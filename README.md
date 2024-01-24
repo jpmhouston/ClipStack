@@ -1,27 +1,34 @@
-<img width="128px" src="https://maccy.app/img/maccy/Logo.png" alt="Logo" align="left" />
+<!--- <img width="128px" src="https://maccy.app/img/maccy/Logo.png" alt="Logo" align="left" /> -->
 
-# [Maccy](https://maccy.app)
+# Clipboarq
 
-[![Downloads](https://img.shields.io/github/downloads/p0deje/Maccy/total.svg)](https://github.com/p0deje/Maccy/releases/latest)
-[![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314)
-[![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/p0deje)
+[![Downloads](https://img.shields.io/github/downloads/jpmhouston/ClipStack/total.svg)](https://github.com/jpmhouston/ClipStack/releases/latest)
+<!--- [![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314 -->
+<!--- [![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/p0deje -->
 
-Maccy is a lightweight clipboard manager for macOS. It keeps the history of what you copy
-and lets you quickly navigate, search, and use previous clipboard contents.
+Clipboarq is a fork of clipboard manager Maccy for macOS.
+It's aim isn't to be a full features clipboard history manager,
+but to provide an easy multi-copy feature that can stack multiple clipboard items
+from a source application window, then paste those items in order elsewhere.
 
-Maccy works on macOS Mojave 10.14 or higher.
+Clipboarq works on macOS Mojave 10.14 or higher.
 
 <!-- vim-markdown-toc GFM -->
 
 * [Features](#features)
 * [Install](#install)
 * [Usage](#usage)
+    * [Basic Usage](#basic-usage)
+    * [Alternatives](#alternatives)
+    * [Clipboarq Menu](#clip-stack-menu)
 * [Advanced](#advanced)
+    * [Expanded Clipboard History](#expanded-clipboard-history)
+    * [Start A Clipboarq From History](#start-a-clip-stack-from-history)
+    * [Selecting Single Item From History To Paste](#selecting-single-item-from-history-to-paste)
     * [Ignore Copied Items](#ignore-copied-items)
     * [Ignore Custom Copy Types](#ignore-custom-copy-types)
 * [FAQ](#faq)
-    * [Why doesn't it paste when I select an item in history?](#why-doesnt-it-paste-when-i-select-an-item-in-history)
-* [Motivation](#motivation)
+    * [Why doesn't the Clipboarq custom paste shortcut do anything?](#why-doesnt-the-clip-stack-paste-shortcut-do-anything)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
@@ -29,21 +36,61 @@ Maccy works on macOS Mojave 10.14 or higher.
 ## Features
 
 * Lightweight and fast
-* Keyboard-first
+* Simple
 * Secure and private
 * Native UI
-* Open source and free
+* Open source and free on GitHub (nominal fee on the Mac App Store)
 
 ## Install
 
-Download the latest version from the [releases](https://github.com/p0deje/Maccy/releases/latest) page, or use [Homebrew](https://brew.sh/):
-
-```sh
-brew install maccy
-```
+Download the latest version from the
+[releases](https://github.com/jpmhouston/ClipStack/releases/latest) page,
+or the Mac App Store
 
 ## Usage
 
+### Basic Usage
+
+1. In your source document window(s) copy using the Clipboarq shortcut (TBD).
+
+2. Repeat.\
+\
+	*The number in the menu bar icon will increment with each item copied.*
+
+3. In your target document window paste using the Clipboarq shortcut (TBD).\
+\
+	*Between each paste the clipboard will automatically advance to the next
+	item that was copied in order and the number in the menu bar icon will decrement.*
+
+4. Repeat.\
+\
+	*When all copied items have been pasted, upon which the menu bar icon will
+	return to normal, and copying and pasting will return to normal bahavior.*
+
+### Alternatives
+
+- You may click the Clipboarq menu bar icon with <kbd>COMMAND (⌘)</kbd> pressed
+to start a set of copies, or choose the "Start" (TBD) item in the Clipboarq menu.
+The menu bar icon will change to (TBD).
+You may copy from you source document window(s) using either the Clipboarq shortcut,
+or the application's normal Copy command or shortcut.
+
+- Starting to collect clipboard items can also be done using the "Start" (TBD) item
+in the Clipboarq menu.
+
+- You can return to normal clipboard behavior by again clicking the Clipboarq menu bar icon
+with <kbd>COMMAND (⌘)</kbd> pressed,
+or using the "Stop" (TBD) menu item.
+
+- While in the middle of pasting, you are still able to copy more.
+The clipboard item will be added to the set of menu items as normal and will get pasted last,
+the number in the menu bar icon will increment.
+
+### Clipboarq Menu
+
+(TBD)
+
+<!--
 1. <kbd>SHIFT (⇧)</kbd> + <kbd>COMMAND (⌘)</kbd> + <kbd>C</kbd> to popup Maccy or click on its icon in the menu bar.
 2. Type what you want to find.
 3. To select the history item you wish to copy, press <kbd>ENTER</kbd>, or click the item, or use <kbd>COMMAND (⌘)</kbd> + `n` shortcut.
@@ -56,24 +103,80 @@ brew install maccy
 10. To disable Maccy and ignore new copies, click on the menu icon with <kbd>OPTION (⌥)</kbd> pressed.
 11. To ignore only the next copy, click on the menu icon with <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> pressed.
 12. To customize the behavior, check "Preferences..." window, or press <kbd>COMMAND (⌘)</kbd> + <kbd>,</kbd>.
+-->
 
 ## Advanced
 
+### Expanded Clipboard History
+
+You can click the Clipboarq menu bar icon with <kbd>OPTION (⌥)</kbd> pressed
+to see the expanded menu which displays all your recent clipboard history.
+You can use this to start a Clipboarq from a previous item, or to select a single item
+from you history to paste.
+
+#### Start A Clipboarq From History
+
+1. Click the Clipboarq menu icon with <kbd>OPTION (⌥)</kbd> pressed
+(you may then release the modifier key).
+
+2. Optionally type what you want to find to filter the history.
+
+3. Select a history item, the menu bar icon will change to (TBD).
+
+4. Paste with the Clipboarq shortcut (TBD) to paste each item in succession.\
+\
+	*When the top-most item in the history is reached, the most recent item copied,
+	the stack behavior will end and the Clipboarq menu bar icon will return to normal.\
+	To end the stack behavior at any time, click the Clipboarq menu with
+	<kbd>COMMAND (⌘)</kbd> pressed.*
+
+#### Selecting Single Item From History To Paste
+
+Invoking the expanded menu presents you with a simplified set of clipboard features
+from [Maccy](https://maccy.app) for re-pasting previous items and history management.
+
+For a more full featured set of features, including more keyboard shortcuts,
+a pinning feature, and more, consider using the original app [Maccy](https://maccy.app).
+
+1. Click the Clipboarq menu icon with <kbd>OPTION (⌥)</kbd> pressed
+(you may then release the modifier key).
+
+2. Optionally type what you want to find to filter the history.
+
+3. These features are supported for the history items in the menu:
+
+- To see the full text of the history item, mouse over, or arrow-key to highlight it,
+and wait a couple of seconds for tooltip.
+
+- To select the history item you wish to paste, <kbd>SHIFT (⇧)</kbd> + <kbd>ENTER</kbd>,
+or <kbd>SHIFT (⇧)</kbd> + <kbd>CLICK</kbd> on the item,
+then perform paste as normal in your application's document window.
+
+- To delete the history item, mouse over, or arrow-key to highlight it, then press
+<kbd>COMMAND (⌘)</kbd> + <kbd>DELETE (⌫)</kbd>.
+
+<!--
+- To choose the history item and paste, press <kbd>OPTION (⌥)</kbd> + <kbd>ENTER</kbd>, or <kbd>OPTION (⌥)</kbd> + <kbd>CLICK</kbd> the item.
+- To choose the history item and paste without formatting, press <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> + <kbd>ENTER</kbd>, or <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> + <kbd>CLICK</kbd> the item.
+-->
+
 ### Ignore Copied Items
 
-You can tell Maccy to ignore all copied items:
+You can tell Clipboarq to ignore all copied items:
 
 ```sh
-defaults write org.p0deje.Maccy ignoreEvents true # default is false
+defaults write lol.bananameter.Clipboarq ignoreEvents true # default is false
 ```
 
-This is useful if you have some workflow for copying sensitive data. You can set `ignoreEvents` to true, copy the data and set `ignoreEvents` back to false.
-
+This is useful if you have some workflow for copying sensitive data.
+You can set `ignoreEvents` to true, copy the data and set `ignoreEvents` back to false.
+<!--
 You can also click the menu icon with <kbd>OPTION (⌥)</kbd> pressed. To ignore only the next copy, click with <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> pressed.
+-->
 
 ### Ignore Custom Copy Types
 
-By default Maccy will ignore certain copy types that are considered to be confidential
+By default Clipboarq will ignore certain copy types that are considered to be confidential
 or temporary. The default list always include the following types:
 
 * `org.nspasteboard.TransientType`
@@ -92,35 +195,27 @@ or overwritten:
 You can add additional custom types using preferences or `defaults`:
 
 ```sh
-defaults write org.p0deje.Maccy ignoredPasteboardTypes -array-add "com.myapp.CustomType"
+defaults write lol.bananameter.Clipboarq ignoredPasteboardTypes -array-add "com.myapp.CustomType"
 ```
 
 If you need to find what custom types are used by an application, you can use
 free application [Pasteboard-Viewer](https://github.com/sindresorhus/Pasteboard-Viewer).
 Simply download the application, open it, copy something from the application you
 want to ignore and look for any custom types in the left sidebar. [Here is an example
-of using this approach to ignore Adobe InDesign](https://github.com/p0deje/Maccy/issues/125).
+of using this approach to ignore Adobe InDesign](https://github.com/p0deje/Maccy/issues/125)
+however where "org.p0deje.Maccy" is mentioned, substitute "lol.bananameter.Clipboarq".
 
 If you accidentally removed default types, you can restore the original configuration:
 
 ```sh
-defaults write org.p0deje.Maccy ignoredPasteboardTypes -array "de.petermaurer.TransientPasteboardType" "com.typeit4me.clipping" "Pasteboard generator type" "com.agilebits.onepassword" "net.antelle.keeweb"
+defaults write lol.bananameter.Clipboarq ignoredPasteboardTypes -array "de.petermaurer.TransientPasteboardType" "com.typeit4me.clipping" "Pasteboard generator type" "com.agilebits.onepassword" "net.antelle.keeweb"
 ```
+
 ## FAQ
 
-### Why doesn't it paste when I select an item in history?
+### Why doesn't the Clipboarq custom paste shortcut do anything?   
 
-1. Make sure you have "Paste automatically" enabled in Preferences.
-2. Make sure "Maccy" is added to System Settings -> Privacy & Security -> Accessibility.
-
-## Motivation
-
-There are dozens of similar applications out there, so why build another?
-Over the past years since I moved from Linux to macOS, I struggled to find
-a clipboard manager that is as free and simple as [Parcellite](http://parcellite.sourceforge.net),
-but I couldn't. So I've decided to build one.
-
-Also, I wanted to learn Swift and get acquainted with macOS application development.
+Make sure "Clipboarq" is added to System Settings -> Privacy & Security -> Accessibility.
 
 ## License
 

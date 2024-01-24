@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• Velg med %@ nedtrykket for å kopiere element.";
 "paste_modifiers_config" = "• Velg med %@ nedtrykket for å kopiere og lime inn element.";
 "format_modifiers_config" = "• Velg med %@ nedtrykket for å kopiere, slette formattering og lime inn element.";
-"accessibility_alert_message" = "“Maccy” vil ha adgang til denne datamaskinen for tjenester tilknyttet tilgjengelighet.";
-"accessibility_alert_comment" = "Gi tillatelse til dette programmet i {pane} innstillingene, lokalisert i {settings}.\n\nKlikk på +-knappen, velg “Maccy“ og velg avmerkingsboksen ved siden av.";
+"accessibility_alert_message" = "“Clipboarq” vil ha adgang til denne datamaskinen for tjenester tilknyttet tilgjengelighet.";
+"accessibility_alert_comment" = "Gi tillatelse til dette programmet i {pane} innstillingene, lokalisert i {settings}.\n\nKlikk på +-knappen, velg “Clipboarq“ og velg avmerkingsboksen ved siden av.";
 "accessibility_alert_deny" = "Avslå";
 "accessibility_alert_open" = "Åpne System Valg";
 "clear_alert_message" = "Er du sikker på at du vil tømme historikken?";

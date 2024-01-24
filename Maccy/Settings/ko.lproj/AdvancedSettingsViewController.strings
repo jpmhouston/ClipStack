@@ -4,8 +4,8 @@
 /* Class = "NSButtonCell"; title = "Clear history on quit"; ObjectID = "JvB-ng-8vt"; */
 "JvB-ng-8vt.title" = "종료시 기록 지우기";
 
-/* Class = "NSTextFieldCell"; title = "defaults write org.p0deje.Maccy ignoreEvents true\n# copy data\ndefaults write org.p0deje.Maccy ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
-"LFh-6b-GFi.title" = "defaults write org.p0deje.Maccy ignoreEvents true\n# 데이터 복사\ndefaults write org.p0deje.Maccy ignoreEvents false";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Clipboarq ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
+"LFh-6b-GFi.title" = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# 데이터 복사\ndefaults write lol.bananameter.Clipboarq ignoreEvents false";
 
 /* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ⌥ pressed.\nTo ignore only the next copy, click with ⌥⇧."; ObjectID = "lwS-2p-WwS"; */
 "lwS-2p-WwS.title" = "⌥를 누른 상태에서 메뉴 아이콘을 클릭할 수도 있습니다.\n다음 사본만 무시하려면 ⌥⇧로 클릭하십시오.";
@@ -28,5 +28,5 @@
 /* Class = "NSButton"; ibShadowedToolTip = "When enabled, clearing the history would also clear the current system clipboard."; ObjectID = "lGE-3K-m2Y"; */
 "lGE-3K-m2Y.ibShadowedToolTip" = "활성화되면 기록을 지우면 현재 시스템 클립보드도 지워집니다.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write org.p0deje.Maccy ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
-"yeX-On-Ble.title" = "defaults write org.p0deje.Maccy ignoreOnlyNextEvent true\n# 데이터 복사";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
+"yeX-On-Ble.title" = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# 데이터 복사";

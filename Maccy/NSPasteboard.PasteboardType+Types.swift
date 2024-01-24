@@ -13,7 +13,7 @@ extension NSPasteboard.PasteboardType {
   static let modified = NSPasteboard.PasteboardType(rawValue: "x.nspasteboard.ModifiedType")
 
   // Marks that copy was made from Maccy.
-  static let fromMaccy = NSPasteboard.PasteboardType(rawValue: "org.p0deje.Maccy")
+  static let fromMaccy = NSPasteboard.PasteboardType(rawValue: "lol.bananameter.Clipboarq")
 
   // Types that indicate Microsoft Word bookmarks (links).
   // https://github.com/p0deje/Maccy/issues/613

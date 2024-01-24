@@ -118,7 +118,7 @@ class Maccy: NSObject {
     statusItem.behavior = .removalAllowed
     statusItem.isVisible = UserDefaults.standard.showInStatusBar
 
-    updateStatusMenuIcon(UserDefaults.standard.menuIcon)
+    updateStatusMenuIcon()
 
     clipboard.onNewCopy(history.add)
     clipboard.onNewCopy(menu.add)
@@ -231,19 +231,12 @@ class Maccy: NSObject {
     statusItem.button?.title = String(title.prefix(statusItemTitleMaxLength))
   }
 
-  private func updateStatusMenuIcon(_ newIcon: String) {
+  private func updateStatusMenuIcon() {
     guard let button = statusItem.button else {
       return
     }
 
-    switch newIcon {
-    case "scissors":
-      button.image = NSImage(named: .scissors)
-    case "clipboard":
-      button.image = NSImage(named: .clipboard)
-    default:
-      button.image = NSImage(named: .maccyStatusBar)
-    }
+    button.image = NSImage(named: .clipboard)
     button.imagePosition = .imageRight
     (button.cell as? NSButtonCell)?.highlightsBy = []
   }
@@ -303,9 +296,6 @@ class Maccy: NSObject {
       if UserDefaults.standard.showInStatusBar != change.newValue! {
         UserDefaults.standard.showInStatusBar = change.newValue!
       }
-    }
-    statusItemChangeObserver = UserDefaults.standard.observe(\.menuIcon, options: .new) { _, change in
-      self.updateStatusMenuIcon(change.newValue!)
     }
   }
 

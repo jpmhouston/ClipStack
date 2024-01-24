@@ -1,8 +1,8 @@
 /* Class = "NSTextFieldCell"; title = "Temporarily ignore all new copies.\nYou are likely to use it programmatically and disable application while copying sensitive data."; ObjectID = "Ejh-zi-AFs"; */
 "Ejh-zi-AFs.title" = "Ignora temporaneamente tutte le nuove copie.\nÈ probabile che verrà utilizzato a livello di programmazione e disabiliti l'applicazione durante la copia di dati sensibili.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write org.p0deje.Maccy ignoreEvents true\n# copy data\ndefaults write org.p0deje.Maccy ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
-"LFh-6b-GFi.title" = "defaults write org.p0deje.Maccy ignoreEvents true\n# copia dei dati\ndefaults write org.p0deje.Maccy ignoreEvents false";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Clipboarq ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
+"LFh-6b-GFi.title" = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copia dei dati\ndefaults write lol.bananameter.Clipboarq ignoreEvents false";
 
 /* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ⌥ pressed.\nTo ignore only the next copy, click with ⌥⇧."; ObjectID = "lwS-2p-WwS"; */
 "lwS-2p-WwS.title" = "Puoi anche fare clic sull'icona del menu premendo ⌥.\nPer ignorare solo la copia successiva, fare clic con ⌥⇧.";
@@ -28,5 +28,5 @@
 /* Class = "NSButton"; ibShadowedToolTip = "When enabled, clearing the history would also clear the current system clipboard."; ObjectID = "lGE-3K-m2Y"; */
 "lGE-3K-m2Y.ibShadowedToolTip" = "Se abilitato, la cancellazione della cronologia cancellerebbe anche gli appunti di sistema correnti.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write org.p0deje.Maccy ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
-"yeX-On-Ble.title" = "defaults write org.p0deje.Maccy ignoreOnlyNextEvent true\n# copia dei dati";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
+"yeX-On-Ble.title" = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# copia dei dati";

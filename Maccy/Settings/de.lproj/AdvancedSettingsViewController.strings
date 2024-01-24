@@ -1,8 +1,8 @@
 /* Class = "NSTextFieldCell"; title = "Temporarily ignore all new copies.\nYou are likely to use it programmatically and disable application while copying sensitive data."; ObjectID = "Ejh-zi-AFs"; */
 "Ejh-zi-AFs.title" = "Vorrübergehend alle neue Einträge ignorieren. Zum Beispiel während dem Kopieren von sensiblen Daten.\nDies kann über das Terminal aktiviert und deaktiviert werden mit:";
 
-/* Class = "NSTextFieldCell"; title = "defaults write org.p0deje.Maccy ignoreEvents true\n# copy data\ndefaults write org.p0deje.Maccy ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
-"LFh-6b-GFi.title" = "defaults write org.p0deje.Maccy ignoreEvents true\n# Einträge wieder kopieren\ndefaults write org.p0deje.Maccy ignoreEvents false";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Clipboarq ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
+"LFh-6b-GFi.title" = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# Einträge wieder kopieren\ndefaults write lol.bananameter.Clipboarq ignoreEvents false";
 
 /* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ⌥ pressed.\nTo ignore only the next copy, click with ⌥⇧."; ObjectID = "lwS-2p-WwS"; */
 "lwS-2p-WwS.title" = "Um Maccy zu deaktivieren, klicke auf das Menüleistensymbol und halte dabei ⌥ gedrückt.\nUm nur die nächste Kopie zu ignorieren, klicke und halte ⌥⇧ gedrückt.";
@@ -28,5 +28,5 @@
 /* Class = "NSButton"; ibShadowedToolTip = "When enabled, clearing the history would also clear the current system clipboard."; ObjectID = "lGE-3K-m2Y"; */
 "lGE-3K-m2Y.ibShadowedToolTip" = "Wenn diese Option aktiviert ist, wird durch das Löschen des Verlaufs auch die aktuelle Systemzwischenablage gelöscht.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write org.p0deje.Maccy ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
-"yeX-On-Ble.title" = "defaults write org.p0deje.Maccy ignoreOnlyNextEvent true\n# Einträge wieder kopieren";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
+"yeX-On-Ble.title" = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# Einträge wieder kopieren";

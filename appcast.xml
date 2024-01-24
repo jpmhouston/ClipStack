@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Maccy</title>
-    <link>https://raw.githubusercontent.com/p0deje/Maccy/master/appcast.xml</link>
+    <title>Clipboarq</title>
+    <link>https://raw.githubusercontent.com/jpmhouston/ClipStack/releases/master/appcast.xml</link>
     <description>Most recent changes with links to updates.</description>
     <language>en</language>
     <item>
-      <title>0.29.3</title>
+      <title>0.0.1</title>
       <description>
         <![CDATA[
           <ul>
-            <li>Fixed custom sounds not playing when sending notifications.</li>
+            <li>First release, derived from Maccy 0.29.3.</li>
           </ul>
         ]]>
       </description>
-      <pubDate>2023-12-25</pubDate>
-      <releaseNotesLink>https://github.com/p0deje/Maccy/releases/tag/0.29.3</releaseNotesLink>
+      <pubDate>2024-01-19</pubDate>
+      <releaseNotesLink>https://github.com/jpmhouston/ClipStack/releases/tag/0.0.1</releaseNotesLink>
       <sparkle:minimumSystemVersion>10.14</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/p0deje/Maccy/releases/download/0.29.3/Maccy.app.zip"
+        url="https://github.com/jpmhouston/ClipStack/releases/download/0.0.1/ClipStack.app.zip"
         sparkle:version="27"
-        sparkle:shortVersionString="0.29.3"
+        sparkle:shortVersionString="0.0.1"
         length="0"
         type="application/octet-stream"
       />

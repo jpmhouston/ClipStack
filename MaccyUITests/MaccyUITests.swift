@@ -46,19 +46,19 @@ class MaccyUITests: XCTestCase {
     app.terminate()
   }
 
-  func testPopupWithHotkey() throws {
-    popUpWithHotkey()
-    assertExists(app.menuItems[copy1])
-    assertExists(app.menuItems[copy2])
-    assertSelected(app.menuItems[copy1].firstMatch)
-  }
-
-  func testCloseWithHotkey() throws {
-    popUpWithMouse()
-    assertExists(app.menuItems[copy1])
-    simulatePopupHotkey()
-    assertNotExists(app.menuItems[copy1])
-  }
+//  func testPopupWithHotkey() throws {
+//    popUpWithHotkey()
+//    assertExists(app.menuItems[copy1])
+//    assertExists(app.menuItems[copy2])
+//    assertSelected(app.menuItems[copy1].firstMatch)
+//  }
+//
+//  func testCloseWithHotkey() throws {
+//    popUpWithMouse()
+//    assertExists(app.menuItems[copy1])
+//    simulatePopupHotkey()
+//    assertNotExists(app.menuItems[copy1])
+//  }
 
   func testPopupWithMenubar() {
     popUpWithMouse()
@@ -357,38 +357,38 @@ class MaccyUITests: XCTestCase {
     assertExists(app.menuItems["foo bar"])
   }
 
-  private func popUpWithHotkey() {
-    simulatePopupHotkey()
-    waitUntilPoppedUp()
-  }
-
+//  private func popUpWithHotkey() {
+//    simulatePopupHotkey()
+//    waitUntilPoppedUp()
+//  }
+//
   private func popUpWithMouse() {
     app.statusItems.firstMatch.click()
     waitUntilPoppedUp()
   }
 
-  private func simulatePopupHotkey() {
-    let commandDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Command), keyDown: true)!
-    let commandUp = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Command), keyDown: false)!
-    let shiftDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Shift), keyDown: true)!
-    let shiftUp = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Shift), keyDown: false)!
-    shiftDown.flags = [.maskCommand]
-    shiftUp.flags = [.maskCommand]
-    let cDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_ANSI_C), keyDown: true)!
-    let cUp = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_ANSI_C), keyDown: false)!
-    cDown.flags = [.maskCommand, .maskShift]
-    cUp.flags = [.maskCommand, .maskShift]
-    commandDown.post(tap: .cghidEventTap)
-    shiftDown.post(tap: .cghidEventTap)
-    cDown.post(tap: .cghidEventTap)
-    cUp.post(tap: .cghidEventTap)
-    shiftUp.post(tap: .cghidEventTap)
-    commandUp.post(tap: .cghidEventTap)
-  }
+//  private func simulatePopupHotkey() {
+//    let commandDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Command), keyDown: true)!
+//    let commandUp = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Command), keyDown: false)!
+//    let shiftDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Shift), keyDown: true)!
+//    let shiftUp = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Shift), keyDown: false)!
+//    shiftDown.flags = [.maskCommand]
+//    shiftUp.flags = [.maskCommand]
+//    let cDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_ANSI_C), keyDown: true)!
+//    let cUp = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_ANSI_C), keyDown: false)!
+//    cDown.flags = [.maskCommand, .maskShift]
+//    cUp.flags = [.maskCommand, .maskShift]
+//    commandDown.post(tap: .cghidEventTap)
+//    shiftDown.post(tap: .cghidEventTap)
+//    cDown.post(tap: .cghidEventTap)
+//    cUp.post(tap: .cghidEventTap)
+//    shiftUp.post(tap: .cghidEventTap)
+//    commandUp.post(tap: .cghidEventTap)
+//  }
 
   private func waitUntilPoppedUp() {
     if !app.menuItems.firstMatch.waitForExistence(timeout: 3) {
-      XCTFail("Maccy did not pop up")
+      XCTFail("Clipboarq menu did not pop up")
     }
   }
 

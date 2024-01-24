@@ -18,7 +18,6 @@ extension UserDefaults {
     static let lastReviewRequestedAt = "lastReviewRequestedAt"
     static let maxMenuItems = "maxMenuItems"
     static let maxMenuItemLength = "maxMenuItemLength"
-    static let menuIcon = "menuIcon"
     static let migrations = "migrations"
     static let numberOfUsages = "numberOfUsages"
     static let pasteByDefault = "pasteByDefault"
@@ -59,7 +58,6 @@ extension UserDefaults {
     static let showInStatusBar = true
     static let size = 200
     static let sortBy = "lastCopiedAt"
-    static let menuIcon = "maccy"
   }
 
   public var avoidTakingFocus: Bool {
@@ -151,11 +149,6 @@ extension UserDefaults {
   @objc dynamic public var maxMenuItemLength: Int {
     get { integer(forKey: Keys.maxMenuItemLength) }
     set { set(newValue, forKey: Keys.maxMenuItemLength) }
-  }
-
-  @objc dynamic public var menuIcon: String {
-    get { string(forKey: Keys.menuIcon) ?? Values.menuIcon }
-    set { set(newValue, forKey: Keys.menuIcon) }
   }
 
   public var migrations: [String: Bool] {
