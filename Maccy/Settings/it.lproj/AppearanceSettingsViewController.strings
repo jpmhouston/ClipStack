@@ -1,47 +1,8 @@
-/* Class = "NSMenuItem"; title = "Menu icon"; ObjectID = "0h4-CZ-fwT"; */
-"0h4-CZ-fwT.title" = "Icona del menù";
-
-/* Class = "NSMenuItem"; title = "Cursor"; ObjectID = "Ccp-5J-8nw"; */
-"Ccp-5J-8nw.title" = "Cursore";
-
-/* Class = "NSButtonCell"; title = "Show footer"; ObjectID = "ClZ-IS-YKz"; */
-"ClZ-IS-YKz.title" = "Mostra footer";
-
-/* Class = "NSMenuItem"; title = "Window center"; ObjectID = "gMh-0J-BUx"; */
-"gMh-0J-BUx.title" = "Centro della finestra";
-
 /* Class = "NSTextFieldCell"; title = "Image height:"; ObjectID = "MKb-cW-gpg"; */
 "MKb-cW-gpg.title" = "Altezza dell'immagine:";
 
-/* Class = "NSButtonCell"; title = "Show menu icon"; ObjectID = "Pud-2o-NKc"; */
-"Pud-2o-NKc.title" = "Mostra icona menù";
-
-/* Class = "NSButtonCell"; title = "Show recent copy next to menu icon"; ObjectID = "2vE-8q-6tq"; */
-"2vE-8q-6tq.title" = "Mostra le copie recenti accanto all'icona menù";
-
-/* Class = "NSTextFieldCell"; title = "Popup at:"; ObjectID = "R7Y-UN-Edt"; */
-"R7Y-UN-Edt.title" = "Popup a:";
-
-/* Class = "NSButtonCell"; title = "Show title before search field"; ObjectID = "ePT-qq-kg9"; */
-"ePT-qq-kg9.title" = "Mostra il titolo prima del campo ricerca";
-
-/* Class = "NSButtonCell"; title = "Show search field"; ObjectID = "mWx-zi-OAv"; */
-"mWx-zi-OAv.title" = "Mostra campo ricerca";
-
-/* Class = "NSTextFieldCell"; title = "Press ⌘, to open preferences when footer is hidden."; ObjectID = "0tN-4z-p8T"; */
-"0tN-4z-p8T.title" = "Premi ⌘, per aprire le preferenze quando il footer è nascosto.";
-
 /* Class = "NSTextFieldCell"; title = "Number of items:"; ObjectID = "gjR-wz-7GQ"; */
 "gjR-wz-7GQ.title" = "Numero di elementi:";
-
-/* Class = "NSTextFieldCell"; title = "Pin to:"; ObjectID = "GhW-Kv-rhO"; */
-"GhW-Kv-rhO.title" = "Blocca su:";
-
-/* Class = "NSMenuItem"; title = "Top"; ObjectID = "DKE-JI-oLS"; */
-"DKE-JI-oLS.title" = "Parte superiore";
-
-/* Class = "NSMenuItem"; title = "Bottom"; ObjectID = "Yio-8e-oaa"; */
-"Yio-8e-oaa.title" = "Parte inferiore";
 
 /* Class = "NSTextFieldCell"; title = "Title length:"; ObjectID = "TgE-eS-5nT"; */
 "TgE-eS-5nT.title" = "Lunghezza del titolo:";
@@ -49,14 +10,8 @@
 /* Class = "NSTextFieldCell"; title = "Preview delay:"; ObjectID = "lnS-Rg-4sa"; */
 "lnS-Rg-4sa.title" = "Anteprima ritardo:";
 
-/* Class = "NSMenuItem"; title = "Screen center"; ObjectID = "N8k-nW-lzS"; */
-"N8k-nW-lzS.title" = "Centro dello schermo";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Change the location where popup appears.\nDefault: Cursor."; ObjectID = "ZHc-k4-Nf9"; */
-"ZHc-k4-Nf9.ibShadowedToolTip" = "Cambia la posizione in cui appare il popup.\nDefault: Cursore.";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Change the location of pinned items.\nDefault: Top."; ObjectID = "tWw-ax-Qej"; */
-"tWw-ax-Qej.ibShadowedToolTip" = "Cambia la posizione degli elementi bloccati.\nDefault: Parte superiore.";
+/* Class = "NSButtonCell"; title = "Show search field"; ObjectID = "mWx-zi-OAv"; */
+"mWx-zi-OAv.title" = "Mostra campo ricerca";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum image preview height.\nDefault: 40.\nHint: Set to 16 to look like text items."; ObjectID = "Tsp-4i-Mym"; */
 "Tsp-4i-Mym.ibShadowedToolTip" = "Altezza massima preview immagine.\nDefault: 40.\nSuggerimento: Impostala a 16 per farla sembrare come gli elementi testuali.";

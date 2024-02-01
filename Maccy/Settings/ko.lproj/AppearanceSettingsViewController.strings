@@ -1,47 +1,8 @@
-/* Class = "NSMenuItem"; title = "Menu icon"; ObjectID = "0h4-CZ-fwT"; */
-"0h4-CZ-fwT.title" = "메뉴 아이콘";
-
-/* Class = "NSTextFieldCell"; title = "Press ⌘, to open preferences when footer is hidden."; ObjectID = "0tN-4z-p8T"; */
-"0tN-4z-p8T.title" = "푸터가 숨겨져 있을 때 설정을 열려면 ⌘,를 누르세요.";
-
-/* Class = "NSButtonCell"; title = "Show recent copy next to menu icon"; ObjectID = "2vE-8q-6tq"; */
-"2vE-8q-6tq.title" = "메뉴 아이콘 옆에 최근 복사 표시";
-
-/* Class = "NSMenuItem"; title = "Cursor"; ObjectID = "Ccp-5J-8nw"; */
-"Ccp-5J-8nw.title" = "커서";
-
-/* Class = "NSButtonCell"; title = "Show footer"; ObjectID = "ClZ-IS-YKz"; */
-"ClZ-IS-YKz.title" = "푸터 표시";
-
-/* Class = "NSMenuItem"; title = "Top"; ObjectID = "DKE-JI-oLS"; */
-"DKE-JI-oLS.title" = "상단";
-
-/* Class = "NSTextFieldCell"; title = "Pin to:"; ObjectID = "GhW-Kv-rhO"; */
-"GhW-Kv-rhO.title" = "고정 위치:";
-
-/* Class = "NSMenuItem"; title = "Window center"; ObjectID = "gMh-0J-BUx"; */
-"gMh-0J-BUx.title" = "창의 중앙";
-
 /* Class = "NSTextFieldCell"; title = "Image height:"; ObjectID = "MKb-cW-gpg"; */
 "MKb-cW-gpg.title" = "이미지 세로 높이:";
 
-/* Class = "NSButtonCell"; title = "Show menu icon"; ObjectID = "Pud-2o-NKc"; */
-"Pud-2o-NKc.title" = "메뉴 아이콘 표시";
-
-/* Class = "NSTextFieldCell"; title = "Popup at:"; ObjectID = "R7Y-UN-Edt"; */
-"R7Y-UN-Edt.title" = "팝업 위치:";
-
-/* Class = "NSMenuItem"; title = "Bottom"; ObjectID = "Yio-8e-oaa"; */
-"Yio-8e-oaa.title" = "하단";
-
-/* Class = "NSButtonCell"; title = "Show title before search field"; ObjectID = "ePT-qq-kg9"; */
-"ePT-qq-kg9.title" = "검색 필드 앞에 타이틀 표시";
-
 /* Class = "NSTextFieldCell"; title = "Number of items:"; ObjectID = "gjR-wz-7GQ"; */
 "gjR-wz-7GQ.title" = "항목 수:";
-
-/* Class = "NSButtonCell"; title = "Show search field"; ObjectID = "mWx-zi-OAv"; */
-"mWx-zi-OAv.title" = "검색 필드 표시";
 
 /* Class = "NSTextFieldCell"; title = "Title length:"; ObjectID = "TgE-eS-5nT"; */
 "TgE-eS-5nT.title" = "제목 길이:";
@@ -49,14 +10,8 @@
 /* Class = "NSTextFieldCell"; title = "Preview delay:"; ObjectID = "lnS-Rg-4sa"; */
 "lnS-Rg-4sa.title" = "미리보기 지연:";
 
-/* Class = "NSMenuItem"; title = "Screen center"; ObjectID = "N8k-nW-lzS"; */
-"N8k-nW-lzS.title" = "화면 중앙";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Change the location where popup appears.\nDefault: Cursor."; ObjectID = "ZHc-k4-Nf9"; */
-"ZHc-k4-Nf9.ibShadowedToolTip" = "팝업이 나타나는 위치를 변경합니다.\n기본값: 커서.";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Change the location of pinned items.\nDefault: Top."; ObjectID = "tWw-ax-Qej"; */
-"tWw-ax-Qej.ibShadowedToolTip" = "고정된 항목의 위치를 변경합니다.\n기본값: 상단.";
+/* Class = "NSButtonCell"; title = "Show search field"; ObjectID = "mWx-zi-OAv"; */
+"mWx-zi-OAv.title" = "검색 필드 표시";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum image preview height.\nDefault: 40.\nHint: Set to 16 to look like text items."; ObjectID = "Tsp-4i-Mym"; */
 "Tsp-4i-Mym.ibShadowedToolTip" = "이미지 미리보기 최대 세로 높이.\n기본값: 40.\nHint: 16으로 설정하면 텍스트 항목과 같아 보입니다.";

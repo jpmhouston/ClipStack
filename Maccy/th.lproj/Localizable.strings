@@ -14,9 +14,6 @@
 "preferences_general" = "ทั่วไป";
 "preferences_pins" = "ปักหมุด";
 "preferences_storage" = "พื้นที่";
-"copy_modifiers_config" = "• เลือกแล้วกด %@ เพื่อคัดลอก";
-"paste_modifiers_config" = "• เลือกแล้วกด %@ เพื่อคัดลอกและวางรายการ";
-"format_modifiers_config" = "• เลือกแล้วกด %@ เพื่อคัดลอก, ล้างรูปแบบและวางรายการ";
 "accessibility_alert_message" = "“Clipboarq” ต้องการใช้สิทธิ์ฟีเจอร์การช่วยการเข้าถึง";
 "accessibility_alert_comment" = "ให้สิทธิ์แอปพลิเคชันนี้ในเมนูการตั้งค่า{pane} ใน {settings}.\n\nคลิกปุ่ม ”+” เลือก ”Clipboarq” และสลับช่องทำเครื่องหมายถัดจากนั้น.";
 "accessibility_alert_deny" = "ปฎิเสธ";

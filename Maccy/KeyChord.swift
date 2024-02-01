@@ -12,29 +12,14 @@ enum KeyChord: CaseIterable {
     (NSApp.delegate as? AppDelegate)?.pasteMenuItem.keyEquivalentModifierMask ?? [.command]
   }
   static var deleteKey: Key? {
-    if let shortcut = KeyboardShortcuts.Shortcut(name: .delete) {
+    if let shortcut = KeyboardShortcuts.Shortcut(name: .deleteItem) {
       return Sauce.shared.key(for: shortcut.carbonKeyCode)
     } else {
       return nil
     }
   }
   static var deleteModifiers: NSEvent.ModifierFlags? {
-    if let shortcut = KeyboardShortcuts.Shortcut(name: .delete) {
-      return shortcut.modifiers.intersection(.deviceIndependentFlagsMask)
-    } else {
-      return nil
-    }
-  }
-
-  static var pinKey: Key? {
-    if let shortcut = KeyboardShortcuts.Shortcut(name: .pin) {
-      return Sauce.shared.key(for: shortcut.carbonKeyCode)
-    } else {
-      return nil
-    }
-  }
-  static var pinModifiers: NSEvent.ModifierFlags? {
-    if let shortcut = KeyboardShortcuts.Shortcut(name: .pin) {
+    if let shortcut = KeyboardShortcuts.Shortcut(name: .deleteItem) {
       return shortcut.modifiers.intersection(.deviceIndependentFlagsMask)
     } else {
       return nil
@@ -47,27 +32,25 @@ enum KeyChord: CaseIterable {
   case deleteCurrentItem
   case deleteOneCharFromSearch
   case deleteLastWordFromSearch
-  case hide
   case ignored
   case moveToNext
   case moveToPrevious
   case openPreferences
   case paste
-  case pinOrUnpin
   case selectCurrentItem
   case unknown
 
   // swiftlint:disable cyclomatic_complexity
   init(_ key: Key, _ modifierFlags: NSEvent.ModifierFlags) {
     switch (key, modifierFlags) {
-    case (.delete, MenuFooter.clear.keyEquivalentModifierMask):
+    case (Key(character: MenuFooter.clear.keyEquivalent, virtualKeyCode: nil), MenuFooter.clear.keyEquivalentModifierMask):
       self = .clearHistory
-    case (.delete, MenuFooter.clearAll.keyEquivalentModifierMask):
+    case (Key(character: MenuFooter.clearAll.keyEquivalent, virtualKeyCode: nil), MenuFooter.clearAll.keyEquivalentModifierMask):
       self = .clearHistoryAll
-    case (.delete, [.command]), (.u, [.control]):
+    case (Key(character: MenuFooter.preferences.keyEquivalent, virtualKeyCode: nil), MenuFooter.preferences.keyEquivalentModifierMask):
+      self = .openPreferences
+    case (.escape, []), (.u, [.control]):
       self = .clearSearch
-    case (KeyChord.deleteKey, KeyChord.deleteModifiers):
-      self = .deleteCurrentItem
     case (.delete, []), (.h, [.control]):
       self = .deleteOneCharFromSearch
     case (.w, [.control]):
@@ -76,16 +59,16 @@ enum KeyChord: CaseIterable {
       self = .moveToNext
     case (.k, [.control]):
       self = .moveToPrevious
-    case (KeyChord.pinKey, KeyChord.pinModifiers):
-      self = .pinOrUnpin
-    case (GlobalHotKey.key, GlobalHotKey.modifierFlags):
-      self = .hide
-    case (.comma, MenuFooter.preferences.keyEquivalentModifierMask):
-      self = .openPreferences
-    case (KeyChord.pasteKey, KeyChord.pasteKeyModifiers):
-      self = .paste
     case (.return, _), (.keypadEnter, _):
       self = .selectCurrentItem
+    case (KeyChord.pasteKey, KeyChord.pasteKeyModifiers):
+      self = .paste
+    case (KeyChord.deleteKey, KeyChord.deleteModifiers):
+      self = .deleteCurrentItem
+    case (GlobalCopyHotKey.key, GlobalCopyHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
+      self = .ignored
+    case (GlobalPasteHotKey.key, GlobalPasteHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
+      self = .ignored
     case (_, _) where Self.keysToSkip.contains(key) || !modifierFlags.isDisjoint(with: Self.modifiersToSkip):
       self = .ignored
     default:

@@ -9,7 +9,6 @@ class Preview: NSViewController {
   @IBOutlet weak var lastCopyTimeValueLabel: NSTextField!
   @IBOutlet weak var numberOfCopiesValueLabel: NSTextField!
   @IBOutlet weak var deleteLabel: NSTextField!
-  @IBOutlet weak var pinLabel: NSTextField!
 
   private let maxTextSize = 1_500
 
@@ -62,18 +61,11 @@ class Preview: NSViewController {
     lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
     numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
 
-    if let deleteKey = KeyboardShortcuts.Shortcut(name: .delete) {
+    if let deleteKey = KeyboardShortcuts.Shortcut(name: .deleteItem) {
       deleteLabel.stringValue = deleteLabel.stringValue
         .replacingOccurrences(of: "{deleteKey}", with: deleteKey.description)
     } else {
       deleteLabel.removeFromSuperview()
-    }
-
-    if let pinKey = KeyboardShortcuts.Shortcut(name: .pin) {
-      pinLabel.stringValue = pinLabel.stringValue
-        .replacingOccurrences(of: "{pinKey}", with: pinKey.description)
-    } else {
-      pinLabel.removeFromSuperview()
     }
   }
 

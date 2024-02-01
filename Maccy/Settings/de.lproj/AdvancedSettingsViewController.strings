@@ -4,8 +4,8 @@
 /* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Clipboarq ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
 "LFh-6b-GFi.title" = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# Einträge wieder kopieren\ndefaults write lol.bananameter.Clipboarq ignoreEvents false";
 
-/* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ⌥ pressed.\nTo ignore only the next copy, click with ⌥⇧."; ObjectID = "lwS-2p-WwS"; */
-"lwS-2p-WwS.title" = "Um Maccy zu deaktivieren, klicke auf das Menüleistensymbol und halte dabei ⌥ gedrückt.\nUm nur die nächste Kopie zu ignorieren, klicke und halte ⌥⇧ gedrückt.";
+/* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ^ pressed.\nTo ignore only the next copy, click with ^⌥."; ObjectID = "lwS-2p-WwS"; */
+"lwS-2p-WwS.title" = "Um Maccy zu deaktivieren, klicke auf das Menüleistensymbol und halte dabei ^ gedrückt.\nUm nur die nächste Kopie zu ignorieren, klicke und halte ^⌥ gedrückt.";
 
 /* Class = "NSButtonCell"; title = "Turn off"; ObjectID = "RA0-eh-Udt"; */
 "RA0-eh-Udt.title" = "Deaktivieren";

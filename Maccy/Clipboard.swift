@@ -83,7 +83,7 @@ class Clipboard {
     }
     pasteboard.setString("", forType: .fromMaccy)
 
-    Notifier.notify(body: item.title, sound: .knock)
+    // usded to do here: Notifier.notify(body: item.title, sound: .knock)
 
     checkForChangesInPasteboard()
   }

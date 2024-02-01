@@ -10,37 +10,29 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
 
   override var nibName: NSNib.Name? { "GeneralSettingsViewController" }
 
-  private let popupHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .popup)
-  private let pinHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .pin)
-  private let deleteHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .delete)
+  private let copyHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .queueCopy)
+  private let pasteHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .queuePaste)
 
-  private lazy var notificationsURL = URL(string: "x-apple.systempreferences:com.apple.preference.notifications?id=\(Bundle.main.bundleIdentifier ?? "")")
-
-  @IBOutlet weak var popupHotkeyContainerView: NSView!
-  @IBOutlet weak var pinHotkeyContainerView: NSView!
-  @IBOutlet weak var deleteHotkeyContainerView: NSView!
+  @IBOutlet weak var copyHotkeyContainerView: NSView!
+  @IBOutlet weak var pasteHotkeyContainerView: NSView!
   @IBOutlet weak var launchAtLoginButton: NSButton!
   @IBOutlet weak var searchModeButton: NSPopUpButton!
-  @IBOutlet weak var pasteAutomaticallyButton: NSButton!
-  @IBOutlet weak var removeFormattingButton: NSButton!
-  @IBOutlet weak var modifiersDescriptionLabel: NSTextField!
-  @IBOutlet weak var notificationsButton: NSButton!
+  @IBOutlet weak var checkForUpdatesOptionRow: NSGridRow!
+  @IBOutlet weak var checkForUpdatesButtonRow: NSGridRow!
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    popupHotkeyContainerView.addSubview(popupHotkeyRecorder)
-    pinHotkeyContainerView.addSubview(pinHotkeyRecorder)
-    deleteHotkeyContainerView.addSubview(deleteHotkeyRecorder)
-    loadNotificationsLink()
+    copyHotkeyContainerView.addSubview(copyHotkeyRecorder)
+    pasteHotkeyContainerView.addSubview(pasteHotkeyRecorder)
+    if true { // TODO: how to build for app store vs. github release
+      hideSparkleUpdateRows()
+    }
   }
 
   override func viewWillAppear() {
     super.viewWillAppear()
     populateLaunchAtLogin()
     populateSearchMode()
-    populatePasteAutomatically()
-    populateRemoveFormatting()
-    updateModifiersDescriptionLabel()
   }
 
   @IBAction func launchAtLoginChanged(_ sender: NSButton) {
@@ -60,22 +52,6 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     }
   }
 
-  @IBAction func pasteAutomaticallyChanged(_ sender: NSButton) {
-    UserDefaults.standard.pasteByDefault = (sender.state == .on)
-    updateModifiersDescriptionLabel()
-  }
-
-  @IBAction func removeFormattingChanged(_ sender: NSButton) {
-    UserDefaults.standard.removeFormattingByDefault = (sender.state == .on)
-    updateModifiersDescriptionLabel()
-  }
-
-  @IBAction func notificationsButtonClicked(_ sender: NSButton) {
-    guard let notificationsURL else { return }
-
-    NSWorkspace.shared.open(notificationsURL)
-  }
-
   private func populateLaunchAtLogin() {
     launchAtLoginButton.state = LaunchAtLogin.isEnabled ? .on : .off
   }
@@ -93,34 +69,9 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     }
   }
 
-  private func populatePasteAutomatically() {
-    pasteAutomaticallyButton.state = UserDefaults.standard.pasteByDefault ? .on : .off
+  private func hideSparkleUpdateRows() {
+    checkForUpdatesOptionRow?.isHidden = true
+    checkForUpdatesButtonRow?.isHidden = true
   }
-
-  private func populateRemoveFormatting() {
-    removeFormattingButton.state = UserDefaults.standard.removeFormattingByDefault ? .on : .off
-  }
-
-  private func updateModifiersDescriptionLabel() {
-    let descriptions = [
-      String(format: NSLocalizedString("copy_modifiers_config", comment: ""),
-             HistoryMenuItem.CopyMenuItem.keyEquivalentModifierMask.description),
-      String(format: NSLocalizedString("paste_modifiers_config", comment: ""),
-             HistoryMenuItem.PasteMenuItem.keyEquivalentModifierMask.description),
-      String(format: NSLocalizedString("format_modifiers_config", comment: ""),
-             HistoryMenuItem.PasteWithoutFormattingMenuItem.keyEquivalentModifierMask.description)
-    ]
-    modifiersDescriptionLabel.stringValue = descriptions.joined(separator: "\n")
-  }
-
-  private func loadNotificationsLink() {
-    guard let notificationsURL else { return }
-
-    notificationsButton.attributedTitle = NSMutableAttributedString(
-      string: notificationsButton.title,
-      attributes: [
-        .link: notificationsURL
-      ]
-    )
-  }
+  
 }

@@ -14,9 +14,6 @@
 "preferences_general" = "Загальні";
 "preferences_pins" = "Прикріплення";
 "preferences_storage" = "Зберігання";
-"copy_modifiers_config" = "• Виберіть, натиснувши %@, щоб скопіювати елемент.";
-"paste_modifiers_config" = "• Виберіть, натиснувши %@, щоб скопіювати та вставити елемент.";
-"format_modifiers_config" = "• Виберіть, натиснувши %@, щоб скопіювати, очистити форматування та вставити елемент.";
 "accessibility_alert_message" = "“Clipboarq” хоче керувати цим комп’ютером за допомогою функцій доступності.";
 "accessibility_alert_comment" = "Надайте доступ до цієї програми в налаштуваннях {pane}, розташованих у {settings}.\n\nНатисніть кнопку “+“, виберіть “Clipboarq“ і встановіть прапорець поруч із ним.";
 "accessibility_alert_deny" = "Відказати";

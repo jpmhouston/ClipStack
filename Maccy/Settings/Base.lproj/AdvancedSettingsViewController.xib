@@ -62,7 +62,7 @@ You are likely to use it programmatically and disable application while copying 
                         </gridCell>
                         <gridCell row="M6T-bh-slS" column="8aH-p4-Hiw" id="dQu-KC-grG">
                             <textField key="contentView" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fpb-AC-gT0">
-                                <rect key="frame" x="-2" y="157" width="402" height="33"/>
+                                <rect key="frame" x="-2" y="171" width="402" height="33"/>
                                 <textFieldCell key="cell" selectable="YES" id="LFh-6b-GFi">
                                     <font key="font" size="10" name="Menlo-Regular"/>
                                     <string key="title">defaults write lol.bananameter.Clipboarq ignoreEvents true
@@ -75,11 +75,11 @@ defaults write lol.bananameter.Clipboarq ignoreEvents false</string>
                         </gridCell>
                         <gridCell row="klT-Xg-5Xa" column="8aH-p4-Hiw" id="9Bn-10-d0I">
                             <textField key="contentView" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b73-sw-gL3">
-                                <rect key="frame" x="-2" y="121" width="402" height="28"/>
+                                <rect key="frame" x="-2" y="135" width="402" height="28"/>
                                 <textFieldCell key="cell" selectable="YES" id="lwS-2p-WwS">
                                     <font key="font" metaFont="controlContent" size="11"/>
-                                    <string key="title">You can also click the menu icon with ⌥ pressed.
-To ignore only the next copy, click with ⌥⇧.</string>
+                                    <string key="title">You can also click the menu icon with ^ pressed.
+To ignore only the next copy, click with ^⌥.</string>
                                     <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

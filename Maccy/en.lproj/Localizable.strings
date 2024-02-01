@@ -14,9 +14,6 @@
 "preferences_general" = "General";
 "preferences_pins" = "Pins";
 "preferences_storage" = "Storage";
-"copy_modifiers_config" = "• Select with %@ pressed to copy item.";
-"paste_modifiers_config" = "• Select with %@ pressed to copy and paste item.";
-"format_modifiers_config" = "• Select with %@ pressed to copy, clear formatting and paste item.";
 "accessibility_alert_message" = "“Clipboarq” would like to control this computer using accessibility features.";
 "accessibility_alert_comment" = "Grant access to this application in {pane}, located in {settings}.\n\nClick + button, select Clipboarq and toggle on the checkbox next to it.";
 "accessibility_alert_deny" = "Deny";

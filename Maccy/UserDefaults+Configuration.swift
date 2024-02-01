@@ -1,5 +1,7 @@
 import AppKit
 
+// TODO: remove hideFooter hideSearch hideTitle pasteByDefault pinTo removeFormattingByDefault showRecentCopyInMenuBar
+
 extension UserDefaults {
   public struct Keys {
     static let avoidTakingFocus = "avoidTakingFocus"

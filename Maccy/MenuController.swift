@@ -17,42 +17,35 @@ class MenuController {
     self.statusItem.menu = menuLoader
   }
 
-  func popUp() {
-    let location = PopupLocation.forUserDefaults
-
-    withFocus {
-      switch location {
-      case .inMenuBar:
-        self.simulateStatusItemClick()
-      default:
-        self.linkingMenuToStatusItem {
-          self.menu.popUpMenu(at: location.location(for: self.menu.size) ?? .zero, ofType: location)
-        }
-      }
-    }
-  }
-
   @objc
   private func performStatusItemClick(_ event: NSEvent?) {
     if let event = event {
       let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
-
-      if modifierFlags.contains(.option) {
+      
+      if modifierFlags.contains(.control) {
         UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
-
-        if modifierFlags.contains(.shift) {
+        
+        if modifierFlags.contains(.option) {
           UserDefaults.standard.ignoreOnlyNextEvent = UserDefaults.standard.ignoreEvents
         }
-
         return
       }
+      
+      if modifierFlags.contains(.command) {
+        // TODO: make command-click turn on queueing mode
+        return
+      }
+      
+      if modifierFlags.contains(.option) {
+        // TODO: make option-click open full menu including history
+      }
     }
-
+    
     withFocus {
       self.simulateStatusItemClick()
     }
   }
-
+  
   private func simulateStatusItemClick() {
     if let buttonCell = statusItem.button?.cell as? NSButtonCell {
       withMenuButtonHighlighted(buttonCell) {
@@ -114,16 +107,16 @@ class MenuController {
   // and fallback to default NSMenu behavior by enabling
   // UserDefaults.standard.avoidTakingFocus.
   private func withFocus(_ closure: @escaping () -> Void) {
-    KeyboardShortcuts.disable(.popup)
+    //KeyboardShortcuts.disable(.popup) // TODO: figure out if there are any implications of removing these lines
 
     if UserDefaults.standard.avoidTakingFocus {
       closure()
-      KeyboardShortcuts.enable(.popup)
+      //KeyboardShortcuts.enable(.popup)
     } else {
       NSApp.activate(ignoringOtherApps: true)
       Timer.scheduledTimer(withTimeInterval: 0.04, repeats: false) { _ in
         closure()
-        KeyboardShortcuts.enable(.popup)
+        //KeyboardShortcuts.enable(.popup)
         if Maccy.returnFocusToPreviousApp && self.extraVisibleWindows.count == 0 {
           NSApp.hide(self)
           Maccy.returnFocusToPreviousApp = true

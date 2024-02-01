@@ -42,7 +42,6 @@ class Maccy: NSObject {
   private var maxMenuItemLengthObserver: NSKeyValueObservation?
 //  private var sortByObserver: NSKeyValueObservation? // don't think i need sortBy or the statusItem obsevrers
 //  private var statusItemConfigurationObserver: NSKeyValueObservation?
-//  private var statusItemVisibilityObserver: NSKeyValueObservation?
   
   override init() {
     UserDefaults.standard.register(defaults: [
@@ -50,14 +49,11 @@ class Maccy: NSObject {
       UserDefaults.Keys.maxMenuItems: UserDefaults.Values.maxMenuItems,
       UserDefaults.Keys.maxMenuItemLength: UserDefaults.Values.maxMenuItemLength,
       UserDefaults.Keys.previewDelay: UserDefaults.Values.previewDelay
-//      UserDefaults.Keys.showInStatusBar: UserDefaults.Values.showInStatusBar // don't think i need showInStatusBar
     ])
     
     super.init()
     initializeObservers()
     disableUnusedGlobalHotkeys()
-    
-    // TODO: maybe think about what's here in init() vs what is in start(), and if that makes sense
     
     menu = Menu(history: history, clipboard: Clipboard.shared)
     menuController = MenuController(menu, statusItem)
@@ -72,11 +68,14 @@ class Maccy: NSObject {
     maxMenuItemLengthObserver?.invalidate()
 //    sortByObserver?.invalidate() // don't think i need sortBy or the statusItem obsevrers
 //    statusItemConfigurationObserver?.invalidate()
-//    statusItemVisibilityObserver?.invalidate()
+  }
+
+  func queueCopy() {
+    // TODO: called from global shortcut, fill this in
   }
   
-  func popUp() {
-    menuController.popUp()
+  func queuePaste() {
+    // TODO: called from global shortcut, fill this in
   }
   
   func select(position: Int) -> String? {
@@ -91,8 +90,8 @@ class Maccy: NSObject {
     return menu.historyItem(at: position)
   }
   
+  // TODO: will be removed, not sure if we want a special version of clear in its place or not
   func clearUnpinned(suppressClearAlert: Bool = false) {
-    // TODO: maybe rename since none will be pinned? called from app delegate and one other place
     withClearAlert(suppressClearAlert: suppressClearAlert) {
       self.history.clearUnpinned()
       self.menu.clearUnpinned()
@@ -112,6 +111,7 @@ class Maccy: NSObject {
     clipboard.onNewCopy(updateMenuTitle)
     clipboard.startListening()
     
+    // TODO: move normal menu items current in the footer to the top, define using nib file instead of programmatically
     populateHeader()
     populateItems()
     populateFooter()
@@ -252,28 +252,11 @@ class Maccy: NSObject {
       self.menu.regenerateMenuItemTitles()
       CoreDataManager.shared.saveContext()
     }
-    // TODO: remove UserDefaults properties hideFooter hideSearch hideTitle pasteByDefault pinTo removeFormattingByDefault showRecentCopyInMenuBar
-    // don't think i need sortBy showInStatusBar, or their observers, or the statusItem.isVisible observer
-//    sortByObserver = UserDefaults.standard.observe(\.sortBy, options: .new) { _, _ in
-//      self.rebuild()
-//    }
-//    statusItemConfigurationObserver = UserDefaults.standard.observe(\.showInStatusBar,
-//                                                                    options: .new) { _, change in
-//      if self.statusItem.isVisible != change.newValue! {
-//        self.statusItem.isVisible = change.newValue!
-//      }
-//    }
-//    statusItemVisibilityObserver = observe(\.statusItem.isVisible, options: .new) { _, change in
-//      if UserDefaults.standard.showInStatusBar != change.newValue! {
-//        UserDefaults.standard.showInStatusBar = change.newValue!
-//      }
-//    }
   }
   
   private func disableUnusedGlobalHotkeys() {
-    // TODO: understand what this does, does the delete hotkey not work?! do our new ones need to be added this?
-    // TODO: remove KeyboardShortcuts case pin
-    let names: [KeyboardShortcuts.Name] = [.delete]
+    // i believe these hotkeys are only for use when the menu is visible TODO: figure it out for sure
+    let names: [KeyboardShortcuts.Name] = [.deleteItem]
     names.forEach(KeyboardShortcuts.disable)
 
     NotificationCenter.default.addObserver(
@@ -286,5 +269,6 @@ class Maccy: NSObject {
       }
     }
   }
+  
 }
 // swiftlint:enable type_body_length

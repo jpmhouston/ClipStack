@@ -9,7 +9,8 @@ import Sparkle
 class AppDelegate: NSObject, NSApplicationDelegate {
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
-  private var hotKey: GlobalHotKey!
+  private var copyHotKey: GlobalCopyHotKey!
+  private var pasteHotKey: GlobalPasteHotKey!
   private var maccy: Maccy!
 
   func applicationWillFinishLaunching(_ notification: Notification) {
@@ -28,11 +29,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     clearOrphanRecords()
 
     maccy = Maccy()
-    hotKey = GlobalHotKey(maccy.popUp)
+    copyHotKey = GlobalCopyHotKey(maccy.queueCopy)
+    pasteHotKey = GlobalPasteHotKey(maccy.queueCopy)
   }
 
+  // TODO: figure out if this can just be removed since popUp() call now gone, does it affect using the menu normally
   func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-    maccy.popUp()
+    //maccy.popUp()
     return true
   }
 
@@ -61,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   // swiftlint:disable cyclomatic_complexity
   // swiftlint:disable function_body_length
   private func migrateUserDefaults() {
+    /*
     if UserDefaults.standard.migrations["2020-04-25-allow-custom-ignored-types"] != true {
       UserDefaults.standard.ignoredPasteboardTypes = [
         "de.petermaurer.TransientPasteboardType",
@@ -175,6 +179,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
       UserDefaults.standard.migrations["2023-01-22-add-regexp-search-mode"] = true
     }
+    */
   }
 
   private func clearOrphanRecords() {

@@ -165,27 +165,16 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
     case .moveToPrevious:
       customMenu?.selectPrevious()
       return true
-    case .pinOrUnpin:
-      if let menu = customMenu, menu.pinOrUnpin() {
-        queryField.stringValue = "" // clear search field just in case
-        return true
-      }
-    case .hide:
-      customMenu?.cancelTracking()
-      return true
     case .openPreferences:
       performMenuItemAction(MenuFooter.preferences.rawValue)
       return true
     case .paste:
-      if HistoryItem.pinned.contains(where: { $0.pin == key.rawValue }) {
-        return false
-      } else {
-        queryField.becomeFirstResponder()
-        queryField.currentEditor()?.paste(nil)
-        return true
-      }
+      queryField.window?.makeFirstResponder(queryField)
+      queryField.currentEditor()?.paste(nil)
+      return true
     case .selectCurrentItem:
-      customMenu?.select(queryField.stringValue)
+      // TODO: figure out what this was for: customMenu?.select(queryField.stringValue)
+      customMenu?.select()
       return true
     case .ignored:
       return false
@@ -233,7 +222,7 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       return
     }
 
-    queryField.becomeFirstResponder()
+    queryField.window?.makeFirstResponder(queryField)
     // Making text field a first responder selects all the text by default.
     // We need to make sure events are appended to existing text.
     if let fieldEditor = queryField.currentEditor() {

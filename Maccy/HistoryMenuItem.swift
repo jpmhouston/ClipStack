@@ -25,7 +25,6 @@ class HistoryMenuItem: NSMenuItem {
     }
   }()
 
-  private var editPinObserver: NSKeyValueObservation?
   private var editTitleObserver: NSKeyValueObservation?
 
   required init(coder: NSCoder) {
@@ -52,22 +51,13 @@ class HistoryMenuItem: NSMenuItem {
       loadHTML(item)
     }
 
-    if let itemPin = item.pin {
-      pin(itemPin)
-    }
-
-    alternate()
-
-    editPinObserver = item.observe(\.pin, options: .new, changeHandler: { item, _ in
-      self.keyEquivalent = item.pin ?? ""
-    })
+    // TODO: editing titles, is that a thing
     editTitleObserver = item.observe(\.title, options: .new, changeHandler: { item, _ in
       self.title = item.title ?? ""
     })
   }
 
   deinit {
-    editPinObserver?.invalidate()
     editTitleObserver?.invalidate()
   }
 
@@ -80,24 +70,6 @@ class HistoryMenuItem: NSMenuItem {
 
   func select() {
     // Override in children.
-  }
-
-  func alternate() {
-    // Override in children.
-  }
-
-  func pin(_ pin: String) {
-    item?.pin = pin
-    self.isPinned = true
-    self.keyEquivalent = pin
-    self.state = .on
-  }
-
-  func unpin() {
-    item?.pin = nil
-    self.isPinned = false
-    self.keyEquivalent = ""
-    self.state = .off
   }
 
   func resizeImage() {

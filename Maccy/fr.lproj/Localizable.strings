@@ -14,9 +14,6 @@
 "preferences_general" = "Général";
 "preferences_pins" = "Épingles";
 "preferences_storage" = "Stockage";
-"copy_modifiers_config" = "• Selectionnez avec %@ pressé pour copier un élément.";
-"paste_modifiers_config" = "• Selectionnez avec %@ pressé pour copier et coller l'élément.";
-"format_modifiers_config" = "• Selectionnez avec %@ pressé pour copier, reformater et coller l'élément.";
 "accessibility_alert_message" = "“Clipboarq” souhaite contrôler cet ordinateur en utilisant des fonctions d'accessibilité.";
 "accessibility_alert_comment" = "Accorder les droits à cette application dans le panneau {pane}, situé dans {settings}.\n\nCliquez sur le bouton +, sélectionnez “Clipboarq“ et cochez la case à côté.";
 "accessibility_alert_deny" = "Refuser";

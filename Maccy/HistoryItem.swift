@@ -4,22 +4,6 @@ import Sauce
 
 @objc(HistoryItem)
 class HistoryItem: NSManagedObject {
-  static var availablePins: Set<String> {
-    var keys = Set([
-      "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-      "n", "o", "p", "r", "s", "t", "u", "v", "w", "x", "y", "z" // "q" reserved for quit
-    ])
-
-    if let deleteKey = KeyChord.deleteKey {
-      keys.remove(Sauce.shared.character(for: Int(deleteKey.QWERTYKeyCode), cocoaModifiers: []) ?? "")
-    }
-    if let pinKey = KeyChord.pinKey {
-      keys.remove(Sauce.shared.character(for: Int(pinKey.QWERTYKeyCode), cocoaModifiers: []) ?? "")
-    }
-
-    return keys
-  }
-
   static let sortByFirstCopiedAt = NSSortDescriptor(key: #keyPath(HistoryItem.firstCopiedAt), ascending: false)
 
   static var all: [HistoryItem] {
@@ -32,25 +16,12 @@ class HistoryItem: NSManagedObject {
     }
   }
 
-  static var pinned: [HistoryItem] {
-    all.filter({ $0.pin != nil })
-  }
-
-  static var unpinned: [HistoryItem] {
-    all.filter({ $0.pin == nil })
-  }
-
-  static var randomAvailablePin: String {
-    let assignedPins = Set(all.compactMap({ $0.pin }))
-    return availablePins.subtracting(assignedPins).randomElement() ?? ""
-  }
-
   @NSManaged public var application: String?
   @NSManaged public var contents: NSSet?
   @NSManaged public var firstCopiedAt: Date!
   @NSManaged public var lastCopiedAt: Date!
   @NSManaged public var numberOfCopies: Int
-  @NSManaged public var pin: String?
+  //@NSManaged public var pin: String?
   @NSManaged public var title: String?
 
   var fileURL: URL? {
@@ -146,13 +117,6 @@ class HistoryItem: NSManagedObject {
     self.title = generateTitle(contents)
   }
 
-  override func validateValue(_ value: AutoreleasingUnsafeMutablePointer<AnyObject?>, forKey key: String) throws {
-    try super.validateValue(value, forKey: key)
-    if key == "pin", let pin = value.pointee as? String {
-      try validatePin(pin)
-    }
-  }
-
   @objc(addContentsObject:)
   @NSManaged public func addToContents(_ value: HistoryItemContent)
 
@@ -194,17 +158,6 @@ class HistoryItem: NSManagedObject {
       .trimmingCharacters(in: .whitespacesAndNewlines)
       .replacingOccurrences(of: "\n", with: "⏎")
       .shortened(to: UserDefaults.standard.maxMenuItemLength)
-  }
-
-  private func validatePin(_ pin: String) throws {
-    for item in HistoryItem.all {
-      if let existingPin = item.pin, !pin.isEmpty, existingPin == pin, item != self {
-        throw NSError(
-          domain: "keyUsed",
-          code: 1,
-          userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("key_used_error", comment: "")])
-      }
-    }
   }
 
   private func contentData(_ types: [NSPasteboard.PasteboardType]) -> Data? {

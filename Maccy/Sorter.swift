@@ -3,15 +3,15 @@ import AppKit
 // swiftlint:disable identifier_name
 class Sorter {
   private var by: String
-
+  
   init(by: String) {
     self.by = by
   }
-
+  
   public func sort(_ items: [HistoryItem]) -> [HistoryItem] {
-    return items.sorted(by: bySortingAlgorithm(_:_:)).sorted(by: byPinned(_:_:))
+    return items.sorted(by: bySortingAlgorithm(_:_:))
   }
-
+  
   private func bySortingAlgorithm(_ lhs: HistoryItem, _ rhs: HistoryItem) -> Bool {
     switch by {
     case "firstCopiedAt":
@@ -22,12 +22,5 @@ class Sorter {
       return lhs.lastCopiedAt > rhs.lastCopiedAt
     }
   }
-
-  private func byPinned(_ lhs: HistoryItem, _ rhs: HistoryItem) -> Bool {
-    if UserDefaults.standard.pinTo == "bottom" {
-      return (lhs.pin == nil) && (rhs.pin != nil)
-    } else {
-      return (lhs.pin != nil) && (rhs.pin == nil)
-    }
-  }
+  
 }

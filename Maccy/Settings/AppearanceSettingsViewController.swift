@@ -8,10 +8,6 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
 
   override var nibName: NSNib.Name? { "AppearanceSettingsViewController" }
 
-  @IBOutlet weak var popupAtButton: NSPopUpButton!
-  @IBOutlet weak var popupAtMenuIconMenuItem: NSMenuItem!
-  @IBOutlet weak var popupAtScreenCenterMenuItem: NSMenuItem!
-  @IBOutlet weak var pinToButton: NSPopUpButton!
   @IBOutlet weak var imageHeightField: NSTextField!
   @IBOutlet weak var imageHeightStepper: NSStepper!
   @IBOutlet weak var numberOfItemsField: NSTextField!
@@ -20,13 +16,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var titleLengthStepper: NSStepper!
   @IBOutlet weak var previewDelayField: NSTextField!
   @IBOutlet weak var previewDelayStepper: NSStepper!
-  @IBOutlet weak var showMenuIconButton: NSButton!
-//  @IBOutlet weak var changeMenuIcon: NSPopUpButton!
-  @IBOutlet weak var showRecentCopyButton: NSButton!
   @IBOutlet weak var showSearchFieldButton: NSButton!
-  @IBOutlet weak var showTitleButton: NSButton!
-  @IBOutlet weak var showFooterButton: NSButton!
-  @IBOutlet weak var openPreferencesLabel: NSTextField!
 
   private let imageHeightMin = 1
   private let imageHeightMax = 200
@@ -54,64 +44,10 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
 
   override func viewWillAppear() {
     super.viewWillAppear()
-    populateScreens()
-    populatePopupPosition()
-    populatePinTo()
     populateImageHeight()
     populateNumberOfItems()
     populateTitleLength()
     populatePreviewDelay()
-    populateShowMenuIcon()
-    populateShowRecentCopy()
-    populateShowSearchField()
-    populateShowTitle()
-    populateShowFooter()
-  }
-
-  @IBAction func popupAtCursorSelected(_ sender: NSMenuItem) {
-    UserDefaults.standard.popupPosition = "cursor"
-    showMenuIconButton.isEnabled = true
-  }
-
-  @IBAction func popupAtMenuIconSelected(_ sender: NSMenuItem) {
-    UserDefaults.standard.popupPosition = "statusItem"
-    showMenuIconButton.isEnabled = false
-  }
-
-  @IBAction func popupAtScreenCenterSelected(_ sender: NSMenuItem) {
-    UserDefaults.standard.popupPosition = "center"
-    UserDefaults.standard.popupScreen = 0
-    showMenuIconButton.isEnabled = true
-  }
-
-  @IBAction func popupAtWindowSelected(_ sender: NSMenuItem) {
-    UserDefaults.standard.popupPosition = "window"
-    showMenuIconButton.isEnabled = true
-  }
-
-  @IBAction func selectScreen(_ sender: NSMenuItem) {
-    UserDefaults.standard.popupPosition = "center"
-    UserDefaults.standard.popupScreen = sender.tag
-
-    populatePopupPosition()
-  }
-
-  private func updateScreensSelection() {
-    guard let menu = popupAtScreenCenterMenuItem.submenu else {
-      return
-    }
-
-    menu.items.forEach { $0.state = .off }
-    menu.item(withTag: UserDefaults.standard.popupScreen)?.state = .on
-  }
-
-  @IBAction func pinToChanged(_ sender: NSPopUpButton) {
-    switch sender.selectedTag() {
-    case 1:
-      UserDefaults.standard.pinTo = "bottom"
-    default:
-      UserDefaults.standard.pinTo = "top"
-    }
   }
 
   @IBAction func imageHeightFieldChanged(_ sender: NSTextField) {
@@ -154,94 +90,8 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
     previewDelayField.integerValue = sender.integerValue
   }
 
-  @IBAction func showMenuIconChanged(_ sender: NSButton) {
-    UserDefaults.standard.showInStatusBar = (sender.state == .on)
-    popupAtMenuIconMenuItem.isEnabled = (sender.state == .on)
-//    changeMenuIcon.isEnabled = (sender.state == .on)
-  }
-
-  @IBAction func showMenuIconChangedToDefault(_ sender: NSMenuItem) {
-//    UserDefaults.standard.menuIcon = "maccy"
-  }
-
-  @IBAction func showMenuIconChangedToClipboard(_ sender: NSMenuItem) {
-//    UserDefaults.standard.menuIcon = "clipboard"
-  }
-
-  @IBAction func showMenuIconChangedToScissors(_ sender: NSMenuItem) {
-//    UserDefaults.standard.menuIcon = "scissors"
-  }
-
-  @IBAction func showRecentCopyChanged(_ sender: NSButton) {
-    UserDefaults.standard.showRecentCopyInMenuBar = (sender.state == .on)
-  }
-
   @IBAction func showSearchFieldChanged(_ sender: NSButton) {
     UserDefaults.standard.hideSearch = (sender.state == .off)
-  }
-
-  @IBAction func showTitleChanged(_ sender: NSButton) {
-    UserDefaults.standard.hideTitle = (sender.state == .off)
-  }
-
-  @IBAction func showFooterChanged(_ sender: NSButton) {
-    UserDefaults.standard.hideFooter = (sender.state == .off)
-    openPreferencesLabel.isHidden = (sender.state == .on)
-  }
-
-  private func populateScreens() {
-    guard NSScreen.screens.count > 1 else {
-      popupAtScreenCenterMenuItem.submenu = nil
-      popupAtScreenCenterMenuItem.action = #selector(popupAtScreenCenterSelected)
-      return
-    }
-
-    let screensMenu = NSMenu(title: "Screens")
-    popupAtScreenCenterMenuItem.submenu = screensMenu
-    popupAtScreenCenterMenuItem.action = nil
-
-    let activeScreenMenuItem = NSMenuItem(
-      title: NSLocalizedString("active_screen", comment: ""),
-      action: #selector(selectScreen),
-      keyEquivalent: ""
-    )
-    activeScreenMenuItem.tag = 0
-    screensMenu.addItem(activeScreenMenuItem)
-
-    for (index, screen) in NSScreen.screens.enumerated() {
-      var name = "\(NSLocalizedString("screen", comment: "")) \(index + 1)"
-      if #available(macOS 10.15, *) {
-        name += " (\(screen.localizedName))"
-      }
-
-      let item = NSMenuItem(title: name, action: #selector(selectScreen), keyEquivalent: "")
-      item.tag = index + 1
-      screensMenu.addItem(item)
-    }
-  }
-
-  private func populatePopupPosition() {
-    switch UserDefaults.standard.popupPosition {
-    case "window":
-      popupAtButton.selectItem(withTag: 3)
-    case "center":
-      popupAtButton.selectItem(withTag: 2)
-      updateScreensSelection()
-    case "statusItem":
-      popupAtButton.selectItem(withTag: 1)
-      showMenuIconButton.isEnabled = false
-    default:
-      popupAtButton.selectItem(withTag: 0)
-    }
-  }
-
-  private func populatePinTo() {
-    switch UserDefaults.standard.pinTo {
-    case "bottom":
-      pinToButton.selectItem(withTag: 1)
-    default:
-      pinToButton.selectItem(withTag: 0)
-    }
   }
 
   private func setMinAndMaxImageHeight() {
@@ -304,25 +154,4 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
     previewDelayStepper.integerValue = UserDefaults.standard.previewDelay
   }
 
-  private func populateShowMenuIcon() {
-    showMenuIconButton.state = UserDefaults.standard.showInStatusBar ? .on : .off
-    popupAtMenuIconMenuItem.isEnabled = UserDefaults.standard.showInStatusBar
-  }
-
-  private func populateShowRecentCopy() {
-    showRecentCopyButton.state = UserDefaults.standard.showRecentCopyInMenuBar ? .on : .off
-  }
-
-  private func populateShowSearchField() {
-    showSearchFieldButton.state = UserDefaults.standard.hideSearch ? .off : .on
-  }
-
-  private func populateShowTitle() {
-    showTitleButton.state = UserDefaults.standard.hideTitle ? .off : .on
-  }
-
-  private func populateShowFooter() {
-    showFooterButton.state = UserDefaults.standard.hideFooter ? .off : .on
-    openPreferencesLabel.isHidden = !UserDefaults.standard.hideFooter
-  }
 }

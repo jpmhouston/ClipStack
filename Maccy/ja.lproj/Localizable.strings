@@ -14,9 +14,6 @@
 "preferences_general" = "一般";
 "preferences_pins" = "ピン留め";
 "preferences_storage" = "保管";
-"copy_modifiers_config" = "• %を押しながら選択すると項目をコピーします。";
-"paste_modifiers_config" = "• %@を押しながら選択すると項目をコピーして貼り付けます。";
-"format_modifiers_config" = "• %@を押しながら選択すると項目をコピーし、 書式なしで貼り付けます。";
 "accessibility_alert_message" = "“Clipboarq”は、アクセシビリティ機能を使用してこのコンピュータを制御することを求めています。";
 "accessibility_alert_comment" = "{settings}{pane}環境設定で、このアプリケーションへのアクセスを許可してください。\n\n“+“ボタンをクリックし、“Clipboarq“を選択して、その横のチェックボックスをオンにします。";
 "accessibility_alert_deny" = "拒否";

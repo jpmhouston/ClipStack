@@ -13,8 +13,8 @@
 /* Class = "NSButtonCell"; title = "Avoid taking application focus"; ObjectID = "jjU-HE-iIA"; */
 "jjU-HE-iIA.title" = "Uygulama odağını almaktan kaçın";
 
-/* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ⌥ pressed.\nTo ignore only the next copy, click with ⌥⇧."; ObjectID = "lwS-2p-WwS"; */
-"lwS-2p-WwS.title" = "Aynı zamanda, ⌥ basılıyken menü simgesine tıklayabilirsiniz.\nYalnızca sonraki kopyayı yok saymak için ⌥⇧ ile tıklayın.";
+/* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ^ pressed.\nTo ignore only the next copy, click with ^⌥."; ObjectID = "lwS-2p-WwS"; */
+"lwS-2p-WwS.title" = "Aynı zamanda, ^ basılıyken menü simgesine tıklayabilirsiniz.\nYalnızca sonraki kopyayı yok saymak için ^⌥ ile tıklayın.";
 
 /* Class = "NSButtonCell"; title = "Clear the system clipboard too"; ObjectID = "WSh-1o-SG8"; */
 "WSh-1o-SG8.title" = "Sistem panosunu da temizle";

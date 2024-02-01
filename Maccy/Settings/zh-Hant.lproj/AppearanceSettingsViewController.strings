@@ -1,47 +1,8 @@
-/* Class = "NSMenuItem"; title = "Menu icon"; ObjectID = "0h4-CZ-fwT"; */
-"0h4-CZ-fwT.title" = "選單列圖示";
-
-/* Class = "NSTextFieldCell"; title = "Press ⌘, to open preferences when footer is hidden."; ObjectID = "0tN-4z-p8T"; */
-"0tN-4z-p8T.title" = "隱藏底部選單時，可按 ⌘, 顯示偏好設定。";
-
-/* Class = "NSMenuItem"; title = "Cursor"; ObjectID = "Ccp-5J-8nw"; */
-"Ccp-5J-8nw.title" = "滑鼠指標";
-
-/* Class = "NSButtonCell"; title = "Show footer"; ObjectID = "ClZ-IS-YKz"; */
-"ClZ-IS-YKz.title" = "顯示底部操作選單";
-
-/* Class = "NSMenuItem"; title = "Top"; ObjectID = "DKE-JI-oLS"; */
-"DKE-JI-oLS.title" = "置頂";
-
-/* Class = "NSTextFieldCell"; title = "Pin to:"; ObjectID = "GhW-Kv-rhO"; */
-"GhW-Kv-rhO.title" = "固定項目位置:";
-
-/* Class = "NSMenuItem"; title = "Window center"; ObjectID = "gMh-0J-BUx"; */
-"gMh-0J-BUx.title" = "窗口中心";
-
 /* Class = "NSTextFieldCell"; title = "Image height:"; ObjectID = "MKb-cW-gpg"; */
 "MKb-cW-gpg.title" = "圖片高度:";
 
-/* Class = "NSButtonCell"; title = "Show menu icon"; ObjectID = "Pud-2o-NKc"; */
-"Pud-2o-NKc.title" = "顯示選單列圖示";
-
-/* Class = "NSButtonCell"; title = "Show recent copy next to menu icon"; ObjectID = "2vE-8q-6tq"; */
-"2vE-8q-6tq.title" = "選單列圖示旁顯示目前內容";
-
-/* Class = "NSTextFieldCell"; title = "Popup at:"; ObjectID = "R7Y-UN-Edt"; */
-"R7Y-UN-Edt.title" = "彈窗位置:";
-
-/* Class = "NSMenuItem"; title = "Bottom"; ObjectID = "Yio-8e-oaa"; */
-"Yio-8e-oaa.title" = "置底";
-
-/* Class = "NSButtonCell"; title = "Show title before search field"; ObjectID = "ePT-qq-kg9"; */
-"ePT-qq-kg9.title" = "搜尋列旁顯示 Maccy";
-
 /* Class = "NSTextFieldCell"; title = "Number of items:"; ObjectID = "gjR-wz-7GQ"; */
 "gjR-wz-7GQ.title" = "東西的個數:";
-
-/* Class = "NSButtonCell"; title = "Show search field"; ObjectID = "mWx-zi-OAv"; */
-"mWx-zi-OAv.title" = "顯示搜尋框";
 
 /* Class = "NSTextFieldCell"; title = "Title length:"; ObjectID = "TgE-eS-5nT"; */
 "TgE-eS-5nT.title" = "標題長度:";
@@ -49,14 +10,8 @@
 /* Class = "NSTextFieldCell"; title = "Preview delay:"; ObjectID = "lnS-Rg-4sa"; */
 "lnS-Rg-4sa.title" = "預覽延遲:";
 
-/* Class = "NSMenuItem"; title = "Screen center"; ObjectID = "N8k-nW-lzS"; */
-"N8k-nW-lzS.title" = "螢幕中央";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Change the location where popup appears.\nDefault: Cursor."; ObjectID = "ZHc-k4-Nf9"; */
-"ZHc-k4-Nf9.ibShadowedToolTip" = "更改彈窗顯示位置。\n預設: 指標";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Change the location of pinned items.\nDefault: Top."; ObjectID = "tWw-ax-Qej"; */
-"tWw-ax-Qej.ibShadowedToolTip" = "更改固定項目的位置。\n預設: 置頂。";
+/* Class = "NSButtonCell"; title = "Show search field"; ObjectID = "mWx-zi-OAv"; */
+"mWx-zi-OAv.title" = "顯示搜尋框";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum image preview height.\nDefault: 40.\nHint: Set to 16 to look like text items."; ObjectID = "Tsp-4i-Mym"; */
 "Tsp-4i-Mym.ibShadowedToolTip" = "圖片預覽最高。\n預設: 40\n提示：設定 16 可符合文字項目大小。";
