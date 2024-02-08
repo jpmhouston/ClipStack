@@ -8,11 +8,12 @@
         <customObject id="-2" userLabel="File's Owner" customClass="Preview" customModule="Clipboarq" customModuleProvider="target">
             <connections>
                 <outlet property="applicationValueLabel" destination="vfJ-eN-smJ" id="Bup-Ci-7Ed"/>
-                <outlet property="deleteLabel" destination="rqD-s2-oFc" id="fOr-l2-udQ"/>
+                <outlet property="copyLabel" destination="Chw-FC-c2t" id="hO5-cQ-fAo"/>
                 <outlet property="firstCopyTimeValueLabel" destination="2XE-55-cRR" id="KsJ-p4-71t"/>
                 <outlet property="imageView" destination="eUh-Sy-ZGJ" id="fUX-f9-odQ"/>
                 <outlet property="lastCopyTimeValueLabel" destination="0RA-bO-K2R" id="0EU-OV-I14"/>
                 <outlet property="numberOfCopiesValueLabel" destination="5pE-jy-xQR" id="I9f-GA-3Eh"/>
+                <outlet property="startLabel" destination="3ca-72-NPr" id="b42-5j-mgU"/>
                 <outlet property="textView" destination="oAD-3G-XiA" id="CYO-sc-BSI"/>
                 <outlet property="view" destination="v9u-1t-63F" id="cIg-fC-ryr"/>
             </connections>
@@ -169,8 +170,8 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rqD-s2-oFc" userLabel="Delete">
-                            <rect key="frame" x="-2" y="0.0" width="150" height="14"/>
-                            <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Press {deleteKey} to delete." id="oTv-7u-tbp">
+                            <rect key="frame" x="-2" y="0.0" width="111" height="14"/>
+                            <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Press ⌘⌫ to delete." id="oTv-7u-tbp">
                                 <font key="font" metaFont="smallSystem"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

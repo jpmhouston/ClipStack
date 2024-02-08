@@ -5,6 +5,15 @@ import Settings
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
+  static var showExpandedMenu = true
+  static var queueSize: Int? = nil
+  static var queueModeOn: Bool {
+    get { queueSize != nil }
+    set { if newValue && queueSize == nil { queueSize = 0 } else if !newValue { queueSize = nil } }
+  }
+
+  static var allowExpandedMenu = true
+  static var allowSomethingElse = true
   
   @objc let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
   var selectedItem: HistoryItem? { (menu.highlightedItem as? HistoryMenuItem)?.item }
@@ -53,7 +62,6 @@ class Maccy: NSObject {
     
     super.init()
     initializeObservers()
-    disableUnusedGlobalHotkeys()
     
     menu = Menu(history: history, clipboard: Clipboard.shared)
     menuController = MenuController(menu, statusItem)
@@ -251,22 +259,6 @@ class Maccy: NSObject {
     maxMenuItemLengthObserver = UserDefaults.standard.observe(\.maxMenuItemLength, options: .new) { _, _ in
       self.menu.regenerateMenuItemTitles()
       CoreDataManager.shared.saveContext()
-    }
-  }
-  
-  private func disableUnusedGlobalHotkeys() {
-    // i believe these hotkeys are only for use when the menu is visible TODO: figure it out for sure
-    let names: [KeyboardShortcuts.Name] = [.deleteItem]
-    names.forEach(KeyboardShortcuts.disable)
-
-    NotificationCenter.default.addObserver(
-      forName: Notification.Name("KeyboardShortcuts_shortcutByNameDidChange"),
-      object: nil,
-      queue: nil
-    ) { notification in
-      if let name = notification.userInfo?["name"] as? KeyboardShortcuts.Name, names.contains(name) {
-        KeyboardShortcuts.disable(name)
-      }
     }
   }
   

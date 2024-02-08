@@ -8,20 +8,21 @@ class Preview: NSViewController {
   @IBOutlet weak var firstCopyTimeValueLabel: NSTextField!
   @IBOutlet weak var lastCopyTimeValueLabel: NSTextField!
   @IBOutlet weak var numberOfCopiesValueLabel: NSTextField!
-  @IBOutlet weak var deleteLabel: NSTextField!
-
+  @IBOutlet weak var startLabel: NSTextField!
+  @IBOutlet weak var copyLabel: NSTextField!
+  
   private let maxTextSize = 1_500
-
+  
   private var item: HistoryItem?
-
+  
   convenience init(item: HistoryItem?) {
     self.init()
     self.item = item
   }
-
+  
   override func viewDidLoad() {
     guard let item, !item.isFault else { return }
-
+    
     if let image = item.image {
       textView.removeFromSuperview()
       imageView.image = image
@@ -50,44 +51,41 @@ class Preview: NSViewController {
       imageView.removeFromSuperview()
       textView.stringValue = item.title ?? ""
     }
-
+    
     loadApplication(item)
-
+    
     if textView.stringValue.count > maxTextSize {
       textView.stringValue = textView.stringValue.shortened(to: maxTextSize)
     }
-
+    
     firstCopyTimeValueLabel.stringValue = formatDate(item.firstCopiedAt)
     lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
     numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
-
-    if let deleteKey = KeyboardShortcuts.Shortcut(name: .deleteItem) {
-      deleteLabel.stringValue = deleteLabel.stringValue
-        .replacingOccurrences(of: "{deleteKey}", with: deleteKey.description)
-    } else {
-      deleteLabel.removeFromSuperview()
-    }
+    
+    startLabel.isHidden = Maccy.queueModeOn
+    copyLabel.isHidden = Maccy.queueModeOn
   }
-
+  
   private func formatDate(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "MMM d, H:mm:ss"
     formatter.timeZone = TimeZone.current
     return formatter.string(from: date)
   }
-
+  
   private func loadApplication(_ item: HistoryItem) {
     if item.universalClipboard {
       applicationValueLabel.stringValue = "iCloud"
       return
     }
-
+    
     guard let bundle = item.application,
           let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundle) else {
       applicationValueLabel.removeFromSuperview()
       return
     }
-
+    
     applicationValueLabel.stringValue = url.deletingPathExtension().lastPathComponent
   }
+  
 }

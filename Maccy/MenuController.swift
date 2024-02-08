@@ -5,18 +5,18 @@ class MenuController {
   private let menu: Menu
   private let statusItem: NSStatusItem
   private var menuLoader: MenuLoader!
-
+  
   private var extraVisibleWindows: [NSWindow] {
     NSApp.windows.filter({ $0.isVisible && $0.className != NSApp.statusBarWindow?.className })
   }
-
+  
   init(_ menu: Menu, _ statusItem: NSStatusItem) {
     self.menu = menu
     self.statusItem = statusItem
     self.menuLoader = MenuLoader(performStatusItemClick)
     self.statusItem.menu = menuLoader
   }
-
+  
   @objc
   private func performStatusItemClick(_ event: NSEvent?) {
     if let event = event {
@@ -31,13 +31,13 @@ class MenuController {
         return
       }
       
-      if modifierFlags.contains(.command) {
-        // TODO: make command-click turn on queueing mode
+      if modifierFlags.contains(.shift) {
+        Maccy.queueModeOn = true
         return
       }
       
-      if modifierFlags.contains(.option) {
-        // TODO: make option-click open full menu including history
+      if Maccy.allowExpandedMenu && modifierFlags.contains(.option) {
+        Maccy.showExpandedMenu = true
       }
     }
     
@@ -56,7 +56,7 @@ class MenuController {
       }
     }
   }
-
+  
   private func withMenuButtonHighlighted(_ buttonCell: NSButtonCell, _ closure: @escaping () -> Void) {
     if #available(macOS 11, *) {
       closure()
@@ -66,13 +66,13 @@ class MenuController {
       buttonCell.highlightsBy = []
     }
   }
-
+  
   private func linkingMenuToStatusItem(_ closure: @escaping () -> Void) {
     statusItem.menu = menu
     closure()
     statusItem.menu = menuLoader
   }
-
+  
   // Executes closure with application focus (pun intended).
   //
   // Beware of hacks. This code is so fragile that you should
@@ -108,7 +108,7 @@ class MenuController {
   // UserDefaults.standard.avoidTakingFocus.
   private func withFocus(_ closure: @escaping () -> Void) {
     //KeyboardShortcuts.disable(.popup) // TODO: figure out if there are any implications of removing these lines
-
+    
     if UserDefaults.standard.avoidTakingFocus {
       closure()
       //KeyboardShortcuts.enable(.popup)
@@ -124,4 +124,5 @@ class MenuController {
       }
     }
   }
+  
 }

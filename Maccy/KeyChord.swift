@@ -11,21 +11,7 @@ enum KeyChord: CaseIterable {
   static var pasteKeyModifiers: NSEvent.ModifierFlags {
     (NSApp.delegate as? AppDelegate)?.pasteMenuItem.keyEquivalentModifierMask ?? [.command]
   }
-  static var deleteKey: Key? {
-    if let shortcut = KeyboardShortcuts.Shortcut(name: .deleteItem) {
-      return Sauce.shared.key(for: shortcut.carbonKeyCode)
-    } else {
-      return nil
-    }
-  }
-  static var deleteModifiers: NSEvent.ModifierFlags? {
-    if let shortcut = KeyboardShortcuts.Shortcut(name: .deleteItem) {
-      return shortcut.modifiers.intersection(.deviceIndependentFlagsMask)
-    } else {
-      return nil
-    }
-  }
-
+  
   case clearHistory
   case clearHistoryAll
   case clearSearch
@@ -39,7 +25,7 @@ enum KeyChord: CaseIterable {
   case paste
   case selectCurrentItem
   case unknown
-
+  
   // swiftlint:disable cyclomatic_complexity
   init(_ key: Key, _ modifierFlags: NSEvent.ModifierFlags) {
     switch (key, modifierFlags) {
@@ -61,10 +47,10 @@ enum KeyChord: CaseIterable {
       self = .moveToPrevious
     case (.return, _), (.keypadEnter, _):
       self = .selectCurrentItem
+    case (.delete, [.command]):
+      self = .deleteCurrentItem
     case (KeyChord.pasteKey, KeyChord.pasteKeyModifiers):
       self = .paste
-    case (KeyChord.deleteKey, KeyChord.deleteModifiers):
-      self = .deleteCurrentItem
     case (GlobalCopyHotKey.key, GlobalCopyHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
       self = .ignored
     case (GlobalPasteHotKey.key, GlobalPasteHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
@@ -76,7 +62,7 @@ enum KeyChord: CaseIterable {
     }
   }
   // swiftlint:enable cyclomatic_complexity
-
+  
   private static let keysToSkip = [
     Key.home,
     Key.pageUp,
@@ -113,4 +99,5 @@ enum KeyChord: CaseIterable {
     .control,
     .option
   ])
+  
 }

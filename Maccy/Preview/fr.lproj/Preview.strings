@@ -16,5 +16,5 @@
 /* Class = "NSTextFieldCell"; title = "Select with ⌥ for pasting just this."; ObjectID = "PxB-sa-HD1"; */
 "PxB-sa-HD1.title" = "Select with ⌥ for pasting just this" // TODO: update
 
-/* Class = "NSTextFieldCell"; title = "Press {deleteKey} to delete."; ObjectID = "oTv-7u-tbp"; */
-"oTv-7u-tbp.title" = "Appuyez sur {deleteKey} pour supprimer.";
+/* Class = "NSTextFieldCell"; title = "Press ⌘⌫ to delete."; ObjectID = "oTv-7u-tbp"; */
+"oTv-7u-tbp.title" = "Appuyez sur ⌘⌫ pour supprimer.";

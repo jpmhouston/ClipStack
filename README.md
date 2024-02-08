@@ -69,7 +69,7 @@ or the Mac App Store
 
 ### Alternatives
 
-- You may click the Clipboarq menu bar icon with <kbd>COMMAND (⌘)</kbd> pressed
+- You may click the Clipboarq menu bar icon with <kbd>SHIFT (⇧)</kbd> pressed
 to start a set of copies, or choose the "Start" (TBD) item in the Clipboarq menu.
 The menu bar icon will change to (TBD).
 You may copy from you source document window(s) using either the Clipboarq shortcut,
@@ -79,7 +79,7 @@ or the application's normal Copy command or shortcut.
 in the Clipboarq menu.
 
 - You can return to normal clipboard behavior by again clicking the Clipboarq menu bar icon
-with <kbd>COMMAND (⌘)</kbd> pressed,
+with <kbd>SHIFT (⇧)</kbd> pressed,
 or using the "Stop" (TBD) menu item.
 
 - While in the middle of pasting, you are still able to copy more.
@@ -128,7 +128,7 @@ from you history to paste.
 	*When the top-most item in the history is reached, the most recent item copied,
 	the stack behavior will end and the Clipboarq menu bar icon will return to normal.\
 	To end the stack behavior at any time, click the Clipboarq menu with
-	<kbd>COMMAND (⌘)</kbd> pressed.*
+	<kbd>SHIFT (⇧)</kbd> pressed.*
 
 #### Selecting Single Item From History To Paste
 

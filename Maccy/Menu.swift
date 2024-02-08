@@ -105,7 +105,9 @@ class Menu: NSMenu, NSMenuDelegate {
     isVisible = false
     lastMenuLocation = nil
     offloadCurrentPreview()
-
+    
+    Maccy.showExpandedMenu = false // revert to showing full menu next time (until option-clicked again)
+    
     DispatchQueue.main.async {
       self.menuHeader?.setQuery("", throttle: false)
       self.menuHeader?.queryField.refusesFirstResponder = true
