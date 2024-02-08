@@ -46,8 +46,9 @@ extension UserDefaults {
   }
 
   public struct Values {
+    static let enabledPasteboardTypes: [String] = [ "public.rtf", "public.utf8-plain-text", "public.file-url", "public.tiff", "public.png", "public.html" ]
     static let ignoredApps: [String] = []
-    static let ignoredPasteboardTypes: [String] = []
+    static let ignoredPasteboardTypes: [String] = [ "net.antelle.keeweb", "com.agilebits.onepassword", "com.typeit4me.clipping", "Pasteboard generator type", "de.petermaurer.TransientPasteboardType" ]
     static let ignoreRegexp: [String] = []
     static let imageMaxHeight = 40.0
     static let maxMenuItems = 0
@@ -79,7 +80,7 @@ extension UserDefaults {
 
   @objc dynamic public var enabledPasteboardTypes: Set<NSPasteboard.PasteboardType> {
     get {
-      let types = array(forKey: Keys.enabledPasteboardTypes) as? [String] ?? []
+      let types = array(forKey: Keys.enabledPasteboardTypes) as? [String] ?? Values.enabledPasteboardTypes
       return Set(types.map({ NSPasteboard.PasteboardType($0) }))
     }
     set { set(Array(newValue.map({ $0.rawValue })), forKey: Keys.enabledPasteboardTypes) }

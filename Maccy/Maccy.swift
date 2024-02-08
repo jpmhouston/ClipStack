@@ -54,6 +54,8 @@ class Maccy: NSObject {
   
   override init() {
     UserDefaults.standard.register(defaults: [
+      UserDefaults.Keys.enabledPasteboardTypes: UserDefaults.Values.enabledPasteboardTypes,
+      UserDefaults.Keys.ignoredPasteboardTypes: UserDefaults.Values.ignoredPasteboardTypes,
       UserDefaults.Keys.imageMaxHeight: UserDefaults.Values.imageMaxHeight,
       UserDefaults.Keys.maxMenuItems: UserDefaults.Values.maxMenuItems,
       UserDefaults.Keys.maxMenuItemLength: UserDefaults.Values.maxMenuItemLength,
