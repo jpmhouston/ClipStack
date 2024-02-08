@@ -388,7 +388,7 @@ class MaccyUITests: XCTestCase {
 
   private func waitUntilPoppedUp() {
     if !app.menuItems.firstMatch.waitForExistence(timeout: 3) {
-      XCTFail("Clipboarq menu did not pop up")
+      XCTFail("Cleepp menu did not pop up")
     }
   }
 

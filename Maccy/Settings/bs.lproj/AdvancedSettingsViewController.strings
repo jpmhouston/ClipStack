@@ -4,8 +4,8 @@
 /* Class = "NSButtonCell"; title = "Clear history on quit"; ObjectID = "JvB-ng-8vt"; */
 "JvB-ng-8vt.title" = "Očisti historiju pri izlasku iz aplikacije";
 
-/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Clipboarq ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
-"LFh-6b-GFi.title" = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# kopirati podatke\ndefaults write lol.bananameter.Clipboarq ignoreEvents false";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Cleepp ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Cleepp ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
+"LFh-6b-GFi.title" = "defaults write lol.bananameter.Cleepp ignoreEvents true\n# kopirati podatke\ndefaults write lol.bananameter.Cleepp ignoreEvents false";
 
 /* Class = "NSButtonCell"; title = "Turn off"; ObjectID = "RA0-eh-Udt"; */
 "RA0-eh-Udt.title" = "Ugasi";
@@ -28,5 +28,5 @@
 /* Class = "NSButton"; ibShadowedToolTip = "When enabled, clearing the history would also clear the current system clipboard."; ObjectID = "lGE-3K-m2Y"; */
 "lGE-3K-m2Y.ibShadowedToolTip" = "Kada je omogućeno, brisanje historije će također izbrisati trenutni sistemski međuspremnik.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
-"yeX-On-Ble.title" = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# kopirati podatke";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Cleepp ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
+"yeX-On-Ble.title" = "defaults write lol.bananameter.Cleepp ignoreOnlyNextEvent true\n# kopirati podatke";

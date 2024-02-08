@@ -14,8 +14,8 @@
 "preferences_general" = "Général";
 "preferences_pins" = "Épingles";
 "preferences_storage" = "Stockage";
-"accessibility_alert_message" = "“Clipboarq” souhaite contrôler cet ordinateur en utilisant des fonctions d'accessibilité.";
-"accessibility_alert_comment" = "Accorder les droits à cette application dans le panneau {pane}, situé dans {settings}.\n\nCliquez sur le bouton +, sélectionnez “Clipboarq“ et cochez la case à côté.";
+"accessibility_alert_message" = "“Cleepp” souhaite contrôler cet ordinateur en utilisant des fonctions d'accessibilité.";
+"accessibility_alert_comment" = "Accorder les droits à cette application dans le panneau {pane}, situé dans {settings}.\n\nCliquez sur le bouton +, sélectionnez “Cleepp“ et cochez la case à côté.";
 "accessibility_alert_deny" = "Refuser";
 "accessibility_alert_open" = "Ouvrir les Préférences Système";
 "clear_alert_message" = "Voulez-vous vraiment effacer l'historique?";

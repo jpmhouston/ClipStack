@@ -14,8 +14,8 @@
 "preferences_general" = "Generelt";
 "preferences_pins" = "Merker";
 "preferences_storage" = "Lagring";
-"accessibility_alert_message" = "“Clipboarq” vil ha adgang til denne datamaskinen for tjenester tilknyttet tilgjengelighet.";
-"accessibility_alert_comment" = "Gi tillatelse til dette programmet i {pane} innstillingene, lokalisert i {settings}.\n\nKlikk på +-knappen, velg “Clipboarq“ og velg avmerkingsboksen ved siden av.";
+"accessibility_alert_message" = "“Cleepp” vil ha adgang til denne datamaskinen for tjenester tilknyttet tilgjengelighet.";
+"accessibility_alert_comment" = "Gi tillatelse til dette programmet i {pane} innstillingene, lokalisert i {settings}.\n\nKlikk på +-knappen, velg “Cleepp“ og velg avmerkingsboksen ved siden av.";
 "accessibility_alert_deny" = "Avslå";
 "accessibility_alert_open" = "Åpne System Valg";
 "clear_alert_message" = "Er du sikker på at du vil tømme historikken?";

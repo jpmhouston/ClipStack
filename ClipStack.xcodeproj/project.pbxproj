@@ -175,7 +175,7 @@
 		DA08FDE5282596FA0001F3DA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/IgnoreSettingsViewController.strings"; sourceTree = "<group>"; };
 		DA08FDE6282596FA0001F3DA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/StorageSettingsViewController.strings"; sourceTree = "<group>"; };
 		DA08FDE7282596FA0001F3DA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		DA0EE7B6204657830025FC60 /* ClipStackUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipStackUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA0EE7B6204657830025FC60 /* CleeppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleeppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0EE7B8204657830025FC60 /* MaccyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaccyUITests.swift; sourceTree = "<group>"; };
 		DA0EF1871E444B2A00E58577 /* Clipboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; tabWidth = 2; };
 		DA0F34CC24913DCA008E9E26 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		DA20FA752B082E0800056DD5 /* Write.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Write.caf; sourceTree = "<group>"; };
 		DA20FA772B082E1A00056DD5 /* NSSound+Named.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSound+Named.swift"; sourceTree = "<group>"; };
 		DA246D601E56C9EA001E40F3 /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
-		DA2B0AF1234201E500EFAD72 /* UserDefaults+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Configuration.swift"; sourceTree = "<group>"; };
+		DA2B0AF1234201E500EFAD72 /* UserDefaults+Configuration.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Configuration.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		DA2B0AF32343104600EFAD72 /* UserDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsTests.swift; sourceTree = "<group>"; };
 		DA2C752B2029FE990090965D /* Menu.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; tabWidth = 2; };
 		DA2F1B0426F22DD0005D30BA /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 		DA2F1B0826F22DD0005D30BA /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/IgnoreSettingsViewController.strings; sourceTree = "<group>"; };
 		DA2F1B0926F22DF4005D30BA /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DA35278B268D645700C92EBB /* IgnoreSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreSettingsViewController.swift; sourceTree = "<group>"; };
-		DA360DB01E3DF137005C6F6B /* ClipStackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipStackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA360DB01E3DF137005C6F6B /* CleeppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleeppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA360DB21E3DF137005C6F6B /* HistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HistoryTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DA360DB41E3DF137005C6F6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA384E85232746D800603999 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
@@ -301,7 +301,7 @@
 		DADBA97E2985C7B600EC46FB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Preview.strings; sourceTree = "<group>"; };
 		DAE284FF232257D20080E394 /* ColorImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorImage.swift; sourceTree = "<group>"; };
 		DAE2850123225BD90080E394 /* ColorImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorImageTests.swift; sourceTree = "<group>"; };
-		DAEE38431E3DBEB100DD2966 /* Clipboarq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clipboarq.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAEE38431E3DBEB100DD2966 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEE38461E3DBEB100DD2966 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DAEE384D1E3DBEB100DD2966 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAEE38531E3DD6F100DD2966 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = History.swift; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -479,9 +479,9 @@
 		DAEE38441E3DBEB100DD2966 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DAEE38431E3DBEB100DD2966 /* Clipboarq.app */,
-				DA360DB01E3DF137005C6F6B /* ClipStackTests.xctest */,
-				DA0EE7B6204657830025FC60 /* ClipStackUITests.xctest */,
+				DAEE38431E3DBEB100DD2966 /* Cleepp.app */,
+				DA360DB01E3DF137005C6F6B /* CleeppTests.xctest */,
+				DA0EE7B6204657830025FC60 /* CleeppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -555,9 +555,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA0EE7B5204657830025FC60 /* ClipStackUITests */ = {
+		DA0EE7B5204657830025FC60 /* CleeppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA0EE7BF204657840025FC60 /* Build configuration list for PBXNativeTarget "ClipStackUITests" */;
+			buildConfigurationList = DA0EE7BF204657840025FC60 /* Build configuration list for PBXNativeTarget "CleeppUITests" */;
 			buildPhases = (
 				DA0EE7B2204657830025FC60 /* Sources */,
 				DA0EE7B3204657830025FC60 /* Frameworks */,
@@ -568,14 +568,14 @@
 			dependencies = (
 				DA0EE7BC204657840025FC60 /* PBXTargetDependency */,
 			);
-			name = ClipStackUITests;
+			name = CleeppUITests;
 			productName = MaccyUITests;
-			productReference = DA0EE7B6204657830025FC60 /* ClipStackUITests.xctest */;
+			productReference = DA0EE7B6204657830025FC60 /* CleeppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		DA360DAF1E3DF137005C6F6B /* ClipStackTests */ = {
+		DA360DAF1E3DF137005C6F6B /* CleeppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA360DB71E3DF137005C6F6B /* Build configuration list for PBXNativeTarget "ClipStackTests" */;
+			buildConfigurationList = DA360DB71E3DF137005C6F6B /* Build configuration list for PBXNativeTarget "CleeppTests" */;
 			buildPhases = (
 				DA360DAC1E3DF137005C6F6B /* Sources */,
 				DA360DAD1E3DF137005C6F6B /* Frameworks */,
@@ -586,14 +586,14 @@
 			dependencies = (
 				DA360DB61E3DF137005C6F6B /* PBXTargetDependency */,
 			);
-			name = ClipStackTests;
+			name = CleeppTests;
 			productName = MaccyTests;
-			productReference = DA360DB01E3DF137005C6F6B /* ClipStackTests.xctest */;
+			productReference = DA360DB01E3DF137005C6F6B /* CleeppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		DAEE38421E3DBEB100DD2966 /* ClipStack */ = {
+		DAEE38421E3DBEB100DD2966 /* Cleepp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DAEE38501E3DBEB100DD2966 /* Build configuration list for PBXNativeTarget "ClipStack" */;
+			buildConfigurationList = DAEE38501E3DBEB100DD2966 /* Build configuration list for PBXNativeTarget "Cleepp" */;
 			buildPhases = (
 				DAEE383F1E3DBEB100DD2966 /* Sources */,
 				DAEE38401E3DBEB100DD2966 /* Frameworks */,
@@ -604,7 +604,7 @@
 			);
 			dependencies = (
 			);
-			name = ClipStack;
+			name = Cleepp;
 			packageProductDependencies = (
 				DA5154D72564102900C01004 /* Sauce */,
 				DA00993F256414560030E697 /* Fuse */,
@@ -615,7 +615,7 @@
 				2F39CB092AD9AE1F00B749FD /* Settings */,
 			);
 			productName = Maccy;
-			productReference = DAEE38431E3DBEB100DD2966 /* Clipboarq.app */;
+			productReference = DAEE38431E3DBEB100DD2966 /* Cleepp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -684,9 +684,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DAEE38421E3DBEB100DD2966 /* ClipStack */,
-				DA360DAF1E3DF137005C6F6B /* ClipStackTests */,
-				DA0EE7B5204657830025FC60 /* ClipStackUITests */,
+				DAEE38421E3DBEB100DD2966 /* Cleepp */,
+				DA360DAF1E3DF137005C6F6B /* CleeppTests */,
+				DA0EE7B5204657830025FC60 /* CleeppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -849,12 +849,12 @@
 /* Begin PBXTargetDependency section */
 		DA0EE7BC204657840025FC60 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DAEE38421E3DBEB100DD2966 /* ClipStack */;
+			target = DAEE38421E3DBEB100DD2966 /* Cleepp */;
 			targetProxy = DA0EE7BB204657840025FC60 /* PBXContainerItemProxy */;
 		};
 		DA360DB61E3DF137005C6F6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DAEE38421E3DBEB100DD2966 /* ClipStack */;
+			target = DAEE38421E3DBEB100DD2966 /* Cleepp */;
 			targetProxy = DA360DB51E3DF137005C6F6B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1272,8 +1272,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.29.3;
-				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.Clipboarq;
-				PRODUCT_NAME = Clipboarq;
+				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1307,8 +1307,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.29.3;
-				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.Clipboarq;
-				PRODUCT_NAME = Clipboarq;
+				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1317,7 +1317,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA0EE7BF204657840025FC60 /* Build configuration list for PBXNativeTarget "ClipStackUITests" */ = {
+		DA0EE7BF204657840025FC60 /* Build configuration list for PBXNativeTarget "CleeppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA0EE7BD204657840025FC60 /* Debug */,
@@ -1326,7 +1326,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA360DB71E3DF137005C6F6B /* Build configuration list for PBXNativeTarget "ClipStackTests" */ = {
+		DA360DB71E3DF137005C6F6B /* Build configuration list for PBXNativeTarget "CleeppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA360DB81E3DF137005C6F6B /* Debug */,
@@ -1344,7 +1344,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DAEE38501E3DBEB100DD2966 /* Build configuration list for PBXNativeTarget "ClipStack" */ = {
+		DAEE38501E3DBEB100DD2966 /* Build configuration list for PBXNativeTarget "Cleepp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DAEE38511E3DBEB100DD2966 /* Debug */,

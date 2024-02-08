@@ -1,17 +1,17 @@
 <!--- <img width="128px" src="https://maccy.app/img/maccy/Logo.png" alt="Logo" align="left" /> -->
 
-# Clipboarq
+# Cleepp
 
 [![Downloads](https://img.shields.io/github/downloads/jpmhouston/ClipStack/total.svg)](https://github.com/jpmhouston/ClipStack/releases/latest)
 <!--- [![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314 -->
 <!--- [![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/p0deje -->
 
-Clipboarq is a fork of clipboard manager Maccy for macOS.
+Cleepp is a fork of clipboard manager Maccy for macOS.
 It's aim isn't to be a full features clipboard history manager,
 but to provide an easy multi-copy feature that can stack multiple clipboard items
 from a source application window, then paste those items in order elsewhere.
 
-Clipboarq works on macOS Mojave 10.14 or higher.
+Cleepp works on macOS Mojave 10.14 or higher.
 
 <!-- vim-markdown-toc GFM -->
 
@@ -20,15 +20,15 @@ Clipboarq works on macOS Mojave 10.14 or higher.
 * [Usage](#usage)
     * [Basic Usage](#basic-usage)
     * [Alternatives](#alternatives)
-    * [Clipboarq Menu](#clip-stack-menu)
+    * [Cleepp Menu](#clip-stack-menu)
 * [Advanced](#advanced)
     * [Expanded Clipboard History](#expanded-clipboard-history)
-    * [Start A Clipboarq From History](#start-a-clip-stack-from-history)
+    * [Start A Cleepp From History](#start-a-clip-stack-from-history)
     * [Selecting Single Item From History To Paste](#selecting-single-item-from-history-to-paste)
     * [Ignore Copied Items](#ignore-copied-items)
     * [Ignore Custom Copy Types](#ignore-custom-copy-types)
 * [FAQ](#faq)
-    * [Why doesn't the Clipboarq custom paste shortcut do anything?](#why-doesnt-the-clip-stack-paste-shortcut-do-anything)
+    * [Why doesn't the Cleepp custom paste shortcut do anything?](#why-doesnt-the-clip-stack-paste-shortcut-do-anything)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
@@ -51,13 +51,13 @@ or the Mac App Store
 
 ### Basic Usage
 
-1. In your source document window(s) copy using the Clipboarq shortcut (TBD).
+1. In your source document window(s) copy using the Cleepp shortcut (TBD).
 
 2. Repeat.\
 \
 	*The number in the menu bar icon will increment with each item copied.*
 
-3. In your target document window paste using the Clipboarq shortcut (TBD).\
+3. In your target document window paste using the Cleepp shortcut (TBD).\
 \
 	*Between each paste the clipboard will automatically advance to the next
 	item that was copied in order and the number in the menu bar icon will decrement.*
@@ -69,16 +69,16 @@ or the Mac App Store
 
 ### Alternatives
 
-- You may click the Clipboarq menu bar icon with <kbd>SHIFT (⇧)</kbd> pressed
-to start a set of copies, or choose the "Start" (TBD) item in the Clipboarq menu.
+- You may click the Cleepp menu bar icon with <kbd>SHIFT (⇧)</kbd> pressed
+to start a set of copies, or choose the "Start" (TBD) item in the Cleepp menu.
 The menu bar icon will change to (TBD).
-You may copy from you source document window(s) using either the Clipboarq shortcut,
+You may copy from you source document window(s) using either the Cleepp shortcut,
 or the application's normal Copy command or shortcut.
 
 - Starting to collect clipboard items can also be done using the "Start" (TBD) item
-in the Clipboarq menu.
+in the Cleepp menu.
 
-- You can return to normal clipboard behavior by again clicking the Clipboarq menu bar icon
+- You can return to normal clipboard behavior by again clicking the Cleepp menu bar icon
 with <kbd>SHIFT (⇧)</kbd> pressed,
 or using the "Stop" (TBD) menu item.
 
@@ -86,7 +86,7 @@ or using the "Stop" (TBD) menu item.
 The clipboard item will be added to the set of menu items as normal and will get pasted last,
 the number in the menu bar icon will increment.
 
-### Clipboarq Menu
+### Cleepp Menu
 
 (TBD)
 
@@ -109,25 +109,25 @@ the number in the menu bar icon will increment.
 
 ### Expanded Clipboard History
 
-You can click the Clipboarq menu bar icon with <kbd>OPTION (⌥)</kbd> pressed
+You can click the Cleepp menu bar icon with <kbd>OPTION (⌥)</kbd> pressed
 to see the expanded menu which displays all your recent clipboard history.
-You can use this to start a Clipboarq from a previous item, or to select a single item
+You can use this to start a Cleepp from a previous item, or to select a single item
 from you history to paste.
 
-#### Start A Clipboarq From History
+#### Start A Cleepp From History
 
-1. Click the Clipboarq menu icon with <kbd>OPTION (⌥)</kbd> pressed
+1. Click the Cleepp menu icon with <kbd>OPTION (⌥)</kbd> pressed
 (you may then release the modifier key).
 
 2. Optionally type what you want to find to filter the history.
 
 3. Select a history item, the menu bar icon will change to (TBD).
 
-4. Paste with the Clipboarq shortcut (TBD) to paste each item in succession.\
+4. Paste with the Cleepp shortcut (TBD) to paste each item in succession.\
 \
 	*When the top-most item in the history is reached, the most recent item copied,
-	the stack behavior will end and the Clipboarq menu bar icon will return to normal.\
-	To end the stack behavior at any time, click the Clipboarq menu with
+	the stack behavior will end and the Cleepp menu bar icon will return to normal.\
+	To end the stack behavior at any time, click the Cleepp menu with
 	<kbd>SHIFT (⇧)</kbd> pressed.*
 
 #### Selecting Single Item From History To Paste
@@ -138,7 +138,7 @@ from [Maccy](https://maccy.app) for re-pasting previous items and history manage
 For a more full featured set of features, including more keyboard shortcuts,
 a pinning feature, and more, consider using the original app [Maccy](https://maccy.app).
 
-1. Click the Clipboarq menu icon with <kbd>OPTION (⌥)</kbd> pressed
+1. Click the Cleepp menu icon with <kbd>OPTION (⌥)</kbd> pressed
 (you may then release the modifier key).
 
 2. Optionally type what you want to find to filter the history.
@@ -162,10 +162,10 @@ then perform paste as normal in your application's document window.
 
 ### Ignore Copied Items
 
-You can tell Clipboarq to ignore all copied items:
+You can tell Cleepp to ignore all copied items:
 
 ```sh
-defaults write lol.bananameter.Clipboarq ignoreEvents true # default is false
+defaults write lol.bananameter.Cleepp ignoreEvents true # default is false
 ```
 
 This is useful if you have some workflow for copying sensitive data.
@@ -176,7 +176,7 @@ You can also click the menu icon with <kbd>OPTION (⌥)</kbd> pressed. To ignore
 
 ### Ignore Custom Copy Types
 
-By default Clipboarq will ignore certain copy types that are considered to be confidential
+By default Cleepp will ignore certain copy types that are considered to be confidential
 or temporary. The default list always include the following types:
 
 * `org.nspasteboard.TransientType`
@@ -195,7 +195,7 @@ or overwritten:
 You can add additional custom types using preferences or `defaults`:
 
 ```sh
-defaults write lol.bananameter.Clipboarq ignoredPasteboardTypes -array-add "com.myapp.CustomType"
+defaults write lol.bananameter.Cleepp ignoredPasteboardTypes -array-add "com.myapp.CustomType"
 ```
 
 If you need to find what custom types are used by an application, you can use
@@ -203,19 +203,19 @@ free application [Pasteboard-Viewer](https://github.com/sindresorhus/Pasteboard-
 Simply download the application, open it, copy something from the application you
 want to ignore and look for any custom types in the left sidebar. [Here is an example
 of using this approach to ignore Adobe InDesign](https://github.com/p0deje/Maccy/issues/125)
-however where "org.p0deje.Maccy" is mentioned, substitute "lol.bananameter.Clipboarq".
+however where "org.p0deje.Maccy" is mentioned, substitute "lol.bananameter.Cleepp".
 
 If you accidentally removed default types, you can restore the original configuration:
 
 ```sh
-defaults write lol.bananameter.Clipboarq ignoredPasteboardTypes -array "de.petermaurer.TransientPasteboardType" "com.typeit4me.clipping" "Pasteboard generator type" "com.agilebits.onepassword" "net.antelle.keeweb"
+defaults write lol.bananameter.Cleepp ignoredPasteboardTypes -array "de.petermaurer.TransientPasteboardType" "com.typeit4me.clipping" "Pasteboard generator type" "com.agilebits.onepassword" "net.antelle.keeweb"
 ```
 
 ## FAQ
 
-### Why doesn't the Clipboarq custom paste shortcut do anything?   
+### Why doesn't the Cleepp custom paste shortcut do anything?   
 
-Make sure "Clipboarq" is added to System Settings -> Privacy & Security -> Accessibility.
+Make sure "Cleepp" is added to System Settings -> Privacy & Security -> Accessibility.
 
 ## License
 

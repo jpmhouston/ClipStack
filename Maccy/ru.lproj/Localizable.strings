@@ -14,8 +14,8 @@
 "preferences_general" = "Основные";
 "preferences_pins" = "Прикреплённые";
 "preferences_storage" = "Хранение";
-"accessibility_alert_message" = "Приложение «Clipboarq» запрашивает разрешение на управление компьютером с помощью функций универсального доступа.";
-"accessibility_alert_comment" = "Предоставьте права доступа этой программе в настройках {pane} в {settings}.\n\nНажмите кнопку «+», выберите «Clipboarq» и установите флажок рядом с ним.";
+"accessibility_alert_message" = "Приложение «Cleepp» запрашивает разрешение на управление компьютером с помощью функций универсального доступа.";
+"accessibility_alert_comment" = "Предоставьте права доступа этой программе в настройках {pane} в {settings}.\n\nНажмите кнопку «+», выберите «Cleepp» и установите флажок рядом с ним.";
 "accessibility_alert_deny" = "Запретить";
 "accessibility_alert_open" = "Открыть «Системные настройки»";
 "clear_alert_message" = "Вы дейстительно хотите очистить историю?";

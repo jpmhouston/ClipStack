@@ -14,8 +14,8 @@
 "preferences_general" = "Загальні";
 "preferences_pins" = "Прикріплення";
 "preferences_storage" = "Зберігання";
-"accessibility_alert_message" = "“Clipboarq” хоче керувати цим комп’ютером за допомогою функцій доступності.";
-"accessibility_alert_comment" = "Надайте доступ до цієї програми в налаштуваннях {pane}, розташованих у {settings}.\n\nНатисніть кнопку “+“, виберіть “Clipboarq“ і встановіть прапорець поруч із ним.";
+"accessibility_alert_message" = "“Cleepp” хоче керувати цим комп’ютером за допомогою функцій доступності.";
+"accessibility_alert_comment" = "Надайте доступ до цієї програми в налаштуваннях {pane}, розташованих у {settings}.\n\nНатисніть кнопку “+“, виберіть “Cleepp“ і встановіть прапорець поруч із ним.";
 "accessibility_alert_deny" = "Відказати";
 "accessibility_alert_open" = "Відкрити Системні налаштування";
 "clear_alert_message" = "Ви впевнені, що бажаєте очистити історію?";

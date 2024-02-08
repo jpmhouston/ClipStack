@@ -1,8 +1,8 @@
 /* Class = "NSTextFieldCell"; title = "Temporarily ignore all new copies.\nYou are likely to use it programmatically and disable application while copying sensitive data."; ObjectID = "Ejh-zi-AFs"; */
 "Ejh-zi-AFs.title" = "Privremeno zanemari sve nove kopije.\nVjerojatno ćeš ga koristiti tijekom programiranja i deaktivirati tijekom kopiranja osjetljivih podataka.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Clipboarq ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
-"LFh-6b-GFi.title" = "defaults write lol.bananameter.Clipboarq ignoreEvents true\n# kopiraj podatke\ndefaults write lol.bananameter.Clipboarq ignoreEvents false";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Cleepp ignoreEvents true\n# copy data\ndefaults write lol.bananameter.Cleepp ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
+"LFh-6b-GFi.title" = "defaults write lol.bananameter.Cleepp ignoreEvents true\n# kopiraj podatke\ndefaults write lol.bananameter.Cleepp ignoreEvents false";
 
 /* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ^ pressed.\nTo ignore only the next copy, click with ^⌥."; ObjectID = "lwS-2p-WwS"; */
 "lwS-2p-WwS.title" = "Također možete kliknuti ikonu izbornika s pritisnutim ^.\nZa ignoriranje samo sljedeće kopije kliknite s ^⌥.";
@@ -28,5 +28,5 @@
 /* Class = "NSButton"; ibShadowedToolTip = "When enabled, clearing the history would also clear the current system clipboard."; ObjectID = "lGE-3K-m2Y"; */
 "lGE-3K-m2Y.ibShadowedToolTip" = "Kada je omogućeno, brisanje povijesti također bi izbrisalo trenutni sistemski međuspremnik.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
-"yeX-On-Ble.title" = "defaults write lol.bananameter.Clipboarq ignoreOnlyNextEvent true\n# kopiraj podatke";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.Cleepp ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
+"yeX-On-Ble.title" = "defaults write lol.bananameter.Cleepp ignoreOnlyNextEvent true\n# kopiraj podatke";

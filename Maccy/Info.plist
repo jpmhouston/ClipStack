@@ -32,7 +32,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2023 Alex Rodionov</string>
+	<string>Copyright © 2024 Bananameter Labs</string>
 	<key>NSMainNibFile</key>
 	<string>Application</string>
 	<key>NSPrincipalClass</key>
@@ -49,6 +49,6 @@
 	<key>SUEnableInstallerLauncherService</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/jpmhouston/ClipStack/master/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/jpmhouston/Cleepp/master/appcast.xml</string>
 </dict>
 </plist>
