@@ -7,8 +7,10 @@ import Sparkle
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+  // TODO: figure out if able to remove this menu item, the menu bar completely
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
+  // TODO: perhaps move hotkeys to Maccy object
   private var copyHotKey: GlobalCopyHotKey!
   private var pasteHotKey: GlobalPasteHotKey!
   private var maccy: Maccy!
@@ -41,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationWillTerminate(_ notification: Notification) {
     if UserDefaults.standard.clearOnQuit {
-      maccy.clearUnpinned(suppressClearAlert: true)
+      maccy.clearHistory(suppressClearAlert: true)
     }
     CoreDataManager.shared.saveContext()
   }

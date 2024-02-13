@@ -69,7 +69,7 @@ or the Mac App Store
 
 ### Alternatives
 
-- You may click the Cleepp menu bar icon with <kbd>SHIFT (⇧)</kbd> pressed
+- You may click the Cleepp menu bar icon with <kbd>CONTROL (^)</kbd> pressed
 to start a set of copies, or choose the "Start" (TBD) item in the Cleepp menu.
 The menu bar icon will change to (TBD).
 You may copy from you source document window(s) using either the Cleepp shortcut,
@@ -79,8 +79,7 @@ or the application's normal Copy command or shortcut.
 in the Cleepp menu.
 
 - You can return to normal clipboard behavior by again clicking the Cleepp menu bar icon
-with <kbd>SHIFT (⇧)</kbd> pressed,
-or using the "Stop" (TBD) menu item.
+with <kbd>CONTROL (^))</kbd> pressed, or using the "Stop" (TBD) menu item.
 
 - While in the middle of pasting, you are still able to copy more.
 The clipboard item will be added to the set of menu items as normal and will get pasted last,
@@ -128,7 +127,7 @@ from you history to paste.
 	*When the top-most item in the history is reached, the most recent item copied,
 	the stack behavior will end and the Cleepp menu bar icon will return to normal.\
 	To end the stack behavior at any time, click the Cleepp menu with
-	<kbd>SHIFT (⇧)</kbd> pressed.*
+	<kbd>CONTROL (^))</kbd> pressed.*
 
 #### Selecting Single Item From History To Paste
 
@@ -148,17 +147,12 @@ a pinning feature, and more, consider using the original app [Maccy](https://mac
 - To see the full text of the history item, mouse over, or arrow-key to highlight it,
 and wait a couple of seconds for tooltip.
 
-- To select the history item you wish to paste, <kbd>SHIFT (⇧)</kbd> + <kbd>ENTER</kbd>,
-or <kbd>SHIFT (⇧)</kbd> + <kbd>CLICK</kbd> on the item,
+- To select the history item you wish to paste, <kbd>OPTION (⌥)</kbd> + <kbd>ENTER</kbd>,
+or <kbd>OPTION (⌥)</kbd> + <kbd>CLICK</kbd> on the item,
 then perform paste as normal in your application's document window.
 
 - To delete the history item, mouse over, or arrow-key to highlight it, then press
 <kbd>COMMAND (⌘)</kbd> + <kbd>DELETE (⌫)</kbd>.
-
-<!--
-- To choose the history item and paste, press <kbd>OPTION (⌥)</kbd> + <kbd>ENTER</kbd>, or <kbd>OPTION (⌥)</kbd> + <kbd>CLICK</kbd> the item.
-- To choose the history item and paste without formatting, press <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> + <kbd>ENTER</kbd>, or <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> + <kbd>CLICK</kbd> the item.
--->
 
 ### Ignore Copied Items
 
@@ -170,9 +164,9 @@ defaults write lol.bananameter.Cleepp ignoreEvents true # default is false
 
 This is useful if you have some workflow for copying sensitive data.
 You can set `ignoreEvents` to true, copy the data and set `ignoreEvents` back to false.
-<!--
-You can also click the menu icon with <kbd>OPTION (⌥)</kbd> pressed. To ignore only the next copy, click with <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> pressed.
--->
+
+You can also click the menu icon with <kbd>CONTROL (^)</kbd> + <kbd>OPTION (⌥)</kbd> pressed.
+To ignore only the next copy, click with <kbd>CONTROL (^)</kbd> + <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> pressed.
 
 ### Ignore Custom Copy Types
 

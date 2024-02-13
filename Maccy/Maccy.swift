@@ -5,7 +5,7 @@ import Settings
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
-  static var showExpandedMenu = true
+  static var showExpandedMenu = false
   static var queueSize: Int? = nil
   static var queueModeOn: Bool {
     get { queueSize != nil }
@@ -21,9 +21,9 @@ class Maccy: NSObject {
   private let about = About()
   private let clipboard = Clipboard.shared
   private let history = History()
-  private var menu: Menu!
   private var menuController: MenuController!
-  
+  private var menu: StatusItemMenu!
+
   private var clearAlert: NSAlert {
     let alert = NSAlert()
     alert.messageText = NSLocalizedString("clear_alert_message", comment: "")
@@ -49,6 +49,7 @@ class Maccy: NSObject {
   private var ignoreEventsObserver: NSKeyValueObservation?
   private var imageHeightObserver: NSKeyValueObservation?
   private var maxMenuItemLengthObserver: NSKeyValueObservation?
+  private var removalObserver: NSKeyValueObservation?
 //  private var sortByObserver: NSKeyValueObservation? // don't think i need sortBy or the statusItem obsevrers
 //  private var statusItemConfigurationObserver: NSKeyValueObservation?
   
@@ -65,7 +66,14 @@ class Maccy: NSObject {
     super.init()
     initializeObservers()
     
-    menu = Menu(history: history, clipboard: Clipboard.shared)
+    guard let nib = NSNib(nibNamed: "StatusItemMenu", bundle: nil) else { fatalError("menu nib file missing") }
+    var nibObjects: NSArray? = NSArray()
+    nib.instantiate(withOwner: self, topLevelObjects: &nibObjects)
+    guard let nibMenu = nibObjects?.compactMap({ $0 as? StatusItemMenu }).first else { fatalError("menu object missing") }
+    
+    menu = nibMenu
+    menu.inject(history: history, clipboard: Clipboard.shared)
+    
     menuController = MenuController(menu, statusItem)
     
     start()
@@ -76,6 +84,7 @@ class Maccy: NSObject {
     ignoreEventsObserver?.invalidate()
     imageHeightObserver?.invalidate()
     maxMenuItemLengthObserver?.invalidate()
+    removalObserver?.invalidate()
 //    sortByObserver?.invalidate() // don't think i need sortBy or the statusItem obsevrers
 //    statusItemConfigurationObserver?.invalidate()
   }
@@ -86,6 +95,10 @@ class Maccy: NSObject {
   
   func queuePaste() {
     // TODO: called from global shortcut, fill this in
+  }
+  
+  func undoLastCopy() {
+    // TODO: fill this in
   }
   
   func select(position: Int) -> String? {
@@ -100,11 +113,10 @@ class Maccy: NSObject {
     return menu.historyItem(at: position)
   }
   
-  // TODO: will be removed, not sure if we want a special version of clear in its place or not
-  func clearUnpinned(suppressClearAlert: Bool = false) {
+  func clearHistory(suppressClearAlert: Bool = false) {
     withClearAlert(suppressClearAlert: suppressClearAlert) {
-      self.history.clearUnpinned()
-      self.menu.clearUnpinned()
+      self.history.clear()
+      self.menu.clear()
       self.clipboard.clear()
       self.updateMenuTitle()
     }
@@ -121,49 +133,43 @@ class Maccy: NSObject {
     clipboard.onNewCopy(updateMenuTitle)
     clipboard.startListening()
     
-    // TODO: move normal menu items current in the footer to the top, define using nib file instead of programmatically
-    populateHeader()
-    populateItems()
-    populateFooter()
-    updateHistoryVisibility()
+    populateMenu()
 
     updateStatusItemEnabledness()
   }
   
-  private func populateHeader() {
-    let headerItem = NSMenuItem()
-    headerItem.title = "Maccy"
-    headerItem.view = MenuHeader().view
-    
-    menu.addItem(headerItem)
-  }
-  
-  private func populateItems() {
+  private func populateMenu() {
+    // wanted this, but currently needs work to allow clean decoupling of Maccy from the menu object
+    //menu.buildItems(showingNumberOfQueueItems: Maccy.queueSize ?? 0, showingAllHistory: Maccy.showExpandedMenu)
     menu.buildItems()
   }
   
-  private func populateFooter() {
-    MenuFooter.allCases.map({ $0.menuItem }).forEach({ item in
-      item.action = #selector(menuItemAction)
-      item.target = self
-      menu.addItem(item)
-    })
-  }
-  
-  private func updateHistoryVisibility() {
-    // TODO: hide history items depending on queue mode
-  }
-  
-  @objc
+  @IBAction
   private func menuItemAction(_ sender: NSMenuItem) {
-    if let tag = MenuFooter(rawValue: sender.tag) {
+    if let tag = StatusItemMenu.Item(rawValue: sender.tag) {
       switch tag {
+      case .queueStart:
+        Maccy.queueModeOn = true
+        updateStatusMenuIcon()
+        updateMenuTitle()
+      case .queueStop:
+        Maccy.queueModeOn = false
+        updateStatusMenuIcon()
+        updateMenuTitle()
+      case .queueCopy:
+        queueCopy()
+      case .queuePaste:
+        queuePaste()
+      case .undoLastCopy:
+        // TODO: do what here
+        break
       case .about:
         Maccy.returnFocusToPreviousApp = false
         about.openAbout(sender)
         Maccy.returnFocusToPreviousApp = true
       case .clear:
-        clearAll()
+        Maccy.queueModeOn = false
+        clearHistory()
       case .quit:
         NSApp.terminate(sender)
       case .preferences:
@@ -171,18 +177,7 @@ class Maccy: NSObject {
         settingsWindowController.show()
         settingsWindowController.window?.orderFrontRegardless()
         Maccy.returnFocusToPreviousApp = true
-      default:
-        break
       }
-    }
-  }
-  
-  private func clearAll(suppressClearAlert: Bool = false) {
-    withClearAlert(suppressClearAlert: suppressClearAlert) {
-      self.history.clear()
-      self.menu.clearAll()
-      self.clipboard.clear()
-      // TODO: instead call self.updateMenuTitle() from method turning queue mode on and off
     }
   }
   
@@ -206,13 +201,10 @@ class Maccy: NSObject {
   
   private func rebuild() {
     // TODO: don't think i need this
-    menu.clearAll()
+    menu.clear()
     menu.removeAllItems()
     
-    populateHeader()
-    populateItems()
-    populateFooter()
-    updateHistoryVisibility()
+    populateMenu()
   }
   
   private func updateMenuTitle(_ item: HistoryItem? = nil) {
@@ -247,7 +239,11 @@ class Maccy: NSObject {
   }
   
   private func initializeObservers() {
-    // TODO: need to init something like queueModeChangeObserver, pasteWueueAdvanceObserver
+    removalObserver = statusItem.observe(\.isVisible, options: .new) { _, change in
+      if change.newValue == false {
+        NSApp.terminate(nil)
+      }
+    }
     
     enabledPasteboardTypesObserver = UserDefaults.standard.observe(\.enabledPasteboardTypes, options: .new) { _, _ in
       self.updateStatusItemEnabledness()

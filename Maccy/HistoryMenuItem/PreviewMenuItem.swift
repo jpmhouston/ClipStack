@@ -3,7 +3,7 @@ import AppKit
 extension HistoryMenuItem {
   @available(macOS, obsoleted: 14.0)
   class PreviewMenuItem: NSMenuItem {
-    private let initialSize = NSSize(width: CGFloat(Menu.menuWidth), height: 0.1)
+    private let initialSize = NSSize(width: CGFloat(StatusItemMenu.menuWidth), height: 0.1)
 
     init() {
       super.init(title: "", action: nil, keyEquivalent: "")

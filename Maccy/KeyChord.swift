@@ -29,12 +29,12 @@ enum KeyChord: CaseIterable {
   // swiftlint:disable cyclomatic_complexity
   init(_ key: Key, _ modifierFlags: NSEvent.ModifierFlags) {
     switch (key, modifierFlags) {
-    case (Key(character: MenuFooter.clear.keyEquivalent, virtualKeyCode: nil), MenuFooter.clear.keyEquivalentModifierMask):
-      self = .clearHistory
-    case (Key(character: MenuFooter.clearAll.keyEquivalent, virtualKeyCode: nil), MenuFooter.clearAll.keyEquivalentModifierMask):
-      self = .clearHistoryAll
-    case (Key(character: MenuFooter.preferences.keyEquivalent, virtualKeyCode: nil), MenuFooter.preferences.keyEquivalentModifierMask):
-      self = .openPreferences
+//    case (Key(character: StatusItemMenu.Item.clear.keyEquivalent, virtualKeyCode: nil), StatusItemMenu.Item.clear.keyEquivalentModifierMask):
+//      self = .clearHistory
+//    case (Key(character: StatusItemMenu.Item.clearAll.keyEquivalent, virtualKeyCode: nil), StatusItemMenu.Item.clearAll.keyEquivalentModifierMask):
+//      self = .clearHistoryAll
+//    case (Key(character: StatusItemMenu.Item.preferences.keyEquivalent, virtualKeyCode: nil), StatusItemMenu.Item.preferences.keyEquivalentModifierMask):
+//      self = .openPreferences
     case (.escape, []), (.u, [.control]):
       self = .clearSearch
     case (.delete, []), (.h, [.control]):
@@ -49,12 +49,12 @@ enum KeyChord: CaseIterable {
       self = .selectCurrentItem
     case (.delete, [.command]):
       self = .deleteCurrentItem
-    case (KeyChord.pasteKey, KeyChord.pasteKeyModifiers):
-      self = .paste
-    case (GlobalCopyHotKey.key, GlobalCopyHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
-      self = .ignored
-    case (GlobalPasteHotKey.key, GlobalPasteHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
-      self = .ignored
+//    case (KeyChord.pasteKey, KeyChord.pasteKeyModifiers):
+//      self = .paste
+//    case (GlobalCopyHotKey.key, GlobalCopyHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
+//      self = .ignored
+//    case (GlobalPasteHotKey.key, GlobalPasteHotKey.modifierFlags): // when menu showing want this global shortcut to do nothing
+//      self = .ignored
     case (_, _) where Self.keysToSkip.contains(key) || !modifierFlags.isDisjoint(with: Self.modifiersToSkip):
       self = .ignored
     default:

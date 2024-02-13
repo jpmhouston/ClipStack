@@ -2,7 +2,7 @@ import Carbon
 import Cocoa
 import Sauce
 
-class MenuHeaderView: NSView, NSSearchFieldDelegate {
+class SearchItemView: NSView, NSSearchFieldDelegate {
   @IBOutlet weak var queryField: NSSearchField!
   @IBOutlet weak var titleField: NSTextField!
 
@@ -24,9 +24,9 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
     }
   }
 
-  private lazy var customMenu: Menu? = self.enclosingMenuItem?.menu as? Menu
+  private lazy var customMenu: StatusItemMenu? = self.enclosingMenuItem?.menu as? StatusItemMenu
   private lazy var headerHeight = UserDefaults.standard.hideSearch ? 1 : 28
-  private lazy var headerSize = NSSize(width: Menu.menuWidth, height: headerHeight)
+  private lazy var headerSize = NSSize(width: StatusItemMenu.menuWidth, height: headerHeight)
 
   override func awakeFromNib() {
     autoresizingMask = .width
@@ -39,30 +39,12 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       horizontalLeftPadding.constant = macOSXLeftPadding
       horizontalRightPadding.constant = macOSXRightPadding
     }
-
-    if UserDefaults.standard.hideTitle {
-      titleField.isHidden = true
-      removeConstraint(titleAndSearchSpacing)
-    }
-
-    if UserDefaults.standard.hideSearch {
-      constraints.forEach(removeConstraint)
-    }
   }
 
   override func viewDidMoveToWindow() {
     super.viewDidMoveToWindow()
 
-    guard let menu = customMenu else { return }
-
     if window != nil {
-      // Fix for Sonoma. The menu will report an incorrect height causing the popup to be mispositioned.
-      // This is the most convenient and earliest point to intercept and adjust the window location.
-      if #available(macOS 14, *) {
-        if menu.size.height < (NSScreen.forPopup?.visibleFrame.height ?? 0.0) {
-          menu.adjustMenuWindowPosition()
-        }
-      }
       eventMonitor.start()
     } else {
       // Ensure header view was not simply scrolled out of the menu.
@@ -145,12 +127,15 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       customMenu?.delete()
       setQuery("")
       return true
-    case .clearHistory:
-      performMenuItemAction(MenuFooter.clear.rawValue)
-      return true
-    case .clearHistoryAll:
-      performMenuItemAction(MenuFooter.clearAll.rawValue)
-      return true
+//    case .clearHistory:
+//      performMenuItemAction(StatusItemMenu.Item.clear.rawValue)
+//      return true
+//    case .clearHistoryAll:
+//      performMenuItemAction(StatusItemMenu.Item.clearAll.rawValue)
+//      return true
+//    case .openPreferences:
+//      performMenuItemAction(StatusItemMenu.Item.preferences.rawValue)
+//      return true
     case .deleteOneCharFromSearch:
       if !queryField.stringValue.isEmpty {
         setQuery(String(queryField.stringValue.dropLast()))
@@ -164,9 +149,6 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       return true
     case .moveToPrevious:
       customMenu?.selectPrevious()
-      return true
-    case .openPreferences:
-      performMenuItemAction(MenuFooter.preferences.rawValue)
       return true
     case .paste:
       queryField.window?.makeFirstResponder(queryField)

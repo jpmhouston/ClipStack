@@ -11,11 +11,11 @@ class Search {
 
   struct SearchResult: Equatable {
     var score: Double?
-    var object: Menu.IndexedItem
+    var object: StatusItemMenu.IndexedItem
     var titleMatches: [ClosedRange<Int>]
   }
 
-  typealias Searchable = Menu.IndexedItem
+  typealias Searchable = StatusItemMenu.IndexedItem
 
   private let fuse = Fuse(threshold: 0.7) // threshold found by trial-and-error
   private let fuzzySearchLimit = 5_000

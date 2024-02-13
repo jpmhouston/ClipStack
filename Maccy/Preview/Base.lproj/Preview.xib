@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="Preview" customModule="Clipboarq" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="Preview" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="applicationValueLabel" destination="vfJ-eN-smJ" id="Bup-Ci-7Ed"/>
                 <outlet property="copyLabel" destination="Chw-FC-c2t" id="hO5-cQ-fAo"/>

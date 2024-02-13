@@ -9,7 +9,7 @@ class ClearIntentHandler: NSObject, ClearIntentHandling {
   }
 
   func handle(intent: ClearIntent, completion: @escaping (ClearIntentResponse) -> Void) {
-    maccy.clearUnpinned()
+    maccy.clearHistory()
     return completion(ClearIntentResponse(code: .success, userActivity: nil))
   }
 }

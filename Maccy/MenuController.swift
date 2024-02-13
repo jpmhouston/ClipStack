@@ -2,7 +2,7 @@ import AppKit
 import KeyboardShortcuts
 
 class MenuController {
-  private let menu: Menu
+  private let menu: StatusItemMenu
   private let statusItem: NSStatusItem
   private var menuLoader: MenuLoader!
   
@@ -10,7 +10,7 @@ class MenuController {
     NSApp.windows.filter({ $0.isVisible && $0.className != NSApp.statusBarWindow?.className })
   }
   
-  init(_ menu: Menu, _ statusItem: NSStatusItem) {
+  init(_ menu: StatusItemMenu, _ statusItem: NSStatusItem) {
     self.menu = menu
     self.statusItem = statusItem
     self.menuLoader = MenuLoader(performStatusItemClick)
@@ -22,21 +22,21 @@ class MenuController {
     if let event = event {
       let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
       
-      if modifierFlags.contains(.control) {
+      if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
         UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
         
-        if modifierFlags.contains(.option) {
-          UserDefaults.standard.ignoreOnlyNextEvent = UserDefaults.standard.ignoreEvents
+        if !modifierFlags.contains(.shift) && UserDefaults.standard.ignoreEvents {
+          UserDefaults.standard.ignoreOnlyNextEvent = true
         }
         return
       }
       
-      if modifierFlags.contains(.shift) {
+      if modifierFlags.contains(.control) {
         Maccy.queueModeOn = true
         return
       }
       
-      if Maccy.allowExpandedMenu && modifierFlags.contains(.option) {
+      if modifierFlags.contains(.option) && Maccy.allowExpandedMenu {
         Maccy.showExpandedMenu = true
       }
     }
@@ -50,7 +50,7 @@ class MenuController {
     if let buttonCell = statusItem.button?.cell as? NSButtonCell {
       withMenuButtonHighlighted(buttonCell) {
         self.linkingMenuToStatusItem {
-          self.menu.prepareForPopup(location: .inMenuBar)
+          self.menu.prepareForPopup()
           self.statusItem.button?.performClick(self)
         }
       }

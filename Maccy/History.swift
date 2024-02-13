@@ -56,11 +56,6 @@ class History {
     CoreDataManager.shared.viewContext.delete(item)
   }
 
-  // TODO: will be removed, not sure if we want a special version of clear in its place or not
-  func clearUnpinned() {
-    all.forEach(remove(_:)) // was: all.filter({ $0.pin == nil }).forEach(remove(_:))
-  }
-
   func clear() {
     all.forEach(remove(_:))
   }
