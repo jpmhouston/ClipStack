@@ -66,20 +66,20 @@
                         <action selector="menuItemAction:" target="-2" id="dXo-we-s4Q"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Stop Collecting/Replaying" tag="102" alternate="YES" id="TKZ-UP-Ggw">
+                <menuItem title="Stop Collecting/Replaying" tag="102" hidden="YES" id="TKZ-UP-Ggw">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuItemAction:" target="-2" id="sXi-SV-ZVd"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="1dD-HH-ufE"/>
-                <menuItem title="Collect Copy" tag="103" id="ieX-in-c9O">
+                <menuItem title="Copy &amp; Collect" tag="103" id="ieX-in-c9O">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuItemAction:" target="-2" id="YZi-gD-YUf"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Replay Paste" tag="104" id="WZ5-r7-f8t">
+                <menuItem title="Paste &amp; Advance" tag="104" id="WZ5-r7-f8t">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuItemAction:" target="-2" id="Ywb-cN-1Vc"/>

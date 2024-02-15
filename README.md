@@ -51,13 +51,15 @@ or the Mac App Store
 
 ### Basic Usage
 
-1. In your source document window(s) copy using the Cleepp shortcut (TBD).
+1. In your source document window(s) copy using the Cleepp shortcut
+<kbd>CONTROL (^))</kbd> + <kbd>COMMAND (⌘))</kbd> + C.
 
 2. Repeat.\
 \
 	*The number in the menu bar icon will increment with each item copied.*
 
-3. In your target document window paste using the Cleepp shortcut (TBD).\
+3. In your target document window paste using the Cleepp shortcut
+<kbd>CONTROL (^))</kbd> + <kbd>COMMAND (⌘))</kbd> + V.\
 \
 	*Between each paste the clipboard will automatically advance to the next
 	item that was copied in order and the number in the menu bar icon will decrement.*
@@ -67,19 +69,19 @@ or the Mac App Store
 	*When all copied items have been pasted, upon which the menu bar icon will
 	return to normal, and copying and pasting will return to normal bahavior.*
 
-### Alternatives
+#### Alternatives
 
 - You may click the Cleepp menu bar icon with <kbd>CONTROL (^)</kbd> pressed
 to start a set of copies, or choose the "Start" (TBD) item in the Cleepp menu.
-The menu bar icon will change to (TBD).
+The menu bar icon will get a count value added beside it.
 You may copy from you source document window(s) using either the Cleepp shortcut,
 or the application's normal Copy command or shortcut.
 
-- Starting to collect clipboard items can also be done using the "Start" (TBD) item
+- Starting to collect clipboard items can also be done using the "Start Collecting" item
 in the Cleepp menu.
 
 - You can return to normal clipboard behavior by again clicking the Cleepp menu bar icon
-with <kbd>CONTROL (^))</kbd> pressed, or using the "Stop" (TBD) menu item.
+with <kbd>CONTROL (^))</kbd> pressed, or using the "Stop Collecting / Replaying" menu item.
 
 - While in the middle of pasting, you are still able to copy more.
 The clipboard item will be added to the set of menu items as normal and will get pasted last,
@@ -104,7 +106,7 @@ the number in the menu bar icon will increment.
 12. To customize the behavior, check "Preferences..." window, or press <kbd>COMMAND (⌘)</kbd> + <kbd>,</kbd>.
 -->
 
-## Advanced
+## Extended Features
 
 ### Expanded Clipboard History
 
@@ -113,16 +115,17 @@ to see the expanded menu which displays all your recent clipboard history.
 You can use this to start a Cleepp from a previous item, or to select a single item
 from you history to paste.
 
-#### Start A Cleepp From History
+#### Start Replaying From History
 
 1. Click the Cleepp menu icon with <kbd>OPTION (⌥)</kbd> pressed
 (you may then release the modifier key).
 
 2. Optionally type what you want to find to filter the history.
 
-3. Select a history item, the menu bar icon will change to (TBD).
+3. Select a history item, the menu bar icon will get a count value added beside it.
 
-4. Paste with the Cleepp shortcut (TBD) to paste each item in succession.\
+4. Paste with the Cleepp shortcut <kbd>CONTROL (^))</kbd> + <kbd>COMMAND (⌘))</kbd> + V
+to paste each item in succession.\
 \
 	*When the top-most item in the history is reached, the most recent item copied,
 	the stack behavior will end and the Cleepp menu bar icon will return to normal.\
@@ -153,6 +156,8 @@ then perform paste as normal in your application's document window.
 
 - To delete the history item, mouse over, or arrow-key to highlight it, then press
 <kbd>COMMAND (⌘)</kbd> + <kbd>DELETE (⌫)</kbd>.
+
+## Advanced
 
 ### Ignore Copied Items
 

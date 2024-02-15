@@ -32,12 +32,12 @@ class MenuController {
       }
       
       if modifierFlags.contains(.control) {
-        Maccy.queueModeOn = true
+        menu.performQueueModeToggle()
         return
       }
       
       if modifierFlags.contains(.option) && Maccy.allowExpandedMenu {
-        Maccy.showExpandedMenu = true
+        menu.enableExpandedMenu()
       }
     }
     

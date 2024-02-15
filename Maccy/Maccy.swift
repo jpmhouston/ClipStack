@@ -5,7 +5,6 @@ import Settings
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
-  static var showExpandedMenu = false
   static var queueSize: Int? = nil
   static var queueModeOn: Bool {
     get { queueSize != nil }
@@ -139,8 +138,6 @@ class Maccy: NSObject {
   }
   
   private func populateMenu() {
-    // wanted this, but currently needs work to allow clean decoupling of Maccy from the menu object
-    //menu.buildItems(showingNumberOfQueueItems: Maccy.queueSize ?? 0, showingAllHistory: Maccy.showExpandedMenu)
     menu.buildItems()
   }
   
@@ -161,8 +158,7 @@ class Maccy: NSObject {
       case .queuePaste:
         queuePaste()
       case .undoLastCopy:
-        // TODO: do what here
-        break
+        undoLastCopy()
       case .about:
         Maccy.returnFocusToPreviousApp = false
         about.openAbout(sender)
@@ -208,15 +204,11 @@ class Maccy: NSObject {
   }
   
   private func updateMenuTitle(_ item: HistoryItem? = nil) {
-    // TODO: make code here something like
-//    guard something_indicating_queue_mode else {
-//      statusItem.button?.title = ""
-//      return
-//    }
-//
-//    let count = number_of_queued_items
-//    
-//    statusItem.button?.title = String(count)
+    if Maccy.queueModeOn {
+      statusItem.button?.title = String(Maccy.queueSize ?? 0)
+    } else {
+      statusItem.button?.title = ""
+    }
     
     // TODO: remove UserDefaults property showRecentCopyInMenuBar
   }
