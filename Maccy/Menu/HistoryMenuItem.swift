@@ -76,33 +76,33 @@ class HistoryMenuItem: NSMenuItem {
     guard let item, !isImage(item) else {
       return
     }
-
+    
     item.title = item.generateTitle(item.getContents())
     attributedTitle = nil
-
+    
     updateFrontOfQueueIndication()
   }
-
+  
   func highlight(_ ranges: [ClosedRange<Int>]) {
     guard !ranges.isEmpty, title != imageTitle else {
       regenerateTitle()
       return
     }
-
+    
     let attributedTitle = NSMutableAttributedString(string: title, attributes: isFrontOfQueue ? frontOfQueueAttributes() : nil)
-
+    
     for range in ranges {
       let rangeLength = range.upperBound - range.lowerBound + 1
       let highlightRange = NSRange(location: range.lowerBound, length: rangeLength)
-
+      
       if Range(highlightRange, in: title) != nil {
         attributedTitle.addAttribute(.font, value: highlightFont, range: highlightRange)
       }
     }
-
+    
     self.attributedTitle = attributedTitle
   }
-
+  
   private func frontOfQueueAttributes() -> [NSAttributedString.Key: Any]? {
     if #unavailable(macOS 14) {
       [.underlineStyle: NSUnderlineStyle.single.rawValue]
@@ -110,7 +110,7 @@ class HistoryMenuItem: NSMenuItem {
       nil
     }
   }
-
+  
   private func styleToIndicateFrontOfQueue() {
     // NB: if item has had highlight called, will now lose the styling it set; just assume that won't happen
     if isFrontOfQueue {
@@ -120,7 +120,7 @@ class HistoryMenuItem: NSMenuItem {
       attributedTitle = nil
     }
   }
-
+  
   private func badgeToIndicateFrontOfQueue() {
     if #available(macOS 14, *) {
       if isFrontOfQueue {
@@ -130,7 +130,7 @@ class HistoryMenuItem: NSMenuItem {
       }
     }
   }
-
+  
   private func updateFrontOfQueueIndication() {
     if #unavailable(macOS 14) {
       styleToIndicateFrontOfQueue()
