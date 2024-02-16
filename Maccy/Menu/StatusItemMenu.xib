@@ -66,7 +66,7 @@
                         <action selector="menuItemAction:" target="-2" id="dXo-we-s4Q"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Stop Collecting/Replaying" tag="102" hidden="YES" id="TKZ-UP-Ggw">
+                <menuItem title="Cancel Collecting / Replaying" tag="102" hidden="YES" id="TKZ-UP-Ggw">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuItemAction:" target="-2" id="sXi-SV-ZVd"/>

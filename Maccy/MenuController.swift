@@ -31,7 +31,7 @@ class MenuController {
         return
       }
       
-      if modifierFlags.contains(.control) {
+      if modifierFlags.contains(.control) || modifierFlags.contains(.shift) {
         menu.performQueueModeToggle()
         return
       }

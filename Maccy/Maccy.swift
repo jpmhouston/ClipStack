@@ -89,11 +89,27 @@ class Maccy: NSObject {
   }
 
   func queueCopy() {
-    // TODO: called from global shortcut, fill this in
+    if !Maccy.queueModeOn {
+      Maccy.queueModeOn = true
+    }
+    
+    // TODO: make the frontmost application perform a copy, let onNewCopy find this normally to do the rest
   }
   
   func queuePaste() {
-    // TODO: called from global shortcut, fill this in
+    // TODO: make the frontmost application perform a paste
+    
+    // Advance queue
+    if Maccy.queueModeOn, let priorQueueSize = Maccy.queueSize {
+      if priorQueueSize > 1 {
+        Maccy.queueSize = priorQueueSize - 1
+      } else {
+        Maccy.queueModeOn = false
+        updateStatusMenuIcon()
+        updateMenuTitle()
+      }
+      menu.updateFrontOfQueue()
+    }
   }
   
   func undoLastCopy() {
@@ -129,7 +145,7 @@ class Maccy: NSObject {
     
     clipboard.onNewCopy(history.add)
     clipboard.onNewCopy(menu.add)
-    clipboard.onNewCopy(updateMenuTitle)
+    clipboard.onNewCopy(incremenentQueue)
     clipboard.startListening()
     
     populateMenu()
@@ -151,6 +167,7 @@ class Maccy: NSObject {
         updateMenuTitle()
       case .queueStop:
         Maccy.queueModeOn = false
+        menu.updateFrontOfQueue()
         updateStatusMenuIcon()
         updateMenuTitle()
       case .queueCopy:
@@ -203,7 +220,17 @@ class Maccy: NSObject {
     populateMenu()
   }
   
-  private func updateMenuTitle(_ item: HistoryItem? = nil) {
+  private func incremenentQueue(_ item: HistoryItem? = nil) {
+    if let priorQueueSize = Maccy.queueSize {
+      Maccy.queueSize = priorQueueSize + 1
+      if priorQueueSize == 0 {
+        menu.updateFrontOfQueue()
+      }
+      updateMenuTitle()
+    }
+  }
+  
+  private func updateMenuTitle() {
     if Maccy.queueModeOn {
       statusItem.button?.title = String(Maccy.queueSize ?? 0)
     } else {

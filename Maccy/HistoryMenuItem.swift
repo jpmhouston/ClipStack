@@ -1,9 +1,11 @@
 import Cocoa
 
 class HistoryMenuItem: NSMenuItem {
-  var isPinned = false
   var item: HistoryItem?
   var value = ""
+  var isFrontOfQueue = false {
+    didSet { updateFrontOfQueueIndication() }
+  }
 
   internal var clipboard: Clipboard!
 
@@ -25,8 +27,6 @@ class HistoryMenuItem: NSMenuItem {
     }
   }()
 
-  private var editTitleObserver: NSKeyValueObservation?
-
   required init(coder: NSCoder) {
     super.init(coder: coder)
   }
@@ -36,6 +36,7 @@ class HistoryMenuItem: NSMenuItem {
 
     self.clipboard = clipboard
     self.item = item
+    self.isFrontOfQueue = false
     self.onStateImage = NSImage(named: "PinImage")
     self.target = self
 
@@ -50,15 +51,6 @@ class HistoryMenuItem: NSMenuItem {
     } else if isHTML(item) {
       loadHTML(item)
     }
-
-    // TODO: editing titles, is that a thing
-    editTitleObserver = item.observe(\.title, options: .new, changeHandler: { item, _ in
-      self.title = item.title ?? ""
-    })
-  }
-
-  deinit {
-    editTitleObserver?.invalidate()
   }
 
   @objc
@@ -86,15 +78,19 @@ class HistoryMenuItem: NSMenuItem {
     }
 
     item.title = item.generateTitle(item.getContents())
+    attributedTitle = nil
+
+    updateFrontOfQueueIndication()
   }
 
   func highlight(_ ranges: [ClosedRange<Int>]) {
     guard !ranges.isEmpty, title != imageTitle else {
-      self.attributedTitle = nil
+      regenerateTitle()
       return
     }
 
-    let attributedTitle = NSMutableAttributedString(string: title)
+    let attributedTitle = NSMutableAttributedString(string: title, attributes: isFrontOfQueue ? frontOfQueueAttributes() : nil)
+
     for range in ranges {
       let rangeLength = range.upperBound - range.lowerBound + 1
       let highlightRange = NSRange(location: range.lowerBound, length: rangeLength)
@@ -105,6 +101,42 @@ class HistoryMenuItem: NSMenuItem {
     }
 
     self.attributedTitle = attributedTitle
+  }
+
+  private func frontOfQueueAttributes() -> [NSAttributedString.Key: Any]? {
+    if #unavailable(macOS 14) {
+      [.underlineStyle: NSUnderlineStyle.single.rawValue]
+    } else {
+      nil
+    }
+  }
+
+  private func styleToIndicateFrontOfQueue() {
+    // NB: if item has had highlight called, will now lose the styling it set; just assume that won't happen
+    if isFrontOfQueue {
+      guard title != imageTitle else { return }
+      attributedTitle = NSMutableAttributedString(string: title, attributes: frontOfQueueAttributes())
+    } else {
+      attributedTitle = nil
+    }
+  }
+
+  private func badgeToIndicateFrontOfQueue() {
+    if #available(macOS 14, *) {
+      if isFrontOfQueue {
+        badge = NSMenuItemBadge(string: "replay \u{2BAD}") // \u{2BAD}
+      } else {
+        badge = nil
+      }
+    }
+  }
+
+  private func updateFrontOfQueueIndication() {
+    if #unavailable(macOS 14) {
+      styleToIndicateFrontOfQueue()
+    } else {
+      badgeToIndicateFrontOfQueue()
+    }
   }
 
   private func isImage(_ item: HistoryItem) -> Bool {

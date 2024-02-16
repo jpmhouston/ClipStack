@@ -6,10 +6,12 @@
 <!--- [![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314 -->
 <!--- [![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/p0deje -->
 
-Cleepp is a fork of clipboard manager Maccy for macOS.
-It's aim isn't to be a full features clipboard history manager,
-but to provide an easy multi-copy feature that can stack multiple clipboard items
-from a source application window, then paste those items in order elsewhere.
+Cleepp is a menu bar utility for macOS that adds the ability to copy multiple items
+and then paste them in order elsewhere.
+
+Cleepp is a fork of clipboard manager [Maccy](https://maccy.app); it's aim isn't to have
+all the features of a full features clipboard history manager, but to provide just that single
+multi-clipboard feature.
 
 Cleepp works on macOS Mojave 10.14 or higher.
 
@@ -18,17 +20,18 @@ Cleepp works on macOS Mojave 10.14 or higher.
 * [Features](#features)
 * [Install](#install)
 * [Usage](#usage)
-    * [Basic Usage](#basic-usage)
+    * [Basic Usage](#basic-usage )
     * [Alternatives](#alternatives)
-    * [Cleepp Menu](#clip-stack-menu)
-* [Advanced](#advanced)
+    * [The Cleepp Menu](#the-cleepp-menu)
+* [Additional Features](#additional-features)
     * [Expanded Clipboard History](#expanded-clipboard-history)
-    * [Start A Cleepp From History](#start-a-clip-stack-from-history)
-    * [Selecting Single Item From History To Paste](#selecting-single-item-from-history-to-paste)
+	    * [Start Replaying From History](#start-replaying-from-history)
+	    * [Selecting Single Item From History To Paste](#selecting-single-item-from-history-to-paste)
+* [Advanced](#advanced)
     * [Ignore Copied Items](#ignore-copied-items)
     * [Ignore Custom Copy Types](#ignore-custom-copy-types)
 * [FAQ](#faq)
-    * [Why doesn't the Cleepp custom paste shortcut do anything?](#why-doesnt-the-clip-stack-paste-shortcut-do-anything)
+    * [Why don't the Cleepp global shortcuts do anything?](#why-dont-the-cleepp-global-shortcuts-do-anything)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
@@ -69,10 +72,10 @@ or the Mac App Store
 	*When all copied items have been pasted, upon which the menu bar icon will
 	return to normal, and copying and pasting will return to normal bahavior.*
 
-#### Alternatives
+### Alternatives
 
 - You may click the Cleepp menu bar icon with <kbd>CONTROL (^)</kbd> pressed
-to start a set of copies, or choose the "Start" (TBD) item in the Cleepp menu.
+to start a set of copies, or choose the "Start Collecting" item in the Cleepp menu.
 The menu bar icon will get a count value added beside it.
 You may copy from you source document window(s) using either the Cleepp shortcut,
 or the application's normal Copy command or shortcut.
@@ -81,13 +84,13 @@ or the application's normal Copy command or shortcut.
 in the Cleepp menu.
 
 - You can return to normal clipboard behavior by again clicking the Cleepp menu bar icon
-with <kbd>CONTROL (^))</kbd> pressed, or using the "Stop Collecting / Replaying" menu item.
+with <kbd>CONTROL (^))</kbd> pressed, or using the "Cancel Collecting / Replaying" menu item.
 
 - While in the middle of pasting, you are still able to copy more.
 The clipboard item will be added to the set of menu items as normal and will get pasted last,
 the number in the menu bar icon will increment.
 
-### Cleepp Menu
+### The Cleepp Menu
 
 (TBD)
 
@@ -106,7 +109,11 @@ the number in the menu bar icon will increment.
 12. To customize the behavior, check "Preferences..." window, or press <kbd>COMMAND (⌘)</kbd> + <kbd>,</kbd>.
 -->
 
-## Extended Features
+## Additional Features
+
+### Undo Last Copy
+
+(TBD)
 
 ### Expanded Clipboard History
 
@@ -115,44 +122,42 @@ to see the expanded menu which displays all your recent clipboard history.
 You can use this to start a Cleepp from a previous item, or to select a single item
 from you history to paste.
 
+This menu includes a simplified set of clipboard features from the open source project
+[Maccy](https://maccy.app). For a more full featured set of features, including
+more keyboard shortcuts, a pinning feature, and more, consider using that original app. 
+It can be found at their homepage [https://maccy.app](https://maccy.app).
+
 #### Start Replaying From History
 
 1. Click the Cleepp menu icon with <kbd>OPTION (⌥)</kbd> pressed
 (you may then release the modifier key).
 
-2. Optionally type what you want to find to filter the history.
+2. Select a history item, the menu bar icon will get a count value added beside it.
 
-3. Select a history item, the menu bar icon will get a count value added beside it.
-
-4. Paste with the Cleepp shortcut <kbd>CONTROL (^))</kbd> + <kbd>COMMAND (⌘))</kbd> + V
+3. Paste with the Cleepp shortcut <kbd>CONTROL (^))</kbd> + <kbd>COMMAND (⌘))</kbd> + V
 to paste each item in succession.\
 \
-	*When the top-most item in the history is reached, the most recent item copied,
-	the stack behavior will end and the Cleepp menu bar icon will return to normal.\
-	To end the stack behavior at any time, click the Cleepp menu with
-	<kbd>CONTROL (^))</kbd> pressed.*
+	*Like normal clip replay described in section [Basic Usage](#basic-usage) and 
+[Alternatives](#alternatives) when the topmost clipped item in the menu has been pasted,
+copying and pasting will return to normal bahavior. You can also return to normal
+clipboard behavior at any time by clicking the Cleepp menu bar icon with
+<kbd>CONTROL (^))</kbd> pressed, or using the “Cancel Collecting / Replaying” menu item*
 
 #### Selecting Single Item From History To Paste
-
-Invoking the expanded menu presents you with a simplified set of clipboard features
-from [Maccy](https://maccy.app) for re-pasting previous items and history management.
-
-For a more full featured set of features, including more keyboard shortcuts,
-a pinning feature, and more, consider using the original app [Maccy](https://maccy.app).
 
 1. Click the Cleepp menu icon with <kbd>OPTION (⌥)</kbd> pressed
 (you may then release the modifier key).
 
-2. Optionally type what you want to find to filter the history.
+2. Optionally type what you want to find in the "Filter" search box to filter the history.
 
-3. These features are supported for the history items in the menu:
+3. Select the desired item from the history item and press <kbd>OPTION (⌥)</kbd> +
+<kbd>ENTER</kbd>, or <kbd>OPTION (⌥)</kbd> + <kbd>CLICK</kbd> on the item,
+then perform paste as normal in your application's document window.\
+\
+	These features are also supported for the history items in the menu:
 
 - To see the full text of the history item, mouse over, or arrow-key to highlight it,
 and wait a couple of seconds for tooltip.
-
-- To select the history item you wish to paste, <kbd>OPTION (⌥)</kbd> + <kbd>ENTER</kbd>,
-or <kbd>OPTION (⌥)</kbd> + <kbd>CLICK</kbd> on the item,
-then perform paste as normal in your application's document window.
 
 - To delete the history item, mouse over, or arrow-key to highlight it, then press
 <kbd>COMMAND (⌘)</kbd> + <kbd>DELETE (⌫)</kbd>.
@@ -170,8 +175,9 @@ defaults write lol.bananameter.Cleepp ignoreEvents true # default is false
 This is useful if you have some workflow for copying sensitive data.
 You can set `ignoreEvents` to true, copy the data and set `ignoreEvents` back to false.
 
-You can also click the menu icon with <kbd>CONTROL (^)</kbd> + <kbd>OPTION (⌥)</kbd> pressed.
-To ignore only the next copy, click with <kbd>CONTROL (^)</kbd> + <kbd>OPTION (⌥)</kbd> + <kbd>SHIFT (⇧)</kbd> pressed.
+You can also click the menu icon with <kbd>SHIFT (⇧)</kbd> + <kbd>CONTROL (^)</kbd> pressed.
+To ignore only the next copy, click with <kbd>SHIFT (⇧)</kbd> + <kbd>CONTROL (^)</kbd> +
+<kbd>OPTION (⌥)</kbd> pressed.
 
 ### Ignore Custom Copy Types
 
@@ -197,12 +203,13 @@ You can add additional custom types using preferences or `defaults`:
 defaults write lol.bananameter.Cleepp ignoredPasteboardTypes -array-add "com.myapp.CustomType"
 ```
 
-If you need to find what custom types are used by an application, you can use
+If you need to find what custom types are used by an application, you can use the
 free application [Pasteboard-Viewer](https://github.com/sindresorhus/Pasteboard-Viewer).
 Simply download the application, open it, copy something from the application you
-want to ignore and look for any custom types in the left sidebar. [Here is an example
-of using this approach to ignore Adobe InDesign](https://github.com/p0deje/Maccy/issues/125)
-however where "org.p0deje.Maccy" is mentioned, substitute "lol.bananameter.Cleepp".
+want to ignore and look for any custom types in the left sidebar.
+[Here](https://github.com/p0deje/Maccy/issues/125)  is an example of using this approach
+to ignore Adobe InDesign (*however where "org.p0deje.Maccy" is mentioned, substitute
+"lol.bananameter.Cleepp"**).
 
 If you accidentally removed default types, you can restore the original configuration:
 
@@ -212,9 +219,9 @@ defaults write lol.bananameter.Cleepp ignoredPasteboardTypes -array "de.petermau
 
 ## FAQ
 
-### Why doesn't the Cleepp custom paste shortcut do anything?   
+### Why don't the Cleepp global shortcuts do anything?
 
-Make sure "Cleepp" is added to System Settings -> Privacy & Security -> Accessibility.
+Make sure "Cleepp" is added to System Settings ⮕ Privacy & Security ⮕ Accessibility.
 
 ## License
 

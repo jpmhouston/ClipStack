@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     maccy = Maccy()
     copyHotKey = GlobalCopyHotKey(maccy.queueCopy)
-    pasteHotKey = GlobalPasteHotKey(maccy.queueCopy)
+    pasteHotKey = GlobalPasteHotKey(maccy.queuePaste)
   }
 
   // TODO: figure out if this can just be removed since popUp() call now gone, does it affect using the menu normally
