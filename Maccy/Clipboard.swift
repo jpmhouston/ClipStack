@@ -57,7 +57,10 @@ class Clipboard {
   func copy(_ string: String) {
     pasteboard.clearContents()
     pasteboard.setString(string, forType: .string)
-    checkForChangesInPasteboard()
+    
+    // i don't think we ever want to track these copies
+    //checkForChangesInPasteboard()
+    changeCount = pasteboard.changeCount
   }
 
   func copy(_ item: HistoryItem?, removeFormatting: Bool = false) {
@@ -85,24 +88,34 @@ class Clipboard {
 
     // usded to do here: Notifier.notify(body: item.title, sound: .knock)
 
-    checkForChangesInPasteboard()
+    // i don't think we ever want to track these copies
+    //checkForChangesInPasteboard()
+    changeCount = pasteboard.changeCount
   }
 
+  func invokeApplicationCopy(then action: (() -> Void)? = nil) {
+    postKeypress(KeyChord.copyKeyModifiers, KeyChord.copyKey, then: action)
+  }
+  
+  func invokeApplicationPaste(then action: (() -> Void)? = nil) {
+    postKeypress(KeyChord.pasteKeyModifiers, KeyChord.pasteKey, then: action)
+  }
+  
   // Based on https://github.com/Clipy/Clipy/blob/develop/Clipy/Sources/Services/PasteService.swift.
-  func paste() {
+  func postKeypress(_ modifiers: NSEvent.ModifierFlags, _ key: Key, then action: (() -> Void)?) {
     Accessibility.check()
 
     DispatchQueue.main.async {
       // Add flag that left/right modifier key has been pressed.
       // See https://github.com/TermiT/Flycut/pull/18 for details.
-      let cmdFlag = CGEventFlags(rawValue: UInt64(KeyChord.pasteKeyModifiers.rawValue) | 0x000008)
-      var vCode = Sauce.shared.keyCode(for: KeyChord.pasteKey)
+      let cmdFlag = CGEventFlags(rawValue: UInt64(modifiers.rawValue) | 0x000008)
+      var vCode = Sauce.shared.keyCode(for: key)
 
       // Force QWERTY keycode when keyboard layout switches to
       // QWERTY upon pressing ⌘ key (e.g. "Dvorak - QWERTY ⌘").
       // See https://github.com/p0deje/Maccy/issues/482 for details.
       if KeyboardLayout.current.commandSwitchesToQWERTY && cmdFlag.contains(.maskCommand) {
-        vCode = KeyChord.pasteKey.QWERTYKeyCode
+        vCode = key.QWERTYKeyCode
       }
 
       let source = CGEventSource(stateID: .combinedSessionState)
@@ -116,6 +129,8 @@ class Clipboard {
       keyVUp?.flags = cmdFlag
       keyVDown?.post(tap: .cgAnnotatedSessionEventTap)
       keyVUp?.post(tap: .cgAnnotatedSessionEventTap)
+      
+      action?()
     }
   }
 

@@ -5,6 +5,12 @@ import Sauce
 enum KeyChord: CaseIterable {
   // Fetch paste from Edit / Paste menu item.
   // Fallback to ⌘V if unavailable.
+  static var copyKey: Key {
+    (NSApp.delegate as? AppDelegate)?.copyMenuItem.key ?? .c
+  }
+  static var copyKeyModifiers: NSEvent.ModifierFlags {
+    (NSApp.delegate as? AppDelegate)?.copyMenuItem.keyEquivalentModifierMask ?? [.command]
+  }
   static var pasteKey: Key {
     (NSApp.delegate as? AppDelegate)?.pasteMenuItem.key ?? .v
   }

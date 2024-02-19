@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="UnsafePointer"/>
         <customObject id="qYj-xg-cp5" userLabel="Delegate" customClass="AppDelegate" customModule="Cleepp" customModuleProvider="target">
             <connections>
+                <outlet property="copyMenuItem" destination="HrH-Lk-Qdy" id="m4L-87-fnZ"/>
                 <outlet property="pasteMenuItem" destination="vN8-yt-ylS" id="2vu-Dm-hXA"/>
             </connections>
         </customObject>
@@ -51,6 +52,11 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Edit" id="uqj-Ai-QW7">
                         <items>
+                            <menuItem title="Copy" hidden="YES" keyEquivalent="c" id="HrH-Lk-Qdy">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="KCX-yu-kCY"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Paste" hidden="YES" keyEquivalent="v" id="vN8-yt-ylS">
                                 <connections>
                                     <action selector="paste:" target="-1" id="dcf-Pk-PeQ"/>

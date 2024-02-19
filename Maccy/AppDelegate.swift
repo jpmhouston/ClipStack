@@ -8,6 +8,7 @@ import Sparkle
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   // TODO: figure out if able to remove this menu item, the menu bar completely
+  @IBOutlet weak var copyMenuItem: NSMenuItem!
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
   // TODO: perhaps move hotkeys to Maccy object

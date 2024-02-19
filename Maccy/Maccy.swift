@@ -5,14 +5,11 @@ import Settings
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
-  static var queueSize: Int? = nil
-  static var queueModeOn: Bool {
-    get { queueSize != nil }
-    set { if newValue && queueSize == nil { queueSize = 0 } else if !newValue { queueSize = nil } }
-  }
-
+  static var queueModeOn = false
+  static var queueSize = 0
+  
   static var allowExpandedMenu = true
-  static var allowSomethingElse = true
+  static var allowUndoCopy = true
   
   @objc let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
   var selectedItem: HistoryItem? { (menu.highlightedItem as? HistoryMenuItem)?.item }
@@ -22,7 +19,15 @@ class Maccy: NSObject {
   private let history = History()
   private var menuController: MenuController!
   private var menu: StatusItemMenu!
-
+  
+  private var queueHeadIndex: Int? {
+    if Maccy.queueSize < 1 {
+      nil
+    } else {
+      Maccy.queueSize - 1
+    }
+  }
+  
   private var clearAlert: NSAlert {
     let alert = NSAlert()
     alert.messageText = NSLocalizedString("clear_alert_message", comment: "")
@@ -87,33 +92,100 @@ class Maccy: NSObject {
 //    sortByObserver?.invalidate() // don't think i need sortBy or the statusItem obsevrers
 //    statusItemConfigurationObserver?.invalidate()
   }
-
+  
   func queueCopy() {
     if !Maccy.queueModeOn {
       Maccy.queueModeOn = true
     }
     
-    // TODO: make the frontmost application perform a copy, let onNewCopy find this normally to do the rest
+    // make the Headmost application perform a copy
+    // let clipboard object detect this normally and invoke incrementQueue
+    clipboard.invokeApplicationCopy()
   }
   
-  func queuePaste() {
-    // TODO: make the frontmost application perform a paste
+  private func incrementQueue() {
+    guard Maccy.queueModeOn else { return }
     
-    // Advance queue
-    if Maccy.queueModeOn, let priorQueueSize = Maccy.queueSize {
-      if priorQueueSize > 1 {
-        Maccy.queueSize = priorQueueSize - 1
-      } else {
-        Maccy.queueModeOn = false
-        updateStatusMenuIcon()
-        updateMenuTitle()
-      }
-      menu.updateFrontOfQueue()
+    //let wasEmpty = Maccy.queueSize == 0 // TODO: again use this to skip reloading pasteboard or updating menu?
+    Maccy.queueSize += 1
+    
+    updateMenuTitle()
+    menu.updateHeadOfQueue(index: queueHeadIndex)
+    
+    // revert pasteboard back to first item in the queue
+    if let index = queueHeadIndex, index < history.count {
+      clipboard.copy(history.all[index])
     }
   }
   
-  func undoLastCopy() {
-    // TODO: fill this in
+  func queuePaste() {
+    // make the Headmost application perform a paste
+    clipboard.invokeApplicationPaste(then: { self.decrementQueue() })
+  }
+  
+  private func decrementQueue() {
+    guard Maccy.queueModeOn && Maccy.queueSize > 0 else { return }
+    
+    Maccy.queueSize -= 1
+
+    if Maccy.queueSize <= 0 {
+      Maccy.queueModeOn = false
+    } else if let index = queueHeadIndex, index < history.count {
+      clipboard.copy(history.all[index]) // get the new Head item ready to paste next
+    }
+    
+    updateStatusMenuIcon()
+    updateMenuTitle()
+    menu.updateHeadOfQueue(index: queueHeadIndex)
+  }
+  
+  private func startQueueMode() {
+    Accessibility.check()
+    
+    Maccy.queueModeOn = true
+    Maccy.queueSize = 0
+    
+    updateStatusMenuIcon()
+    updateMenuTitle()
+  }
+  
+  private func cancelQueueMode() {
+    Maccy.queueModeOn = false
+    Maccy.queueSize = 0
+    
+    menu.updateHeadOfQueue(index: nil)
+    updateStatusMenuIcon()
+    updateMenuTitle()
+    
+    // in case pasteboard was left set to an item deeper in the queue, reset to the latest item copied
+    if let newestItem = history.first {
+      clipboard.copy(newestItem)
+    }
+  }
+  
+  private func undoLastCopy() {
+    guard let removeItem = history.first else {
+      return
+    }
+    
+    history.remove(removeItem)
+    _ = menu.delete(position: 0)
+    
+    if Maccy.queueModeOn && Maccy.queueSize > 0 {
+      Maccy.queueSize -= 1
+      updateMenuTitle()
+    }
+    
+    // set pasteboard to the previous history item, now first in the history after doing the remove above
+    // though if have items queued we don't want to change the pasteboard, it needs to stay the Head item in the queue
+    if !Maccy.queueModeOn || Maccy.queueSize == 0 {
+      if let replaceItem = history.first {
+        clipboard.copy(replaceItem)
+      } else {
+        clipboard.copy("")
+      }
+    }
+    
   }
   
   func select(position: Int) -> String? {
@@ -145,7 +217,7 @@ class Maccy: NSObject {
     
     clipboard.onNewCopy(history.add)
     clipboard.onNewCopy(menu.add)
-    clipboard.onNewCopy(incremenentQueue)
+    clipboard.onNewCopy({ _ in self.incrementQueue() })
     clipboard.startListening()
     
     populateMenu()
@@ -162,14 +234,9 @@ class Maccy: NSObject {
     if let tag = StatusItemMenu.Item(rawValue: sender.tag) {
       switch tag {
       case .queueStart:
-        Maccy.queueModeOn = true
-        updateStatusMenuIcon()
-        updateMenuTitle()
+        startQueueMode()
       case .queueStop:
-        Maccy.queueModeOn = false
-        menu.updateFrontOfQueue()
-        updateStatusMenuIcon()
-        updateMenuTitle()
+        cancelQueueMode()
       case .queueCopy:
         queueCopy()
       case .queuePaste:
@@ -181,8 +248,8 @@ class Maccy: NSObject {
         about.openAbout(sender)
         Maccy.returnFocusToPreviousApp = true
       case .clear:
-        Maccy.queueModeOn = false
         clearHistory()
+        Maccy.queueModeOn = false
       case .quit:
         NSApp.terminate(sender)
       case .preferences:
@@ -216,23 +283,15 @@ class Maccy: NSObject {
     // TODO: don't think i need this
     menu.clear()
     menu.removeAllItems()
-    
-    populateMenu()
-  }
-  
-  private func incremenentQueue(_ item: HistoryItem? = nil) {
-    if let priorQueueSize = Maccy.queueSize {
-      Maccy.queueSize = priorQueueSize + 1
-      if priorQueueSize == 0 {
-        menu.updateFrontOfQueue()
-      }
-      updateMenuTitle()
+    menu.buildItems()
+    if Maccy.queueModeOn {
+      menu.updateHeadOfQueue(index: queueHeadIndex)
     }
   }
   
   private func updateMenuTitle() {
     if Maccy.queueModeOn {
-      statusItem.button?.title = String(Maccy.queueSize ?? 0)
+      statusItem.button?.title = String(Maccy.queueSize)
     } else {
       statusItem.button?.title = ""
     }
@@ -242,6 +301,9 @@ class Maccy: NSObject {
   
   private func updateStatusMenuIcon() {
     // TODO: add something for changing icon based on queue mode
+//    if Maccy.queueModeOn {
+//    } else {
+//    }
     
     guard let button = statusItem.button else {
       return

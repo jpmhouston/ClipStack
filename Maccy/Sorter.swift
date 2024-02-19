@@ -12,6 +12,10 @@ class Sorter {
     return items.sorted(by: bySortingAlgorithm(_:_:))
   }
   
+  public func first(_ items: [HistoryItem]) -> HistoryItem? {
+    return items.min(by: bySortingAlgorithm(_:_:))
+  }
+  
   private func bySortingAlgorithm(_ lhs: HistoryItem, _ rhs: HistoryItem) -> Bool {
     switch by {
     case "firstCopiedAt":

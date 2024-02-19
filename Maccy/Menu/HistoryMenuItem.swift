@@ -3,8 +3,8 @@ import Cocoa
 class HistoryMenuItem: NSMenuItem {
   var item: HistoryItem?
   var value = ""
-  var isFrontOfQueue = false {
-    didSet { updateFrontOfQueueIndication() }
+  var isHeadOfQueue = false {
+    didSet { updateHeadOfQueueIndication() }
   }
 
   internal var clipboard: Clipboard!
@@ -36,7 +36,7 @@ class HistoryMenuItem: NSMenuItem {
 
     self.clipboard = clipboard
     self.item = item
-    self.isFrontOfQueue = false
+    self.isHeadOfQueue = false
     self.onStateImage = NSImage(named: "PinImage")
     self.target = self
 
@@ -80,7 +80,7 @@ class HistoryMenuItem: NSMenuItem {
     item.title = item.generateTitle(item.getContents())
     attributedTitle = nil
     
-    updateFrontOfQueueIndication()
+    updateHeadOfQueueIndication()
   }
   
   func highlight(_ ranges: [ClosedRange<Int>]) {
@@ -89,7 +89,7 @@ class HistoryMenuItem: NSMenuItem {
       return
     }
     
-    let attributedTitle = NSMutableAttributedString(string: title, attributes: isFrontOfQueue ? frontOfQueueAttributes() : nil)
+    let attributedTitle = NSMutableAttributedString(string: title, attributes: isHeadOfQueue ? headOfQueueAttributes() : nil)
     
     for range in ranges {
       let rangeLength = range.upperBound - range.lowerBound + 1
@@ -103,7 +103,7 @@ class HistoryMenuItem: NSMenuItem {
     self.attributedTitle = attributedTitle
   }
   
-  private func frontOfQueueAttributes() -> [NSAttributedString.Key: Any]? {
+  private func headOfQueueAttributes() -> [NSAttributedString.Key: Any]? {
     if #unavailable(macOS 14) {
       [.underlineStyle: NSUnderlineStyle.single.rawValue]
     } else {
@@ -111,31 +111,31 @@ class HistoryMenuItem: NSMenuItem {
     }
   }
   
-  private func styleToIndicateFrontOfQueue() {
+  private func styleToIndicateHeadOfQueue() {
     // NB: if item has had highlight called, will now lose the styling it set; just assume that won't happen
-    if isFrontOfQueue {
+    if isHeadOfQueue {
       guard title != imageTitle else { return }
-      attributedTitle = NSMutableAttributedString(string: title, attributes: frontOfQueueAttributes())
+      attributedTitle = NSMutableAttributedString(string: title, attributes: headOfQueueAttributes())
     } else {
       attributedTitle = nil
     }
   }
   
-  private func badgeToIndicateFrontOfQueue() {
+  private func badgeToIndicateHeadOfQueue() {
     if #available(macOS 14, *) {
-      if isFrontOfQueue {
-        badge = NSMenuItemBadge(string: "replay \u{2BAD}") // \u{2BAD}
+      if isHeadOfQueue {
+        badge = NSMenuItemBadge(string: "replay from here \u{2BAD}") // \u{2BAD}
       } else {
         badge = nil
       }
     }
   }
   
-  private func updateFrontOfQueueIndication() {
+  private func updateHeadOfQueueIndication() {
     if #unavailable(macOS 14) {
-      styleToIndicateFrontOfQueue()
+      styleToIndicateHeadOfQueue()
     } else {
-      badgeToIndicateFrontOfQueue()
+      badgeToIndicateHeadOfQueue()
     }
   }
 

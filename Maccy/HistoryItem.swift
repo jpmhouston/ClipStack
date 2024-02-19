@@ -15,13 +15,23 @@ class HistoryItem: NSManagedObject {
       return []
     }
   }
+  
+  static var count: Int {
+    let fetchRequest = NSFetchRequest<HistoryItem>(entityName: "HistoryItem")
+    //NSUInteger count = [moc countForFetchRequest:request error:&err];
+    do {
+      return try CoreDataManager.shared.viewContext.count(for: fetchRequest)
+    } catch {
+      return 0
+    }
+  }
 
   @NSManaged public var application: String?
   @NSManaged public var contents: NSSet?
   @NSManaged public var firstCopiedAt: Date!
   @NSManaged public var lastCopiedAt: Date!
   @NSManaged public var numberOfCopies: Int
-  //@NSManaged public var pin: String?
+  //@NSManaged public var shortcut: String?
   @NSManaged public var title: String?
 
   var fileURL: URL? {

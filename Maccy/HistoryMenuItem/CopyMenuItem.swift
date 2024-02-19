@@ -16,7 +16,7 @@ extension HistoryMenuItem {
     }
     
     override func select() {
-      clipboard.copy(item) // TODO: either make new call that copies without adding to menu, or change existing copy to do that
+      clipboard.copy(item)
     }
     
   }
