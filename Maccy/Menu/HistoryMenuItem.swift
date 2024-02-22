@@ -61,7 +61,7 @@ class HistoryMenuItem: NSMenuItem {
   }
 
   func select() {
-    // Override in children.
+    // Can override in children.
   }
 
   func resizeImage() {

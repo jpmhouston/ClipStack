@@ -1,7 +1,7 @@
 import AppKit
 
 extension HistoryMenuItem {
-  class StartHereMenuItem: HistoryMenuItem {
+  class ReplayMenuItem: HistoryMenuItem {
     
     required init(coder: NSCoder) {
       super.init(coder: coder)
@@ -11,11 +11,6 @@ extension HistoryMenuItem {
       super.init(item: item, clipboard: clipboard)
       
       keyEquivalentModifierMask = []
-    }
-    
-    override func select() {
-      // TODO: call whatever to start queue mode
-      clipboard.copy(item) // TODO: either make new call that copies without adding to menu, or change existing copy to do that
     }
     
   }

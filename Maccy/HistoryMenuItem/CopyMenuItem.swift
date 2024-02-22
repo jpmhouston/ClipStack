@@ -15,9 +15,5 @@ extension HistoryMenuItem {
       isHidden = true
     }
     
-    override func select() {
-      clipboard.copy(item)
-    }
-    
   }
 }

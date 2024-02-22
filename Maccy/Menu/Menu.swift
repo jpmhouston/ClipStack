@@ -24,19 +24,6 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
   }
   
-  enum Item: Int, CaseIterable {
-    // these must match tag values set in nib file
-    case queueStart = 101
-    case queueStop
-    case queueCopy
-    case queuePaste
-    case clear
-    case undoLastCopy
-    case preferences
-    case about
-    case quit
-  }
-  
   public var isVisible: Bool = false
   
   internal var historyMenuItems: [HistoryMenuItem] {
@@ -85,6 +72,8 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var queueStartItem: NSMenuItem?
   @IBOutlet weak var queueStopItem: NSMenuItem?
   @IBOutlet weak var historyHeaderItem: NSMenuItem?
+  @IBOutlet weak var placeholderCopyItem: NSMenuItem?
+  @IBOutlet weak var placeholderReplayItem: NSMenuItem?
   @IBOutlet weak var trailingSeparatorItem: NSMenuItem?
   @IBOutlet weak var noteItem: NSMenuItem?
   
@@ -118,8 +107,10 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     
     // restore this if we want to highlight the first history item when menu opens
     //highlight(firstVisibleHistoryMenuItem ?? historyMenuItems.first)
+    
+    // TODO: is this where we should set the search field as the first responder, if it's visible?
   }
-
+  
   func menuDidClose(_ menu: NSMenu) {
     isVisible = false
     offloadCurrentPreview()
@@ -537,16 +528,23 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   private func buildMenuItems(_ item: HistoryItem) -> [HistoryMenuItem] {
-    let menuItems = [
-      HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard),
-      HistoryMenuItem.StartHereMenuItem(item: item, clipboard: clipboard)
-    ]
+    let copyItem = HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard)
+    if let copyPlaceholder = placeholderCopyItem {
+      copyItem.target = copyPlaceholder.target
+      copyItem.action = copyPlaceholder.action
+    }
+    let replayItem = HistoryMenuItem.ReplayMenuItem(item: item, clipboard: clipboard)
+    if let replayPlaceholder = placeholderReplayItem {
+      replayItem.target = replayPlaceholder.target
+      replayItem.action = replayPlaceholder.action
+    }
     
+    let menuItems = [ copyItem, replayItem ]
     assert(menuItems.count == historyMenuItemsGroup)
     
     return menuItems.sorted(by: { !$0.isAlternate && $1.isAlternate })
   }
-
+  
   private func chunks(_ items: [HistoryMenuItem]) -> [[HistoryMenuItem]] {
     return stride(from: 0, to: items.count, by: historyMenuItemsGroup).map({ index in
       Array(items[index ..< Swift.min(index + historyMenuItemsGroup, items.count)])

@@ -70,7 +70,7 @@ class Maccy: NSObject {
     super.init()
     initializeObservers()
     
-    guard let nib = NSNib(nibNamed: "StatusItemMenu", bundle: nil) else { fatalError("menu nib file missing") }
+    guard let nib = NSNib(nibNamed: "Menu", bundle: nil) else { fatalError("menu nib file missing") }
     var nibObjects: NSArray? = NSArray()
     nib.instantiate(withOwner: self, topLevelObjects: &nibObjects)
     guard let nibMenu = nibObjects?.compactMap({ $0 as? StatusItemMenu }).first else { fatalError("menu object missing") }
@@ -91,6 +91,11 @@ class Maccy: NSObject {
     removalObserver?.invalidate()
 //    sortByObserver?.invalidate() // don't think i need sortBy or the statusItem obsevrers
 //    statusItemConfigurationObserver?.invalidate()
+  }
+  
+  @IBAction
+  func queueCopy(_ sender: NSMenuItem) {
+    queueCopy()
   }
   
   func queueCopy() {
@@ -118,6 +123,11 @@ class Maccy: NSObject {
     }
   }
   
+  @IBAction
+  func queuePaste(_ sender: NSMenuItem) {
+    queuePaste()
+  }
+  
   func queuePaste() {
     // make the Headmost application perform a paste
     clipboard.invokeApplicationPaste(then: { self.decrementQueue() })
@@ -139,7 +149,8 @@ class Maccy: NSObject {
     menu.updateHeadOfQueue(index: queueHeadIndex)
   }
   
-  private func startQueueMode() {
+  @IBAction
+  func startQueueMode(_ sender: NSMenuItem) {
     Accessibility.check()
     
     Maccy.queueModeOn = true
@@ -149,7 +160,8 @@ class Maccy: NSObject {
     updateMenuTitle()
   }
   
-  private func cancelQueueMode() {
+  @IBAction
+  func cancelQueueMode(_ sender: NSMenuItem) {
     Maccy.queueModeOn = false
     Maccy.queueSize = 0
     
@@ -163,7 +175,28 @@ class Maccy: NSObject {
     }
   }
   
-  private func undoLastCopy() {
+  @IBAction
+  func replayFromHistory(_ sender: NSMenuItem) {
+    guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else { return }
+    
+    Accessibility.check()
+    Maccy.queueModeOn = true
+    Maccy.queueSize = index + 1
+    
+    updateStatusMenuIcon()
+    updateMenuTitle()
+    menu.updateHeadOfQueue(index: index)
+  }
+  
+  @IBAction
+  func copyFromHistory(_ sender: NSMenuItem) {
+    guard let item = (sender as? HistoryMenuItem)?.item else { return }
+    
+    clipboard.copy(item)
+  }
+  
+  @IBAction
+  func undoLastCopy(_ sender: NSMenuItem) {
     guard let removeItem = history.first else {
       return
     }
@@ -185,7 +218,32 @@ class Maccy: NSObject {
         clipboard.copy("")
       }
     }
-    
+  }
+  
+  @IBAction
+  func clear(_ sender: NSMenuItem) {
+    clearHistory()
+    Maccy.queueModeOn = false
+  }
+  
+  @IBAction
+  func showAbout(_ sender: NSMenuItem) {
+    Maccy.returnFocusToPreviousApp = false
+    about.openAbout(sender)
+    Maccy.returnFocusToPreviousApp = true
+  }
+  
+  @IBAction
+  func showSettings(_ sender: NSMenuItem) {
+    Maccy.returnFocusToPreviousApp = false
+    settingsWindowController.show()
+    settingsWindowController.window?.orderFrontRegardless()
+    Maccy.returnFocusToPreviousApp = true
+  }
+  
+  @IBAction
+  func quit(_ sender: NSMenuItem) {
+    NSApp.terminate(sender)
   }
   
   func select(position: Int) -> String? {
@@ -227,38 +285,6 @@ class Maccy: NSObject {
   
   private func populateMenu() {
     menu.buildItems()
-  }
-  
-  @IBAction
-  private func menuItemAction(_ sender: NSMenuItem) {
-    if let tag = StatusItemMenu.Item(rawValue: sender.tag) {
-      switch tag {
-      case .queueStart:
-        startQueueMode()
-      case .queueStop:
-        cancelQueueMode()
-      case .queueCopy:
-        queueCopy()
-      case .queuePaste:
-        queuePaste()
-      case .undoLastCopy:
-        undoLastCopy()
-      case .about:
-        Maccy.returnFocusToPreviousApp = false
-        about.openAbout(sender)
-        Maccy.returnFocusToPreviousApp = true
-      case .clear:
-        clearHistory()
-        Maccy.queueModeOn = false
-      case .quit:
-        NSApp.terminate(sender)
-      case .preferences:
-        Maccy.returnFocusToPreviousApp = false
-        settingsWindowController.show()
-        settingsWindowController.window?.orderFrontRegardless()
-        Maccy.returnFocusToPreviousApp = true
-      }
-    }
   }
   
   private func withClearAlert(suppressClearAlert: Bool, _ closure: @escaping () -> Void) {
