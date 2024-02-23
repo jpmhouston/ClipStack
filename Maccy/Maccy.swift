@@ -155,6 +155,11 @@ class Maccy: NSObject {
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
+    #if FOR_APP_STORE
+    if !Self.queueModeOn {
+      AppStoreReview.ask()
+    }
+    #endif
   }
   
   @IBAction

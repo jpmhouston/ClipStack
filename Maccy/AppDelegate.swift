@@ -7,23 +7,23 @@ import Sparkle
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-  // TODO: figure out if able to remove this menu item, the menu bar completely
+  // I think these are in the otherwisw-unused menu bar so they can be localized TODO: verify this
   @IBOutlet weak var copyMenuItem: NSMenuItem!
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
-  // TODO: perhaps move hotkeys to Maccy object
   private var copyHotKey: GlobalCopyHotKey!
   private var pasteHotKey: GlobalPasteHotKey!
   private var maccy: Maccy!
 
   func applicationWillFinishLaunching(_ notification: Notification) {
+    #if ALLOW_SPARKLE_UPDATES
     if ProcessInfo.processInfo.arguments.contains("ui-testing") {
-      SPUUpdater(hostBundle: Bundle.main,
-                 applicationBundle: Bundle.main,
-                 userDriver: SPUStandardUserDriver(hostBundle: Bundle.main, delegate: nil),
-                 delegate: nil)
-        .automaticallyChecksForUpdates = false
+      SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+        .updater.automaticallyChecksForUpdates = false
+    } else {
+      let _ = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
     }
+    #endif
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
