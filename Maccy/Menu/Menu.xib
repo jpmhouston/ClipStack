@@ -72,6 +72,12 @@
                         <action selector="cancelQueueMode:" target="-2" id="sql-E4-fEM"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Advance Replay to Next Item" hidden="YES" id="TLY-ku-V0E">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                    <connections>
+                        <action selector="advanceReplay:" target="-2" id="Bb4-sn-Nnk"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="1dD-HH-ufE"/>
                 <menuItem title="Copy &amp; Collect" tag="103" id="ieX-in-c9O">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -138,6 +144,7 @@ CA
                 </menuItem>
             </items>
             <connections>
+                <outlet property="advanceItem" destination="TLY-ku-V0E" id="od9-PM-WWa"/>
                 <outlet property="historyHeaderItem" destination="MMa-qd-9PO" id="Isx-BV-gjX"/>
                 <outlet property="noteItem" destination="f7O-Xw-4yJ" id="MEb-0U-qJb"/>
                 <outlet property="placeholderCopyItem" destination="1hg-yO-AD0" id="BFx-GW-cTS"/>

@@ -71,6 +71,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var queuePasteItem: NSMenuItem?
   @IBOutlet weak var queueStartItem: NSMenuItem?
   @IBOutlet weak var queueStopItem: NSMenuItem?
+  @IBOutlet weak var advanceItem: NSMenuItem?
   @IBOutlet weak var historyHeaderItem: NSMenuItem?
   @IBOutlet weak var placeholderCopyItem: NSMenuItem?
   @IBOutlet weak var placeholderReplayItem: NSMenuItem?
@@ -576,10 +577,15 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     // Switch visibility of start vs stop menu item
     queueStartItem?.isHidden = Maccy.queueModeOn
     queueStopItem?.isHidden = !Maccy.queueModeOn
+    if Maccy.queueModeOn && Maccy.queueSize > 0 {
+      advanceItem?.isAlternate = true // make alternate to queueStopItem, expect to be shown when option down
+    } else {
+      advanceItem?.isAlternate = false // unset as alternate so isHidden respected * doesn't show when option down
+    }
     
     // Show the history header & separator if showing the expanded menu
     guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem else { return }
-    historyHeaderItem.isHidden = !showsExpandedMenu
+    historyHeaderItem.isHidden = !showsExpandedMenu || UserDefaults.standard.hideSearch
     trailingSeparatorItem.isHidden = !showsExpandedMenu
     
     // The rest is for showing or hiding the desired history items
@@ -589,7 +595,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     assert(!(isFiltered && Maccy.queueModeOn))
     
     // count the number of queue items to always show, irrespective of showing the expanded menu
-    if Maccy.queueModeOn, Maccy.queueSize > 0 {
+    if Maccy.queueModeOn && Maccy.queueSize > 0 {
       let historyMenuItemsGroupCount = historyMenuItemsGroup + (usePopoverAnchor ? 1 : 0)
       remainingHistoryMenuItemIndex += historyMenuItemsGroupCount * Maccy.queueSize
       

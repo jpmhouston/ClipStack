@@ -103,7 +103,7 @@ class Maccy: NSObject {
       Maccy.queueModeOn = true
     }
     
-    // make the Headmost application perform a copy
+    // make the frontmost application perform a copy
     // let clipboard object detect this normally and invoke incrementQueue
     clipboard.invokeApplicationCopy()
   }
@@ -129,7 +129,7 @@ class Maccy: NSObject {
   }
   
   func queuePaste() {
-    // make the Headmost application perform a paste
+    // make the frontmost application perform a paste
     clipboard.invokeApplicationPaste(then: { self.decrementQueue() })
   }
   
@@ -141,7 +141,7 @@ class Maccy: NSObject {
     if Maccy.queueSize <= 0 {
       Maccy.queueModeOn = false
     } else if let index = queueHeadIndex, index < history.count {
-      clipboard.copy(history.all[index]) // get the new Head item ready to paste next
+      clipboard.copy(history.all[index]) // reset pasteboard to the latest item copied
     }
     
     updateStatusMenuIcon()
@@ -173,6 +173,11 @@ class Maccy: NSObject {
     if let newestItem = history.first {
       clipboard.copy(newestItem)
     }
+  }
+  
+  @IBAction
+  func advanceReplay(_ sender: NSMenuItem) {
+    decrementQueue()
   }
   
   @IBAction
@@ -212,6 +217,9 @@ class Maccy: NSObject {
     // set pasteboard to the previous history item, now first in the history after doing the remove above
     // though if have items queued we don't want to change the pasteboard, it needs to stay the Head item in the queue
     if !Maccy.queueModeOn || Maccy.queueSize == 0 {
+    // Normally set pasteboard to the previous history item, now first in the history after doing the
+    // delete above. However if have items queued we instead don't want to change the pasteboard at all,
+    // it needs to stay set to the front item in the queue.
       if let replaceItem = history.first {
         clipboard.copy(replaceItem)
       } else {
