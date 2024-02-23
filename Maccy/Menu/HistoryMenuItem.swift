@@ -31,15 +31,16 @@ class HistoryMenuItem: NSMenuItem {
     super.init(coder: coder)
   }
 
-  init(item: HistoryItem, clipboard: Clipboard) {
+  init(item: HistoryItem, clipboard: Clipboard, target: AnyObject?, action: Selector?) {
     super.init(title: "", action: #selector(onSelect(_:)), keyEquivalent: "")
 
     self.clipboard = clipboard
     self.item = item
     self.isHeadOfQueue = false
     self.onStateImage = NSImage(named: "PinImage")
-    self.target = self
-
+    self.target = target ?? self
+    self.action = (target != nil) ? action : #selector(onSelect(_:))
+    
     if isImage(item) {
       loadImage(item)
     } else if isFile(item) {

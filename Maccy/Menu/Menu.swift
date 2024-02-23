@@ -528,18 +528,10 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   private func buildMenuItems(_ item: HistoryItem) -> [HistoryMenuItem] {
-    let copyItem = HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard)
-    if let copyPlaceholder = placeholderCopyItem {
-      copyItem.target = copyPlaceholder.target
-      copyItem.action = copyPlaceholder.action
-    }
-    let replayItem = HistoryMenuItem.ReplayMenuItem(item: item, clipboard: clipboard)
-    if let replayPlaceholder = placeholderReplayItem {
-      replayItem.target = replayPlaceholder.target
-      replayItem.action = replayPlaceholder.action
-    }
-    
-    let menuItems = [ copyItem, replayItem ]
+    let menuItems = [
+      HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard, target: placeholderCopyItem?.target, action: placeholderCopyItem?.action),
+      HistoryMenuItem.ReplayMenuItem(item: item, clipboard: clipboard, target: placeholderReplayItem?.target, action: placeholderReplayItem?.action)
+    ]
     assert(menuItems.count == historyMenuItemsGroup)
     
     return menuItems.sorted(by: { !$0.isAlternate && $1.isAlternate })
