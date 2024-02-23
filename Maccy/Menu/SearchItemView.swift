@@ -119,7 +119,7 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
   // swiftlint:disable cyclomatic_complexity
   // swiftlint:disable function_body_length
   private func processKeyDownEvent(key: Key, modifierFlags: NSEvent.ModifierFlags, chars: String?) -> Bool {
-    switch KeyChord(key, modifierFlags) {
+    switch SearchItemKeypress(key, modifierFlags) {
     case .clearSearch:
       setQuery("")
       return true
@@ -127,15 +127,6 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
       customMenu?.delete()
       setQuery("")
       return true
-//    case .clearHistory:
-//      performMenuItemAction(StatusItemMenu.Item.clear.rawValue)
-//      return true
-//    case .clearHistoryAll:
-//      performMenuItemAction(StatusItemMenu.Item.clearAll.rawValue)
-//      return true
-//    case .openPreferences:
-//      performMenuItemAction(StatusItemMenu.Item.preferences.rawValue)
-//      return true
     case .deleteOneCharFromSearch:
       if !queryField.stringValue.isEmpty {
         setQuery(String(queryField.stringValue.dropLast()))

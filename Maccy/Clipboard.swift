@@ -94,11 +94,17 @@ class Clipboard {
   }
 
   func invokeApplicationCopy(then action: (() -> Void)? = nil) {
-    postKeypress(KeyChord.copyKeyModifiers, KeyChord.copyKey, then: action)
+    // Fetch shortcut from Edit / Copy menu item, fallback to ⌘C if unavailable
+    let copyKey = (NSApp.delegate as? AppDelegate)?.copyMenuItem.key ?? .c
+    let copyKeyModifiers = (NSApp.delegate as? AppDelegate)?.copyMenuItem.keyEquivalentModifierMask ?? [.command]
+    postKeypress(copyKeyModifiers, copyKey, then: action)
   }
   
   func invokeApplicationPaste(then action: (() -> Void)? = nil) {
-    postKeypress(KeyChord.pasteKeyModifiers, KeyChord.pasteKey, then: action)
+    // Fetch shortcut from Edit / Paste menu item, fallback to ⌘V if unavailable
+    let pasteKey = (NSApp.delegate as? AppDelegate)?.pasteMenuItem.key ?? .v
+    let pasteKeyModifiers = (NSApp.delegate as? AppDelegate)?.pasteMenuItem.keyEquivalentModifierMask ?? [.command]
+    postKeypress(pasteKeyModifiers, pasteKey, then: action)
   }
   
   // Based on https://github.com/Clipy/Clipy/blob/develop/Clipy/Sources/Services/PasteService.swift.
