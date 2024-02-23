@@ -5,8 +5,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="GeneralSettingsViewController" customModule="Clipboarq" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="GeneralSettingsViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
+                <outlet property="automaticUpdatesButton" destination="Mxc-Pf-Ef9" id="443-Kc-WHD"/>
                 <outlet property="checkForUpdatesButtonRow" destination="bpM-Oe-CBP" id="VBQ-Mw-0J1"/>
                 <outlet property="checkForUpdatesOptionRow" destination="Ssu-ST-LDz" id="HaS-lu-XC3"/>
                 <outlet property="copyHotkeyContainerView" destination="gv6-rV-zkI" id="nuk-d3-lAf"/>
@@ -64,7 +65,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="NyN-Z6-SI8" name="value" keyPath="self.updater.automaticallyChecksForUpdates" id="7tG-Dp-gUR"/>
+                                    <action selector="sparkleAutomaticUpdatesChanged:" target="-2" id="pjv-0I-Ahw"/>
                                 </connections>
                             </button>
                         </gridCell>
@@ -77,7 +78,7 @@
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="checkForUpdates:" target="NyN-Z6-SI8" id="SZf-Uf-dKc"/>
+                                    <action selector="sparkleUpdateCheck:" target="-2" id="hWZ-ac-pYU"/>
                                 </connections>
                             </button>
                         </gridCell>
@@ -89,7 +90,7 @@
                         <gridCell row="mzz-6k-Dz9" column="pQU-Pz-q1v" headOfMergedCell="hec-ch-tJx" id="hE2-yX-ng0"/>
                         <gridCell row="1lh-Qw-cAx" column="vOJ-9h-G8Y" id="2m8-9a-mJO">
                             <textField key="contentView" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C8J-Mx-Lzz">
-                                <rect key="frame" x="12" y="304" width="91" height="23"/>
+                                <rect key="frame" x="12" y="86" width="91" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="10R-0q-RDn"/>
                                 </constraints>
@@ -102,7 +103,7 @@
                         </gridCell>
                         <gridCell row="1lh-Qw-cAx" column="pQU-Pz-q1v" id="t3H-4Z-90w">
                             <customView key="contentView" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gv6-rV-zkI">
-                                <rect key="frame" x="114" y="307" width="100" height="30"/>
+                                <rect key="frame" x="114" y="89" width="100" height="30"/>
                                 <string key="toolTip">Global shortcut key to copy into the queue.
 Default: ^⌘C.</string>
                                 <constraints>
@@ -112,7 +113,7 @@ Default: ^⌘C.</string>
                         </gridCell>
                         <gridCell row="rSH-D5-fQU" column="vOJ-9h-G8Y" id="MkQ-Ti-RAy">
                             <textField key="contentView" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UNS-12-xWP">
-                                <rect key="frame" x="10" y="263" width="93" height="23"/>
+                                <rect key="frame" x="10" y="45" width="93" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="ARz-S4-0pY"/>
                                 </constraints>
@@ -125,7 +126,7 @@ Default: ^⌘C.</string>
                         </gridCell>
                         <gridCell row="rSH-D5-fQU" column="pQU-Pz-q1v" id="yVM-gZ-e0i">
                             <customView key="contentView" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pPs-rF-k8m">
-                                <rect key="frame" x="114" y="266" width="100" height="30"/>
+                                <rect key="frame" x="114" y="48" width="100" height="30"/>
                                 <string key="toolTip">Global shortcut key to paste next item from the queue.
 Default: ^⌘P.</string>
                                 <constraints>
@@ -135,7 +136,7 @@ Default: ^⌘P.</string>
                         </gridCell>
                         <gridCell row="gQG-qR-qof" column="vOJ-9h-G8Y" headOfMergedCell="8Tc-ki-XIw" xPlacement="fill" id="8Tc-ki-XIw">
                             <box key="contentView" verticalHuggingPriority="750" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fMY-lL-A9Q">
-                                <rect key="frame" x="0.0" y="252" width="532" height="5"/>
+                                <rect key="frame" x="0.0" y="34" width="532" height="5"/>
                             </box>
                         </gridCell>
                         <gridCell row="gQG-qR-qof" column="pQU-Pz-q1v" headOfMergedCell="8Tc-ki-XIw" id="a3u-rN-xNI"/>
@@ -182,6 +183,5 @@ Default: ^⌘P.</string>
             </constraints>
             <point key="canvasLocation" x="193.5" y="154"/>
         </customView>
-        <customObject id="NyN-Z6-SI8" customClass="SPUStandardUpdaterController"/>
     </objects>
 </document>

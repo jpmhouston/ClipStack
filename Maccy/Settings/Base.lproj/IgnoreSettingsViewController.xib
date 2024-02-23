@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="IgnoreSettingsViewController" customModule="Clipboarq" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="IgnoreSettingsViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="NB5-c9-ckl" id="2rT-S1-SUg"/>
             </connections>
@@ -375,17 +375,17 @@ By default, some known application-specific types are defined. You can remove th
             </constraints>
             <point key="canvasLocation" x="194" y="-58.5"/>
         </customView>
-        <viewController id="gYR-MN-G8y" customClass="IgnoreApplicationsViewController" customModule="Clipboarq" customModuleProvider="target">
+        <viewController id="gYR-MN-G8y" customClass="IgnoreApplicationsViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="ignoredItemsTable" destination="CZi-bA-9xC" id="nYD-Vd-eZA"/>
             </connections>
         </viewController>
-        <viewController id="tgV-YG-Zdo" customClass="IgnorePasteboardTypesViewController" customModule="Clipboarq" customModuleProvider="target">
+        <viewController id="tgV-YG-Zdo" customClass="IgnorePasteboardTypesViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="ignoredItemsTable" destination="OFh-D1-WKr" id="gb5-6D-RkJ"/>
             </connections>
         </viewController>
-        <viewController id="yZq-nz-Q7h" customClass="IgnoreRegexViewController" customModule="Clipboarq" customModuleProvider="target">
+        <viewController id="yZq-nz-Q7h" customClass="IgnoreRegexViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="ignoredItemsTable" destination="hKt-HW-p79" id="F8X-wd-gA7"/>
             </connections>

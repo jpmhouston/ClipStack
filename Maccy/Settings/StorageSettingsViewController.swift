@@ -13,7 +13,6 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
 
   @IBOutlet weak var sizeTextField: NSTextField!
   @IBOutlet weak var sizeStepper: NSStepper!
-  @IBOutlet weak var sortByButton: NSPopUpButton!
   @IBOutlet weak var storeFilesButton: NSButton!
   @IBOutlet weak var storeImagesButton: NSButton!
   @IBOutlet weak var storeTextButton: NSButton!
@@ -28,7 +27,6 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
   override func viewWillAppear() {
     super.viewWillAppear()
     populateSize()
-    populateSortBy()
     populateStoredTypes()
   }
 
@@ -40,17 +38,6 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
   @IBAction func sizeStepperChanged(_ sender: NSStepper) {
     UserDefaults.standard.size = sender.integerValue
     sizeTextField.integerValue = sender.integerValue
-  }
-
-  @IBAction func sortByChanged(_ sender: NSPopUpButton) {
-    switch sender.selectedTag() {
-    case 2:
-      UserDefaults.standard.sortBy = "numberOfCopies"
-    case 1:
-      UserDefaults.standard.sortBy = "firstCopiedAt"
-    default:
-      UserDefaults.standard.sortBy = "lastCopiedAt"
-    }
   }
 
   @IBAction func storeFilesChanged(_ sender: NSButton) {
@@ -85,17 +72,6 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
   private func populateSize() {
     sizeTextField.integerValue = UserDefaults.standard.size
     sizeStepper.integerValue = UserDefaults.standard.size
-  }
-
-  private func populateSortBy() {
-    switch UserDefaults.standard.sortBy {
-    case "numberOfCopies":
-      sortByButton.selectItem(withTag: 2)
-    case "firstCopiedAt":
-      sortByButton.selectItem(withTag: 1)
-    default:
-      sortByButton.selectItem(withTag: 0)
-    }
   }
 
   private func populateStoredTypes() {

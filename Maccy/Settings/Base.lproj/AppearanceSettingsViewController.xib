@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AppearanceSettingsViewController" customModule="Clipboarq" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="AppearanceSettingsViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="imageHeightField" destination="fcz-4Q-KUm" id="cyp-tO-tIe"/>
                 <outlet property="imageHeightStepper" destination="P1r-xd-oR8" id="Xjt-Gz-1OP"/>

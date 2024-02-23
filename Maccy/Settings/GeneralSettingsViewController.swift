@@ -2,6 +2,9 @@ import Cocoa
 import KeyboardShortcuts
 import LaunchAtLogin
 import Settings
+#if ALLOW_SPARKLE_UPDATES
+import Sparkle
+#endif
 
 class GeneralSettingsViewController: NSViewController, SettingsPane {
   public let paneIdentifier = Settings.PaneIdentifier.general
@@ -13,9 +16,14 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   private let copyHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .queueCopy)
   private let pasteHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .queuePaste)
 
+  #if ALLOW_SPARKLE_UPDATES
+  private let sparkleUpdateController = SPUStandardUpdaterController(updaterDelegate:nil, userDriverDelegate:nil)
+  #endif
+  
   @IBOutlet weak var copyHotkeyContainerView: NSView!
   @IBOutlet weak var pasteHotkeyContainerView: NSView!
   @IBOutlet weak var launchAtLoginButton: NSButton!
+  @IBOutlet weak var automaticUpdatesButton: NSButton!
   @IBOutlet weak var searchModeButton: NSPopUpButton!
   @IBOutlet weak var checkForUpdatesOptionRow: NSGridRow!
   @IBOutlet weak var checkForUpdatesButtonRow: NSGridRow!
@@ -24,17 +32,37 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     super.viewDidLoad()
     copyHotkeyContainerView.addSubview(copyHotkeyRecorder)
     pasteHotkeyContainerView.addSubview(pasteHotkeyRecorder)
-    if true { // TODO: how to build for app store vs. github release
-      hideSparkleUpdateRows()
-    }
+    
+    #if !ALLOW_SPARKLE_UPDATES
+    hideSparkleUpdateRows()
+    #endif
   }
 
   override func viewWillAppear() {
     super.viewWillAppear()
     populateLaunchAtLogin()
+    populateSparkleAutomaticUpdates()
     populateSearchMode()
   }
 
+  @IBAction func sparkleAutomaticUpdatesChanged(_ sender: NSButton) {
+    #if ALLOW_SPARKLE_UPDATES
+    sparkleUpdateController.updater.automaticallyChecksForUpdates = (sender.state == .on)
+    #endif
+  }
+  
+  private func populateSparkleAutomaticUpdates() {
+    #if ALLOW_SPARKLE_UPDATES
+    automaticUpdatesButton.state = sparkleUpdateController.updater.automaticallyChecksForUpdates ? .on : .off
+    #endif
+  }
+  
+  @IBAction func sparkleUpdateCheck(_ sender: NSButton) {
+    #if ALLOW_SPARKLE_UPDATES
+    sparkleUpdateController.checkForUpdates(sender)
+    #endif
+  }
+  
   @IBAction func launchAtLoginChanged(_ sender: NSButton) {
     LaunchAtLogin.isEnabled = (sender.state == .on)
   }
