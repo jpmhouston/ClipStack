@@ -84,7 +84,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   
   override func awakeFromNib() {
     self.delegate = self
-    self.minimumWidth = CGFloat(StatusItemMenu.menuWidth)
+    self.minimumWidth = CGFloat(Self.menuWidth)
 
     if #unavailable(macOS 14) {
       self.usePopoverAnchor = true
@@ -110,6 +110,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     //highlight(firstVisibleHistoryMenuItem ?? historyMenuItems.first)
     
     // TODO: is this where we should set the search field as the first responder, if it's visible?
+    // (unless UserDefaults.standard.hideSearch)
   }
   
   func menuDidClose(_ menu: NSMenu) {
@@ -144,7 +145,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
         return
       }
 
-      previewThrottle.minimumDelay = StatusItemMenu.subsequentPreviewDelay
+      previewThrottle.minimumDelay = Self.subsequentPreviewDelay
 
       previewPopover?.show(
         relativeTo: boundsOfVisibleMenuItem,
@@ -155,11 +156,11 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       if let popoverWindow = previewPopover?.contentViewController?.view.window {
         if popoverWindow.frame.minX < previewWindow.frame.minX {
           popoverWindow.setFrameOrigin(
-            NSPoint(x: popoverWindow.frame.minX - StatusItemMenu.popoverGap, y: popoverWindow.frame.minY)
+            NSPoint(x: popoverWindow.frame.minX - Self.popoverGap, y: popoverWindow.frame.minY)
           )
         } else {
           popoverWindow.setFrameOrigin(
-            NSPoint(x: popoverWindow.frame.minX + StatusItemMenu.popoverGap, y: popoverWindow.frame.minY)
+            NSPoint(x: popoverWindow.frame.minX + Self.popoverGap, y: popoverWindow.frame.minY)
           )
         }
       }
