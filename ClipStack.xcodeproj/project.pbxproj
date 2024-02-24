@@ -219,7 +219,7 @@
 		7CEEFDEF24F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF124F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		8FBC10D42B88980400DD5481 /* Cleepp MAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp MAS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp (App Store).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBC10D82B889A0B00DD5481 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
@@ -561,7 +561,7 @@
 				DAEE38431E3DBEB100DD2966 /* Cleepp.app */,
 				DA360DB01E3DF137005C6F6B /* CleeppTests.xctest */,
 				DA0EE7B6204657830025FC60 /* CleeppUITests.xctest */,
-				8FBC10D42B88980400DD5481 /* Cleepp MAS.app */,
+				8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -630,9 +630,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8FBC10772B88980400DD5481 /* Cleepp MAS */ = {
+		8FBC10772B88980400DD5481 /* Cleepp (App Store) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8FBC10D12B88980400DD5481 /* Build configuration list for PBXNativeTarget "Cleepp MAS" */;
+			buildConfigurationList = 8FBC10D12B88980400DD5481 /* Build configuration list for PBXNativeTarget "Cleepp (App Store)" */;
 			buildPhases = (
 				8FBC10842B88980400DD5481 /* Sources */,
 				8FBC10B72B88980400DD5481 /* Frameworks */,
@@ -643,7 +643,7 @@
 			);
 			dependencies = (
 			);
-			name = "Cleepp MAS";
+			name = "Cleepp (App Store)";
 			packageProductDependencies = (
 				8FBC10782B88980400DD5481 /* Sauce */,
 				8FBC107A2B88980400DD5481 /* Fuse */,
@@ -653,7 +653,7 @@
 				8FBC10822B88980400DD5481 /* Settings */,
 			);
 			productName = Maccy;
-			productReference = 8FBC10D42B88980400DD5481 /* Cleepp MAS.app */;
+			productReference = 8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */;
 			productType = "com.apple.product-type.application";
 		};
 		DA0EE7B5204657830025FC60 /* CleeppUITests */ = {
@@ -786,7 +786,7 @@
 			projectRoot = "";
 			targets = (
 				DAEE38421E3DBEB100DD2966 /* Cleepp */,
-				8FBC10772B88980400DD5481 /* Cleepp MAS */,
+				8FBC10772B88980400DD5481 /* Cleepp (App Store) */,
 				DA360DAF1E3DF137005C6F6B /* CleeppTests */,
 				DA0EE7B5204657830025FC60 /* CleeppUITests */,
 			);
@@ -1541,6 +1541,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "X_ALLOW_SPARKLE_UPDATES DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1576,7 +1577,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ALLOW_SPARKLE_UPDATES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = X_ALLOW_SPARKLE_UPDATES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1584,7 +1585,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8FBC10D12B88980400DD5481 /* Build configuration list for PBXNativeTarget "Cleepp MAS" */ = {
+		8FBC10D12B88980400DD5481 /* Build configuration list for PBXNativeTarget "Cleepp (App Store)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8FBC10D22B88980400DD5481 /* Debug */,
