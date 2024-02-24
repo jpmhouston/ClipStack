@@ -1,36 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Maccy</title>
-    <link>https://raw.githubusercontent.com/p0deje/Maccy/master/appcast.xml</link>
+    <title>Cleepp</title>
+    <link>https://raw.githubusercontent.com/jpmhouston/Cleepp/forkmain/appcast.xml</link>
     <description>Most recent changes with links to updates.</description>
     <language>en</language>
     <item>
-      <title>0.30.0</title>
+      <title>0.90.0</title>
       <description>
         <![CDATA[
           <ul>
-            <li>Added Hebrew translation.</li>
-            <li>Added an option to show special symbols in the popup (newlines, tabs, leading and trailing spaces)</li>
-            <li>Added an option to change search match highlighting from bold to italic or underline.</li>
-            <li>Added a hidden option to change a clipboard check interval and also lowered it from 1000 ms to 500 ms.</li>
-            <li>Improved Japanese translation.</li>
-            <li>Improved German translation.</li>
-            <li>Improved performance of search by lowering the delay from 400 ms to 200 ms.</li>
-            <li>Fixed an issue when switching between US and JIS keyboards would break search.</li>
-            <li>Fixed an issue alternate items could not be selected on macOS 14.4.</li>
-            <li>Fixed an issue when copying multiple files would only show the first one in the history.</li>
-            <li>Fixed an issue when the popup won't appear near the cursor.</li>
+            <li>First release, derived from Maccy 0.29.4.</li>
           </ul>
         ]]>
       </description>
-      <pubDate>2024-03-04</pubDate>
-      <releaseNotesLink>https://github.com/p0deje/Maccy/releases/tag/0.30.0</releaseNotesLink>
+      <pubDate>2024-02-21</pubDate>
+      <releaseNotesLink>https://github.com/jpmhouston/Cleepp/releases/tag/0.29.4</releaseNotesLink>
       <sparkle:minimumSystemVersion>10.14</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/p0deje/Maccy/releases/download/0.30.0/Maccy.app.zip"
-        sparkle:version="29"
-        sparkle:shortVersionString="0.30.0"
+        url="https://github.com/jpmhouston/Cleepp/releases/download/0.90.0/Cleepp.app.zip"
+        sparkle:version="28"
+        sparkle:shortVersionString="0.90.0"
         length="0"
         type="application/octet-stream"
       />
