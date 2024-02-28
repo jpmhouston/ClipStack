@@ -1,6 +1,7 @@
 import Cocoa
 import KeyboardShortcuts
 import Settings
+import Symbols
 
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
@@ -48,12 +49,23 @@ class Maccy: NSObject {
     ]
   )
   
-  // TODO: need new properties that are something like queueModeChangeObserver, pasteWueueAdvanceObserver
   private var enabledPasteboardTypesObserver: NSKeyValueObservation?
   private var ignoreEventsObserver: NSKeyValueObservation?
   private var imageHeightObserver: NSKeyValueObservation?
   private var maxMenuItemLengthObserver: NSKeyValueObservation?
   private var removalObserver: NSKeyValueObservation?
+  
+  private let accessibilityDesc = "Cleepp Menu" // TODO: localize
+  private let iconBlinkIntervalSeconds: Float = 0.75
+  private var iconBlinkTimer: DispatchSourceTimer?
+  
+  enum QueueChangeDirection {
+    case none, increment, decrement
+  }
+  enum SymbolTransition {
+    case replace
+    case blink(transitionSymbol: String)
+  }
   
   override init() {
     UserDefaults.standard.register(defaults: [
@@ -82,6 +94,8 @@ class Maccy: NSObject {
   }
   
   deinit {
+    cancelIconBlinkTimer()
+    
     enabledPasteboardTypesObserver?.invalidate()
     ignoreEventsObserver?.invalidate()
     imageHeightObserver?.invalidate()
@@ -96,7 +110,7 @@ class Maccy: NSObject {
     Self.queueModeOn = true
     Self.queueSize = 0
     
-    updateStatusMenuIcon()
+    updateStatusMenuIcon(.increment)
     updateMenuTitle()
   }
   
@@ -121,6 +135,7 @@ class Maccy: NSObject {
     //let wasEmpty = Self.queueSize == 0 // TODO: restore my logic to skip reloading pasteboard or updating menu?
     Self.queueSize += 1
     
+    updateStatusMenuIcon(.increment)
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
@@ -151,7 +166,7 @@ class Maccy: NSObject {
       clipboard.copy(history.all[index]) // reset pasteboard to the latest item copied
     }
     
-    updateStatusMenuIcon()
+    updateStatusMenuIcon(.decrement)
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
@@ -190,7 +205,7 @@ class Maccy: NSObject {
     Self.queueModeOn = true
     Self.queueSize = index + 1
     
-    updateStatusMenuIcon()
+    updateStatusMenuIcon(.increment)
     updateMenuTitle()
     menu.updateHeadOfQueue(index: index)
   }
@@ -213,6 +228,7 @@ class Maccy: NSObject {
     
     if Self.queueModeOn && Self.queueSize > 0 {
       Self.queueSize -= 1
+      updateStatusMenuIcon(.decrement)
       updateMenuTitle()
     }
     
@@ -271,6 +287,7 @@ class Maccy: NSObject {
       self.history.clear()
       self.menu.clear()
       self.clipboard.clear()
+      self.updateStatusMenuIcon()
       self.updateMenuTitle()
     }
   }
@@ -279,7 +296,7 @@ class Maccy: NSObject {
     statusItem.behavior = .removalAllowed
     statusItem.isVisible = true // UserDefaults.standard.showInStatusBar // don't think i need UserDefaults property showInStatusBar
     
-    updateStatusMenuIcon()
+    setupStatusMenuIcon()
     
     clipboard.onNewCopy(history.add)
     clipboard.onNewCopy(menu.add)
@@ -323,9 +340,11 @@ class Maccy: NSObject {
     }
   }
   
+  // TODO: perhaps move title logic into its own obj
+  
   private func updateMenuTitle() {
     if Self.queueModeOn {
-      statusItem.button?.title = String(Self.queueSize)
+      statusItem.button?.title = String(Self.queueSize) + "  "
     } else {
       statusItem.button?.title = ""
     }
@@ -333,19 +352,166 @@ class Maccy: NSObject {
     // TODO: remove UserDefaults property showRecentCopyInMenuBar
   }
   
-  private func updateStatusMenuIcon() {
-    // TODO: add something for changing icon based on queue mode
-//    if Self.queueModeOn {
-//    } else {
-//    }
+  @available(macOS 11.0, *)
+  private func getSymbolImage(named name: String) -> NSImage? {
+    var image = NSImage(systemSymbolName: name, accessibilityDescription: accessibilityDesc)
+    if image == nil {
+      image = NSImage(named: name)
+      image?.accessibilityDescription = accessibilityDesc
+    }
+    return image?.withSymbolConfiguration(NSImage.SymbolConfiguration(textStyle: .body, scale: .large))
+  }
+  
+  @available(macOS 13.0, *)
+  private func exerciseAllSymbolIcons() {
+    let symbolNames = ["clipboard.fill", "clipboard.fill", "list.clipboard.fill", "custom.list.clipboard.fill.badge.plus", "custom.list.clipboard.fill.badge.minus", "clipboard"]
+    func showSymbol(_ index: Int) {
+      guard index < symbolNames.count else {
+        //runOnIconBlinkTimer { showSymbol(0) } // to loop endlessly
+        return
+      }
+      let symbolImage = getSymbolImage(named: symbolNames[index])
+      if symbolImage != nil {
+        print("✅ " + symbolNames[index])
+      } else {
+        print("❌ " + symbolNames[index])
+      }
+      statusItem.button?.image = symbolImage
+      runOnIconBlinkTimer {
+        showSymbol(index + 1)
+      }
+    }
+    showSymbol(0)
+  }
+  
+  private func setupStatusMenuIcon() {
+    // the system clipboard symbol requires SF Symbols 4 in macOS 13 Ventura
+    var symbolImage: NSImage?
+    if #available(macOS 13.0, *) {
+      symbolImage = getSymbolImage(named: "clipboard")
+      
+      #if USE_SYMBOL_EFFECTS
+      // aborted idea b/c view is deprecated, and anyhow it doesn't work without subclassing the imageview to handle mouse events & more
+      if let symbolImage = symbolImage {
+        statusItem.view = NSImageView(image: image)
+        return
+      }
+      #endif
+    }
     
     guard let button = statusItem.button else {
       return
     }
     
-    button.image = NSImage(named: .clipboard)
+    button.image = symbolImage ?? NSImage(named: .clipboard)
     button.imagePosition = .imageRight
     (button.cell as? NSButtonCell)?.highlightsBy = []
+    
+    //if #available(macOS 13.0, *) {
+    //  exerciseAllSymbolIcons()
+    //}
+  }
+  
+  private func updateStatusMenuIcon(_ direction: QueueChangeDirection = .none) {
+    // the system clipboard symbol requires SF Symbols 4 in macOS 13 Ventura
+    guard #available(macOS 13.0, *) else {
+      return
+    }
+    
+    let symbol: String
+    var transition = SymbolTransition.replace
+    if !Self.queueModeOn {
+      symbol = "clipboard"
+      if direction == .decrement {
+        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.minus")
+      }
+    } else if Self.queueSize <= 0 {
+      symbol = "clipboard.fill"
+      if direction == .decrement {
+        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.minus")
+      }
+    } else {
+      symbol = "list.clipboard.fill"
+      if direction == .increment {
+        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.plus")
+      } else if direction == .decrement {
+        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.minus")
+      }
+    }
+    
+    guard let symbolImage = getSymbolImage(named: symbol) else {
+      return
+    }
+    
+    #if USE_SYMBOL_EFFECTS
+    // aborted idea b/c view is deprecated, and anyhow it doesn't work without subclassing the imageview to handle mouse events & more
+    guard let titleView = statusItem.view as? NSImageView else {
+      return
+    }
+    
+    // effects on symbols requires macOS 14 Sonoma
+    if #available(macOS 14.0, *) {
+      func transitionToSymbolImage() {
+        switch direction {
+        case .increment:
+          titleView.setSymbolImage(symbolImage, contentTransition: .replace.upUp)
+        case .decrement:
+          titleView.setSymbolImage(symbolImage, contentTransition: .replace.downUp)
+        default:
+          titleView.image = symbolImage
+        }
+      }
+      if case .blink(let transitionSymbol) = transition, let transitionImage = getSymbolImage(named: transitionSymbol) {
+        // bounce into transition symbol then later switch to
+        titleView.image = transitionImage
+        titleView.addSymbolEffect(.bounce)
+        runOnIconBlinkTimer {
+          transitionToSymbolImage()
+        }
+      } else {
+        transitionToSymbolImage()
+      }
+    } else {
+      titleView.image = symbolImage
+    }
+    return
+    #endif
+    
+    if case .blink(let transitionSymbol) = transition, let transitionImage = getSymbolImage(named: transitionSymbol) {
+      // first show transition symbol, then blink to the final symbol
+      statusItem.button?.image = transitionImage
+      runOnIconBlinkTimer {
+        self.statusItem.button?.image = symbolImage
+      }
+    } else {
+      statusItem.button?.image = symbolImage
+    }
+  }
+  
+  private func runOnIconBlinkTimer(_ action: @escaping () -> Void) {
+    if iconBlinkTimer != nil { cancelIconBlinkTimer() }
+    iconBlinkTimer = timerForRunningOnMainQueueAfterDelay(iconBlinkIntervalSeconds) { [weak self] in
+      guard let self = self else { return }
+      self.iconBlinkTimer = nil // doing this before calling closure supports closure itself calling runOnIconBlinkTimer, fwiw
+      action()
+    }
+  }
+  
+  private func cancelIconBlinkTimer() {
+    iconBlinkTimer?.cancel()
+    iconBlinkTimer = nil
+  }
+  
+  private func timerForRunningOnMainQueueAfterDelay(_ seconds: Float, _ action: @escaping () -> Void) -> DispatchSourceTimer {
+    let timer = DispatchSource.makeTimerSource()
+    timer.schedule(wallDeadline: .now() + .milliseconds(Int(seconds * 1000)))
+    timer.setEventHandler {
+      DispatchQueue.main.async {
+        action()
+      }
+    }
+    timer.resume()
+    return timer
   }
   
   private func updateStatusItemEnabledness() {
