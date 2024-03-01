@@ -10,11 +10,11 @@
 /* Class = "NSTextFieldCell"; title = "Number of copies:"; ObjectID = "bmV-pZ-ccc"; */
 "bmV-pZ-ccc.title" = "复制次数:";
 
-/* Class = "NSTextFieldCell"; title = "Select to replay paste starting here (upwards)."; ObjectID = "Hz7-tJ-kat"; */
+/* Class = "NSTextFieldCell"; title = "Select to replay paste of just this item."; ObjectID = "Hz7-tJ-kat"; */
 "Hz7-tJ-kat.title" = "Select for queued pasting from here (upwards)"; // TODO: update
 
-/* Class = "NSTextFieldCell"; title = "Select with ⌥ to replay paste of just this item."; ObjectID = "PxB-sa-HD1"; */
-"PxB-sa-HD1.title" = "Select with ⌥ to replay paste of just this item." // TODO: update
+/* Class = "NSTextFieldCell"; title = "With ⌥ to replay all from here upwards."; ObjectID = "PxB-sa-HD1"; */
+"PxB-sa-HD1.title" = "With ⌥ to replay all from here upwards." // TODO: update
 
 /* Class = "NSTextFieldCell"; title = "Press ⌘⌫ to delete."; ObjectID = "oTv-7u-tbp"; */
 "oTv-7u-tbp.title" = "按 ⌘⌫ 删除。";

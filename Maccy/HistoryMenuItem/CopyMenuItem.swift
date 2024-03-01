@@ -10,9 +10,7 @@ extension HistoryMenuItem {
     override init(item: HistoryItem, clipboard: Clipboard, target: AnyObject?, action: Selector?) {
       super.init(item: item, clipboard: clipboard, target: target, action: action)
       
-      keyEquivalentModifierMask = .option
-      isAlternate = true
-      isHidden = true
+      keyEquivalentModifierMask = []
     }
     
   }
