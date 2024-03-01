@@ -175,7 +175,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     let historyItems = history.all
     
     for item in historyItems {
-      let menuItems = buildMenuItems(item)
+      let menuItems = buildMenuItemAlternates(item)
       guard let menuItem = menuItems.first else {
         continue
       }
@@ -201,7 +201,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       return
     }
     
-    let menuItems = buildMenuItems(item)
+    let menuItems = buildMenuItemAlternates(item)
     guard let menuItem = menuItems.first else {
       return
     }
@@ -529,7 +529,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
   }
   
-  private func buildMenuItems(_ item: HistoryItem) -> [HistoryMenuItem] {
+  private func buildMenuItemAlternates(_ item: HistoryItem) -> [HistoryMenuItem] {
     let menuItems = [
       HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard, target: placeholderCopyItem?.target, action: placeholderCopyItem?.action),
       HistoryMenuItem.ReplayMenuItem(item: item, clipboard: clipboard, target: placeholderReplayItem?.target, action: placeholderReplayItem?.action)
@@ -586,7 +586,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     
     // Show the history header & separator if showing the expanded menu
     guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem else { return }
-    historyHeaderItem.isHidden = !showsExpandedMenu || UserDefaults.standard.hideSearch
+    historyHeaderItem.isHidden = !showsExpandedMenu || !Maccy.allowExtraHistoryFeatures || UserDefaults.standard.hideSearch
     trailingSeparatorItem.isHidden = !showsExpandedMenu
     
     // The rest is for showing or hiding the desired history items

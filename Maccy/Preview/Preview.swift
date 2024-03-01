@@ -8,9 +8,9 @@ class Preview: NSViewController {
   @IBOutlet weak var firstCopyTimeValueLabel: NSTextField!
   @IBOutlet weak var lastCopyTimeValueLabel: NSTextField!
   @IBOutlet weak var numberOfCopiesValueLabel: NSTextField!
-  @IBOutlet weak var startLabel: NSTextField!
   @IBOutlet weak var copyLabel: NSTextField!
-  
+  @IBOutlet weak var startLabel: NSTextField!
+
   private let maxTextSize = 1_500
   
   private var item: HistoryItem?
@@ -63,7 +63,7 @@ class Preview: NSViewController {
     numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
     
     startLabel.isHidden = Maccy.queueModeOn
-    copyLabel.isHidden = Maccy.queueModeOn
+    copyLabel.isHidden = Maccy.queueModeOn || !Maccy.allowExtraHistoryFeatures
   }
   
   private func formatDate(_ date: Date) -> String {

@@ -14,6 +14,7 @@
                 <outlet property="launchAtLoginButton" destination="mOE-Th-WLC" id="xDm-OD-zqC"/>
                 <outlet property="pasteHotkeyContainerView" destination="pPs-rF-k8m" id="9te-4V-6tN"/>
                 <outlet property="searchModeButton" destination="W4h-tN-MTS" id="pfI-eV-8QZ"/>
+                <outlet property="searchModeLabel" destination="Q7N-u9-cfJ" id="Qpp-jn-C9c"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>

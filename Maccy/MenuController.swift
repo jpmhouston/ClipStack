@@ -36,7 +36,7 @@ class MenuController {
         return
       }
       
-      if modifierFlags.contains(.option) && Maccy.allowExpandedMenu {
+      if modifierFlags.contains(.option) {
         menu.enableExpandedMenu()
       }
     }

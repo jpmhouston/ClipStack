@@ -9,7 +9,7 @@ class Maccy: NSObject {
   static var queueModeOn = false
   static var queueSize = 0
   
-  static var allowExpandedMenu = true
+  static var allowExtraHistoryFeatures = true
   static var allowUndoCopy = true
   
   @objc let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
