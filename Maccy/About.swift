@@ -17,7 +17,7 @@ class About {
   private var links: NSMutableAttributedString {
     let string = NSMutableAttributedString(string: "Website│GitHub│Support",
                                            attributes: [NSAttributedString.Key.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: "https://cleepp.bananameter.lol", range: NSRange(location: 0, length: 7))
+    string.addAttribute(.link, value: "http://cleepp.bananameter.lol", range: NSRange(location: 0, length: 7))
     string.addAttribute(.link, value: "https://github.com/jpmhouston/Cleepp", range: NSRange(location: 8, length: 6))
     string.addAttribute(.link, value: "mailto:cleepp@bananameter.lol", range: NSRange(location: 15, length: 7))
     return string
