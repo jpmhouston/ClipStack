@@ -530,6 +530,8 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   private func buildMenuItemAlternates(_ item: HistoryItem) -> [HistoryMenuItem] {
+    // TODO: see if menu items can be entirely defined in nib and copied to make these instances
+    // (including the preview item) making the HistoryMenuItem subclasses unnecessary
     let menuItems = [
       HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard, target: placeholderCopyItem?.target, action: placeholderCopyItem?.action),
       HistoryMenuItem.ReplayMenuItem(item: item, clipboard: clipboard, target: placeholderReplayItem?.target, action: placeholderReplayItem?.action)

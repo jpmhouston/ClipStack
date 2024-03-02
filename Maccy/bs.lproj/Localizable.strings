@@ -29,3 +29,5 @@
 "system_settings_pane" = "Privatnosti i sigurnosti";
 "system_preferences_name" = "Postavki sustava";
 "system_preferences_pane" = "Sigurnosti i privatnosti";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

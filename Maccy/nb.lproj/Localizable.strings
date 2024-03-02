@@ -29,3 +29,5 @@
 "system_settings_pane" = "Personvern og sikkerhet";
 "system_preferences_name" = "System Valg";
 "system_preferences_pane" = "Sikkerhet & Personvern";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

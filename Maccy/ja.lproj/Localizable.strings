@@ -29,3 +29,5 @@
 "system_settings_pane" = "“プライバシーとセキュリティ”";
 "system_preferences_name" = "システム環境設定の";
 "system_preferences_pane" = "“セキュリティとプライバシー”";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

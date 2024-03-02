@@ -29,3 +29,5 @@
 "system_settings_pane" = "ความเป็นส่วนตัวและความปลอดภัย";
 "system_preferences_name" = "การตั้งค่าระบบ";
 "system_preferences_pane" = "ความปลอดภัยและความเป็นส่วนตัว";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

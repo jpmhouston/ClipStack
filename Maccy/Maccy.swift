@@ -55,7 +55,7 @@ class Maccy: NSObject {
   private var maxMenuItemLengthObserver: NSKeyValueObservation?
   private var removalObserver: NSKeyValueObservation?
   
-  private let accessibilityDesc = "Cleepp Menu" // TODO: localize
+  private let accessibilityDesc = NSLocalizedString("menu_accessibility_description", comment: "")
   private let iconBlinkIntervalSeconds: Float = 0.75
   private var iconBlinkTimer: DispatchSourceTimer?
   

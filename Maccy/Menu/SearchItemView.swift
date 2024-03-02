@@ -32,9 +32,6 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
     autoresizingMask = .width
     setFrameSize(headerSize)
 
-    queryField.delegate = self
-    queryField.placeholderString = NSLocalizedString("search_placeholder", comment: "")
-
     if #unavailable(macOS 11) {
       horizontalLeftPadding.constant = macOSXLeftPadding
       horizontalRightPadding.constant = macOSXRightPadding

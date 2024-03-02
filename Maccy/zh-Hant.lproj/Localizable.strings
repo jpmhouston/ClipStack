@@ -29,3 +29,5 @@
 "system_settings_pane" = "「隱私權與安全性」";
 "system_preferences_name" = "「系統偏好設定」";
 "system_preferences_pane" = "「安全性和隱私權」";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

@@ -25,7 +25,7 @@
                         <outlet property="delegate" destination="Hz6-mo-xeY" id="Zbz-Op-Ual"/>
                     </connections>
                 </searchField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S88-gz-je6">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S88-gz-je6">
                     <rect key="frame" x="11" y="7" width="48" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="History" id="xzp-wK-dxe">
                         <font key="font" metaFont="system"/>
@@ -50,7 +50,7 @@
                 <outlet property="titleAndSearchSpacing" destination="ghh-ML-UQd" id="T6U-Q4-EKq"/>
                 <outlet property="titleField" destination="S88-gz-je6" id="m08-of-qqa"/>
             </connections>
-            <point key="canvasLocation" x="-5" y="132.5"/>
+            <point key="canvasLocation" x="-5" y="164"/>
         </customView>
         <menu title="Cleepp" id="dqg-kI-Klz" customClass="StatusItemMenu" customModule="Cleepp" customModuleProvider="target">
             <items>
@@ -123,7 +123,7 @@
                         <action selector="undoLastCopy:" target="-2" id="d5p-Xb-FzG"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Clear…" tag="105" id="u3d-qz-ihN">
+                <menuItem title="Clear History…" tag="105" id="u3d-qz-ihN">
                     <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -161,7 +161,7 @@ CA
             <rect key="frame" x="0.0" y="0.0" width="296" height="28"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uIb-jp-yTA">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uIb-jp-yTA">
                     <rect key="frame" x="11" y="0.0" width="283" height="28"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" id="2lz-8v-x0K">
                         <font key="font" metaFont="smallSystem"/>
@@ -178,7 +178,7 @@ Shortcuts below only work while this menu is open.</string>
                 <constraint firstAttribute="trailing" secondItem="uIb-jp-yTA" secondAttribute="trailing" constant="4" id="OzH-Ah-gqy"/>
                 <constraint firstItem="uIb-jp-yTA" firstAttribute="leading" secondItem="XAP-KR-RlP" secondAttribute="leading" constant="13" id="kTC-Bh-igb"/>
             </constraints>
-            <point key="canvasLocation" x="-5" y="204"/>
+            <point key="canvasLocation" x="-5" y="236"/>
         </customView>
     </objects>
 </document>

@@ -29,3 +29,5 @@
 "system_settings_pane" = "«Конфиденциальность и безопасность»";
 "system_preferences_name" = "Системных настройках";
 "system_preferences_pane" = "«Защита и безопасность»";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

@@ -29,3 +29,5 @@
 "system_settings_pane" = "Datenschutz & Sicherheit";
 "system_preferences_name" = "Systemeinstellungen";
 "system_preferences_pane" = "Sicherheit & Datenschutz";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

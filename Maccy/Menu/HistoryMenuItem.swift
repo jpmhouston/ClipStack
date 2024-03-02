@@ -123,7 +123,7 @@ class HistoryMenuItem: NSMenuItem {
   private func badgeToIndicateHeadOfQueue() {
     if #available(macOS 14, *) {
       if isHeadOfQueue {
-        badge = NSMenuItemBadge(string: "replay from here \u{2BAD}") // \u{2BAD}
+        badge = NSMenuItemBadge(string: NSLocalizedString("first_replay_item_badge", comment: "") + " \u{2BAD}")
       } else {
         badge = nil
       }
@@ -131,6 +131,8 @@ class HistoryMenuItem: NSMenuItem {
   }
   
   private func updateHeadOfQueueIndication() {
+    // TODO: pre-14 perhaps only underline if showing expanded menu
+    // probsbly have to pass in that state from the menu class, refresh this
     if #unavailable(macOS 14) {
       styleToIndicateHeadOfQueue()
     } else {

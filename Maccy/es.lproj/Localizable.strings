@@ -30,3 +30,5 @@
 "system_settings_pane" = "“Privacidad y seguridad”";
 "system_preferences_name" = "Preferencias del Sistema";
 "system_preferences_pane" = "“Seguridad y privacidad”";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";

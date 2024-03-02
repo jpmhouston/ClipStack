@@ -29,3 +29,6 @@
 "system_settings_pane" = "Privacy & Security settings";
 "system_preferences_name" = "System Preferences";
 "system_preferences_pane" = "Security & Privacy preferences";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";
+

@@ -175,7 +175,7 @@ clipboard behavior will revert back to normal. The default shortcut
 <kbd>CONTROL (^)</kbd> + <kbd>COMMAND (⌘)</kbd> + <kbd>V</kbd>
 can be changed in the settings.
 
-**Clear...** will empty the saved clipboard history. If currently collecting clipboard items
+**Clear History...** will empty the saved clipboard history. If currently collecting clipboard items
 then all collected will also be cleared and clipboard behavior will return to normal.
 The shortcut for this menu item,
 <kbd>COMMAND (⌘)</kbd> + <kbd>OPTION (⌥)</kbd> +  <kbd>DELETE (⌫)</kbd>
@@ -199,12 +199,19 @@ When collecting and replaying a set of clipboard items, those items remaining
 to paste are shows in the middle section of the Cleepp menu. The item at the top
 is the most recent copied, the item at the bottom, badged with "replay from here"
 will be the one that is pasted next.
-
+(When running macOS versions before 14.0 Sonoma, menu items cannot be badged
+the item to be pasted next will simply be the one at the bottom on the history) 
 
 ### Expanded Clipboard History Items
 
 Clicking the menu icon with <kbd>OPTION (⌥)</kbd> pressed will show the
 expanded menu which also includes recent history of everything on the clipboard.
+
+When collecting and replaying a set of clipboard items, the item to be pasted
+next will probably not be at the bottom but will still be indicated by the
+badge "replay from here".
+(When running macOS versions before 14.0 Sonoma, this item will instead be
+indicated by an underline)
 
 *This expanded menu give a simplified set of clipboard features from the open source
 project [Maccy](https://maccy.app). For a more full featured set of features, including
