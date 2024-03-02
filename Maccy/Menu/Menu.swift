@@ -78,9 +78,14 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var trailingSeparatorItem: NSMenuItem?
   @IBOutlet weak var noteItem: NSMenuItem?
   
-//  required init(coder decoder: NSCoder) {
-//    super.init(coder: decoder)
-//  }
+  static func load(owner: Any) -> StatusItemMenu? {
+    guard let nib = NSNib(nibNamed: "Menu", bundle: nil) else {
+      return nil
+    }
+    var nibObjects: NSArray? = NSArray()
+    nib.instantiate(withOwner: owner, topLevelObjects: &nibObjects)
+    return nibObjects?.compactMap({ $0 as? StatusItemMenu }).first
+  }
   
   override func awakeFromNib() {
     self.delegate = self

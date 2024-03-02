@@ -49,6 +49,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     CoreDataManager.shared.saveContext()
   }
 
+  func application(_ application: NSApplication, open urls: [URL]) {
+    // get the first of the url,s ignore the rest
+    guard let url = urls.first else {
+      return
+    }
+    print("received url \(url.absoluteString)")
+    if url.absoluteString == "cleeppapp:intro" {
+      maccy.showIntro(self)
+    }
+  }
+  
   @available(macOS 11.0, *)
   func application(_ application: NSApplication, handlerFor intent: INIntent) -> Any? {
     if intent is SelectIntent {

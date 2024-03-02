@@ -54,10 +54,16 @@
         </customView>
         <menu title="Cleepp" id="dqg-kI-Klz" customClass="StatusItemMenu" customModule="Cleepp" customModuleProvider="target">
             <items>
-                <menuItem title="About Cleep…" tag="108" id="m9D-8J-nyc">
+                <menuItem title="About Cleepp…" tag="108" id="m9D-8J-nyc">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showAbout:" target="-2" id="A4A-Di-5u1"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Intro..." alternate="YES" id="1Eb-11-wVB">
+                    <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
+                    <connections>
+                        <action selector="showIntro:" target="-2" id="uTE-rv-v5K"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Start Collecting" tag="101" id="Y5o-n6-NCS">
@@ -137,7 +143,7 @@ CA
                         <action selector="showSettings:" target="-2" id="T0z-qq-fZJ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit Cleep" tag="109" keyEquivalent="q" id="yjd-dE-jma">
+                <menuItem title="Quit Cleepp" tag="109" keyEquivalent="q" id="yjd-dE-jma">
                     <connections>
                         <action selector="quit:" target="-2" id="DKY-Ef-7Mu"/>
                     </connections>

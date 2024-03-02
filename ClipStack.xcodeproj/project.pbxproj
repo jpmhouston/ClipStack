@@ -13,6 +13,10 @@
 		4762D6972467226100B3A2BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		5AA9C8402AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9C83F2AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift */; };
 		5ACA94F52AD4D1E200ECAB6A /* IgnoreRegexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACA94F42AD4D1E200ECAB6A /* IgnoreRegexViewController.swift */; };
+		8F408C242B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
+		8F408C252B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
+		8F408C282B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
+		8F408C292B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
 		8FBC10852B88980400DD5481 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8FBC10862B88980400DD5481 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB082952A2B7B850053E463 /* AppStoreReview.swift */; };
 		8FBC10872B88980400DD5481 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA043DDF247D171C00488756 /* AppearanceSettingsViewController.swift */; };
@@ -219,6 +223,8 @@
 		7CEEFDEF24F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF124F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8F408C232B930C51002582C2 /* Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
+		8F408C272B9314A9002582C2 /* Intro.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
 		8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp (App Store).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBC10D82B889A0B00DD5481 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
@@ -428,6 +434,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F408C262B93111B002582C2 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				8F408C232B930C51002582C2 /* Intro.swift */,
+				8F408C272B9314A9002582C2 /* Intro.xib */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
 		C2D16D1C2EE365D52E1EE446 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +586,7 @@
 			children = (
 				DA68F91F28BD819E007E2F25 /* Intents */,
 				DAF65F4424D396D400F3978F /* HistoryMenuItem */,
+				8F408C262B93111B002582C2 /* Intro */,
 				DA196A8D28AB0A3700ADD8A2 /* Menu */,
 				DA19F18C2984940B0091F26C /* Preview */,
 				DA181178247D150B00066D55 /* Settings */,
@@ -806,6 +822,7 @@
 				8FBC10C52B88980400DD5481 /* Localizable.strings in Resources */,
 				8FBC10C62B88980400DD5481 /* LICENSE in Resources */,
 				8FBC10C72B88980400DD5481 /* Knock.caf in Resources */,
+				8F408C292B9314A9002582C2 /* Intro.xib in Resources */,
 				8FBC10C82B88980400DD5481 /* appcast.xml in Resources */,
 				8FBC10C92B88980400DD5481 /* AppearanceSettingsViewController.xib in Resources */,
 				8FBC10CA2B88980400DD5481 /* Preview.xib in Resources */,
@@ -844,6 +861,7 @@
 				4762D6972467226100B3A2BA /* Localizable.strings in Resources */,
 				DA009934256411F90030E697 /* LICENSE in Resources */,
 				DA20FA742B082E0100056DD5 /* Knock.caf in Resources */,
+				8F408C282B9314A9002582C2 /* Intro.xib in Resources */,
 				DA009931256411F90030E697 /* appcast.xml in Resources */,
 				DA05E7D22483F70B005CB8AA /* AppearanceSettingsViewController.xib in Resources */,
 				DADBA95E2985C7AA00EC46FB /* Preview.xib in Resources */,
@@ -944,6 +962,7 @@
 				8FBC10AB2B88980400DD5481 /* NSApplication+Windows.swift in Sources */,
 				8FBC10AC2B88980400DD5481 /* HistoryItem.swift in Sources */,
 				8FBC10AD2B88980400DD5481 /* ClearIntentHandler.swift in Sources */,
+				8F408C252B930C51002582C2 /* Intro.swift in Sources */,
 				8FBC10AE2B88980400DD5481 /* String+Shortened.swift in Sources */,
 				8FBC10AF2B88980400DD5481 /* Search.swift in Sources */,
 				8FBC10B02B88980400DD5481 /* AppDelegate.swift in Sources */,
@@ -1027,6 +1046,7 @@
 				DA3EAE0C2AE30F7500F39108 /* NSApplication+Windows.swift in Sources */,
 				DAB65E0B2440B078000AECA8 /* HistoryItem.swift in Sources */,
 				DA68F91E28BD7DEB007E2F25 /* ClearIntentHandler.swift in Sources */,
+				8F408C242B930C51002582C2 /* Intro.swift in Sources */,
 				DAFE2DDA268A521B00990986 /* String+Shortened.swift in Sources */,
 				DAC14124232367B200FCFA30 /* Search.swift in Sources */,
 				DAEE38471E3DBEB100DD2966 /* AppDelegate.swift in Sources */,

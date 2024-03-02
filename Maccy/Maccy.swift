@@ -18,6 +18,7 @@ class Maccy: NSObject {
   private let about = About()
   private let clipboard = Clipboard.shared
   private let history = History()
+  private var intro: IntroWindowController!
   private var menuController: MenuController!
   private var menu: StatusItemMenu!
   
@@ -80,15 +81,14 @@ class Maccy: NSObject {
     super.init()
     initializeObservers()
     
-    guard let nib = NSNib(nibNamed: "Menu", bundle: nil) else { fatalError("menu nib file missing") }
-    var nibObjects: NSArray? = NSArray()
-    nib.instantiate(withOwner: self, topLevelObjects: &nibObjects)
-    guard let nibMenu = nibObjects?.compactMap({ $0 as? StatusItemMenu }).first else { fatalError("menu object missing") }
-    
+    guard let nibMenu = StatusItemMenu.load(owner: self) else { fatalError("menu object missing") }
     menu = nibMenu
     menu.inject(history: history, clipboard: Clipboard.shared)
     
     menuController = MenuController(menu, statusItem)
+    
+    guard let nibIntro = IntroWindowController.load(owner: self) else { fatalError("intro object missing") }
+    intro = nibIntro
     
     start()
   }
@@ -104,7 +104,7 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func startQueueMode(_ sender: NSMenuItem) {
+  func startQueueMode(_ sender: AnyObject) {
     Accessibility.check()
     
     Self.queueModeOn = true
@@ -115,7 +115,7 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func queueCopy(_ sender: NSMenuItem) {
+  func queueCopy(_ sender: AnyObject) {
     queueCopy()
   }
   
@@ -146,7 +146,7 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func queuePaste(_ sender: NSMenuItem) {
+  func queuePaste(_ sender: AnyObject) {
     queuePaste()
   }
   
@@ -178,7 +178,7 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func cancelQueueMode(_ sender: NSMenuItem) {
+  func cancelQueueMode(_ sender: AnyObject) {
     Self.queueModeOn = false
     Self.queueSize = 0
     
@@ -193,12 +193,12 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func advanceReplay(_ sender: NSMenuItem) {
+  func advanceReplay(_ sender: AnyObject) {
     decrementQueue()
   }
   
   @IBAction
-  func replayFromHistory(_ sender: NSMenuItem) {
+  func replayFromHistory(_ sender: AnyObject) {
     guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else { return }
     
     Accessibility.check()
@@ -211,14 +211,14 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func copyFromHistory(_ sender: NSMenuItem) {
+  func copyFromHistory(_ sender: AnyObject) {
     guard let item = (sender as? HistoryMenuItem)?.item else { return }
     
     clipboard.copy(item)
   }
   
   @IBAction
-  func undoLastCopy(_ sender: NSMenuItem) {
+  func undoLastCopy(_ sender: AnyObject) {
     guard let removeItem = history.first else {
       return
     }
@@ -245,20 +245,27 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func clear(_ sender: NSMenuItem) {
+  func clear(_ sender: AnyObject) {
     clearHistory()
     Self.queueModeOn = false
   }
   
   @IBAction
-  func showAbout(_ sender: NSMenuItem) {
+  func showAbout(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
-    about.openAbout(sender)
+    about.openAbout()
     Self.returnFocusToPreviousApp = true
   }
   
   @IBAction
-  func showSettings(_ sender: NSMenuItem) {
+  func showIntro(_ sender: AnyObject) {
+    Self.returnFocusToPreviousApp = false
+    intro.openIntro()
+    Self.returnFocusToPreviousApp = true
+  }
+  
+  @IBAction
+  func showSettings(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
     settingsWindowController.show()
     settingsWindowController.window?.orderFrontRegardless()
@@ -266,7 +273,7 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func quit(_ sender: NSMenuItem) {
+  func quit(_ sender: AnyObject) {
     NSApp.terminate(sender)
   }
   
