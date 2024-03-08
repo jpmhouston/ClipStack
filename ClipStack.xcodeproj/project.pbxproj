@@ -17,6 +17,8 @@
 		8F408C252B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C282B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
 		8F408C292B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
+		8F7BAF802B9A0B0E00F85BF3 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */; };
+		8F7BAF812B9A0B0E00F85BF3 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */; };
 		8FBC10852B88980400DD5481 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8FBC10862B88980400DD5481 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB082952A2B7B850053E463 /* AppStoreReview.swift */; };
 		8FBC10872B88980400DD5481 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA043DDF247D171C00488756 /* AppearanceSettingsViewController.swift */; };
@@ -225,6 +227,7 @@
 		7CEEFDF124F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		8F408C232B930C51002582C2 /* Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
 		8F408C272B9314A9002582C2 /* Intro.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
+		8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedWindow.swift; sourceTree = "<group>"; };
 		8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp (App Store).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBC10D82B889A0B00DD5481 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
@@ -439,6 +442,7 @@
 			children = (
 				8F408C232B930C51002582C2 /* Intro.swift */,
 				8F408C272B9314A9002582C2 /* Intro.xib */,
+				8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -938,6 +942,7 @@
 				8FBC10932B88980400DD5481 /* CoreDataManager.swift in Sources */,
 				8FBC10942B88980400DD5481 /* PreviewMenuItem.swift in Sources */,
 				8FBC10952B88980400DD5481 /* UserDefaults+Configuration.swift in Sources */,
+				8F7BAF812B9A0B0E00F85BF3 /* PagedWindow.swift in Sources */,
 				8FBC10962B88980400DD5481 /* RunLoopLocalEventMonitor.swift in Sources */,
 				8FBC10972B88980400DD5481 /* Clipboard.swift in Sources */,
 				8FBC10982B88980400DD5481 /* IgnorePasteboardTypesViewController.swift in Sources */,
@@ -1022,6 +1027,7 @@
 				DAB65DFF2440AE29000AECA8 /* CoreDataManager.swift in Sources */,
 				2F73DF2C2AE2749E00DB654E /* PreviewMenuItem.swift in Sources */,
 				DA2B0AF2234201E500EFAD72 /* UserDefaults+Configuration.swift in Sources */,
+				8F7BAF802B9A0B0E00F85BF3 /* PagedWindow.swift in Sources */,
 				DAC7AFAF2A801C92006081BB /* RunLoopLocalEventMonitor.swift in Sources */,
 				DA0EF1881E444B2A00E58577 /* Clipboard.swift in Sources */,
 				5AA9C8402AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift in Sources */,
@@ -1243,7 +1249,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = CleeppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Maccy/Maccy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1279,7 +1285,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = CleeppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Maccy/Maccy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1535,7 +1541,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = CleeppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Maccy/Maccy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1571,7 +1577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = CleeppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Maccy/Maccy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";

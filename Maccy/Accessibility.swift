@@ -22,8 +22,9 @@ struct Accessibility {
 
     return alert
   }
-  private static var allowed: Bool { AXIsProcessTrustedWithOptions(nil) }
-  private static let url = URL(
+
+  static var allowed: Bool { AXIsProcessTrustedWithOptions(nil) }
+  static let url = URL(
     string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
   )
 
@@ -33,11 +34,18 @@ struct Accessibility {
     Maccy.returnFocusToPreviousApp = false
     // Show accessibility window async to allow menu to close.
     DispatchQueue.main.async {
-      if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn,
-         let url = url {
-        NSWorkspace.shared.open(url)
+      if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn {
+        openSecurityPanel()
       }
       Maccy.returnFocusToPreviousApp = true
     }
+  }
+  
+  static func openSecurityPanel() {
+    guard let url = url else {
+      // TODO: log url failure
+      return
+    }
+    NSWorkspace.shared.open(url)
   }
 }

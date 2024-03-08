@@ -5,6 +5,12 @@ import Cocoa
 // should leave Maccy source unchanged and add a new AboutCleepp.swift/xib
 
 class About {
+  static var githubURL = "https://github.com/jpmhouston/Cleepp"
+  static var homepageURL = "http://cleepp.bananameter.lol"
+  static var maccyURL = "https://maccy.app"
+  static var supportEmailURL = "mailto:cleepp@bananameter.lol"
+  static var localizeVolunteerEmailURL = "mailto:cleepp.l10nhelp@bananameter.lol"
+  
   private var blurb: NSAttributedString {
     return NSAttributedString(
       string: "Cleepp adds a new mode to the clipboard\nthat lets you copy multiple times from one\nplace then paste them all in order elsewhere.",
@@ -12,25 +18,25 @@ class About {
   }
   
   private var introLink: NSAttributedString {
-    let string = NSMutableAttributedString(string: "More info: Open Intro",
+    let string = NSMutableAttributedString(string: "More information: Show Intro",
                                            attributes: [NSAttributedString.Key.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: "cleeppapp:intro", range: NSRange(location: 11, length: 10))
+    string.addAttribute(.link, value: "cleeppapp:intro", range: NSRange(location: 18, length: 10))
     return string
   }
   
   private var forkCredits: NSMutableAttributedString {
       let string = NSMutableAttributedString(string: "Thank you to authors of Maccy which this\napp is a derivative of. Check it out for a\nfull-featured clipboard history manager.",
                                              attributes: [NSAttributedString.Key.foregroundColor: NSColor.labelColor])
-      string.addAttribute(.link, value: "https://maccy.app", range: NSRange(location: 24, length: 5))
+    string.addAttribute(.link, value: About.maccyURL, range: NSRange(location: 24, length: 5))
       return string
   }
-
+  
   private var links: NSAttributedString {
     let string = NSMutableAttributedString(string: "Website│GitHub│Support",
                                            attributes: [NSAttributedString.Key.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: "http://cleepp.bananameter.lol", range: NSRange(location: 0, length: 7))
-    string.addAttribute(.link, value: "https://github.com/jpmhouston/Cleepp", range: NSRange(location: 8, length: 6))
-    string.addAttribute(.link, value: "mailto:cleepp@bananameter.lol", range: NSRange(location: 15, length: 7))
+    string.addAttribute(.link, value: About.homepageURL, range: NSRange(location: 0, length: 7))
+    string.addAttribute(.link, value: About.githubURL, range: NSRange(location: 8, length: 6))
+    string.addAttribute(.link, value: About.supportEmailURL, range: NSRange(location: 15, length: 7))
     return string
   }
 

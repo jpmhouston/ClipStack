@@ -54,16 +54,18 @@ class Clipboard {
                          repeats: true)
   }
 
-  func copy(_ string: String) {
+  func copy(_ string: String, excludeFromHistory: Bool = true) {
     pasteboard.clearContents()
     pasteboard.setString(string, forType: .string)
     
-    // i don't think we ever want to track these copies
-    //checkForChangesInPasteboard()
-    changeCount = pasteboard.changeCount
+    if excludeFromHistory {
+      changeCount = pasteboard.changeCount
+    } else {
+      checkForChangesInPasteboard()
+    }
   }
 
-  func copy(_ item: HistoryItem?, removeFormatting: Bool = false) {
+  func copy(_ item: HistoryItem?, excludeFromHistory: Bool = true, removeFormatting: Bool = false) {
     guard let item else { return }
 
     pasteboard.clearContents()
@@ -88,9 +90,11 @@ class Clipboard {
 
     // usded to do here: Notifier.notify(body: item.title, sound: .knock)
 
-    // i don't think we ever want to track these copies
-    //checkForChangesInPasteboard()
-    changeCount = pasteboard.changeCount
+    if excludeFromHistory {
+      changeCount = pasteboard.changeCount
+    } else {
+      checkForChangesInPasteboard()
+    }
   }
 
   func invokeApplicationCopy(then action: (() -> Void)? = nil) {

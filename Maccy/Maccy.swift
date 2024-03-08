@@ -18,7 +18,7 @@ class Maccy: NSObject {
   private let about = About()
   private let clipboard = Clipboard.shared
   private let history = History()
-  private var intro: IntroWindowController!
+  private var intro = IntroWindowController()
   private var menuController: MenuController!
   private var menu: StatusItemMenu!
   
@@ -86,9 +86,6 @@ class Maccy: NSObject {
     menu.inject(history: history, clipboard: Clipboard.shared)
     
     menuController = MenuController(menu, statusItem)
-    
-    guard let nibIntro = IntroWindowController.load(owner: self) else { fatalError("intro object missing") }
-    intro = nibIntro
     
     start()
   }
@@ -177,6 +174,10 @@ class Maccy: NSObject {
     #endif
   }
   
+  func copy(string: String, excludedFromHistory: Bool) {
+    clipboard.copy(string, excludeFromHistory: excludedFromHistory)
+  }
+  
   @IBAction
   func cancelQueueMode(_ sender: AnyObject) {
     Self.queueModeOn = false
@@ -260,14 +261,18 @@ class Maccy: NSObject {
   @IBAction
   func showIntro(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
-    intro.openIntro()
+    intro.openIntro(with: self)
     Self.returnFocusToPreviousApp = true
   }
   
   @IBAction
   func showSettings(_ sender: AnyObject) {
+    showSettings(selectingPane: .general)
+  }
+  
+  func showSettings(selectingPane pane: Settings.PaneIdentifier) {
     Self.returnFocusToPreviousApp = false
-    settingsWindowController.show()
+    settingsWindowController.show(pane: pane)
     settingsWindowController.window?.orderFrontRegardless()
     Self.returnFocusToPreviousApp = true
   }
@@ -487,8 +492,8 @@ class Maccy: NSObject {
     if case .blink(let transitionSymbol) = transition, let transitionImage = getSymbolImage(named: transitionSymbol) {
       // first show transition symbol, then blink to the final symbol
       statusItem.button?.image = transitionImage
-      runOnIconBlinkTimer {
-        self.statusItem.button?.image = symbolImage
+      runOnIconBlinkTimer { [weak self] in
+        self?.statusItem.button?.image = symbolImage
       }
     } else {
       statusItem.button?.image = symbolImage
@@ -496,10 +501,11 @@ class Maccy: NSObject {
   }
   
   private func runOnIconBlinkTimer(_ action: @escaping () -> Void) {
-    if iconBlinkTimer != nil { cancelIconBlinkTimer() }
+    if iconBlinkTimer != nil {
+      cancelIconBlinkTimer()
+    }
     iconBlinkTimer = timerForRunningOnMainQueueAfterDelay(iconBlinkIntervalSeconds) { [weak self] in
-      guard let self = self else { return }
-      self.iconBlinkTimer = nil // doing this before calling closure supports closure itself calling runOnIconBlinkTimer, fwiw
+      self?.iconBlinkTimer = nil // doing this before calling closure supports closure itself calling runOnIconBlinkTimer, fwiw
       action()
     }
   }

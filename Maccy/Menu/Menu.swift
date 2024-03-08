@@ -79,6 +79,9 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var noteItem: NSMenuItem?
   
   static func load(owner: Any) -> StatusItemMenu? {
+    // somewhat unconventional, perhaps in part because most of this code belongs in a controller class?
+    // we already have a MenuController however its used for some other things
+    // although since there's no such thing as a NSMenuController would have to do custom loading from nib anyway :shrug:
     guard let nib = NSNib(nibNamed: "Menu", bundle: nil) else {
       return nil
     }
