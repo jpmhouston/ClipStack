@@ -65,7 +65,7 @@ class Maccy: NSObject {
   }
   enum SymbolTransition {
     case replace
-    case blink(transitionSymbol: String)
+    case blink(transitionIcon: NSImage.Name)
   }
   
   override init() {
@@ -381,147 +381,73 @@ class Maccy: NSObject {
     // TODO: remove UserDefaults property showRecentCopyInMenuBar
   }
   
-  @available(macOS 11.0, *)
-  private func getSymbolImage(named name: String) -> NSImage? {
-    var image = NSImage(systemSymbolName: name, accessibilityDescription: accessibilityDesc)
-    if image == nil {
-      image = NSImage(named: name)
-      image?.accessibilityDescription = accessibilityDesc
-    }
-    return image?.withSymbolConfiguration(NSImage.SymbolConfiguration(textStyle: .body, scale: .large))
-  }
-  
-  @available(macOS 13.0, *)
-  private func exerciseAllSymbolIcons() {
-    let symbolNames = ["clipboard.fill", "clipboard.fill", "list.clipboard.fill", "custom.list.clipboard.fill.badge.plus", "custom.list.clipboard.fill.badge.minus", "clipboard"]
-    func showSymbol(_ index: Int) {
-      guard index < symbolNames.count else {
-        //runOnIconBlinkTimer { showSymbol(0) } // to loop endlessly
+  // TODO: remove this func
+  private func exerciseAllIcons() {
+    let iconNames = ["cleepp.clipboard.fill", "cleepp.clipboard.fill", "cleepp.clipboard.fill.badge.plus", "cleepp.list.clipboard.fill", "cleepp.list.clipboard.fill.badge.plus", "cleepp.list.clipboard.fill.badge.minus", "cleepp.clipboard"]
+    func showIcon(_ index: Int) {
+      guard index < iconNames.count else {
         return
       }
-      let symbolImage = getSymbolImage(named: symbolNames[index])
-      if symbolImage != nil {
-        print("✅ " + symbolNames[index])
-      } else {
-        print("❌ " + symbolNames[index])
-      }
-      statusItem.button?.image = symbolImage
-      runOnIconBlinkTimer {
-        showSymbol(index + 1)
-      }
+      let iconImage = NSImage(named: iconNames[index])
+      print((iconImage == nil ? "❌ " : "✅ ") + iconNames[index])
+      statusItem.button?.image = iconImage
+      runOnIconBlinkTimer(afterInterval: 0.2) { showIcon(index + 1) }
     }
-    showSymbol(0)
+    showIcon(0)
   }
   
   private func setupStatusMenuIcon() {
-    // the system clipboard symbol requires SF Symbols 4 in macOS 13 Ventura
-    var symbolImage: NSImage?
-    if #available(macOS 13.0, *) {
-      symbolImage = getSymbolImage(named: "clipboard")
-      
-      #if USE_SYMBOL_EFFECTS
-      // aborted idea b/c view is deprecated, and anyhow it doesn't work without subclassing the imageview to handle mouse events & more
-      if let symbolImage = symbolImage {
-        statusItem.view = NSImageView(image: image)
-        return
-      }
-      #endif
-    }
-    
     guard let button = statusItem.button else {
       return
     }
     
-    button.image = symbolImage ?? NSImage(named: .clipboard)
+    button.image = NSImage(named: .cleepMenuIcon)
     button.imagePosition = .imageRight
     (button.cell as? NSButtonCell)?.highlightsBy = []
     
-    //if #available(macOS 13.0, *) {
-    //  exerciseAllSymbolIcons()
-    //}
+    //exerciseAllIcons() // TODO: remove
   }
   
   private func updateStatusMenuIcon(_ direction: QueueChangeDirection = .none) {
-    // the system clipboard symbol requires SF Symbols 4 in macOS 13 Ventura
-    guard #available(macOS 13.0, *) else {
-      return
-    }
-    
-    let symbol: String
+    let icon: NSImage.Name
     var transition = SymbolTransition.replace
     if !Self.queueModeOn {
-      symbol = "clipboard"
-      if direction == .decrement {
-        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.minus")
-      }
-    } else if Self.queueSize <= 0 {
-      symbol = "clipboard.fill"
-      if direction == .decrement {
-        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.minus")
-      }
+      icon = .cleepMenuIcon
     } else {
-      symbol = "list.clipboard.fill"
-      if direction == .increment {
-        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.plus")
-      } else if direction == .decrement {
-        transition = .blink(transitionSymbol: "custom.list.clipboard.fill.badge.minus")
-      }
-    }
-    
-    guard let symbolImage = getSymbolImage(named: symbol) else {
-      return
-    }
-    
-    #if USE_SYMBOL_EFFECTS
-    // aborted idea b/c view is deprecated, and anyhow it doesn't work without subclassing the imageview to handle mouse events & more
-    guard let titleView = statusItem.view as? NSImageView else {
-      return
-    }
-    
-    // effects on symbols requires macOS 14 Sonoma
-    if #available(macOS 14.0, *) {
-      func transitionToSymbolImage() {
-        switch direction {
-        case .increment:
-          titleView.setSymbolImage(symbolImage, contentTransition: .replace.upUp)
-        case .decrement:
-          titleView.setSymbolImage(symbolImage, contentTransition: .replace.downUp)
-        default:
-          titleView.image = symbolImage
-        }
-      }
-      if case .blink(let transitionSymbol) = transition, let transitionImage = getSymbolImage(named: transitionSymbol) {
-        // bounce into transition symbol then later switch to
-        titleView.image = transitionImage
-        titleView.addSymbolEffect(.bounce)
-        runOnIconBlinkTimer {
-          transitionToSymbolImage()
-        }
+      if Self.queueSize == 0 {
+        icon = .cleepMenuIconFill
       } else {
-        transitionToSymbolImage()
+        icon = .cleepMenuIconList
       }
-    } else {
-      titleView.image = symbolImage
+      if direction == .decrement {
+        transition = .blink(transitionIcon: .cleepMenuIconListMinus)
+      } else if direction == .increment && Self.queueSize == 0 {
+        transition = .blink(transitionIcon: .cleepMenuIconFillPlus)
+      } else if direction == .increment {
+        transition = .blink(transitionIcon: .cleepMenuIconListPlus)
+      }
     }
-    return
-    #endif
     
-    if case .blink(let transitionSymbol) = transition, let transitionImage = getSymbolImage(named: transitionSymbol) {
+    guard let iconImage = NSImage(named: icon) else {
+      return
+    }
+    
+    if case .blink(let transitionIcon) = transition, let transitionImage = NSImage(named: transitionIcon) {
       // first show transition symbol, then blink to the final symbol
       statusItem.button?.image = transitionImage
-      runOnIconBlinkTimer { [weak self] in
-        self?.statusItem.button?.image = symbolImage
+      runOnIconBlinkTimer(afterInterval: iconBlinkIntervalSeconds) { [weak self] in
+        self?.statusItem.button?.image = iconImage
       }
     } else {
-      statusItem.button?.image = symbolImage
+      statusItem.button?.image = iconImage
     }
   }
   
-  private func runOnIconBlinkTimer(_ action: @escaping () -> Void) {
+  private func runOnIconBlinkTimer(afterInterval interval: Float, _ action: @escaping () -> Void) {
     if iconBlinkTimer != nil {
       cancelIconBlinkTimer()
     }
-    iconBlinkTimer = timerForRunningOnMainQueueAfterDelay(iconBlinkIntervalSeconds) { [weak self] in
+    iconBlinkTimer = timerForRunningOnMainQueueAfterDelay(interval) { [weak self] in
       self?.iconBlinkTimer = nil // doing this before calling closure supports closure itself calling runOnIconBlinkTimer, fwiw
       action()
     }
