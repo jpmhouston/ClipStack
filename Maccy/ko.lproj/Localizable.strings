@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "{settings} 있는 {pane} 정보 보호 환경설정에서 이 응용 프로그램에 접근 권한을 부여하십시오.\n\n“+“ 버튼을 클릭하고 “Cleepp“를 선택한 다음 옆에 있는 확인란을 토글합니다.";
 "accessibility_alert_deny" = "거부";
 "accessibility_alert_open" = "시스템 환경설정 열기";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "기록을 지우시겠습니까?";
 "clear_alert_comment" = "이 작업은 되돌릴 수 없습니다.";
 "clear_alert_cancel" = "취소";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "개인정보 보호 및 보안";
 "system_preferences_name" = "시스템 환경설정에";
 "system_preferences_pane" = "보안 및 개인";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

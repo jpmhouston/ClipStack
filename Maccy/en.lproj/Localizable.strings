@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "Grant access to this application in {pane}, located in {settings}.\n\nClick + button, select Cleepp and toggle on the checkbox next to it.";
 "accessibility_alert_deny" = "Deny";
 "accessibility_alert_open" = "Open System Preferences";
+"accessibility_alert_show_intro" = "Reopen Intro Window";
 "clear_alert_message" = "Are you sure you want to clear the history?";
 "clear_alert_comment" = "You can't undo this action.";
 "clear_alert_cancel" = "Cancel";
@@ -31,4 +32,3 @@
 "system_preferences_pane" = "Security & Privacy preferences";
 "first_replay_item_badge" = "replay from here";
 "menu_accessibility_description" = "Cleepp Menu";
-

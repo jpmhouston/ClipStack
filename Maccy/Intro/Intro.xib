@@ -1017,6 +1017,8 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
                 <outlet property="demoPasteBubble" destination="ge4-gO-Z9z" id="hDw-Ke-hwn"/>
                 <outlet property="hasAuthorizationEmoji" destination="Blh-fS-N36" id="eRF-FH-QKn"/>
                 <outlet property="hasAuthorizationLabel" destination="DkE-IU-Osz" id="H3p-a5-uM4"/>
+                <outlet property="inAppPurchageLabel" destination="P2t-k7-gU7" id="a6G-Nu-gN5"/>
+                <outlet property="inAppPurchageTitle" destination="UGh-0A-tPy" id="TLr-MX-UKf"/>
                 <outlet property="needsAuthorizationEmoji" destination="gJb-ZW-iAj" id="xNI-2L-jsS"/>
                 <outlet property="needsAuthorizationLabel" destination="EvF-0r-9Z1" id="Ffe-yk-KRE"/>
                 <outlet property="nextAuthorizationDirectionsLabel" destination="rEx-zK-yMR" id="yK3-0r-SVQ"/>

@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "Предоставьте права доступа этой программе в настройках {pane} в {settings}.\n\nНажмите кнопку «+», выберите «Cleepp» и установите флажок рядом с ним.";
 "accessibility_alert_deny" = "Запретить";
 "accessibility_alert_open" = "Открыть «Системные настройки»";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "Вы дейстительно хотите очистить историю?";
 "clear_alert_comment" = "Это действие необратимо.";
 "clear_alert_cancel" = "Отмена";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "«Конфиденциальность и безопасность»";
 "system_preferences_name" = "Системных настройках";
 "system_preferences_pane" = "«Защита и безопасность»";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

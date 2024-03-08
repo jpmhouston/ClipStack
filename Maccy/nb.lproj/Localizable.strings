@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "Gi tillatelse til dette programmet i {pane} innstillingene, lokalisert i {settings}.\n\nKlikk på +-knappen, velg “Cleepp“ og velg avmerkingsboksen ved siden av.";
 "accessibility_alert_deny" = "Avslå";
 "accessibility_alert_open" = "Åpne System Valg";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "Er du sikker på at du vil tømme historikken?";
 "clear_alert_comment" = "Du kan ikke angre denne handlingen.";
 "clear_alert_cancel" = "Avbryt";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "Personvern og sikkerhet";
 "system_preferences_name" = "System Valg";
 "system_preferences_pane" = "Sikkerhet & Personvern";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

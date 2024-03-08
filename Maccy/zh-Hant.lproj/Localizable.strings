@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "在{settings}中的{pane}設定中允許此應用程式權限。\n\n單擊 「+ 「按鈕，選擇 「Cleepp 「並打開旁邊的複選框。";
 "accessibility_alert_deny" = "拒絕";
 "accessibility_alert_open" = "打開系統偏好設定";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "確定要清除歷史記錄嗎？";
 "clear_alert_comment" = "無法還原此操作。";
 "clear_alert_cancel" = "取消";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "「隱私權與安全性」";
 "system_preferences_name" = "「系統偏好設定」";
 "system_preferences_pane" = "「安全性和隱私權」";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

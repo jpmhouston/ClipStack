@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "Bu uygulamaya, {settings} {pane} bölümünden izin verin.\n\n“+“ düğmesine tıklayın, Cleepp'yi seçin ve yanındaki onay kutusunu işaretleyin.";
 "accessibility_alert_deny" = "Reddet";
 "accessibility_alert_open" = "Sistem Ayarları'nı Aç";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "Geçmişi temizlemek istediğinize emin misiniz?";
 "clear_alert_comment" = "Bu eylemi geri alamazsınız.";
 "clear_alert_cancel" = "Vazgeç";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "Gizlilik ve Güvenlik";
 "system_preferences_name" = "Sistem Ayarları'nda";
 "system_preferences_pane" = "Güvenlik ve Gizlilik";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

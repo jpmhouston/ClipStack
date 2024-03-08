@@ -76,7 +76,9 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var copySupportEmailButton: NSButton!
   @IBOutlet var sendL10nEmailButton: NSButton!
   @IBOutlet var copyL10nEmailButton: NSButton!
-  
+  @IBOutlet var inAppPurchageTitle: NSTextField!
+  @IBOutlet var inAppPurchageLabel: NSView!
+
   var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel].compactMap({$0}) }
   
   private var preAuthorizationPageFirsTime = true
@@ -109,6 +111,11 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   func willClose() {
     teardownOptionKeyObserver()
     cancelDemo()
+    
+    // if leaving with accessibility now authorized then don't auto-open again
+    if Accessibility.allowed {
+      UserDefaults.standard.completedIntro = true
+    }
   }
   
   func willShowPage(_ number: Int) {
@@ -144,6 +151,10 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       setupOptionKeyObserver() { [weak self] event in
         self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
       }
+      //#if !FOR_APP_STORE // TODO: uncomment this so non-appstore builds don't get these items
+      inAppPurchageTitle.isHidden = true
+      inAppPurchageLabel.isHidden = true
+      //#endif
       
     default:
       break
@@ -300,7 +311,9 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func openSettingsAppSecurityPanel(_ sender: AnyObject) {
-    Accessibility.openSecurityPanel()
+    openURL(string: Accessibility.openSettingsPaneURL)
+    
+    // make window controller skip ahead to the next page
     (view.window?.windowController as? IntroWindowController)?.advance(self)
   }
   

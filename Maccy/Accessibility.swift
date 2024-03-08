@@ -7,6 +7,7 @@ struct Accessibility {
     alert.messageText = NSLocalizedString("accessibility_alert_message", comment: "")
     alert.addButton(withTitle: NSLocalizedString("accessibility_alert_deny", comment: ""))
     alert.addButton(withTitle: NSLocalizedString("accessibility_alert_open", comment: ""))
+    alert.addButton(withTitle: NSLocalizedString("accessibility_alert_show_intro", comment: ""))
     alert.icon = NSImage(named: "NSSecurity")
 
     var locationName = NSLocalizedString("system_settings_name", comment: "")
@@ -24,25 +25,44 @@ struct Accessibility {
   }
 
   static var allowed: Bool { AXIsProcessTrustedWithOptions(nil) }
-  static let url = URL(
-    string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
-  )
+  static let openSettingsPaneURL =
+    "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
 
-  static func check() {
-    guard !allowed else { return }
+  static func check() -> Bool {
+    if allowed {
+      return true
+    }
 
     Maccy.returnFocusToPreviousApp = false
     // Show accessibility window async to allow menu to close.
     DispatchQueue.main.async {
-      if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn {
+//      if alert.runModal() == NSApplication.ModalResponse.alertSecondButtonReturn {
+//        openSecurityPanel()
+//      }
+      switch alert.runModal() {
+      case NSApplication.ModalResponse.alertSecondButtonReturn:
         openSecurityPanel()
+      case NSApplication.ModalResponse.alertThirdButtonReturn:
+        openIntro()
+      default:
+        break
       }
       Maccy.returnFocusToPreviousApp = true
     }
+
+    return false
   }
   
   static func openSecurityPanel() {
-    guard let url = url else {
+    guard let url = URL(string: openSettingsPaneURL) else {
+      // TODO: log url failure
+      return
+    }
+    NSWorkspace.shared.open(url)
+  }
+  
+  static func openIntro() {
+    guard let url = URL(string: About.showIntroInAppURL) else {
       // TODO: log url failure
       return
     }

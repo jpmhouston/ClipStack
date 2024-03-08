@@ -113,7 +113,9 @@ class Clipboard {
   
   // Based on https://github.com/Clipy/Clipy/blob/develop/Clipy/Sources/Services/PasteService.swift.
   func postKeypress(_ modifiers: NSEvent.ModifierFlags, _ key: Key, then action: (() -> Void)?) {
-    Accessibility.check()
+    guard Accessibility.check() else {
+      return
+    }
 
     DispatchQueue.main.async {
       // Add flag that left/right modifier key has been pressed.

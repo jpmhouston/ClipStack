@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "{settings}{pane}環境設定で、このアプリケーションへのアクセスを許可してください。\n\n“+“ボタンをクリックし、“Cleepp“を選択して、その横のチェックボックスをオンにします。";
 "accessibility_alert_deny" = "拒否";
 "accessibility_alert_open" = "“システム環境設定”を開く";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "履歴をクリアしますか？";
 "clear_alert_comment" = "このアクションは元に戻すことができません。";
 "clear_alert_cancel" = "キャンセル";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "“プライバシーとセキュリティ”";
 "system_preferences_name" = "システム環境設定の";
 "system_preferences_pane" = "“セキュリティとプライバシー”";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

@@ -10,6 +10,7 @@ class About {
   static var maccyURL = "https://maccy.app"
   static var supportEmailURL = "mailto:cleepp@bananameter.lol"
   static var localizeVolunteerEmailURL = "mailto:cleepp.l10nhelp@bananameter.lol"
+  static var showIntroInAppURL = "cleeppapp:intro"
   
   private var blurb: NSAttributedString {
     return NSAttributedString(
@@ -20,7 +21,7 @@ class About {
   private var introLink: NSAttributedString {
     let string = NSMutableAttributedString(string: "More information: Show Intro",
                                            attributes: [NSAttributedString.Key.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: "cleeppapp:intro", range: NSRange(location: 18, length: 10))
+    string.addAttribute(.link, value: About.showIntroInAppURL, range: NSRange(location: 18, length: 10))
     return string
   }
   

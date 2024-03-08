@@ -102,7 +102,9 @@ class Maccy: NSObject {
   
   @IBAction
   func startQueueMode(_ sender: AnyObject) {
-    Accessibility.check()
+    guard Accessibility.check() else {
+      return
+    }
     
     Self.queueModeOn = true
     Self.queueSize = 0
@@ -127,7 +129,9 @@ class Maccy: NSObject {
   }
   
   private func incrementQueue() {
-    guard Self.queueModeOn else { return }
+    guard Self.queueModeOn else {
+      return
+    }
     
     //let wasEmpty = Self.queueSize == 0 // TODO: restore my logic to skip reloading pasteboard or updating menu?
     Self.queueSize += 1
@@ -153,7 +157,9 @@ class Maccy: NSObject {
   }
   
   private func decrementQueue() {
-    guard Self.queueModeOn && Self.queueSize > 0 else { return }
+    guard Self.queueModeOn && Self.queueSize > 0 else {
+      return
+    }
     
     Self.queueSize -= 1
 
@@ -200,9 +206,14 @@ class Maccy: NSObject {
   
   @IBAction
   func replayFromHistory(_ sender: AnyObject) {
-    guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else { return }
+    guard Accessibility.check() else {
+      return
+    }
     
-    Accessibility.check()
+    guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else {
+      return
+    }
+    
     Self.queueModeOn = true
     Self.queueSize = index + 1
     
@@ -213,7 +224,9 @@ class Maccy: NSObject {
   
   @IBAction
   func copyFromHistory(_ sender: AnyObject) {
-    guard let item = (sender as? HistoryMenuItem)?.item else { return }
+    guard let item = (sender as? HistoryMenuItem)?.item else {
+      return
+    }
     
     clipboard.copy(item)
   }
@@ -318,6 +331,10 @@ class Maccy: NSObject {
     populateMenu()
 
     updateStatusItemEnabledness()
+    
+    if !Accessibility.allowed && !UserDefaults.standard.completedIntro {
+      showIntro(self)
+    }
   }
   
   private func populateMenu() {

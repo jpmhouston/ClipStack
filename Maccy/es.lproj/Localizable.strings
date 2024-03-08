@@ -19,6 +19,7 @@
 "accessibility_alert_comment" = "Dale acceso a esta aplicación en el panel {pane} de {settings}.\n\nHaga clic en el botón “+”, seleccione “Cleepp“ y active la casilla de verificación junto a él.";
 "accessibility_alert_deny" = "Denegar";
 "accessibility_alert_open" = "Abrir Preferencias del Sistema";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "¿Estás seguro de que deseas borrar el historial?";
 "clear_alert_comment" = "No puede deshacer esta acción.";
 "clear_alert_cancel" = "Cancelar";
@@ -30,5 +31,5 @@
 "system_settings_pane" = "“Privacidad y seguridad”";
 "system_preferences_name" = "Preferencias del Sistema";
 "system_preferences_pane" = "“Seguridad y privacidad”";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

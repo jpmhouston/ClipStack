@@ -35,6 +35,7 @@ extension UserDefaults {
     static let sortBy = "sortBy"
     static let suppressClearAlert = "suppressClearAlert"
     static let ignoreRegexp = "ignoreRegexp"
+    static let completedIntro = "completedIntro"
 
     static var showInStatusBar: String {
       ProcessInfo.processInfo.arguments.contains("ui-testing") ? "showInStatusBarUITests" : "showInStatusBar"
@@ -227,5 +228,10 @@ extension UserDefaults {
   public var suppressClearAlert: Bool {
     get { bool(forKey: Keys.suppressClearAlert) }
     set { set(newValue, forKey: Keys.suppressClearAlert) }
+  }
+  
+  public var completedIntro: Bool {
+    get { bool(forKey: Keys.completedIntro) }
+    set { set(newValue, forKey: Keys.completedIntro) }
   }
 }

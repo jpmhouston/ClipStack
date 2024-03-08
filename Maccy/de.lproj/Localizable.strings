@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "Erlaube den Zugriff für diese Anwendung in “{settings} > {pane} > Datenschutz > Bedienungshilfen”.\n\nKlicken Sie auf die Schaltfläche “+“, wählen Sie “Cleepp“ aus und aktivieren Sie das Kontrollkästchen daneben.";
 "accessibility_alert_deny" = "Ablehnen";
 "accessibility_alert_open" = "Öffne Systemeinstellungen";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "Möchtest du den Verlauf wirklich leeren?";
 "clear_alert_comment" = "Diese Aktion kann nicht widerrufen werden.";
 "clear_alert_cancel" = "Abbrechen";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "Datenschutz & Sicherheit";
 "system_preferences_name" = "Systemeinstellungen";
 "system_preferences_pane" = "Sicherheit & Datenschutz";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update

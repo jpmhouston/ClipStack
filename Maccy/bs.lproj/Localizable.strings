@@ -18,6 +18,7 @@
 "accessibility_alert_comment" = "Odobrite pristup ovoj aplikaciji u postavkama {pane}, koje se nalaze u {settings}.\n\nKliknite na dugme +, izaberite Cleepp i potvrdite izbor u polju za potvrdu pored njega.";
 "accessibility_alert_deny" = "Ignoriši";
 "accessibility_alert_open" = "Otvori Sistemska podešavanja";
+"accessibility_alert_show_intro" = "Reopen Intro Window"; // TODO: update
 "clear_alert_message" = "Da li ste sigurni?";
 "clear_alert_comment" = "Ne možeš povratiti ovu radnju";
 "clear_alert_cancel" = "Odustani";
@@ -29,5 +30,5 @@
 "system_settings_pane" = "Privatnosti i sigurnosti";
 "system_preferences_name" = "Postavki sustava";
 "system_preferences_pane" = "Sigurnosti i privatnosti";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"first_replay_item_badge" = "replay from here"; // TODO: update
+"menu_accessibility_description" = "Cleepp Menu"; // TODO: update
