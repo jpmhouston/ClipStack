@@ -25,6 +25,8 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
   
   @IBOutlet weak var pageDelegate: PagedWindowControllerDelegate?
   
+  var isOpen = false
+  
   private var rightToLeft: Bool { false } // TODO: set based on system language direction
   
   public override func windowDidLoad() {
@@ -40,6 +42,7 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
   
   public func windowWillClose(_ notification: Notification) {
     pageDelegate?.willClose()
+    isOpen = false
   }
   
   func useView(_ view: NSView) {
@@ -60,10 +63,10 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
     scrollView.contentView.bounds.origin = NSPoint.zero
   }
   
-  func reset() {
+  func reset(opening: Bool = true) {
     var firstPageNumber = 0
     
-    if contentSubview == nil { // TODO: perhaps wrap in #if DEBUG
+    if contentSubview == nil { // perhaps should wrap in #if DEBUG
       setupTestViews()
     }
     
@@ -86,7 +89,10 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
     scroll(toPage: firstPageNumber)
     updateButtons()
     
-    pageDelegate?.willOpen()
+    if opening {
+      pageDelegate?.willOpen()
+      isOpen = true
+    }
   }
   
   private func updateButtons() {
@@ -191,17 +197,6 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
   }
   
   var isAtTheEnd: Bool {
-//    guard let scrollView = scrollView, let content = contentSubview else {
-//      return true
-//    }
-//    let contentBounds = scrollView.contentView.bounds
-//    let entireWidth = content.bounds.size.width
-//    let right = contentBounds.origin.x + contentBounds.size.width
-//    print("isAtTheEnd \(right == entireWidth), x: \(contentBounds.origin.x), right: \(right), width: \(contentBounds.size.width), entireWidth: \(entireWidth)")
-//    if right == entireWidth {
-//      return true
-//    }
-    
     if currentPageNumber >= lastPageNumber {
       return true
     }

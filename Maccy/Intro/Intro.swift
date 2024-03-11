@@ -61,6 +61,7 @@ public class IntroWindowController: PagedWindowController {
 
 public class IntroViewController: NSViewController, PagedWindowControllerDelegate {
   @IBOutlet var openSecurityPanelButton: NSButton!
+  @IBOutlet var openSecurityPanelSpinner: NSProgressIndicator!
   @IBOutlet var hasAuthorizationEmoji: NSTextField!
   @IBOutlet var needsAuthorizationEmoji: NSTextField!
   @IBOutlet var hasAuthorizationLabel: NSTextField!
@@ -106,6 +107,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   func willOpen() {
     visited.removeAll()
+    openSecurityPanelSpinner.stopAnimation(self)
   }
   
   func willClose() {
@@ -138,6 +140,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       if !visited.contains(page) {
         skipSetAuthorizationPage = isAuthorized
       }
+      openSecurityPanelSpinner.stopAnimation(self)
       
     case .setAuth:
       authorizationVerifiedEmoji.isHidden = true
@@ -151,10 +154,10 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       setupOptionKeyObserver() { [weak self] event in
         self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
       }
-      //#if !FOR_APP_STORE // TODO: uncomment this so non-appstore builds don't get these items
-      inAppPurchageTitle.isHidden = true
-      inAppPurchageLabel.isHidden = true
-      //#endif
+//      #if !FOR_APP_STORE // TODO: uncomment this so non-appstore builds don't get these items
+//      inAppPurchageTitle.isHidden = true
+//      inAppPurchageLabel.isHidden = true
+//      #endif
       
     default:
       break
@@ -190,7 +193,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private func teardownOptionKeyObserver() {
     if let eventMonitor = optionKeyEventMonitor {
       NSEvent.removeMonitor(eventMonitor)
-      optionKeyEventMonitor = false
+      optionKeyEventMonitor = nil
     }
   }
   
@@ -311,10 +314,26 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func openSettingsAppSecurityPanel(_ sender: AnyObject) {
-    openURL(string: Accessibility.openSettingsPaneURL)
+    let openSecurityPanelSpinnerTime = 1.25
     
-    // make window controller skip ahead to the next page
-    (view.window?.windowController as? IntroWindowController)?.advance(self)
+    self.openURL(string: Accessibility.openSettingsPaneURL)
+    
+    // make window controller skip ahead to the next page after a delay
+    guard let windowController = (self.view.window?.windowController as? IntroWindowController) else {
+      return
+    }
+    
+    openSecurityPanelSpinner.startAnimation(sender)
+    DispatchQueue.main.asyncAfter(deadline: .now() + openSecurityPanelSpinnerTime) { [weak self] in
+      guard let self = self else {
+        return
+      }
+      self.openSecurityPanelSpinner.stopAnimation(sender)
+      
+      if windowController.isOpen && Pages(rawValue: windowController.currentPageNumber) == .checkAuth {
+        windowController.advance(self)
+      }
+    }
   }
   
   @IBAction func openDocumentationWebpage(_ sender: AnyObject) {
@@ -465,20 +484,3 @@ extension NSMutableAttributedString {
     return NSRange(location: delimitedLocation, length: delimitedLength)
   }
 }
-
-
-//extension CALayer {
-//  open override func setValue(_ value: Any?, forKey key: String) {
-//    if let color = value as? NSColor {
-//      switch key {
-//      case "backgroundColor":
-//        self.backgroundColor = color.cgColor
-//        return
-//      // TODO: more nscolor -> cgcolor cases here
-//      default:
-//        break
-//      }
-//    }
-//    super.setValue(value, forKey: key)
-//  }
-//}

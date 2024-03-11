@@ -232,16 +232,32 @@ But there's a tiny bit of setup you need to do first …</string>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2VO-Pm-i8d">
-                                    <rect key="frame" x="-7" y="47" width="242" height="32"/>
-                                    <buttonCell key="cell" type="push" title="Open Privacy &amp; Security Panel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="J3i-c2-9gG">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system" size="15"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="openSettingsAppSecurityPanel:" target="o5X-kK-gzk" id="WnQ-Go-Hb3"/>
-                                    </connections>
-                                </button>
+                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nCR-Wr-cCe">
+                                    <rect key="frame" x="0.0" y="54" width="252" height="20"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2VO-Pm-i8d">
+                                            <rect key="frame" x="-7" y="-7" width="242" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Open Privacy &amp; Security Panel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="J3i-c2-9gG">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system" size="15"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="openSettingsAppSecurityPanel:" target="o5X-kK-gzk" id="WnQ-Go-Hb3"/>
+                                            </connections>
+                                        </button>
+                                        <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="w2D-dO-d7T">
+                                            <rect key="frame" x="236" y="2" width="16" height="16"/>
+                                        </progressIndicator>
+                                    </subviews>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-zK-yMR">
                                     <rect key="frame" x="-2" y="0.0" width="324" height="38"/>
                                     <textFieldCell key="cell" title="Use the button to open the panel then return to this window for what to do next." id="naz-h7-dY3">
@@ -669,16 +685,16 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
                                     <rect key="frame" x="-2" y="30" width="550" height="34"/>
                                     <textFieldCell key="cell" id="h9x-EW-Yfr">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <string key="title">Hold ⌥ (option key) when clicking the menu to show a history of all recently copied items. Clicking a history item starts replay mode starting from there.</string>
+                                        <string key="title">Hold ⌥ (option key) when clicking the menu to show a history of all recently copied items. Clicking a history item lets you paste that item again.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m2v-U7-QYJ">
+                                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m2v-U7-QYJ">
                                     <rect key="frame" x="0.0" y="0.0" width="500" height="20"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="ZDM-lj-aVO">
-                                            <rect key="frame" x="-2" y="2" width="381" height="17"/>
+                                            <rect key="frame" x="-2" y="3" width="381" height="17"/>
                                             <textFieldCell key="cell" title="The keyboard shortcuts ^⌘C and ^⌘V can be customized" id="vFs-Ep-8cZ">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1023,6 +1039,7 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
                 <outlet property="needsAuthorizationLabel" destination="EvF-0r-9Z1" id="Ffe-yk-KRE"/>
                 <outlet property="nextAuthorizationDirectionsLabel" destination="rEx-zK-yMR" id="yK3-0r-SVQ"/>
                 <outlet property="openSecurityPanelButton" destination="2VO-Pm-i8d" id="R4l-fD-bqu"/>
+                <outlet property="openSecurityPanelSpinner" destination="w2D-dO-d7T" id="U9Z-8M-Muf"/>
                 <outlet property="sendL10nEmailButton" destination="K04-rZ-O0s" id="gpt-xG-oUo"/>
                 <outlet property="sendSupportEmailButton" destination="Jez-C6-oFa" id="Lkh-Vo-TqX"/>
                 <outlet property="specialCopyPasteBehaviorLabel" destination="Sed-8H-0RI" id="hoL-y1-4oZ"/>
