@@ -52,7 +52,7 @@ extension UserDefaults {
     static let ignoredPasteboardTypes: [String] = [ "net.antelle.keeweb", "com.agilebits.onepassword", "com.typeit4me.clipping", "Pasteboard generator type", "de.petermaurer.TransientPasteboardType" ]
     static let ignoreRegexp: [String] = []
     static let imageMaxHeight = 40.0
-    static let maxMenuItems = 30
+    static let maxMenuItems = 25
     static let maxMenuItemLength = 50
     static let migrations: [String: Bool] = [:]
     static let pinTo = "top"
