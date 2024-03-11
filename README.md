@@ -202,6 +202,7 @@ will be the one that is pasted next.
 (When running macOS versions before 14.0 Sonoma, menu items cannot be badged
 the item to be pasted next will simply be the one at the bottom on the history) 
 
+
 ### Expanded Clipboard History Items
 
 Clicking the menu icon with <kbd>OPTION (⌥)</kbd> pressed will show the
@@ -301,9 +302,6 @@ or using the “Cancel Collecting / Replaying” menu item*
 
 
 ### Additional History Features
-
-The "Extras" purchase unlocks these additional features on the history items
-in the expanded Cleepp menu:
 
 - There is a "Filter" search box to filter the history. Use it to make it easier to find a
 specific item previously copied for replay from there, or of just that item.
