@@ -109,7 +109,7 @@ class Maccy: NSObject {
     Self.queueModeOn = true
     Self.queueSize = 0
     
-    updateStatusMenuIcon(.increment)
+    updateStatusMenuIcon()
     updateMenuTitle()
   }
   
@@ -217,7 +217,7 @@ class Maccy: NSObject {
     Self.queueModeOn = true
     Self.queueSize = index + 1
     
-    updateStatusMenuIcon(.increment)
+    updateStatusMenuIcon()
     updateMenuTitle()
     menu.updateHeadOfQueue(index: index)
   }
@@ -261,6 +261,9 @@ class Maccy: NSObject {
       Self.queueSize -= 1
       updateStatusMenuIcon(.decrement)
       updateMenuTitle()
+      if Self.queueSize == 0 {
+        menu.updateHeadOfQueue(index: nil)
+      }
     }
     
     // Normally set pasteboard to the previous history item, now first in the history after doing the
@@ -329,6 +332,7 @@ class Maccy: NSObject {
       self.history.clear()
       self.menu.clear()
       self.clipboard.clear()
+      Self.queueSize = 0
       self.updateStatusMenuIcon()
       self.updateMenuTitle()
     }
@@ -379,7 +383,6 @@ class Maccy: NSObject {
   private func rebuild() {
     // TODO: don't think i need this
     menu.clear()
-    menu.removeAllItems()
     menu.buildItems()
     if Self.queueModeOn {
       menu.updateHeadOfQueue(index: queueHeadIndex)
@@ -394,23 +397,6 @@ class Maccy: NSObject {
     } else {
       statusItem.button?.title = ""
     }
-    
-    // TODO: remove UserDefaults property showRecentCopyInMenuBar
-  }
-  
-  // TODO: remove this func
-  private func exerciseAllIcons() {
-    let iconNames = ["cleepp.clipboard.fill", "cleepp.clipboard.fill", "cleepp.clipboard.fill.badge.plus", "cleepp.list.clipboard.fill", "cleepp.list.clipboard.fill.badge.plus", "cleepp.list.clipboard.fill.badge.minus", "cleepp.clipboard"]
-    func showIcon(_ index: Int) {
-      guard index < iconNames.count else {
-        return
-      }
-      let iconImage = NSImage(named: iconNames[index])
-      print((iconImage == nil ? "❌ " : "✅ ") + iconNames[index])
-      statusItem.button?.image = iconImage
-      runOnIconBlinkTimer(afterInterval: 0.2) { showIcon(index + 1) }
-    }
-    showIcon(0)
   }
   
   private func setupStatusMenuIcon() {
@@ -421,8 +407,6 @@ class Maccy: NSObject {
     button.image = NSImage(named: .cleepMenuIcon)
     button.imagePosition = .imageRight
     (button.cell as? NSButtonCell)?.highlightsBy = []
-    
-    //exerciseAllIcons() // TODO: remove
   }
   
   private func updateStatusMenuIcon(_ direction: QueueChangeDirection = .none) {
@@ -430,6 +414,9 @@ class Maccy: NSObject {
     var transition = SymbolTransition.replace
     if !Self.queueModeOn {
       icon = .cleepMenuIcon
+      if direction == .decrement {
+        transition = .blink(transitionIcon: .cleepMenuIconListMinus)
+      }
     } else {
       if Self.queueSize == 0 {
         icon = .cleepMenuIconFill
@@ -438,9 +425,9 @@ class Maccy: NSObject {
       }
       if direction == .decrement {
         transition = .blink(transitionIcon: .cleepMenuIconListMinus)
-      } else if direction == .increment && Self.queueSize == 0 {
+      } else if direction == .increment && Self.queueSize == 1 {
         transition = .blink(transitionIcon: .cleepMenuIconFillPlus)
-      } else if direction == .increment {
+      } else if direction == .increment && Self.queueSize > 1 {
         transition = .blink(transitionIcon: .cleepMenuIconListPlus)
       }
     }
