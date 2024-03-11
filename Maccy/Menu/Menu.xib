@@ -12,11 +12,11 @@
             <rect key="frame" x="0.0" y="0.0" width="296" height="28"/>
             <subviews>
                 <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-Nx-C7z">
-                    <rect key="frame" x="61" y="3" width="229" height="25"/>
+                    <rect key="frame" x="6" y="3" width="284" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="xNg-gc-FWv"/>
                     </constraints>
-                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" refusesFirstResponder="YES" borderStyle="bezel" focusRingType="none" placeholderString="type to search..." usesSingleLineMode="YES" bezelStyle="round" id="oKU-5I-XAd">
+                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" refusesFirstResponder="YES" borderStyle="bezel" focusRingType="none" placeholderString="Filter" usesSingleLineMode="YES" bezelStyle="round" id="oKU-5I-XAd">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -25,32 +25,24 @@
                         <outlet property="delegate" destination="Hz6-mo-xeY" id="Zbz-Op-Ual"/>
                     </connections>
                 </searchField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S88-gz-je6">
-                    <rect key="frame" x="11" y="7" width="48" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="History" id="xzp-wK-dxe">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="MmW-Nx-C7z" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" priority="250" constant="14" id="4vf-96-ME7"/>
+                <constraint firstItem="MmW-Nx-C7z" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" priority="250" constant="6" id="4vf-96-ME7"/>
                 <constraint firstAttribute="bottom" secondItem="MmW-Nx-C7z" secondAttribute="bottom" constant="3" id="5IV-uJ-8Mm"/>
                 <constraint firstAttribute="trailing" secondItem="MmW-Nx-C7z" secondAttribute="trailing" constant="6" id="9iL-Y8-VWA"/>
-                <constraint firstItem="S88-gz-je6" firstAttribute="firstBaseline" secondItem="MmW-Nx-C7z" secondAttribute="firstBaseline" constant="2" id="f2J-Is-8vr"/>
-                <constraint firstItem="MmW-Nx-C7z" firstAttribute="leading" secondItem="S88-gz-je6" secondAttribute="trailing" priority="750" constant="4" identifier="fieldRelativeToTitle" id="ghh-ML-UQd"/>
-                <constraint firstItem="S88-gz-je6" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="13" id="m8t-Ev-ws5"/>
                 <constraint firstItem="MmW-Nx-C7z" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="mfY-C7-erp"/>
             </constraints>
             <connections>
-                <outlet property="horizontalLeftPadding" destination="m8t-Ev-ws5" id="Zou-Qo-UfO"/>
+                <outlet property="horizontalLeftPadding" destination="4vf-96-ME7" id="LGF-jf-Z0g"/>
                 <outlet property="horizontalRightPadding" destination="9iL-Y8-VWA" id="Kbl-Wd-50R"/>
                 <outlet property="queryField" destination="MmW-Nx-C7z" id="blP-46-55K"/>
-                <outlet property="titleAndSearchSpacing" destination="ghh-ML-UQd" id="T6U-Q4-EKq"/>
-                <outlet property="titleField" destination="S88-gz-je6" id="m08-of-qqa"/>
             </connections>
-            <point key="canvasLocation" x="-5" y="164"/>
+            <point key="canvasLocation" x="-5" y="174"/>
+        </customView>
+        <customView id="9fv-At-xQC" userLabel="Placeholder Anchor Item View">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="0.0"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <point key="canvasLocation" x="-123" y="314"/>
         </customView>
         <menu title="Cleepp" id="dqg-kI-Klz" customClass="StatusItemMenu" customModule="Cleepp" customModuleProvider="target">
             <items>
@@ -104,21 +96,29 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="JrS-zo-Haf"/>
-                <menuItem title="Placeholder Copy History Item" hidden="YES" id="1hg-yO-AD0">
+                <menuItem title="Placeholder Copy History Item" id="1hg-yO-AD0" customClass="HistoryMenuItem" customModule="Cleepp" customModuleProvider="target">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="copyFromHistory:" target="-2" id="dkX-Up-627"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Placeholder Replay History Item" hidden="YES" id="u5y-6g-IID">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Placeholder Replay History Item" alternate="YES" id="u5y-6g-IID" customClass="HistoryMenuItem" customModule="Cleepp" customModuleProvider="target">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                     <connections>
                         <action selector="replayFromHistory:" target="-2" id="BLU-IN-o9D"/>
+                    </connections>
+                </menuItem>
+                <menuItem enabled="NO" id="pms-CA-OfJ" userLabel="Placeholder Anchor Item" customClass="HistoryMenuItem" customModule="Cleepp" customModuleProvider="target">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="replayFromHistory:" target="-2" id="srV-C0-AYl"/>
+                        <outlet property="view" destination="9fv-At-xQC" id="1Dr-Z4-0vJ"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Placeholder History Header" hidden="YES" id="MMa-qd-9PO">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
+                        <action selector="deleteHistoryItem:" target="-2" id="iqa-ww-Cc0"/>
                         <outlet property="view" destination="Hz6-mo-xeY" id="qea-wg-GoD"/>
                     </connections>
                 </menuItem>
@@ -153,8 +153,9 @@ CA
                 <outlet property="advanceItem" destination="TLY-ku-V0E" id="od9-PM-WWa"/>
                 <outlet property="historyHeaderItem" destination="MMa-qd-9PO" id="Isx-BV-gjX"/>
                 <outlet property="noteItem" destination="f7O-Xw-4yJ" id="MEb-0U-qJb"/>
-                <outlet property="placeholderCopyItem" destination="1hg-yO-AD0" id="BFx-GW-cTS"/>
-                <outlet property="placeholderReplayItem" destination="u5y-6g-IID" id="BiY-9N-axa"/>
+                <outlet property="prototypeAnchorItem" destination="pms-CA-OfJ" id="SCX-Hb-a2C"/>
+                <outlet property="prototypeCopyItem" destination="1hg-yO-AD0" id="BFx-GW-cTS"/>
+                <outlet property="prototypeReplayItem" destination="u5y-6g-IID" id="BiY-9N-axa"/>
                 <outlet property="queueCopyItem" destination="ieX-in-c9O" id="V9f-FJ-h9b"/>
                 <outlet property="queuePasteItem" destination="WZ5-r7-f8t" id="nfN-UU-R2i"/>
                 <outlet property="queueStartItem" destination="Y5o-n6-NCS" id="j9S-hc-MQx"/>
@@ -184,7 +185,7 @@ Shortcuts below only work while this menu is open.</string>
                 <constraint firstAttribute="trailing" secondItem="uIb-jp-yTA" secondAttribute="trailing" constant="4" id="OzH-Ah-gqy"/>
                 <constraint firstItem="uIb-jp-yTA" firstAttribute="leading" secondItem="XAP-KR-RlP" secondAttribute="leading" constant="13" id="kTC-Bh-igb"/>
             </constraints>
-            <point key="canvasLocation" x="-5" y="236"/>
+            <point key="canvasLocation" x="-5" y="248"/>
         </customView>
     </objects>
 </document>

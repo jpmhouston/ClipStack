@@ -6,65 +6,48 @@ import AppKit
 class StatusItemMenu: NSMenu, NSMenuDelegate {
   static let menuWidth = 300
   static let popoverGap = 5.0
-
+  
+  internal var isVisible: Bool = false
+  internal var history: History!
+  
   class IndexedItem: NSObject {
     var value: String
     var title: String { item?.title ?? "" }
     var item: HistoryItem?
     var menuItems: [HistoryMenuItem]
-    var popoverAnchor: NSMenuItem?
-
+    
     init(value: String, item: HistoryItem?, menuItems: [HistoryMenuItem]) {
       self.value = value
       self.item = item
       self.menuItems = menuItems
-      if #unavailable(macOS 14) {
-        self.popoverAnchor = HistoryMenuItem.PreviewMenuItem()
-      }
     }
   }
   
-  public var isVisible: Bool = false
+  private var indexedItems: [IndexedItem] = []
+  private var headOfQueueIndexedItem: IndexedItem?
   
   internal var historyMenuItems: [HistoryMenuItem] {
-    items.compactMap({ $0 as? HistoryMenuItem })
+    items.compactMap({ ($0 as? HistoryMenuItem)?.onlyIfNotIn([topAnchorItem].compactMap({ $0 })) })
   }
   
-  private let search = Search()
+  private var historyMenuItemsGroupCount: Int { usePopoverAnchors ? 3 : 2 } // 1 main, 1 alternate, 1 popover anchor
+  private var maxMenuItems: Int { min(UserDefaults.standard.maxMenuItems, UserDefaults.standard.size) }
+  
+  private var usePopoverAnchors = false
+  private var showsExpandedMenu = false
+  private var isFiltered: Bool = false
   
   private static let subsequentPreviewDelay = 0.2
   private var initialPreviewDelay: Double { Double(UserDefaults.standard.previewDelay) / 1000 }
   private lazy var previewThrottle = Throttler(minimumDelay: initialPreviewDelay)
-  private var previewPopover: NSPopover?
-  
-  private var clipboard: Clipboard!
-  private var history: History!
-  
-  private var indexedItems: [IndexedItem] = []
-  private var headOfQueueIndexedItem: IndexedItem?
-
-  // When menu opens, we don't know which of the alternate menu items
-  // is actually visible. We would like to highlight the one that is currently
-  // visible and it seems like the only way to do is to try to find out
-  // which ones has keyEquivalentModifierMask matching currently pressed
-  // modifier flags.
-  private var firstVisibleHistoryMenuItem: HistoryMenuItem? {
-    let firstMenuItems = historyMenuItems.prefix(historyMenuItemsGroup)
-    return firstMenuItems.first(where: { NSEvent.modifierFlags == $0.keyEquivalentModifierMask }) ??
-      firstMenuItems.first(where: { NSEvent.modifierFlags.isSuperset(of: $0.keyEquivalentModifierMask) }) ??
-      firstMenuItems.first
-  }
-  
-  private let historyMenuItemsGroup = 2 // 1 main and 1 alternate
-  private var usePopoverAnchor = false
-  
-  private var showsExpandedMenu = false
-  private var isFiltered: Bool = false
-  
-  private var maxMenuItems: Int { min(UserDefaults.standard.maxMenuItems, UserDefaults.standard.size) }
-  private var maxVisibleItems: Int { maxMenuItems * historyMenuItemsGroup }
   
   private var historyHeader: SearchItemView? { historyHeaderItem?.view as? SearchItemView }
+  private let search = Search()
+  private var topAnchorItem: HistoryMenuItem?
+  private var previewPopover: NSPopover?
+  private var protoCopyItem: HistoryMenuItem?
+  private var protoReplayItem: HistoryMenuItem?
+  private var protoAnchorItem: HistoryMenuItem?
   private var menuWindow: NSWindow? { NSApp.menuWindow }
   
   @IBOutlet weak var queueCopyItem: NSMenuItem?
@@ -73,8 +56,9 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var queueStopItem: NSMenuItem?
   @IBOutlet weak var advanceItem: NSMenuItem?
   @IBOutlet weak var historyHeaderItem: NSMenuItem?
-  @IBOutlet weak var placeholderCopyItem: NSMenuItem?
-  @IBOutlet weak var placeholderReplayItem: NSMenuItem?
+  @IBOutlet weak var prototypeCopyItem: NSMenuItem?
+  @IBOutlet weak var prototypeReplayItem: NSMenuItem?
+  @IBOutlet weak var prototypeAnchorItem: NSMenuItem?
   @IBOutlet weak var trailingSeparatorItem: NSMenuItem?
   @IBOutlet weak var noteItem: NSMenuItem?
   
@@ -93,15 +77,30 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   override func awakeFromNib() {
     self.delegate = self
     self.minimumWidth = CGFloat(Self.menuWidth)
-
-    if #unavailable(macOS 14) {
-      self.usePopoverAnchor = true
+    
+    // save aside the prototype history menu items and remove them from the menu
+    if let prototypeCopyItem = prototypeCopyItem as? HistoryMenuItem {
+      protoCopyItem = prototypeCopyItem
+      removeItem(prototypeCopyItem)
     }
+    if let prototypeReplayItem = prototypeReplayItem as? HistoryMenuItem {
+      protoReplayItem = prototypeReplayItem
+      removeItem(prototypeReplayItem)
+    }
+    if let prototypeAnchorItem = prototypeAnchorItem as? HistoryMenuItem {
+      protoAnchorItem = prototypeAnchorItem
+      removeItem(prototypeAnchorItem)
+    }
+    
+    if #unavailable(macOS 14) {
+      self.usePopoverAnchors = true
+    }
+    // for now exercise using popover anchors even on macOS 14
+    //self.usePopoverAnchors = true // TODO: remove this
   }
   
-  func inject(history: History, clipboard: Clipboard) {
+  func inject(history: History) {
     self.history = history
-    self.clipboard = clipboard
   }
   
   func prepareForPopup() {
@@ -114,11 +113,14 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     isVisible = true
     previewThrottle.minimumDelay = initialPreviewDelay
     
-    // restore this if we want to highlight the first history item when menu opens
-    //highlight(firstVisibleHistoryMenuItem ?? historyMenuItems.first)
-    
-    // TODO: is this where we should set the search field as the first responder, if it's visible?
-    // (unless UserDefaults.standard.hideSearch)
+    // showsExpandedMenu flag set by call to enableExpandedMenu() before the menu is opened
+    // switch it back off if either not allowed or if history blank (pointless, plus it looks weird)
+    if showsExpandedMenu && (!Maccy.allowExtraHistoryFeatures || historyMenuItems.isEmpty) {
+      showsExpandedMenu = false
+    }
+    if showsExpandedMenu {
+      historyHeader?.queryField.becomeFirstResponder()
+    }
   }
   
   func menuDidClose(_ menu: NSMenu) {
@@ -176,10 +178,12 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   func buildItems() {
-    clear()
+    clear() // wipes indexedItems as well as history menu items
     
-    // TODO: does this assume indexedItems currently empty?
-    
+    if usePopoverAnchors {
+      insertTopAnchorItem()
+    }
+
     let historyItems = history.all
     
     for item in historyItems {
@@ -194,9 +198,6 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       )
       indexedItems.append(indexedItem)
       menuItems.forEach(appendMenuItem)
-      if usePopoverAnchor {
-        appendPopoverAnchor(indexedItem)
-      }
     }
   }
   
@@ -205,7 +206,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     guard let insertionIndex = sortedItems.firstIndex(where: { $0 == item }) else {
       return
     }
-    guard let historyHeaderItem = historyHeaderItem else {
+    guard let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem else {
       return
     }
     
@@ -220,22 +221,25 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     )
     indexedItems.insert(indexedItem, at: insertionIndex)
     
-    let firstHistoryMenuItemIndex = index(of: historyHeaderItem) + 1
-    let historyMenuItemsGroupCount = historyMenuItemsGroup + (usePopoverAnchor ? 1 : 0)
-    
+    let firstHistoryMenuItemIndex = index(of: zerothHistoryHeaderItem) + 1
+    let menuItemInsertionIndex = firstHistoryMenuItemIndex + self.historyMenuItemsGroupCount * insertionIndex
+
     ensureInEventTrackingModeIfVisible {
-      var menuItemInsertionIndex = firstHistoryMenuItemIndex + historyMenuItemsGroupCount * insertionIndex
+      var index = menuItemInsertionIndex
       for menuItem in menuItems {
-        self.safeInsertItem(menuItem, at: menuItemInsertionIndex)
-        menuItemInsertionIndex += 1
-      }
-      if self.usePopoverAnchor {
-        self.insertPopoverAnchor(indexedItem, menuItemInsertionIndex)
+        self.safeInsertItem(menuItem, at: index)
+        index += 1
       }
       
-      // TODO: figure out why clearRemovedItems is called here
+      // i wish there was an explanation why clearRemovedItems should be called here
       self.clearRemovedItems()
     }
+  }
+  
+  func clear() {
+    clear(indexedItems)
+    clearAllHistoryMenuItems()
+    headOfQueueIndexedItem = nil
   }
   
   func updateHeadOfQueue(index: Int?) {
@@ -244,14 +248,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     if let index = index, index >= 0, index < indexedItems.count {
       headOfQueueIndexedItem = indexedItems[index]
       headOfQueueIndexedItem?.menuItems.forEach { $0.isHeadOfQueue = true }
-//      if let f = headOfQueueIndexedItem {
-//        f.menuItems.forEach { $0.isHeadOfQueue = true }
-//      }
     }
-  }
-  
-  func clear() {
-    clear(indexedItems)
   }
   
   func updateFilter(filter: String) {
@@ -263,11 +260,13 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
     
     // Remove existing menu history items
-    guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem,
-          index(of: historyHeaderItem) < index(of: trailingSeparatorItem) else {
+    guard let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem,
+          let trailingSeparatorItem = trailingSeparatorItem else {
       return
     }
-    for index in (index(of: historyHeaderItem) + 1 ..< index(of: trailingSeparatorItem)).reversed() {
+    assert(index(of: zerothHistoryHeaderItem) < index(of: trailingSeparatorItem))
+    
+    for index in (index(of: zerothHistoryHeaderItem) + 1 ..< index(of: trailingSeparatorItem)).reversed() {
       safeRemoveItem(at: index)
     }
     
@@ -277,15 +276,11 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
         menuItem.highlight(result.titleMatches)
         appendMenuItem(menuItem)
       }
-      if usePopoverAnchor {
-        appendPopoverAnchor(result.object)
-      }
     }
     
     isFiltered = results.count < indexedItems.count
     
-    // restore this if we want to highlight the first history item when menu opens
-    //highlight(historyMenuItems.first)
+    highlight(historyMenuItems.first)
   }
   
   func select() {
@@ -293,8 +288,6 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       performActionForItem(at: index(of: item))
     }
   }
-  
-  // TODO: figure out what this one was for, maybe bring it back: func select(_ searchQuery: String)
   
   func select(position: Int) -> String? {
     guard indexedItems.count > position,
@@ -325,36 +318,45 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       highlight(highlightableItems(items).first) // start from the beginning after reaching the last item
     }
   }
-
-  func delete() {
-    guard let itemToRemove = highlightedItem else {
-      return
+  
+  func highlightedMenuItem() -> HistoryMenuItem? {
+    guard let menuItem = highlightedItem, let historyMenuItem = menuItem as? HistoryMenuItem else {
+      return nil
     }
-
-    if let historyItemToRemove = itemToRemove as? HistoryMenuItem {
-      let historyItemToRemoveIndex = index(of: historyItemToRemove)
-
-      // When deleting mulitple items by holding the removal keys
-      // we sometimes get into a race condition with menu updating indices.
-      // https://github.com/p0deje/Maccy/issues/628
-      guard historyItemToRemoveIndex != -1 else { return }
-
-      if let indexedItem = indexedItems.first(where: { $0.item == historyItemToRemove.item }) {
-        if self.usePopoverAnchor {
-          removePopoverAnchor(indexedItem)
-        }
-        indexedItem.menuItems.forEach(safeRemoveItem)
-        if let removeIndex = indexedItems.firstIndex(of: indexedItem) {
-          indexedItems.remove(at: removeIndex)
-        }
-      }
-
-      history.remove(historyItemToRemove.item)
-
-      rebuildItemsAsNeeded()
-      highlight(items[historyItemToRemoveIndex])
+    let menuIndex = index(of: historyMenuItem)
+    
+    // When deleting mulitple items by holding the removal keys
+    // we sometimes get into a race condition with menu updating indices.
+    // https://github.com/p0deje/Maccy/issues/628
+    guard menuIndex != -1 else {
+      return nil
     }
+    
+    return historyMenuItem
   }
+  
+  // TOOD: remove this func
+//  func delete() {
+//    guard let menuItem = highlightedItem, let historyMenuItem = menuItem as? HistoryMenuItem else {
+//      return
+//    }
+//    let menuIndex = index(of: historyMenuItem)
+//    
+//    // When deleting mulitple items by holding the removal keys
+//    // we sometimes get into a race condition with menu updating indices.
+//    // https://github.com/p0deje/Maccy/issues/628
+//    guard menuIndex != -1 else { return }
+//    
+//    guard let indexedItem = indexedItems.first(where: { $0.item == historyMenuItem.item }),
+//          let index = indexedItems.firstIndex(of: indexedItem) else {
+//      return
+//    }
+//    
+//    _ = delete(position: index)
+//    
+//    rebuildItemsAsNeeded()
+//    highlight(items[menuIndex]) // highlight next one in the menu, now at the same index
+//  }
 
   func delete(position: Int) -> String? {
     guard indexedItems.count > position else {
@@ -364,13 +366,14 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     let indexedItem = indexedItems[position]
     let value = indexedItem.value
 
-    if self.usePopoverAnchor {
-      removePopoverAnchor(indexedItem)
-    }
     indexedItem.menuItems.forEach(safeRemoveItem)
     history.remove(indexedItem.item)
     indexedItems.remove(at: position)
-
+    
+    if indexedItem == headOfQueueIndexedItem {
+      headOfQueueIndexedItem = nil
+    }
+    
     return value
   }
 
@@ -399,6 +402,33 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   
   func enableExpandedMenu() {
     showsExpandedMenu = true // gets set back to false in menuDidClose
+  }
+  
+  private func insertTopAnchorItem() {
+    // need an anchor item above all the history items because they're like fenceposts
+    // (see "the fencepost problem") cannot use the saarch header item like Maccy because it can be hidden
+    guard let protoAnchorItem = protoAnchorItem, let historyHeaderItem = historyHeaderItem else {
+      return
+    }
+    let anchorItem = protoAnchorItem.copy() as! HistoryMenuItem
+    
+    let index = index(of: historyHeaderItem) + 1
+    insertItem(anchorItem, at: index)
+    
+    topAnchorItem = anchorItem
+  }
+  
+  private func updateShortcuts() {
+    queueCopyItem?.setShortcut(for: .queueCopy)
+    queuePasteItem?.setShortcut(for: .queuePaste)
+    // might have a start stop hotkey at some point, something like:
+    //if !Maccy.queueModeOn {
+    //  queueStartItem?.setShortcut(for: .queueStartStop)
+    //  queueStopItem?.setShortcut(for: nil)
+    //} else {
+    //  queueStartItem?.setShortcut(for: nil)
+    //  queueStopItem?.setShortcut(for: .queueStartStop)
+    //}
   }
   
   private func highlightNext(_ items: [NSMenuItem]) -> Bool {
@@ -430,10 +460,11 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   
   private func highlightItem(_ itemToHighlight: NSMenuItem?) {
     let highlightItemSelector = NSSelectorFromString("highlightItem:")
-    // we need to highlight filter menu item to force menu redrawing
+    // we need to highlight a near-the-top menu item to force menu redrawing
+    // (was ...need to highlight the filter menu item)
     // when it has more items that can fit into the screen height
     // and scrolling items are added to the top and bottom of menu
-    perform(highlightItemSelector, with: items.first)
+    perform(highlightItemSelector, with: historyMenuItems.first)
     if let item = itemToHighlight, !item.isHighlighted, items.contains(item) {
       perform(highlightItemSelector, with: item)
     } else {
@@ -444,30 +475,15 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   
   private func clear(_ itemsToClear: [IndexedItem]) {
     for indexedItem in itemsToClear {
-      if self.usePopoverAnchor {
-        removePopoverAnchor(indexedItem)
-      }
       indexedItem.menuItems.forEach(safeRemoveItem)
 
       if let removeIndex = indexedItems.firstIndex(of: indexedItem) {
         indexedItems.remove(at: removeIndex)
       }
     }
-  }
-  
-  private func rebuildItemsAsNeeded() {
-    // TODO: test to see if this really does anything, figure out is we really want it
-    let historyMenuItemsCount = historyMenuItems.count
     
-    if maxVisibleItems <= 0 {
-      let allItemsCount = indexedItems.flatMap({ $0.menuItems }).count
-      if historyMenuItemsCount < allItemsCount {
-        appendItemsUntilLimit(allItemsCount)
-      }
-    } else if historyMenuItemsCount < maxVisibleItems {
-      appendItemsUntilLimit(historyMenuItemsCount)
-    } else { // ie. historyMenuItemsCount >= maxVisibleItems
-      removeItemsOverLimit(historyMenuItemsCount)
+    if let item = headOfQueueIndexedItem, itemsToClear.contains(item) {
+      headOfQueueIndexedItem = nil
     }
   }
   
@@ -476,51 +492,45 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     safeInsertItem(item, at: index(of: historyEndItem))
   }
   
-  private func appendPopoverAnchor(_ item: IndexedItem) {
-    if let popoverAnchor = item.popoverAnchor {
-      guard let historyEndItem = trailingSeparatorItem else { return }
-      safeInsertItem(popoverAnchor, at: index(of: historyEndItem))
-    }
-  }
-  
-  private func insertPopoverAnchor(_ item: IndexedItem, _ index: Int) {
-    if let popoverAnchor = item.popoverAnchor {
-      safeInsertItem(popoverAnchor, at: index)
-    }
-  }
-  
-  private func removePopoverAnchor(_ item: IndexedItem) {
-    if let popoverAnchor = item.popoverAnchor {
-      safeRemoveItem(popoverAnchor)
+  private func rebuildItemsAsNeeded() {
+    let availableHistoryCount = indexedItems.count
+    let presentItemsCount = historyMenuItems.count / historyMenuItemsGroupCount
+    
+    if (maxMenuItems <= 0 || maxMenuItems > availableHistoryCount) && presentItemsCount < availableHistoryCount {
+      appendItemsUntilLimit(availableHistoryCount)
+    } else if indexedItems.count < maxMenuItems {
+      appendItemsUntilLimit(maxMenuItems)
+    } else if indexedItems.count > maxMenuItems {
+      removeItemsOverLimit(maxMenuItems)
     }
   }
   
   private func removeItemsOverLimit(_ limit: Int) {
-    var limit = limit
+    var count = historyMenuItems.count / historyMenuItemsGroupCount
     for indexedItem in indexedItems.reversed() {
-      if maxVisibleItems != 0 && maxVisibleItems >= limit {
+      if count <= limit {
         return
       }
       
+      // if menu doesn't contains this item, skip it
       let menuItems = indexedItem.menuItems.filter({ historyMenuItems.contains($0) })
       if menuItems.isEmpty {
         continue
       }
       
-      removePopoverAnchor(indexedItem)
       menuItems.forEach(safeRemoveItem)
-      limit -= menuItems.count
+      count -= 1
     }
   }
   
   private func appendItemsUntilLimit(_ limit: Int) {
-    var limit = limit
+    var count = historyMenuItems.count / historyMenuItemsGroupCount
     for indexedItem in indexedItems {
-      if maxVisibleItems != 0 && maxVisibleItems <= limit {
+      if count >= limit {
         return
       }
       
-      // if menu contains this item already skip it
+      // if menu contains this item already, skip it
       let menuItems = indexedItem.menuItems.filter({ !historyMenuItems.contains($0) })
       if menuItems.isEmpty {
         continue
@@ -530,29 +540,32 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       if indexedItem == headOfQueueIndexedItem {
         menuItems.forEach { $0.isHeadOfQueue = true }
       }
-      if usePopoverAnchor {
-        appendPopoverAnchor(indexedItem)
-      }
-      limit += menuItems.count
+      count += 1
     }
   }
   
   private func buildMenuItemAlternates(_ item: HistoryItem) -> [HistoryMenuItem] {
-    // TODO: see if menu items can be entirely defined in nib and copied to make these instances
-    // (including the preview item) making the HistoryMenuItem subclasses unnecessary
-    let menuItems = [
-      HistoryMenuItem.CopyMenuItem(item: item, clipboard: clipboard, target: placeholderCopyItem?.target, action: placeholderCopyItem?.action),
-      HistoryMenuItem.ReplayMenuItem(item: item, clipboard: clipboard, target: placeholderReplayItem?.target, action: placeholderReplayItem?.action)
-    ]
-    assert(menuItems.count == historyMenuItemsGroup)
+    // (including the preview item) making the HistoryMenuItem subclasses unnecessary,
+    guard let protoCopyItem = protoCopyItem, let protoReplayItem = protoReplayItem else {
+      return []
+    }
     
-    return menuItems.sorted(by: { !$0.isAlternate && $1.isAlternate })
-  }
-  
-  private func chunks(_ items: [HistoryMenuItem]) -> [[HistoryMenuItem]] {
-    return stride(from: 0, to: items.count, by: historyMenuItemsGroup).map({ index in
-      Array(items[index ..< Swift.min(index + historyMenuItemsGroup, items.count)])
-    })
+    var menuItems = [
+      (protoCopyItem.copy() as! HistoryMenuItem).configured(withItem: item),
+      (protoReplayItem.copy() as! HistoryMenuItem).configured(withItem: item)
+    ]
+    menuItems.sort(by: { !$0.isAlternate && $1.isAlternate })
+    
+    if usePopoverAnchors {
+      guard let protoAnchorItem = protoAnchorItem else {
+        return []
+      }
+      menuItems.append(protoAnchorItem.copy() as! HistoryMenuItem)
+    }
+    
+    assert(menuItems.count == historyMenuItemsGroupCount)
+    
+    return menuItems
   }
   
   private func clearRemovedItems() {
@@ -560,31 +573,36 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     for indexedItem in indexedItems {
       if let historyItem = indexedItem.item, !currentHistoryItems.contains(historyItem) {
         indexedItem.menuItems.forEach(safeRemoveItem)
-        if usePopoverAnchor {
-          removePopoverAnchor(indexedItem)
-        }
-
+        
         if let removeIndex = indexedItems.firstIndex(of: indexedItem) {
           indexedItems.remove(at: removeIndex)
+        }
+        
+        if let item = headOfQueueIndexedItem, item == indexedItem {
+          headOfQueueIndexedItem = nil
         }
       }
     }
   }
   
-  private func updateShortcuts() {
-    queueCopyItem?.setShortcut(for: .queueCopy)
-    queuePasteItem?.setShortcut(for: .queuePaste)
-    // TODO: maybe have a start stop hotkey
-//    if !Maccy.queueModeOn {
-//      queueStartItem?.setShortcut(for: .queueStartStop)
-//      queueStopItem?.setShortcut(for: nil)
-//    } else {
-//      queueStartItem?.setShortcut(for: nil)
-//      queueStopItem?.setShortcut(for: .queueStartStop)
-//    }
+  private func clearAllHistoryMenuItems() {
+    guard let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem,
+          let trailingSeparatorItem = trailingSeparatorItem else {
+      return
+    }
+    assert(index(of: zerothHistoryHeaderItem) < index(of: trailingSeparatorItem))
+    
+    for index in (index(of: zerothHistoryHeaderItem) + 1 ..< index(of: trailingSeparatorItem)).reversed() {
+      safeRemoveItem(at: index)
+    }
+    assert(historyMenuItems.isEmpty)
   }
   
   private func updateItemVisibility() {
+    guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem else {
+      return
+    }
+    
     // Switch visibility of start vs stop menu item
     queueStartItem?.isHidden = Maccy.queueModeOn
     queueStopItem?.isHidden = !Maccy.queueModeOn
@@ -594,32 +612,33 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       advanceItem?.isAlternate = false // unset as alternate so isHidden respected * doesn't show when option down
     }
     
-    // Show the history header & separator if showing the expanded menu
-    guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem else { return }
-    historyHeaderItem.isHidden = !showsExpandedMenu || !Maccy.allowExtraHistoryFeatures || UserDefaults.standard.hideSearch
-    trailingSeparatorItem.isHidden = !showsExpandedMenu
+    // Visiblity of the history header and trailing separator
+    // (the expanded menu means the search header and all of the history items)
+    historyHeaderItem.isHidden = !showsExpandedMenu || UserDefaults.standard.hideSearch
+    trailingSeparatorItem.isHidden = !showsExpandedMenu && !(Maccy.queueModeOn && Maccy.queueSize > 0)
     
-    // The rest is for showing or hiding the desired history items
-    let firstHistoryMenuItemIndex = index(of: historyHeaderItem) + 1
+    // Show or hide the desired history items
+    let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem
+    let firstHistoryMenuItemIndex = index(of: zerothHistoryHeaderItem) + 1
     let endHistoryMenuItemIndex = index(of: trailingSeparatorItem)
     var remainingHistoryMenuItemIndex = firstHistoryMenuItemIndex
-    assert(!(isFiltered && Maccy.queueModeOn))
     
-    // count the number of queue items to always show, irrespective of showing the expanded menu
-    if Maccy.queueModeOn && Maccy.queueSize > 0 {
-      let historyMenuItemsGroupCount = historyMenuItemsGroup + (usePopoverAnchor ? 1 : 0)
-      remainingHistoryMenuItemIndex += historyMenuItemsGroupCount * Maccy.queueSize
+    // First queue items to always show when not filtering by a search term
+    if Maccy.queueModeOn && Maccy.queueSize > 0 && !isFiltered {
+      let endQueuedItemIndex = remainingHistoryMenuItemIndex + historyMenuItemsGroupCount * Maccy.queueSize
       
-      for index in firstHistoryMenuItemIndex ..< remainingHistoryMenuItemIndex {
+      for index in firstHistoryMenuItemIndex ..< endQueuedItemIndex {
         guard let menuItem = item(at: index) else { break }
         menuItem.isHidden = false
         if !menuItem.keyEquivalentModifierMask.isEmpty { // see the isAlternate comment below
           menuItem.isAlternate = true
         }
       }
+      
+      remainingHistoryMenuItemIndex = endQueuedItemIndex
     }
     
-    // show the remaining history items if showing the expanded menu
+    // Remaining history items hidden unless showing the expanded menu
     for index in remainingHistoryMenuItemIndex  ..< endHistoryMenuItemIndex {
       guard let menuItem = item(at: index) else { continue }
       menuItem.isHidden = !showsExpandedMenu
@@ -630,10 +649,6 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
         menuItem.isAlternate = showsExpandedMenu
       }
     }
-    
-    // update visibility of the trailing separator also based on queue items showing
-    let showsQueuedHistory = remainingHistoryMenuItemIndex > firstHistoryMenuItemIndex
-    trailingSeparatorItem.isHidden = !showsExpandedMenu && !showsQueuedHistory
   }
   
   private func safeInsertItem(_ item: NSMenuItem, at index: Int) {
@@ -668,13 +683,13 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   
   private func sanityCheckIndexIsHistoryItemIndex(_ i: Int, forInserting inserting: Bool = false) {
     if item(at: i) != nil, let historyHeaderItem, let trailingSeparatorItem {
-      if i <= index(of: historyHeaderItem) {
+      if i <= index(of: topAnchorItem ?? historyHeaderItem) {
         fatalError()
       }
-      if !inserting && i >= index(of: trailingSeparatorItem) {
+      if i > index(of: trailingSeparatorItem) {
         fatalError()
       }
-      if inserting && i > index(of: trailingSeparatorItem) {
+      if !inserting && i == index(of: trailingSeparatorItem) {
         fatalError()
       }
     }
@@ -687,7 +702,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
 
   private func boundsOfMenuItem(_ item: NSMenuItem, _ windowContentView: NSView) -> NSRect? {
-    if #available(macOS 14, *) {
+    if !usePopoverAnchors {
       let windowRectInScreenCoordinates = windowContentView.accessibilityFrame()
       let menuItemRectInScreenCoordinates = item.accessibilityFrame()
       return NSRect(
@@ -697,30 +712,23 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
         size: menuItemRectInScreenCoordinates.size
       )
     } else {
-      guard let item = item as? HistoryMenuItem,
+      // assumes the last of a group of history items is the anchor
+      guard let topAnchorView = topAnchorItem?.view, let item = item as? HistoryMenuItem,
             let itemIndex = indexedItems.firstIndex(where: { $0.menuItems.contains(item) }) else {
         return nil
       }
       let indexedItem = indexedItems[itemIndex]
-      guard let previewView = indexedItem.popoverAnchor?.view else {
+      guard let previewView = indexedItem.menuItems.last?.view else {
         return nil
       }
-
-      func getPrecedingView() -> NSView? {
-        for index in (0..<itemIndex).reversed() {
-          // PreviewMenuItem always has a view
-          // Check if preview item is visible (it may be hidden by the search filter)
-          if let view = indexedItems[index].popoverAnchor?.view,
-             view.window != nil {
-            return view
-          }
+      
+      var precedingView = topAnchorView
+      for index in (0..<itemIndex).reversed() {
+        // Check if anchor for this item is visible (it may be hidden by the search filter)
+        if let view = indexedItems[index].menuItems.last?.view, view.window != nil {
+          precedingView = view
+          break
         }
-        // If the item is the first visible one, the preceding view is the header.
-        return historyHeader
-      }
-
-      guard let precedingView = getPrecedingView() else {
-        return nil
       }
 
       let bottomPoint = previewView.convert(

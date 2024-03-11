@@ -83,7 +83,7 @@ class Maccy: NSObject {
     
     guard let nibMenu = StatusItemMenu.load(owner: self) else { fatalError("menu object missing") }
     menu = nibMenu
-    menu.inject(history: history, clipboard: Clipboard.shared)
+    menu.inject(history: history)
     
     menuController = MenuController(menu, statusItem)
     
@@ -229,6 +229,23 @@ class Maccy: NSObject {
     }
     
     clipboard.copy(item)
+  }
+  
+  @IBAction
+  func deleteHistoryItem(_ sender: AnyObject) {
+    guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else {
+      return
+    }
+    
+    _ = menu.delete(position: index)
+    
+    if Self.queueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
+      Self.queueSize -= 1
+      
+      updateStatusMenuIcon(.decrement)
+      updateMenuTitle()
+      menu.updateHeadOfQueue(index: queueHeadIndex)
+    }
   }
   
   @IBAction

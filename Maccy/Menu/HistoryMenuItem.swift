@@ -7,8 +7,6 @@ class HistoryMenuItem: NSMenuItem {
     didSet { updateHeadOfQueueIndication() }
   }
 
-  internal var clipboard: Clipboard!
-
   private let imageMaxWidth: CGFloat = 340.0
 
   // Assign "empty" title to the image (but it can't be empty string).
@@ -31,16 +29,14 @@ class HistoryMenuItem: NSMenuItem {
     super.init(coder: coder)
   }
 
-  init(item: HistoryItem, clipboard: Clipboard, target: AnyObject?, action: Selector?) {
-    super.init(title: "", action: #selector(onSelect(_:)), keyEquivalent: "")
+  // avoid this mysterious runtime failure:
+  // Fatal error: Use of unimplemented initializer 'init(title:action:keyEquivalent:)' for class 'Cleepp.HistoryMenuItem'
+  override init(title: String, action: Selector?, keyEquivalent: String) {
+    super.init(title: title, action: action, keyEquivalent: keyEquivalent)
+  }
 
-    self.clipboard = clipboard
+  func configured(withItem item: HistoryItem) -> Self {
     self.item = item
-    self.isHeadOfQueue = false
-    self.onStateImage = NSImage(named: "PinImage")
-    self.target = target ?? self
-    self.action = (target != nil) ? action : #selector(onSelect(_:))
-    
     if isImage(item) {
       loadImage(item)
     } else if isFile(item) {
@@ -52,8 +48,9 @@ class HistoryMenuItem: NSMenuItem {
     } else if isHTML(item) {
       loadHTML(item)
     }
+    return self
   }
-
+  
   @objc
   func onSelect(_ sender: NSMenuItem) {
     select()
@@ -88,7 +85,7 @@ class HistoryMenuItem: NSMenuItem {
       return
     }
     
-    let attributedTitle = NSMutableAttributedString(string: title, attributes: isHeadOfQueue ? headOfQueueAttributes() : nil)
+    let attributedTitle = NSMutableAttributedString(string: title, attributes: isHeadOfQueue ? headOfQueueAttributes : nil)
     
     for range in ranges {
       let rangeLength = range.upperBound - range.lowerBound + 1
@@ -102,7 +99,7 @@ class HistoryMenuItem: NSMenuItem {
     self.attributedTitle = attributedTitle
   }
   
-  private func headOfQueueAttributes() -> [NSAttributedString.Key: Any]? {
+  private var headOfQueueAttributes: [NSAttributedString.Key: Any]? {
     if #unavailable(macOS 14) {
       [.underlineStyle: NSUnderlineStyle.single.rawValue]
     } else {
@@ -112,9 +109,9 @@ class HistoryMenuItem: NSMenuItem {
   
   private func styleToIndicateHeadOfQueue() {
     // NB: if item has had highlight called, will now lose the styling it set; just assume that won't happen
-    if isHeadOfQueue {
+    if #unavailable(macOS 14), isHeadOfQueue {
       guard title != imageTitle else { return }
-      attributedTitle = NSMutableAttributedString(string: title, attributes: headOfQueueAttributes())
+      attributedTitle = NSMutableAttributedString(string: title, attributes: headOfQueueAttributes)
     } else {
       attributedTitle = nil
     }
@@ -131,7 +128,6 @@ class HistoryMenuItem: NSMenuItem {
   }
   
   private func updateHeadOfQueueIndication() {
-    // TODO: pre-14 perhaps only underline if showing expanded menu
     // probsbly have to pass in that state from the menu class, refresh this
     if #unavailable(macOS 14) {
       styleToIndicateHeadOfQueue()

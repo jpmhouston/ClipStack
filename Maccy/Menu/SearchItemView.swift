@@ -121,8 +121,12 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
       setQuery("")
       return true
     case .deleteCurrentItem:
-      customMenu?.delete()
-      setQuery("")
+      // The search menu item should have its target/action set to a delete method,
+      // pass it the highlighted menuitem
+      if let target = self.enclosingMenuItem?.target, let action = self.enclosingMenuItem?.action,
+         let menuItem = customMenu?.highlightedMenuItem() {
+        _ = target.perform(action, with: menuItem)
+      }
       return true
     case .deleteOneCharFromSearch:
       if !queryField.stringValue.isEmpty {
@@ -143,7 +147,6 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
       queryField.currentEditor()?.paste(nil)
       return true
     case .selectCurrentItem:
-      // TODO: figure out what this was for: customMenu?.select(queryField.stringValue)
       customMenu?.select()
       return true
     case .ignored:
@@ -211,12 +214,4 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
     }
   }
 
-  private func performMenuItemAction(_ tag: Int) {
-    guard let menuItem = customMenu?.item(withTag: tag) else {
-      return
-    }
-
-    _ = menuItem.target?.perform(menuItem.action, with: menuItem)
-    customMenu?.cancelTracking()
-  }
 }
