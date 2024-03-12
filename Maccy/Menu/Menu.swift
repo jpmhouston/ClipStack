@@ -31,10 +31,19 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   private var historyMenuItemsGroupCount: Int { usePopoverAnchors ? 3 : 2 } // 1 main, 1 alternate, 1 popover anchor
-  private var maxMenuItems: Int { min(UserDefaults.standard.maxMenuItems, UserDefaults.standard.size) }
+  private var maxMenuItems: Int {
+    if !Maccy.allowDictinctStorageSize {
+      UserDefaults.standard.maxMenuItems
+    } else if showsFullExpansion {
+      max(UserDefaults.standard.maxMenuItems, UserDefaults.standard.size)
+    } else {
+      min(UserDefaults.standard.maxMenuItems, UserDefaults.standard.size)
+    }
+  }
   
   private var usePopoverAnchors = false
   private var showsExpandedMenu = false
+  private var showsFullExpansion = false
   private var isFiltered: Bool = false
   
   private static let subsequentPreviewDelay = 0.2
@@ -61,6 +70,8 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var prototypeAnchorItem: NSMenuItem?
   @IBOutlet weak var trailingSeparatorItem: NSMenuItem?
   @IBOutlet weak var noteItem: NSMenuItem?
+  
+  // MARK: -
   
   static func load(owner: Any) -> StatusItemMenu? {
     // somewhat unconventional, perhaps in part because most of this code belongs in a controller class?
@@ -115,7 +126,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     
     // showsExpandedMenu flag set by call to enableExpandedMenu() before the menu is opened
     // switch it back off if either not allowed or if history blank (pointless, plus it looks weird)
-    if showsExpandedMenu && (!Maccy.allowExtraHistoryFeatures || historyMenuItems.isEmpty) {
+    if showsExpandedMenu && (!Maccy.allowExpandedHistory || historyMenuItems.isEmpty) {
       showsExpandedMenu = false
     }
     if showsExpandedMenu {
@@ -127,7 +138,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     isVisible = false
     offloadCurrentPreview()
     
-    showsExpandedMenu = false // revert to showing full menu next time (until option-clicked again)
+    enableExpandedMenu(false) // revert to showing small menu next time, without history,
     
     DispatchQueue.main.async {
       self.historyHeader?.setQuery("", throttle: false)
@@ -177,6 +188,8 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
   }
   
+  // MARK: -
+
   func buildItems() {
     clear() // wipes indexedItems as well as history menu items
     
@@ -362,10 +375,17 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     guard indexedItems.count > position else {
       return nil
     }
-
+    
     let indexedItem = indexedItems[position]
     let value = indexedItem.value
-
+    
+    // check if this menu item is highlighted
+    var rehighlightMenuIndex: Int? = nil
+    if let historyMenuItem = highlightedItem as? HistoryMenuItem, historyMenuItem.item == indexedItem {
+      rehighlightMenuIndex = index(of: historyMenuItem)
+    }
+    
+    // remove menu items, history item, this class's indexing item
     indexedItem.menuItems.forEach(safeRemoveItem)
     history.remove(indexedItem.item)
     indexedItems.remove(at: position)
@@ -374,9 +394,13 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
       headOfQueueIndexedItem = nil
     }
     
+    // if deleted item was highlighted, highlight next one in the menu now at the same index
+    if let menuIndex = rehighlightMenuIndex {
+      highlight(items[menuIndex])
+    }
     return value
   }
-
+  
   func resizeImageMenuItems() {
     historyMenuItems.forEach {
       $0.resizeImage()
@@ -391,7 +415,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   func performQueueModeToggle() {
-    if Maccy.queueModeOn {
+    if Maccy.isQueueModeOn {
       guard let queueStopItem = queueStopItem else { return }
       performActionForItem(at: index(of: queueStopItem))
     } else {
@@ -400,9 +424,12 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
   }
   
-  func enableExpandedMenu() {
-    showsExpandedMenu = true // gets set back to false in menuDidClose
+  func enableExpandedMenu(_ enable: Bool, full: Bool = false) {
+    showsExpandedMenu = enable // gets set back to false in menuDidClose
+    showsFullExpansion = enable && full
   }
+  
+  // MARK: -
   
   private func insertTopAnchorItem() {
     // need an anchor item above all the history items because they're like fenceposts
@@ -496,12 +523,14 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     let availableHistoryCount = indexedItems.count
     let presentItemsCount = historyMenuItems.count / historyMenuItemsGroupCount
     
-    if (maxMenuItems <= 0 || maxMenuItems > availableHistoryCount) && presentItemsCount < availableHistoryCount {
+    let maxItems = if Maccy.isQueueModeOn { max(maxMenuItems, Maccy.queueSize) } else { maxMenuItems }
+    
+    if (maxItems <= 0 || maxItems > availableHistoryCount) && presentItemsCount < availableHistoryCount {
       appendItemsUntilLimit(availableHistoryCount)
-    } else if indexedItems.count < maxMenuItems {
-      appendItemsUntilLimit(maxMenuItems)
-    } else if indexedItems.count > maxMenuItems {
-      removeItemsOverLimit(maxMenuItems)
+    } else if presentItemsCount < maxItems {
+      appendItemsUntilLimit(maxItems)
+    } else if presentItemsCount > maxItems {
+      removeItemsOverLimit(maxItems)
     }
   }
   
@@ -604,9 +633,10 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
     
     // Switch visibility of start vs stop menu item
-    queueStartItem?.isHidden = Maccy.queueModeOn
-    queueStopItem?.isHidden = !Maccy.queueModeOn
-    if Maccy.queueModeOn && Maccy.queueSize > 0 {
+    queueStartItem?.isHidden = Maccy.isQueueModeOn
+    queueStopItem?.isHidden = !Maccy.isQueueModeOn
+    let gotQueueItems = Maccy.isQueueModeOn && Maccy.queueSize > 0
+    if gotQueueItems {
       advanceItem?.isAlternate = true // make alternate to queueStopItem, expect to be shown when option down
     } else {
       advanceItem?.isAlternate = false // unset as alternate so isHidden respected * doesn't show when option down
@@ -615,7 +645,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     // Visiblity of the history header and trailing separator
     // (the expanded menu means the search header and all of the history items)
     historyHeaderItem.isHidden = !showsExpandedMenu || UserDefaults.standard.hideSearch
-    trailingSeparatorItem.isHidden = !showsExpandedMenu && !(Maccy.queueModeOn && Maccy.queueSize > 0)
+    trailingSeparatorItem.isHidden = !showsExpandedMenu && !gotQueueItems
     
     // Show or hide the desired history items
     let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem
@@ -624,7 +654,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     var remainingHistoryMenuItemIndex = firstHistoryMenuItemIndex
     
     // First queue items to always show when not filtering by a search term
-    if Maccy.queueModeOn && Maccy.queueSize > 0 && !isFiltered {
+    if gotQueueItems && !isFiltered {
       let endQueuedItemIndex = remainingHistoryMenuItemIndex + historyMenuItemsGroupCount * Maccy.queueSize
       
       for index in firstHistoryMenuItemIndex ..< endQueuedItemIndex {

@@ -62,8 +62,8 @@ class Preview: NSViewController {
     lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
     numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
     
-    copyLabel.isHidden = Maccy.queueModeOn
-    startLabel.isHidden = Maccy.queueModeOn || !Maccy.allowExtraHistoryFeatures
+    copyLabel.isHidden = Maccy.isQueueModeOn
+    startLabel.isHidden = Maccy.isQueueModeOn || !Maccy.allowReplayFromHistory
   }
   
   private func formatDate(_ date: Date) -> String {

@@ -31,13 +31,14 @@ class MenuController {
         return
       }
       
-      if modifierFlags.contains(.control) || modifierFlags.contains(.shift) {
+      if !modifierFlags.contains(.option) &&
+          (modifierFlags.contains(.control) || modifierFlags.contains(.shift)) {
         menu.performQueueModeToggle()
         return
       }
       
       if modifierFlags.contains(.option) {
-        menu.enableExpandedMenu()
+        menu.enableExpandedMenu(true, full: modifierFlags.contains(.shift))
       }
     }
     

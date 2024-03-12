@@ -6,11 +6,15 @@ import Symbols
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
-  static var queueModeOn = false
+  static var isQueueModeOn = false
   static var queueSize = 0
   
-  static var allowExtraHistoryFeatures = true
+  static var allowExpandedHistory = true
+  static var allowFullyExpandedHistory = true
+  static var allowHistorySearch = true
+  static var allowReplayFromHistory = true
   static var allowUndoCopy = true
+  static var allowDictinctStorageSize: Bool { Self.allowFullyExpandedHistory || Self.allowHistorySearch }
   
   @objc let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
   var selectedItem: HistoryItem? { (menu.highlightedItem as? HistoryMenuItem)?.item }
@@ -29,6 +33,7 @@ class Maccy: NSObject {
       Self.queueSize - 1
     }
   }
+  private var permitEmptyQueueMode = false // affects behavior when deleting history items
   
   private var clearAlert: NSAlert {
     let alert = NSAlert()
@@ -43,6 +48,9 @@ class Maccy: NSObject {
   private lazy var settingsWindowController = SettingsWindowController(
     panes: [
       GeneralSettingsViewController(),
+      //#if FOR_APP_STORE // TODO: uncomment this to restore conditional
+      PurchaseSettingsViewController(),
+      //#endif
       StorageSettingsViewController(),
       AppearanceSettingsViewController(),
       IgnoreSettingsViewController(),
@@ -106,8 +114,9 @@ class Maccy: NSObject {
       return
     }
     
-    Self.queueModeOn = true
+    Self.isQueueModeOn = true
     Self.queueSize = 0
+    permitEmptyQueueMode = true
     
     updateStatusMenuIcon()
     updateMenuTitle()
@@ -119,8 +128,9 @@ class Maccy: NSObject {
   }
   
   func queueCopy() {
-    if !Self.queueModeOn {
-      Self.queueModeOn = true
+    if !Self.isQueueModeOn {
+      Self.isQueueModeOn = true
+      permitEmptyQueueMode = false
     }
     
     // make the frontmost application perform a copy
@@ -129,7 +139,7 @@ class Maccy: NSObject {
   }
   
   private func incrementQueue() {
-    guard Self.queueModeOn else {
+    guard Self.isQueueModeOn else {
       return
     }
     
@@ -157,14 +167,14 @@ class Maccy: NSObject {
   }
   
   private func decrementQueue() {
-    guard Self.queueModeOn && Self.queueSize > 0 else {
+    guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
     
     Self.queueSize -= 1
 
     if Self.queueSize <= 0 {
-      Self.queueModeOn = false
+      Self.isQueueModeOn = false
     } else if let index = queueHeadIndex, index < history.count {
       clipboard.copy(history.all[index]) // reset pasteboard to the latest item copied
     }
@@ -174,7 +184,7 @@ class Maccy: NSObject {
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
     #if FOR_APP_STORE
-    if !Self.queueModeOn {
+    if !Self.isQueueModeOn {
       AppStoreReview.ask()
     }
     #endif
@@ -186,7 +196,7 @@ class Maccy: NSObject {
   
   @IBAction
   func cancelQueueMode(_ sender: AnyObject) {
-    Self.queueModeOn = false
+    Self.isQueueModeOn = false
     Self.queueSize = 0
     
     menu.updateHeadOfQueue(index: nil)
@@ -214,8 +224,9 @@ class Maccy: NSObject {
       return
     }
     
-    Self.queueModeOn = true
+    Self.isQueueModeOn = true
     Self.queueSize = index + 1
+    permitEmptyQueueMode = false
     
     updateStatusMenuIcon()
     updateMenuTitle()
@@ -239,8 +250,11 @@ class Maccy: NSObject {
     
     _ = menu.delete(position: index)
     
-    if Self.queueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
+    if Self.isQueueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
       Self.queueSize -= 1
+      if !permitEmptyQueueMode && Self.queueSize == 0 {
+        Self.isQueueModeOn = false
+      }
       
       updateStatusMenuIcon(.decrement)
       updateMenuTitle()
@@ -257,19 +271,21 @@ class Maccy: NSObject {
     history.remove(removeItem)
     _ = menu.delete(position: 0)
     
-    if Self.queueModeOn && Self.queueSize > 0 {
+    if Self.isQueueModeOn && Self.queueSize > 0 {
       Self.queueSize -= 1
+      if !permitEmptyQueueMode && Self.queueSize == 0 {
+        Self.isQueueModeOn = false
+      }
+      
       updateStatusMenuIcon(.decrement)
       updateMenuTitle()
-      if Self.queueSize == 0 {
-        menu.updateHeadOfQueue(index: nil)
-      }
+      menu.updateHeadOfQueue(index: queueHeadIndex)
     }
     
     // Normally set pasteboard to the previous history item, now first in the history after doing the
     // delete above. However if have items queued we instead don't want to change the pasteboard at all,
     // it needs to stay set to the front item in the queue.
-    if !Self.queueModeOn || Self.queueSize == 0 {
+    if !Self.isQueueModeOn || Self.queueSize == 0 {
       if let replaceItem = history.first {
         clipboard.copy(replaceItem)
       } else {
@@ -281,7 +297,7 @@ class Maccy: NSObject {
   @IBAction
   func clear(_ sender: AnyObject) {
     clearHistory()
-    Self.queueModeOn = false
+    Self.isQueueModeOn = false
   }
   
   @IBAction
@@ -384,7 +400,7 @@ class Maccy: NSObject {
     // TODO: don't think i need this
     menu.clear()
     menu.buildItems()
-    if Self.queueModeOn {
+    if Self.isQueueModeOn {
       menu.updateHeadOfQueue(index: queueHeadIndex)
     }
   }
@@ -392,7 +408,7 @@ class Maccy: NSObject {
   // TODO: perhaps move title logic into its own obj
   
   private func updateMenuTitle() {
-    if Self.queueModeOn {
+    if Self.isQueueModeOn {
       statusItem.button?.title = String(Self.queueSize) + "  "
     } else {
       statusItem.button?.title = ""
@@ -412,7 +428,7 @@ class Maccy: NSObject {
   private func updateStatusMenuIcon(_ direction: QueueChangeDirection = .none) {
     let icon: NSImage.Name
     var transition = SymbolTransition.replace
-    if !Self.queueModeOn {
+    if !Self.isQueueModeOn {
       icon = .cleepMenuIcon
       if direction == .decrement {
         transition = .blink(transitionIcon: .cleepMenuIconListMinus)

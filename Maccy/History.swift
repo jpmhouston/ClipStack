@@ -7,7 +7,7 @@ class History {
     var items = sorter.sort(HistoryItem.all)
     
     // trim results and the database based on size setting, but if queueing then also ensure to include it entirely
-    let maxItems = max(UserDefaults.standard.size, Maccy.queueSize)
+    let maxItems = max(UserDefaults.standard.size, UserDefaults.standard.maxMenuItems, Maccy.queueSize)
     while items.count > maxItems {
       remove(items.removeLast())
     }
@@ -35,7 +35,7 @@ class History {
 
   func add(_ item: HistoryItem) {
     // TODO: maybe keep this exception, maybe give up on coalescing duplicates altogether
-    if !Maccy.queueModeOn {
+    if !Maccy.isQueueModeOn {
       while let existingHistoryItem = findSimilarItem(item) {
         if isModified(item) == nil {
           item.contents = existingHistoryItem.contents
