@@ -20,6 +20,14 @@
 		8F7BAF812B9A0B0E00F85BF3 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */; };
 		8F7BAF832B9DD6F400F85BF3 /* Equatable+IsIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF822B9DD6F400F85BF3 /* Equatable+IsIn.swift */; };
 		8F7BAF842B9DD6F400F85BF3 /* Equatable+IsIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF822B9DD6F400F85BF3 /* Equatable+IsIn.swift */; };
+		8F7BAF862B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF852B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift */; };
+		8F7BAF872B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF852B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift */; };
+		8F7BAF892B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */; };
+		8F7BAF8A2B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */; };
+		8F7BAF8C2B9ED8C300F85BF3 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */; };
+		8F7BAF8D2B9ED8C300F85BF3 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */; };
+		8F7C81A72B9EE4B900627F08 /* NSAttributedString+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */; };
+		8F7C81A82B9EE4B900627F08 /* NSAttributedString+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */; };
 		8FBC10852B88980400DD5481 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8FBC10862B88980400DD5481 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB082952A2B7B850053E463 /* AppStoreReview.swift */; };
 		8FBC10872B88980400DD5481 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA043DDF247D171C00488756 /* AppearanceSettingsViewController.swift */; };
@@ -224,6 +232,10 @@
 		8F408C272B9314A9002582C2 /* Intro.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
 		8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedWindow.swift; sourceTree = "<group>"; };
 		8F7BAF822B9DD6F400F85BF3 /* Equatable+IsIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equatable+IsIn.swift"; sourceTree = "<group>"; };
+		8F7BAF852B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSettingsViewController.swift; sourceTree = "<group>"; };
+		8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseSettingsViewController.xib; sourceTree = "<group>"; };
+		8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
+		8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Style.swift"; sourceTree = "<group>"; };
 		8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp (App Store).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBC10D82B889A0B00DD5481 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
@@ -466,10 +478,12 @@
 				DA05E7D42483F70B005CB8AA /* AppearanceSettingsViewController.xib */,
 				DA18116E247B405B00066D55 /* GeneralSettingsViewController.swift */,
 				DA05E7CE2483EF83005CB8AA /* GeneralSettingsViewController.xib */,
-				DA181176247D14DA00066D55 /* Settings.PaneIdentifier+Panes.swift */,
 				DA20EBAE268E24E50032D360 /* IgnoreSettingsViewController */,
 				DA35278B268D645700C92EBB /* IgnoreSettingsViewController.swift */,
 				DA20EBB7268E54E80032D360 /* IgnoreSettingsViewController.xib */,
+				8F7BAF852B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift */,
+				8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */,
+				DA181176247D14DA00066D55 /* Settings.PaneIdentifier+Panes.swift */,
 				DA1DF95127AF8BBA006839E0 /* StorageSettingsViewController.swift */,
 				DA1DF95327AF8BCD006839E0 /* StorageSettingsViewController.xib */,
 			);
@@ -616,9 +630,11 @@
 				DA11AE952693DD7100D640D2 /* MenuLoader.swift */,
 				DA20FA712B082DD600056DD5 /* Notifier.swift */,
 				DA3EAE0B2AE30F7500F39108 /* NSApplication+Windows.swift */,
+				8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */,
 				DA7A753D26A52F0F00DC16EF /* NSImage+Names.swift */,
 				DAC929D6297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift */,
 				DA20FA772B082E1A00056DD5 /* NSSound+Named.swift */,
+				8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */,
 				DAC7AFAE2A801C92006081BB /* RunLoopLocalEventMonitor.swift */,
 				DAC14123232367B200FCFA30 /* Search.swift */,
 				DA696BCD240177E800DE80CF /* Sorter.swift */,
@@ -812,6 +828,7 @@
 				8FBC10C72B88980400DD5481 /* Knock.caf in Resources */,
 				8F408C292B9314A9002582C2 /* Intro.xib in Resources */,
 				8FBC10C82B88980400DD5481 /* appcast.xml in Resources */,
+				8F7BAF8A2B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib in Resources */,
 				8FBC10C92B88980400DD5481 /* AppearanceSettingsViewController.xib in Resources */,
 				8FBC10CA2B88980400DD5481 /* Preview.xib in Resources */,
 				8FBC10CB2B88980400DD5481 /* StorageSettingsViewController.xib in Resources */,
@@ -851,6 +868,7 @@
 				DA20FA742B082E0100056DD5 /* Knock.caf in Resources */,
 				8F408C282B9314A9002582C2 /* Intro.xib in Resources */,
 				DA009931256411F90030E697 /* appcast.xml in Resources */,
+				8F7BAF892B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib in Resources */,
 				DA05E7D22483F70B005CB8AA /* AppearanceSettingsViewController.xib in Resources */,
 				DADBA95E2985C7AA00EC46FB /* Preview.xib in Resources */,
 				DA1DF95527AF8BCD006839E0 /* StorageSettingsViewController.xib in Resources */,
@@ -933,6 +951,7 @@
 				8FBC109A2B88980400DD5481 /* About.swift in Sources */,
 				8FBC109B2B88980400DD5481 /* Accessibility.swift in Sources */,
 				8FBC109C2B88980400DD5481 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
+				8F7BAF8D2B9ED8C300F85BF3 /* Purchase.swift in Sources */,
 				8FBC109D2B88980400DD5481 /* HistoryItemContent.swift in Sources */,
 				8FBC109E2B88980400DD5481 /* Sorter.swift in Sources */,
 				8FBC109F2B88980400DD5481 /* KeyboardLayout.swift in Sources */,
@@ -940,7 +959,9 @@
 				8FBC10A12B88980400DD5481 /* Notifier.swift in Sources */,
 				8FBC10A22B88980400DD5481 /* SearchItemView.swift in Sources */,
 				8FBC10A32B88980400DD5481 /* HistoryMenuItem.swift in Sources */,
+				8F7BAF872B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift in Sources */,
 				8FBC10A42B88980400DD5481 /* StorageSettingsViewController.swift in Sources */,
+				8F7C81A82B9EE4B900627F08 /* NSAttributedString+Style.swift in Sources */,
 				8FBC10A52B88980400DD5481 /* Menu.swift in Sources */,
 				8FBC10A62B88980400DD5481 /* IgnoreSettingsViewController.swift in Sources */,
 				8FBC10A72B88980400DD5481 /* AdvancedSettingsViewController.swift in Sources */,
@@ -1016,6 +1037,7 @@
 				DAAEB196219694AE00A7883C /* About.swift in Sources */,
 				DA6D98E22AEABE03008A77CE /* Accessibility.swift in Sources */,
 				DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
+				8F7BAF8C2B9ED8C300F85BF3 /* Purchase.swift in Sources */,
 				DAB65E0D2440B0D4000AECA8 /* HistoryItemContent.swift in Sources */,
 				DA696BCE240177E800DE80CF /* Sorter.swift in Sources */,
 				DABDE97F2974706C005B32E9 /* KeyboardLayout.swift in Sources */,
@@ -1023,7 +1045,9 @@
 				DA20FA722B082DD600056DD5 /* Notifier.swift in Sources */,
 				DA196A9328AB0D4500ADD8A2 /* SearchItemView.swift in Sources */,
 				DA573EAD1EDD410F00561FB2 /* HistoryMenuItem.swift in Sources */,
+				8F7BAF862B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift in Sources */,
 				DA1DF95227AF8BBA006839E0 /* StorageSettingsViewController.swift in Sources */,
+				8F7C81A72B9EE4B900627F08 /* NSAttributedString+Style.swift in Sources */,
 				DA2C752C2029FE990090965D /* Menu.swift in Sources */,
 				DA35278C268D645700C92EBB /* IgnoreSettingsViewController.swift in Sources */,
 				DA181174247B409A00066D55 /* AdvancedSettingsViewController.swift in Sources */,

@@ -44,7 +44,7 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     populateLaunchAtLogin()
     populateSparkleAutomaticUpdates()
     populateSearchMode()
-    enableSearchOptions(Maccy.allowExtraHistoryFeatures)
+    enableSearchOptions(Maccy.allowExpandedHistory)
   }
 
   @IBAction func sparkleAutomaticUpdatesChanged(_ sender: NSButton) {

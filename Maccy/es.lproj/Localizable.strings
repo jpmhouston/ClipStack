@@ -14,6 +14,7 @@
 "preferences_general" = "General";
 "preferences_pins" = "Anclas";
 "preferences_storage" = "Almacenamiento";
+"preferences_purchase" = "Purchase"; // TODO: update
 "format_modifiers_config" = "• Seleccione con %@ presionado para copiar, borrar el formato y pegar el elemento.";
 "accessibility_alert_message" = "“Cleepp” quiere controlar esta computadora mediante las funciones de accesibilidad.";
 "accessibility_alert_comment" = "Dale acceso a esta aplicación en el panel {pane} de {settings}.\n\nHaga clic en el botón “+”, seleccione “Cleepp“ y active la casilla de verificación junto a él.";

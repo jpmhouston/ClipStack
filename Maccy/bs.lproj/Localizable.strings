@@ -14,6 +14,7 @@
 "preferences_general" = "Opšte";
 "preferences_pins" = "Zakačke";
 "preferences_storage" = "Pohrana";
+"preferences_purchase" = "Purchase"; // TODO: update
 "accessibility_alert_message" = "“Cleepp” želi da kontroliše ovaj računar koristeći funkcije pristupačnosti.";
 "accessibility_alert_comment" = "Odobrite pristup ovoj aplikaciji u postavkama {pane}, koje se nalaze u {settings}.\n\nKliknite na dugme +, izaberite Cleepp i potvrdite izbor u polju za potvrdu pored njega.";
 "accessibility_alert_deny" = "Ignoriši";

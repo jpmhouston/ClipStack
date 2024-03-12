@@ -48,7 +48,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
     populateNumberOfItems()
     populateTitleLength()
     populatePreviewDelay()
-    enableSearchOptions(Maccy.allowExtraHistoryFeatures)
+    enableSearchOptions(Maccy.allowHistorySearch)
   }
   
   @IBAction func imageHeightFieldChanged(_ sender: NSTextField) {

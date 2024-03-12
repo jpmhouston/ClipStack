@@ -14,6 +14,7 @@
 "preferences_general" = "General";
 "preferences_pins" = "Pins";
 "preferences_storage" = "Storage";
+"preferences_purchase" = "Purchase";
 "accessibility_alert_message" = "“Cleepp” would like to control this computer using accessibility features.";
 "accessibility_alert_comment" = "Grant access to this application in {pane}, located in {settings}.\n\nClick + button, select Cleepp and toggle on the checkbox next to it.";
 "accessibility_alert_deny" = "Deny";

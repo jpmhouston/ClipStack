@@ -6,13 +6,14 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
   let paneTitle = NSLocalizedString("preferences_storage", comment: "")
   let toolbarItemIcon = NSImage(named: .externaldrive)!
 
-  let sizeMin = 1
+  let sizeMin = 10
   let sizeMax = 999
 
   override var nibName: NSNib.Name? { "StorageSettingsViewController" }
 
   @IBOutlet weak var sizeTextField: NSTextField!
   @IBOutlet weak var sizeStepper: NSStepper!
+  @IBOutlet weak var sizeSeparator: NSView!
   @IBOutlet weak var storeFilesButton: NSButton!
   @IBOutlet weak var storeImagesButton: NSButton!
   @IBOutlet weak var storeTextButton: NSButton!
@@ -28,6 +29,7 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
     super.viewWillAppear()
     populateSize()
     populateStoredTypes()
+    enableSizeOptions(Maccy.allowDictinctStorageSize) // hide for simplicity when moot
   }
 
   @IBAction func sizeFieldChanged(_ sender: NSTextField) {
@@ -60,18 +62,26 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
   }
 
   private func setMinAndMaxSize() {
+    let effectiveMin = max(sizeMin, UserDefaults.standard.maxMenuItems)
     sizeFormatter = NumberFormatter()
-    sizeFormatter.minimum = sizeMin as NSNumber
+    sizeFormatter.minimum = effectiveMin as NSNumber
     sizeFormatter.maximum = sizeMax as NSNumber
     sizeFormatter.maximumFractionDigits = 0
     sizeTextField.formatter = sizeFormatter
-    sizeStepper.minValue = Double(sizeMin)
+    sizeStepper.minValue = Double(effectiveMin)
     sizeStepper.maxValue = Double(sizeMax)
   }
 
+  private func enableSizeOptions(_ enable: Bool) {
+    sizeTextField.isHidden = !enable
+    sizeStepper.isHidden = !enable
+    sizeSeparator.isHidden = !enable
+  }
+
   private func populateSize() {
-    sizeTextField.integerValue = UserDefaults.standard.size
-    sizeStepper.integerValue = UserDefaults.standard.size
+    let effectiveSize = max(UserDefaults.standard.size, UserDefaults.standard.maxMenuItems)
+    sizeTextField.integerValue = effectiveSize
+    sizeStepper.integerValue = effectiveSize
   }
 
   private func populateStoredTypes() {

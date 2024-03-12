@@ -14,6 +14,7 @@
 "preferences_general" = "일반";
 "preferences_pins" = "고정";
 "preferences_storage" = "보관";
+"preferences_purchase" = "Purchase"; // TODO: update
 "accessibility_alert_message" = "“Cleepp”가 손쉬운 사용 기능을 사용하여 이 컴퓨터를 제어하려고 합니다.";
 "accessibility_alert_comment" = "{settings} 있는 {pane} 정보 보호 환경설정에서 이 응용 프로그램에 접근 권한을 부여하십시오.\n\n“+“ 버튼을 클릭하고 “Cleepp“를 선택한 다음 옆에 있는 확인란을 토글합니다.";
 "accessibility_alert_deny" = "거부";

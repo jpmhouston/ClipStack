@@ -3,7 +3,7 @@
 //  ClipStack
 //
 //  Created by Pierre Houston on 2024-03-07.
-//  Copyright © 2024 p0deje. All rights reserved.
+//  Copyright © 2024 Bananameter Labs. All rights reserved.
 //
 
 import AppKit
