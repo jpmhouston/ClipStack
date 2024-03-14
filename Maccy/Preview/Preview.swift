@@ -60,7 +60,6 @@ class Preview: NSViewController {
     
     firstCopyTimeValueLabel.stringValue = formatDate(item.firstCopiedAt)
     lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
-    numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
     
     copyLabel.isHidden = Maccy.isQueueModeOn
     startLabel.isHidden = Maccy.isQueueModeOn || !Maccy.allowReplayFromHistory
