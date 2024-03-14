@@ -37,12 +37,12 @@
                 <outlet property="horizontalRightPadding" destination="9iL-Y8-VWA" id="Kbl-Wd-50R"/>
                 <outlet property="queryField" destination="MmW-Nx-C7z" id="blP-46-55K"/>
             </connections>
-            <point key="canvasLocation" x="-5" y="174"/>
+            <point key="canvasLocation" x="-5" y="182"/>
         </customView>
         <customView id="9fv-At-xQC" userLabel="Placeholder Anchor Item View">
             <rect key="frame" x="0.0" y="0.0" width="100" height="0.0"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <point key="canvasLocation" x="-123" y="314"/>
+            <point key="canvasLocation" x="-102" y="301"/>
         </customView>
         <menu title="Cleepp" id="dqg-kI-Klz" customClass="StatusItemMenu" customModule="Cleepp" customModuleProvider="target">
             <items>
@@ -118,24 +118,31 @@
                 <menuItem title="Placeholder History Header" hidden="YES" id="MMa-qd-9PO">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="deleteHistoryItem:" target="-2" id="iqa-ww-Cc0"/>
                         <outlet property="view" destination="Hz6-mo-xeY" id="qea-wg-GoD"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" hidden="YES" id="5yx-82-0Qq"/>
-                <menuItem title="Undo Last Copy" tag="106" keyEquivalent="z" id="FT3-WA-g9c">
-                    <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                <menuItem title="Delete History Item" id="vGj-r1-rIx">
+                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                     <connections>
-                        <action selector="undoLastCopy:" target="-2" id="d5p-Xb-FzG"/>
+                        <action selector="deleteHighlightedHistoryItem:" target="-2" id="KSd-tR-ybd"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Clear History…" tag="105" id="u3d-qz-ihN">
+                <menuItem title="Clear History…" tag="105" hidden="YES" alternate="YES" id="u3d-qz-ihN">
                     <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
                     <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                     <connections>
                         <action selector="clear:" target="-2" id="fCY-pl-Td7"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Undo Last Copy" tag="106" keyEquivalent="z" id="FT3-WA-g9c">
+                    <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                    <connections>
+                        <action selector="undoLastCopy:" target="-2" id="d5p-Xb-FzG"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Settings…" tag="107" keyEquivalent="," id="Dy3-In-uEL">
@@ -151,6 +158,8 @@ CA
             </items>
             <connections>
                 <outlet property="advanceItem" destination="TLY-ku-V0E" id="od9-PM-WWa"/>
+                <outlet property="clearItem" destination="u3d-qz-ihN" id="aak-jk-gan"/>
+                <outlet property="deleteItem" destination="vGj-r1-rIx" id="wrK-G3-cEq"/>
                 <outlet property="historyHeaderItem" destination="MMa-qd-9PO" id="Isx-BV-gjX"/>
                 <outlet property="noteItem" destination="f7O-Xw-4yJ" id="MEb-0U-qJb"/>
                 <outlet property="prototypeAnchorItem" destination="pms-CA-OfJ" id="SCX-Hb-a2C"/>

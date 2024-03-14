@@ -44,14 +44,16 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   private var usePopoverAnchors = false
   private var showsExpandedMenu = false
   private var showsFullExpansion = false
-  private var isFiltered: Bool = false
-  
+  private var isFiltered = false
+  private var ignoreNextHighlight = false
+
   private static let subsequentPreviewDelay = 0.2
   private var initialPreviewDelay: Double { Double(UserDefaults.standard.previewDelay) / 1000 }
   private lazy var previewThrottle = Throttler(minimumDelay: initialPreviewDelay)
   
   private var historyHeader: SearchItemView? { historyHeaderItem?.view as? SearchItemView }
   private let search = Search()
+  private var lastHighlightedItem: HistoryMenuItem?
   private var topAnchorItem: HistoryMenuItem?
   private var previewPopover: NSPopover?
   private var protoCopyItem: HistoryMenuItem?
@@ -64,12 +66,14 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var queueStartItem: NSMenuItem?
   @IBOutlet weak var queueStopItem: NSMenuItem?
   @IBOutlet weak var advanceItem: NSMenuItem?
+  @IBOutlet weak var noteItem: NSMenuItem?
   @IBOutlet weak var historyHeaderItem: NSMenuItem?
   @IBOutlet weak var prototypeCopyItem: NSMenuItem?
   @IBOutlet weak var prototypeReplayItem: NSMenuItem?
   @IBOutlet weak var prototypeAnchorItem: NSMenuItem?
   @IBOutlet weak var trailingSeparatorItem: NSMenuItem?
-  @IBOutlet weak var noteItem: NSMenuItem?
+  @IBOutlet weak var deleteItem: NSMenuItem?
+  @IBOutlet weak var clearItem: NSMenuItem?
   
   // MARK: -
   
@@ -149,6 +153,17 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
 
   func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
     offloadCurrentPreview()
+
+    if item == nil {
+      ignoreNextHighlight = true // after being called with nil item ignore the next call
+      return
+    } else if ignoreNextHighlight {
+      ignoreNextHighlight = false // after getting that following call, back to normal
+      return
+    } else  {
+      enableDelete(forHighlightedItem: item)
+      lastHighlightedItem = item as? HistoryMenuItem
+    }
 
     guard let item = item as? HistoryMenuItem else {
       return
@@ -348,29 +363,6 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     return historyMenuItem
   }
   
-  // TOOD: remove this func
-//  func delete() {
-//    guard let menuItem = highlightedItem, let historyMenuItem = menuItem as? HistoryMenuItem else {
-//      return
-//    }
-//    let menuIndex = index(of: historyMenuItem)
-//    
-//    // When deleting mulitple items by holding the removal keys
-//    // we sometimes get into a race condition with menu updating indices.
-//    // https://github.com/p0deje/Maccy/issues/628
-//    guard menuIndex != -1 else { return }
-//    
-//    guard let indexedItem = indexedItems.first(where: { $0.item == historyMenuItem.item }),
-//          let index = indexedItems.firstIndex(of: indexedItem) else {
-//      return
-//    }
-//    
-//    _ = delete(position: index)
-//    
-//    rebuildItemsAsNeeded()
-//    highlight(items[menuIndex]) // highlight next one in the menu, now at the same index
-//  }
-
   func delete(position: Int) -> String? {
     guard indexedItems.count > position else {
       return nil
@@ -401,12 +393,39 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     return value
   }
   
+  func deleteHighlightedItem() {
+    guard let item = lastHighlightedItem,
+          let index = indexedItems.firstIndex(where: { $0.menuItems.contains(item) }) else {
+      return
+    }
+    _ = delete(position: index)
+  }
+  
+  private func enableDelete(forHighlightedItem item: NSMenuItem?) {
+    guard let item = item else {
+      return
+    }
+    
+    var enable = false
+    if let historyMenuItem = item as? HistoryMenuItem {
+      enable = canDeleteHistoryMenuItem(historyMenuItem)
+    } else {
+      enable = false
+    }
+    deleteItem?.isEnabled = enable
+  }
+  
+  func canDeleteHistoryMenuItem(_ item: HistoryMenuItem) -> Bool {
+    // currently all history menu items can be deleted
+    return true
+  }
+  
   func resizeImageMenuItems() {
     historyMenuItems.forEach {
       $0.resizeImage()
     }
   }
-
+  
   func regenerateMenuItemTitles() {
     historyMenuItems.forEach {
       $0.regenerateTitle()
@@ -635,12 +654,12 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     // Switch visibility of start vs stop menu item
     queueStartItem?.isHidden = Maccy.isQueueModeOn
     queueStopItem?.isHidden = !Maccy.isQueueModeOn
+    
     let gotQueueItems = Maccy.isQueueModeOn && Maccy.queueSize > 0
-    if gotQueueItems {
-      advanceItem?.isAlternate = true // make alternate to queueStopItem, expect to be shown when option down
-    } else {
-      advanceItem?.isAlternate = false // unset as alternate so isHidden respected * doesn't show when option down
-    }
+    advanceItem?.isAlternate = gotQueueItems // as alternate to queueStopItem can be shown, hidden when not alternate
+    
+    deleteItem?.isHidden = !showsExpandedMenu
+    clearItem?.isAlternate = showsExpandedMenu // as alternate to deleteItem can be shown, hidden when not alternate
     
     // Visiblity of the history header and trailing separator
     // (the expanded menu means the search header and all of the history items)

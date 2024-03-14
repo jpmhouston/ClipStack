@@ -5,7 +5,6 @@ enum SearchItemKeypress: CaseIterable {
   case clearHistory
   case clearHistoryAll
   case clearSearch
-  case deleteCurrentItem
   case deleteOneCharFromSearch
   case deleteLastWordFromSearch
   case ignored
@@ -31,8 +30,6 @@ enum SearchItemKeypress: CaseIterable {
       self = .moveToPrevious
     case (.return, _), (.keypadEnter, _):
       self = .selectCurrentItem
-    case (.delete, [.command]):
-      self = .deleteCurrentItem
     case (_, _) where Self.keysToSkip.contains(key) || !modifierFlags.isDisjoint(with: Self.modifiersToSkip):
       self = .ignored
     default:

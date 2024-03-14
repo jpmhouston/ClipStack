@@ -263,6 +263,19 @@ class Maccy: NSObject {
   }
   
   @IBAction
+  func deleteHighlightedHistoryItem(_ sender: AnyObject) {
+    menu.deleteHighlightedItem()
+  }
+  
+  @IBAction
+  func clear(_ sender: AnyObject) {
+    clearHistory()
+    if !permitEmptyQueueMode {
+      Self.isQueueModeOn = false
+    }
+  }
+  
+  @IBAction
   func undoLastCopy(_ sender: AnyObject) {
     guard let removeItem = history.first else {
       return
@@ -292,12 +305,6 @@ class Maccy: NSObject {
         clipboard.copy("")
       }
     }
-  }
-  
-  @IBAction
-  func clear(_ sender: AnyObject) {
-    clearHistory()
-    Self.isQueueModeOn = false
   }
   
   @IBAction

@@ -120,14 +120,6 @@ class SearchItemView: NSView, NSSearchFieldDelegate {
     case .clearSearch:
       setQuery("")
       return true
-    case .deleteCurrentItem:
-      // The search menu item should have its target/action set to a delete method,
-      // pass it the highlighted menuitem
-      if let target = self.enclosingMenuItem?.target, let action = self.enclosingMenuItem?.action,
-         let menuItem = customMenu?.highlightedMenuItem() {
-        _ = target.perform(action, with: menuItem)
-      }
-      return true
     case .deleteOneCharFromSearch:
       if !queryField.stringValue.isEmpty {
         setQuery(String(queryField.stringValue.dropLast()))
