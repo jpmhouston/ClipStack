@@ -38,7 +38,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   override func viewWillAppear() {
     // TODO: reset state for testing, to be removed
-    Purchase.hasPurchasedExtras = false
+    Purchases.shared.hasPurchasedExtras = false
     
     super.viewWillAppear()
     updateTitleLabel()
@@ -85,7 +85,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     errorLabel.stringValue = ""
     
     progressIndicator.startAnimation(sender)
-    Purchase.restorePurchases() { [weak self] error in
+    Purchases.restorePurchases() { [weak self] error in
       guard let self = self else {
         return
       }
@@ -93,7 +93,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
       
       // TODO: hardcode success, to be removed
       // its just a dummy error value for now anyway, ignore it and switch to Purchased
-      Purchase.hasPurchasedExtras = true
+      Purchases.shared.hasPurchasedExtras = true
       errorLabel.stringValue = "For now this just exercises the 2 states of this window. Purchases will work in the 1.0 App Store version."
       
       updatePurchaseButtons()
@@ -117,13 +117,13 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   // MARK: -
   
   private func updateTitleLabel() {
-    pleasePurchaseLabel.isHidden = Purchase.hasPurchasedExtras
-    havePurchasedLabel.isHidden = !Purchase.hasPurchasedExtras
+    pleasePurchaseLabel.isHidden = Purchases.extrasPurchased
+    havePurchasedLabel.isHidden = !Purchases.extrasPurchased
   }
   
   private func updatePurchaseButtons() {
-    purchaseButton.isEnabled = !Purchase.hasPurchasedExtras
-    restoreButton.isEnabled = !Purchase.hasPurchasedExtras
+    purchaseButton.isEnabled = !Purchases.extrasPurchased
+    restoreButton.isEnabled = !Purchases.extrasPurchased
   }
   
   private func clearError() {

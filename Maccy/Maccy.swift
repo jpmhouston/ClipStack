@@ -21,6 +21,7 @@ class Maccy: NSObject {
   
   private let about = About()
   private let clipboard = Clipboard.shared
+  private let purchases = Purchases.shared
   private let history = History()
   private var intro = IntroWindowController()
   private var menuController: MenuController!
@@ -89,6 +90,8 @@ class Maccy: NSObject {
     super.init()
     initializeObservers()
     
+    purchases.connect()
+    
     guard let nibMenu = StatusItemMenu.load(owner: self) else { fatalError("menu object missing") }
     menu = nibMenu
     menu.inject(history: history)
@@ -106,6 +109,8 @@ class Maccy: NSObject {
     imageHeightObserver?.invalidate()
     maxMenuItemLengthObserver?.invalidate()
     removalObserver?.invalidate()
+    
+    purchases.disconnect()
   }
   
   @IBAction

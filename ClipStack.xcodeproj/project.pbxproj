@@ -24,8 +24,8 @@
 		8F7BAF872B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF852B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift */; };
 		8F7BAF892B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */; };
 		8F7BAF8A2B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */; };
-		8F7BAF8C2B9ED8C300F85BF3 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */; };
-		8F7BAF8D2B9ED8C300F85BF3 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */; };
+		8F7BAF8C2B9ED8C300F85BF3 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF8B2B9ED8C300F85BF3 /* Purchases.swift */; };
+		8F7BAF8D2B9ED8C300F85BF3 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7BAF8B2B9ED8C300F85BF3 /* Purchases.swift */; };
 		8F7C81A72B9EE4B900627F08 /* NSAttributedString+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */; };
 		8F7C81A82B9EE4B900627F08 /* NSAttributedString+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */; };
 		8FBC10852B88980400DD5481 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
@@ -234,7 +234,7 @@
 		8F7BAF822B9DD6F400F85BF3 /* Equatable+IsIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Equatable+IsIn.swift"; sourceTree = "<group>"; };
 		8F7BAF852B9ECBCC00F85BF3 /* PurchaseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSettingsViewController.swift; sourceTree = "<group>"; };
 		8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseSettingsViewController.xib; sourceTree = "<group>"; };
-		8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
+		8F7BAF8B2B9ED8C300F85BF3 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
 		8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Style.swift"; sourceTree = "<group>"; };
 		8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp (App Store).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBC10D82B889A0B00DD5481 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 				DA7A753D26A52F0F00DC16EF /* NSImage+Names.swift */,
 				DAC929D6297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift */,
 				DA20FA772B082E1A00056DD5 /* NSSound+Named.swift */,
-				8F7BAF8B2B9ED8C300F85BF3 /* Purchase.swift */,
+				8F7BAF8B2B9ED8C300F85BF3 /* Purchases.swift */,
 				DAC7AFAE2A801C92006081BB /* RunLoopLocalEventMonitor.swift */,
 				DAC14123232367B200FCFA30 /* Search.swift */,
 				DA696BCD240177E800DE80CF /* Sorter.swift */,
@@ -748,7 +748,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = p0deje;
+				ORGANIZATIONNAME = "Bananameter Labs";
 				TargetAttributes = {
 					DA0EE7B5204657830025FC60 = {
 						CreatedOnToolsVersion = 9.2;
@@ -800,6 +800,7 @@
 				DAC6CE8F26E1AC19002B70B8 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				2F39CB022AD9A93C00B749FD /* XCRemoteSwiftPackageReference "Sparkle" */,
 				2F39CB082AD9AE1F00B749FD /* XCRemoteSwiftPackageReference "Settings" */,
+				8F0D3BF12BA3B10900DDB603 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 			);
 			productRefGroup = DAEE38441E3DBEB100DD2966 /* Products */;
 			projectDirPath = "";
@@ -951,7 +952,7 @@
 				8FBC109A2B88980400DD5481 /* About.swift in Sources */,
 				8FBC109B2B88980400DD5481 /* Accessibility.swift in Sources */,
 				8FBC109C2B88980400DD5481 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
-				8F7BAF8D2B9ED8C300F85BF3 /* Purchase.swift in Sources */,
+				8F7BAF8D2B9ED8C300F85BF3 /* Purchases.swift in Sources */,
 				8FBC109D2B88980400DD5481 /* HistoryItemContent.swift in Sources */,
 				8FBC109E2B88980400DD5481 /* Sorter.swift in Sources */,
 				8FBC109F2B88980400DD5481 /* KeyboardLayout.swift in Sources */,
@@ -1037,7 +1038,7 @@
 				DAAEB196219694AE00A7883C /* About.swift in Sources */,
 				DA6D98E22AEABE03008A77CE /* Accessibility.swift in Sources */,
 				DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
-				8F7BAF8C2B9ED8C300F85BF3 /* Purchase.swift in Sources */,
+				8F7BAF8C2B9ED8C300F85BF3 /* Purchases.swift in Sources */,
 				DAB65E0D2440B0D4000AECA8 /* HistoryItemContent.swift in Sources */,
 				DA696BCE240177E800DE80CF /* Sorter.swift in Sources */,
 				DABDE97F2974706C005B32E9 /* KeyboardLayout.swift in Sources */,
