@@ -177,9 +177,9 @@
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tFI-rf-aIM">
                             <rect key="frame" x="-2" y="63" width="598" height="28"/>
                             <textFieldCell key="cell" id="wil-jv-Bmn">
-                                <font key="font" metaFont="system" size="11"/>
+                                <font key="font" metaFont="smallSystem"/>
                                 <string key="title">Restore Purchases means to recover a purchase previously made in this app on your Mac App Store account, perhaps on another Mac.</string>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
