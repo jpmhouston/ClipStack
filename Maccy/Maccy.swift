@@ -90,7 +90,12 @@ class Maccy: NSObject {
     super.init()
     initializeObservers()
     
-    purchases.connect()
+    purchases.start(withObserver: self) { [weak self] s, update in
+      guard let self = self, self == s else {
+        return
+      }
+      purchasesUpdated(update)
+    }
     
     guard let nibMenu = StatusItemMenu.load(owner: self) else { fatalError("menu object missing") }
     menu = nibMenu
@@ -110,7 +115,7 @@ class Maccy: NSObject {
     maxMenuItemLengthObserver?.invalidate()
     removalObserver?.invalidate()
     
-    purchases.disconnect()
+    purchases.finish()
   }
   
   @IBAction
@@ -384,6 +389,20 @@ class Maccy: NSObject {
     if !Accessibility.allowed && !UserDefaults.standard.completedIntro {
       showIntro(self)
     }
+  }
+  
+  private func purchasesUpdated(_ update: Purchases.ObservationUpdate) {
+    if case .success(_) = update {
+      setFeatureFlags(givenPurchase: purchases.hasBoughtExtras)
+    }
+  }
+  
+  private func setFeatureFlags(givenPurchase hasPurchased: Bool) {
+    Self.allowFullyExpandedHistory = hasPurchased
+    Self.allowHistorySearch = hasPurchased
+    Self.allowReplayFromHistory = hasPurchased
+    Self.allowPasteMultiple = hasPurchased
+    Self.allowUndoCopy = hasPurchased
   }
   
   private func populateMenu() {

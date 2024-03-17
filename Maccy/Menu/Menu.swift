@@ -650,21 +650,26 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem else {
       return
     }
+    let gotQueueItems = Maccy.isQueueModeOn && Maccy.queueSize > 0
+    let historyItemsShowing = gotQueueItems || showsExpandedMenu
+    let historyItemsPresent = gotQueueItems || (showsExpandedMenu && indexedItems.count > 0)
+    let showSearchHeader = showsExpandedMenu && !UserDefaults.standard.hideSearch
     
     // Switch visibility of start vs stop menu item
     queueStartItem?.isHidden = Maccy.isQueueModeOn
     queueStopItem?.isHidden = !Maccy.isQueueModeOn
     
-    let gotQueueItems = Maccy.isQueueModeOn && Maccy.queueSize > 0
-    advanceItem?.isAlternate = gotQueueItems // as alternate to queueStopItem can be shown, hidden when not alternate
+    // Allow/prohibit alternate to queueStopItem
+    advanceItem?.isAlternate = gotQueueItems // when not alternate to queueStopItem it ends up hidden (Hidden must be set in nib)
     
-    deleteItem?.isHidden = !showsExpandedMenu
-    clearItem?.isAlternate = showsExpandedMenu // as alternate to deleteItem can be shown, hidden when not alternate
+    // Delete item visibility
+    deleteItem?.isHidden = !historyItemsShowing
+    clearItem?.isAlternate = showsExpandedMenu // when not alternate to deleteItem it ends up hidden
     
     // Visiblity of the history header and trailing separator
     // (the expanded menu means the search header and all of the history items)
-    historyHeaderItem.isHidden = !showsExpandedMenu || UserDefaults.standard.hideSearch
-    trailingSeparatorItem.isHidden = !showsExpandedMenu && !gotQueueItems
+    historyHeaderItem.isHidden = !showSearchHeader
+    trailingSeparatorItem.isHidden = !showSearchHeader && !historyItemsPresent
     
     // Show or hide the desired history items
     let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem

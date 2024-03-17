@@ -12,6 +12,10 @@
 		4762D6972467226100B3A2BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		5AA9C8402AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9C83F2AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift */; };
 		5ACA94F52AD4D1E200ECAB6A /* IgnoreRegexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACA94F42AD4D1E200ECAB6A /* IgnoreRegexViewController.swift */; };
+		8F0D3BF52BA3BB1000DDB603 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BF42BA3BB1000DDB603 /* SwiftyStoreKit */; };
+		8F0D3BF82BA4F75300DDB603 /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BF72BA4F75300DDB603 /* TPInAppReceipt */; };
+		8F0D3BFA2BA4F76300DDB603 /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BF92BA4F76300DDB603 /* TPInAppReceipt */; };
+		8F0D3BFC2BA4F77400DDB603 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BFB2BA4F77400DDB603 /* SwiftyStoreKit */; };
 		8F408C242B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C252B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C282B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
@@ -401,13 +405,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FBC10B82B88980400DD5481 /* KeyboardShortcuts in Frameworks */,
 				8FBC10B92B88980400DD5481 /* Carbon.framework in Frameworks */,
+				8FBC10B82B88980400DD5481 /* KeyboardShortcuts in Frameworks */,
+				8F0D3BF52BA3BB1000DDB603 /* SwiftyStoreKit in Frameworks */,
 				8FBC10BA2B88980400DD5481 /* SwiftHEXColors in Frameworks */,
 				8FBC10BB2B88980400DD5481 /* Sauce in Frameworks */,
 				8FBC10BC2B88980400DD5481 /* Settings in Frameworks */,
 				8FBC10BD2B88980400DD5481 /* LaunchAtLogin in Frameworks */,
 				8FBC10BE2B88980400DD5481 /* Fuse in Frameworks */,
+				8F0D3BF82BA4F75300DDB603 /* TPInAppReceipt in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,14 +435,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5F46512020E9FB00425C11 /* Carbon.framework in Frameworks */,
 				DA009955256414E60030E697 /* KeyboardShortcuts in Frameworks */,
 				8FBC10D72B88982100DD5481 /* Sparkle in Frameworks */,
-				DA5F46512020E9FB00425C11 /* Carbon.framework in Frameworks */,
+				8F0D3BFC2BA4F77400DDB603 /* SwiftyStoreKit in Frameworks */,
 				DA009947256414800030E697 /* SwiftHEXColors in Frameworks */,
 				DA5154D82564102900C01004 /* Sauce in Frameworks */,
 				2F39CB0A2AD9AE1F00B749FD /* Settings in Frameworks */,
 				DAC6CE9126E1AC19002B70B8 /* LaunchAtLogin in Frameworks */,
 				DA009940256414560030E697 /* Fuse in Frameworks */,
+				8F0D3BFA2BA4F76300DDB603 /* TPInAppReceipt in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +679,8 @@
 				8FBC107E2B88980400DD5481 /* KeyboardShortcuts */,
 				8FBC10802B88980400DD5481 /* LaunchAtLogin */,
 				8FBC10822B88980400DD5481 /* Settings */,
+				8F0D3BF42BA3BB1000DDB603 /* SwiftyStoreKit */,
+				8F0D3BF72BA4F75300DDB603 /* TPInAppReceipt */,
 			);
 			productName = Maccy;
 			productReference = 8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */;
@@ -734,6 +744,8 @@
 				DAC6CE9026E1AC19002B70B8 /* LaunchAtLogin */,
 				2F39CB092AD9AE1F00B749FD /* Settings */,
 				8FBC10D62B88982100DD5481 /* Sparkle */,
+				8F0D3BF92BA4F76300DDB603 /* TPInAppReceipt */,
+				8F0D3BFB2BA4F77400DDB603 /* SwiftyStoreKit */,
 			);
 			productName = Maccy;
 			productReference = DAEE38431E3DBEB100DD2966 /* Cleepp.app */;
@@ -801,6 +813,7 @@
 				2F39CB022AD9A93C00B749FD /* XCRemoteSwiftPackageReference "Sparkle" */,
 				2F39CB082AD9AE1F00B749FD /* XCRemoteSwiftPackageReference "Settings" */,
 				8F0D3BF12BA3B10900DDB603 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
+				8F0D3BF62BA4F75300DDB603 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */,
 			);
 			productRefGroup = DAEE38441E3DBEB100DD2966 /* Products */;
 			projectDirPath = "";
@@ -1280,7 +1293,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "FOR_APP_STORE DEBUG";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP FOR_APP_STORE DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1316,7 +1329,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = FOR_APP_STORE;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP FOR_APP_STORE";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1572,7 +1585,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "X_ALLOW_SPARKLE_UPDATES DEBUG";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP X_ALLOW_SPARKLE_UPDATES DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1608,7 +1621,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = X_ALLOW_SPARKLE_UPDATES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP X_ALLOW_SPARKLE_UPDATES";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1678,6 +1691,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.0.3;
+			};
+		};
+		8F0D3BF12BA3B10900DDB603 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.16.4;
+			};
+		};
+		8F0D3BF62BA4F75300DDB603 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tikhop/TPInAppReceipt";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.4.0;
 			};
 		};
 		8FBC10792B88980400DD5481 /* XCRemoteSwiftPackageReference "Sauce" */ = {
@@ -1775,6 +1804,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2F39CB082AD9AE1F00B749FD /* XCRemoteSwiftPackageReference "Settings" */;
 			productName = Settings;
+		};
+		8F0D3BF42BA3BB1000DDB603 /* SwiftyStoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F0D3BF12BA3B10900DDB603 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */;
+			productName = SwiftyStoreKit;
+		};
+		8F0D3BF72BA4F75300DDB603 /* TPInAppReceipt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F0D3BF62BA4F75300DDB603 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */;
+			productName = TPInAppReceipt;
+		};
+		8F0D3BF92BA4F76300DDB603 /* TPInAppReceipt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F0D3BF62BA4F75300DDB603 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */;
+			productName = TPInAppReceipt;
+		};
+		8F0D3BFB2BA4F77400DDB603 /* SwiftyStoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F0D3BF12BA3B10900DDB603 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */;
+			productName = SwiftyStoreKit;
 		};
 		8FBC10782B88980400DD5481 /* Sauce */ = {
 			isa = XCSwiftPackageProductDependency;
