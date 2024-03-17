@@ -24,6 +24,10 @@
 "clear_alert_comment" = "Questa azione non può essere annullata.";
 "clear_alert_cancel" = "Annulla";
 "clear_alert_confirm" = "Pulisci";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "Annulla";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "La chiave è già in uso.";
 "active_screen" = "Schermo attivo";
 "screen" = "Schermo";

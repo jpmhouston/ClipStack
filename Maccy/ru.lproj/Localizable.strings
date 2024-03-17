@@ -24,6 +24,10 @@
 "clear_alert_comment" = "Это действие необратимо.";
 "clear_alert_cancel" = "Отмена";
 "clear_alert_confirm" = "Очистить";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "Отмена";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "Клавиша уже используется.";
 "active_screen" = "Активынй экран";
 "screen" = "Экран";

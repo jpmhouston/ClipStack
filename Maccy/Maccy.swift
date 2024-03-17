@@ -4,15 +4,17 @@ import Settings
 import Symbols
 
 // swiftlint:disable type_body_length
-class Maccy: NSObject {
+class Maccy: NSObject, NSMenuItemValidation {
   static var returnFocusToPreviousApp = true
   static var isQueueModeOn = false
   static var queueSize = 0
+  static var busy = false
   
   static var allowExpandedHistory = true
   static var allowFullyExpandedHistory = true
   static var allowHistorySearch = true
   static var allowReplayFromHistory = true
+  static var allowPasteMultiple = true
   static var allowUndoCopy = true
   static var allowDictinctStorageSize: Bool { Self.allowFullyExpandedHistory || Self.allowHistorySearch }
   
@@ -46,6 +48,23 @@ class Maccy: NSObject {
     return alert
   }
   
+  private var numberQueuedAlert: NSAlert {
+    let alert = NSAlert()
+    alert.messageText = NSLocalizedString("number_alert_message", comment: "")
+    alert.informativeText = NSLocalizedString("number_alert_comment", comment: "")
+      .replacingOccurrences(of: "{number}", with: String(Self.queueSize))
+    alert.addButton(withTitle: NSLocalizedString("number_alert_confirm", comment: ""))
+    alert.addButton(withTitle: NSLocalizedString("number_alert_cancel", comment: ""))
+    let field = RangedIntegerTextField(acceptingRange: 1...Self.queueSize, permittingEmpty: true,
+                                       frame: NSRect(x: 0, y: 0, width: 200, height: 24)) { valid in
+      alert.buttons[0].isEnabled = valid
+    }
+    field.placeholderString = String(Self.queueSize)
+    alert.accessoryView = field
+    alert.window.initialFirstResponder = field
+    return alert
+  }
+
   private lazy var settingsWindowController = SettingsWindowController(
     panes: [
       GeneralSettingsViewController(),
@@ -66,6 +85,9 @@ class Maccy: NSObject {
   private var removalObserver: NSKeyValueObservation?
   
   private let accessibilityDesc = NSLocalizedString("menu_accessibility_description", comment: "")
+  
+  private let pasteMultipleDelaySeconds: Float = 0.333
+  private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(pasteMultipleDelaySeconds * 1000)) }
   private let iconBlinkIntervalSeconds: Float = 0.75
   private var iconBlinkTimer: DispatchSourceTimer?
   
@@ -76,6 +98,8 @@ class Maccy: NSObject {
     case replace
     case blink(transitionIcon: NSImage.Name)
   }
+  
+  // MARK: -
   
   override init() {
     UserDefaults.standard.register(defaults: [
@@ -118,8 +142,19 @@ class Maccy: NSObject {
     purchases.finish()
   }
   
+  func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    if Self.busy {
+      return false
+    } else {
+      return menu.validationShouldEnable(item: menuItem)
+    }
+  }
+  
+  // MARK: -
+  
   @IBAction
   func startQueueMode(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     guard Accessibility.check() else {
       return
     }
@@ -133,19 +168,23 @@ class Maccy: NSObject {
   }
   
   @IBAction
-  func queueCopy(_ sender: AnyObject) {
-    queueCopy()
+  func queuedCopy(_ sender: AnyObject) {
+    queuedCopy()
   }
   
-  func queueCopy() {
+  func queuedCopy() {
     if !Self.isQueueModeOn {
       Self.isQueueModeOn = true
       permitEmptyQueueMode = false
     }
     
+    Self.busy = true
+    
     // make the frontmost application perform a copy
     // let clipboard object detect this normally and invoke incrementQueue
-    clipboard.invokeApplicationCopy()
+    clipboard.invokeApplicationCopy() {
+      Self.busy = false
+    }
   }
   
   private func incrementQueue() {
@@ -153,30 +192,35 @@ class Maccy: NSObject {
       return
     }
     
-    //let wasEmpty = Self.queueSize == 0 // TODO: restore my logic to skip reloading pasteboard or updating menu?
     Self.queueSize += 1
     
     updateStatusMenuIcon(.increment)
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
-    // revert pasteboard back to first item in the queue
-    if let index = queueHeadIndex, index < history.count {
+    // revert pasteboard back to first item in the queue (don't have to when queueSize is now 1)
+    if let index = queueHeadIndex, index > 0 && index < history.count {
       clipboard.copy(history.all[index])
     }
   }
   
   @IBAction
-  func queuePaste(_ sender: AnyObject) {
-    queuePaste()
+  func queuedPaste(_ sender: AnyObject) {
+    queuedPaste()
   }
   
-  func queuePaste() {
+  func queuedPaste() {
+    Self.busy = true
+    
     // make the frontmost application perform a paste
-    clipboard.invokeApplicationPaste(then: { self.decrementQueue() })
+    clipboard.invokeApplicationPaste() {
+      self.decrementQueue()
+      
+      Self.busy = false
+    }
   }
   
-  private func decrementQueue() {
+  private func decrementQueue(withIconUpdates updateIcon: Bool = true) {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
@@ -189,7 +233,9 @@ class Maccy: NSObject {
       clipboard.copy(history.all[index]) // reset pasteboard to the latest item copied
     }
     
-    updateStatusMenuIcon(.decrement)
+    if updateIcon {
+      updateStatusMenuIcon(.decrement)
+    }
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
@@ -198,6 +244,62 @@ class Maccy: NSObject {
       AppStoreReview.ask()
     }
     #endif
+  }
+  
+  @IBAction
+  func queuedPasteMultiple(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
+    withNumberToPasteAlert() { number in
+      // Tricky! See MenuController for how `withFocus` normally uses NSApp.hide
+      // after making the menu open, except when returnFocusToPreviousApp false.
+      // `withNumberToPasteAlert` must set that flag to false to run the alert
+      // and so at this moment our app has not been hidden.
+      // `invokeApplicationPaste` internally does a dispatch async around
+      // controlling the frontmost app so it does so only after the `withFocus`
+      // closure does NSApp.hide as it exits.
+      // Because this runs after withFocus has already exited without doing
+      // NSApp.hide (since withNumberToPasteAlert sets returnFocusToPreviousApp
+      // to false), and we want to immediately control the app now, must do the
+      // NSApp.hide ourselves here.
+      NSApp.hide(self)
+      
+      self.queuedPasteMultiple(number)
+    }
+  }
+  
+  @IBAction
+  func queuedPasteAll(_ sender: AnyObject) {
+    queuedPasteMultiple(Self.queueSize)
+  }
+  
+  private func queuedPasteMultiple(_ count: Int) {
+    guard count >= 1 && count <= Self.queueSize else {
+      return
+    }
+    if count == 1 {
+      queuedPaste()
+    } else {
+      Self.busy = true
+      
+      setStatusMenuIcon(to: .cleepMenuIconListMinus)
+      queuedPasteMultipleIteration(count)
+    }
+  }
+  
+  private func queuedPasteMultipleIteration(_ count: Int) {
+    // make the frontmost application perform a paste again & again until count decrements to 0
+    if count > 0 {
+      clipboard.invokeApplicationPaste() {
+        self.decrementQueue(withIconUpdates: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) {
+          self.queuedPasteMultipleIteration(count - 1)
+        }
+      }
+    } else {
+      updateStatusMenuIcon()
+      
+      Self.busy = false
+    }
   }
   
   func copy(string: String, excludedFromHistory: Bool) {
@@ -226,6 +328,7 @@ class Maccy: NSObject {
   
   @IBAction
   func replayFromHistory(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     guard Accessibility.check() else {
       return
     }
@@ -258,7 +361,7 @@ class Maccy: NSObject {
       return
     }
     
-    _ = menu.delete(position: index)
+    menu.delete(position: index)
     
     if Self.isQueueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
       Self.queueSize -= 1
@@ -268,13 +371,26 @@ class Maccy: NSObject {
       
       updateStatusMenuIcon(.decrement)
       updateMenuTitle()
-      menu.updateHeadOfQueue(index: queueHeadIndex)
+      // menu updates the head of queue item itself when deleting
     }
   }
   
   @IBAction
   func deleteHighlightedHistoryItem(_ sender: AnyObject) {
-    menu.deleteHighlightedItem()
+    guard let deletedIndex = menu.deleteHighlightedItem() else {
+      return
+    }
+    
+    if Self.isQueueModeOn && deletedIndex < Self.queueSize {
+      Self.queueSize -= 1
+      if !permitEmptyQueueMode && Self.queueSize == 0 {
+        Self.isQueueModeOn = false
+      }
+      
+      updateStatusMenuIcon(.decrement)
+      updateMenuTitle()
+      // menu updates the head of queue item itself when deleting
+    }
   }
   
   @IBAction
@@ -292,7 +408,7 @@ class Maccy: NSObject {
     }
     
     history.remove(removeItem)
-    _ = menu.delete(position: 0)
+    menu.delete(position: 0)
     
     if Self.isQueueModeOn && Self.queueSize > 0 {
       Self.queueSize -= 1
@@ -348,6 +464,8 @@ class Maccy: NSObject {
     NSApp.terminate(sender)
   }
   
+  // MARK: -
+  
   func select(position: Int) -> String? {
     return menu.select(position: position)
   }
@@ -361,6 +479,7 @@ class Maccy: NSObject {
   }
   
   func clearHistory(suppressClearAlert: Bool = false) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     withClearAlert(suppressClearAlert: suppressClearAlert) {
       self.history.clear()
       self.menu.clear()
@@ -427,6 +546,22 @@ class Maccy: NSObject {
     }
   }
   
+  private func withNumberToPasteAlert(_ closure: @escaping (Int) -> Void) {
+    let alert = numberQueuedAlert
+    guard let field = alert.accessoryView as? RangedIntegerTextField else {
+      return
+    }
+    Self.returnFocusToPreviousApp = false
+    DispatchQueue.main.async {
+      if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
+        //alert.window.orderOut(nil)
+        let number = Int(field.stringValue) ?? Self.queueSize
+        closure(number)
+      }
+      Self.returnFocusToPreviousApp = true
+    }
+  }
+  
   private func rebuild() {
     // TODO: don't think i need this
     menu.clear()
@@ -436,6 +571,7 @@ class Maccy: NSObject {
     }
   }
   
+  // MARK: -
   // TODO: perhaps move title logic into its own obj
   
   private func updateMenuTitle() {
@@ -454,6 +590,13 @@ class Maccy: NSObject {
     button.image = NSImage(named: .cleepMenuIcon)
     button.imagePosition = .imageRight
     (button.cell as? NSButtonCell)?.highlightsBy = []
+  }
+  
+  private func setStatusMenuIcon(to name: NSImage.Name) {
+    guard let iconImage = NSImage(named: name) else {
+      return
+    }
+    statusItem.button?.image = iconImage
   }
   
   private func updateStatusMenuIcon(_ direction: QueueChangeDirection = .none) {

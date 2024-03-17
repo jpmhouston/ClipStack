@@ -24,6 +24,10 @@
 "clear_alert_comment" = "คุณไม่สามารถย้อนกลับการกระทำนี้ได้";
 "clear_alert_cancel" = "ยกเลิก";
 "clear_alert_confirm" = "ล้าง";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "ยกเลิก";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "คีย์นี้ถูกใช้แล้ว";
 "active_screen" = "หน้าจอที่ใช้งานอยู่";
 "screen" = "หน้าจอ";

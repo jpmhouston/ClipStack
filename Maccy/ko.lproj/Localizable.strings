@@ -24,7 +24,11 @@
 "clear_alert_comment" = "이 작업은 되돌릴 수 없습니다.";
 "clear_alert_cancel" = "취소";
 "clear_alert_confirm" = "지우기";
-"key_used_error" = "키가 이미 사용 중입니다.";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "취소";
+"number_alert_confirm" = "Paste"; // TODO: update
+ = "키가 이미 사용 중입니다.";
 "active_screen" = "활성 화면";
 "screen" = "화면";
 "system_settings_name" = "시스템 설정";

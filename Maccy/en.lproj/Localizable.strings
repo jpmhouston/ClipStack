@@ -24,6 +24,10 @@
 "clear_alert_comment" = "You can't undo this action.";
 "clear_alert_cancel" = "Cancel";
 "clear_alert_confirm" = "Clear";
+"number_alert_message" = "Paste how many items?";
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
+"number_alert_cancel" = "Cancel";
+"number_alert_confirm" = "Paste";
 "key_used_error" = "Key is already used.";
 "active_screen" = "Active screen";
 "screen" = "Screen";

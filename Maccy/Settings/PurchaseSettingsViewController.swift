@@ -25,12 +25,13 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var featureLabel1: NSTextField!
   @IBOutlet weak var featureLabel2: NSTextField!
   @IBOutlet weak var featureLabel3: NSTextField!
+  @IBOutlet weak var featureLabel4: NSTextField!
   @IBOutlet weak var purchaseButton: NSButton!
   @IBOutlet weak var restoreButton: NSButton!
   @IBOutlet weak var progressIndicator: NSProgressIndicator!
   @IBOutlet weak var errorLabel: NSTextField!
   
-  var labelsToStyle: [NSTextField] { [featureLabel1, featureLabel2, featureLabel3] }
+  var labelsToStyle: [NSTextField] { [featureLabel1, featureLabel2, featureLabel3, featureLabel4] }
   
   // MARK: -
   

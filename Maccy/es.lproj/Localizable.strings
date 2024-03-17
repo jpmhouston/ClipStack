@@ -25,6 +25,10 @@
 "clear_alert_comment" = "No puede deshacer esta acción.";
 "clear_alert_cancel" = "Cancelar";
 "clear_alert_confirm" = "Limpiar";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "Cancelar";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "La clave ya está en uso.";
 "active_screen" = "Pantalla activa";
 "screen" = "Pantalla";

@@ -22,19 +22,21 @@ class MenuController {
     if let event = event {
       let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
       
-      if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
-        UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
-        
-        if !modifierFlags.contains(.shift) && UserDefaults.standard.ignoreEvents {
-          UserDefaults.standard.ignoreOnlyNextEvent = true
+      if !Maccy.busy {
+        if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
+          UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
+          
+          if !modifierFlags.contains(.shift) && UserDefaults.standard.ignoreEvents {
+            UserDefaults.standard.ignoreOnlyNextEvent = true
+          }
+          return
         }
-        return
-      }
-      
-      if !modifierFlags.contains(.option) &&
-          (modifierFlags.contains(.control) || modifierFlags.contains(.shift)) {
-        menu.performQueueModeToggle()
-        return
+        
+        if !modifierFlags.contains(.option) &&
+            (modifierFlags.contains(.control) || modifierFlags.contains(.shift)) {
+          menu.performQueueModeToggle()
+          return
+        }
       }
       
       if modifierFlags.contains(.option) {

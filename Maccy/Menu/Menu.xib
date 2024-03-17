@@ -37,12 +37,12 @@
                 <outlet property="horizontalRightPadding" destination="9iL-Y8-VWA" id="Kbl-Wd-50R"/>
                 <outlet property="queryField" destination="MmW-Nx-C7z" id="blP-46-55K"/>
             </connections>
-            <point key="canvasLocation" x="-5" y="182"/>
+            <point key="canvasLocation" x="-8" y="243"/>
         </customView>
         <customView id="9fv-At-xQC" userLabel="Placeholder Anchor Item View">
             <rect key="frame" x="0.0" y="0.0" width="100" height="0.0"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <point key="canvasLocation" x="-102" y="301"/>
+            <point key="canvasLocation" x="-105" y="362"/>
         </customView>
         <menu title="Cleepp" id="dqg-kI-Klz" customClass="StatusItemMenu" customModule="Cleepp" customModuleProvider="target">
             <items>
@@ -80,13 +80,25 @@
                 <menuItem title="Copy &amp; Collect" tag="103" id="ieX-in-c9O">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="queueCopy:" target="-2" id="VYn-hd-kO6"/>
+                        <action selector="queuedCopy:" target="-2" id="VYn-hd-kO6"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Paste &amp; Advance" tag="104" id="WZ5-r7-f8t">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="queuePaste:" target="-2" id="Dd4-CN-zGU"/>
+                        <action selector="queuedPaste:" target="-2" id="Dd4-CN-zGU"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Paste All" id="mK7-my-GpM">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="queuedPasteAll:" target="-2" id="fHI-ld-axH"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Paste Mutliple…" hidden="YES" alternate="YES" id="4b4-xr-zN6">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                    <connections>
+                        <action selector="queuedPasteMultiple:" target="-2" id="iSw-Vb-ZeW"/>
                     </connections>
                 </menuItem>
                 <menuItem id="f7O-Xw-4yJ" userLabel="Note Item">
@@ -165,13 +177,16 @@ CA
                 <outlet property="prototypeAnchorItem" destination="pms-CA-OfJ" id="SCX-Hb-a2C"/>
                 <outlet property="prototypeCopyItem" destination="1hg-yO-AD0" id="BFx-GW-cTS"/>
                 <outlet property="prototypeReplayItem" destination="u5y-6g-IID" id="BiY-9N-axa"/>
-                <outlet property="queueCopyItem" destination="ieX-in-c9O" id="V9f-FJ-h9b"/>
-                <outlet property="queuePasteItem" destination="WZ5-r7-f8t" id="nfN-UU-R2i"/>
                 <outlet property="queueStartItem" destination="Y5o-n6-NCS" id="j9S-hc-MQx"/>
                 <outlet property="queueStopItem" destination="TKZ-UP-Ggw" id="2PD-gl-875"/>
+                <outlet property="queuedCopyItem" destination="ieX-in-c9O" id="V9f-FJ-h9b"/>
+                <outlet property="queuedPasteAllItem" destination="mK7-my-GpM" id="1fB-7e-6og"/>
+                <outlet property="queuedPasteItem" destination="WZ5-r7-f8t" id="nfN-UU-R2i"/>
+                <outlet property="queuedPasteMultipleItem" destination="4b4-xr-zN6" id="tAs-Yl-Dbs"/>
                 <outlet property="trailingSeparatorItem" destination="5yx-82-0Qq" id="Yna-RH-BVK"/>
+                <outlet property="undoCopyItem" destination="FT3-WA-g9c" id="VA5-67-hoL"/>
             </connections>
-            <point key="canvasLocation" x="-19" y="-82"/>
+            <point key="canvasLocation" x="-22" y="-81"/>
         </menu>
         <customView id="XAP-KR-RlP" userLabel="Note Item View">
             <rect key="frame" x="0.0" y="0.0" width="296" height="28"/>
@@ -194,7 +209,7 @@ Shortcuts below only work while this menu is open.</string>
                 <constraint firstAttribute="trailing" secondItem="uIb-jp-yTA" secondAttribute="trailing" constant="4" id="OzH-Ah-gqy"/>
                 <constraint firstItem="uIb-jp-yTA" firstAttribute="leading" secondItem="XAP-KR-RlP" secondAttribute="leading" constant="13" id="kTC-Bh-igb"/>
             </constraints>
-            <point key="canvasLocation" x="-5" y="248"/>
+            <point key="canvasLocation" x="-8" y="309"/>
         </customView>
     </objects>
 </document>

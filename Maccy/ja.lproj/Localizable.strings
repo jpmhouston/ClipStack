@@ -24,6 +24,10 @@
 "clear_alert_comment" = "このアクションは元に戻すことができません。";
 "clear_alert_cancel" = "キャンセル";
 "clear_alert_confirm" = "クリア";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "キャンセル";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "キーが既に使用中です。";
 "active_screen" = "アクティブスクリーン";
 "screen" = "画面";

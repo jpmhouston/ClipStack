@@ -24,6 +24,10 @@
 "clear_alert_comment" = "Diese Aktion kann nicht widerrufen werden.";
 "clear_alert_cancel" = "Abbrechen";
 "clear_alert_confirm" = "Bestätigen";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "Abbrechen";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "Hotkey ist bereits belegt.";
 "active_screen" = "Aktiver Bildschirm";
 "screen" = "Bildschirm";

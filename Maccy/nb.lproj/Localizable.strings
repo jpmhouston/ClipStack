@@ -24,6 +24,10 @@
 "clear_alert_comment" = "Du kan ikke angre denne handlingen.";
 "clear_alert_cancel" = "Avbryt";
 "clear_alert_confirm" = "Slett";
+"number_alert_message" = "Paste how many items?"; // TODO: update
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?"; // TODO: update
+"number_alert_cancel" = "Avbryt";
+"number_alert_confirm" = "Paste"; // TODO: update
 "key_used_error" = "Nøkkel er allerede brukt.";
 "active_screen" = "Aktiv skjerm";
 "screen" = "Skjerm";

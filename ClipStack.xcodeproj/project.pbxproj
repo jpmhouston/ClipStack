@@ -16,6 +16,8 @@
 		8F0D3BF82BA4F75300DDB603 /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BF72BA4F75300DDB603 /* TPInAppReceipt */; };
 		8F0D3BFA2BA4F76300DDB603 /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BF92BA4F76300DDB603 /* TPInAppReceipt */; };
 		8F0D3BFC2BA4F77400DDB603 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BFB2BA4F77400DDB603 /* SwiftyStoreKit */; };
+		8F0D3BFE2BA62D7F00DDB603 /* RangedIntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */; };
+		8F0D3BFF2BA62D7F00DDB603 /* RangedIntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */; };
 		8F408C242B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C252B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C282B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
@@ -232,6 +234,7 @@
 		7CEEFDEF24F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF124F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedIntegerTextField.swift; sourceTree = "<group>"; };
 		8F408C232B930C51002582C2 /* Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
 		8F408C272B9314A9002582C2 /* Intro.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
 		8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedWindow.swift; sourceTree = "<group>"; };
@@ -643,6 +646,7 @@
 				DAC929D6297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift */,
 				DA20FA772B082E1A00056DD5 /* NSSound+Named.swift */,
 				8F7BAF8B2B9ED8C300F85BF3 /* Purchases.swift */,
+				8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */,
 				DAC7AFAE2A801C92006081BB /* RunLoopLocalEventMonitor.swift */,
 				DAC14123232367B200FCFA30 /* Search.swift */,
 				DA696BCD240177E800DE80CF /* Sorter.swift */,
@@ -970,6 +974,7 @@
 				8FBC109E2B88980400DD5481 /* Sorter.swift in Sources */,
 				8FBC109F2B88980400DD5481 /* KeyboardLayout.swift in Sources */,
 				8FBC10A02B88980400DD5481 /* Throttler.swift in Sources */,
+				8F0D3BFF2BA62D7F00DDB603 /* RangedIntegerTextField.swift in Sources */,
 				8FBC10A12B88980400DD5481 /* Notifier.swift in Sources */,
 				8FBC10A22B88980400DD5481 /* SearchItemView.swift in Sources */,
 				8FBC10A32B88980400DD5481 /* HistoryMenuItem.swift in Sources */,
@@ -1056,6 +1061,7 @@
 				DA696BCE240177E800DE80CF /* Sorter.swift in Sources */,
 				DABDE97F2974706C005B32E9 /* KeyboardLayout.swift in Sources */,
 				DA81D674252A056B009977BC /* Throttler.swift in Sources */,
+				8F0D3BFE2BA62D7F00DDB603 /* RangedIntegerTextField.swift in Sources */,
 				DA20FA722B082DD600056DD5 /* Notifier.swift in Sources */,
 				DA196A9328AB0D4500ADD8A2 /* SearchItemView.swift in Sources */,
 				DA573EAD1EDD410F00561FB2 /* HistoryMenuItem.swift in Sources */,

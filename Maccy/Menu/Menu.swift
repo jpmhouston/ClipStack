@@ -61,11 +61,13 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   private var protoAnchorItem: HistoryMenuItem?
   private var menuWindow: NSWindow? { NSApp.menuWindow }
   
-  @IBOutlet weak var queueCopyItem: NSMenuItem?
-  @IBOutlet weak var queuePasteItem: NSMenuItem?
   @IBOutlet weak var queueStartItem: NSMenuItem?
   @IBOutlet weak var queueStopItem: NSMenuItem?
   @IBOutlet weak var advanceItem: NSMenuItem?
+  @IBOutlet weak var queuedCopyItem: NSMenuItem?
+  @IBOutlet weak var queuedPasteItem: NSMenuItem?
+  @IBOutlet weak var queuedPasteMultipleItem: NSMenuItem?
+  @IBOutlet weak var queuedPasteAllItem: NSMenuItem?
   @IBOutlet weak var noteItem: NSMenuItem?
   @IBOutlet weak var historyHeaderItem: NSMenuItem?
   @IBOutlet weak var prototypeCopyItem: NSMenuItem?
@@ -74,7 +76,8 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var trailingSeparatorItem: NSMenuItem?
   @IBOutlet weak var deleteItem: NSMenuItem?
   @IBOutlet weak var clearItem: NSMenuItem?
-  
+  @IBOutlet weak var undoCopyItem: NSMenuItem?
+
   // MARK: -
   
   static func load(owner: Any) -> StatusItemMenu? {
@@ -144,27 +147,29 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     
     enableExpandedMenu(false) // revert to showing small menu next time, without history,
     
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { // not sure why this is in a dispatch to the main thread, some timing thing i'm guessing
       self.historyHeader?.setQuery("", throttle: false)
       self.historyHeader?.queryField.refusesFirstResponder = true
     }
-    isFiltered = false
+    self.isFiltered = false
   }
-
+  
   func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
     offloadCurrentPreview()
-
-    if item == nil {
-      ignoreNextHighlight = true // after being called with nil item ignore the next call
-      return
-    } else if ignoreNextHighlight {
-      ignoreNextHighlight = false // after getting that following call, back to normal
-      return
-    } else  {
-      enableDelete(forHighlightedItem: item)
-      lastHighlightedItem = item as? HistoryMenuItem
+    
+    if !Maccy.busy {
+      if item == nil {
+        ignoreNextHighlight = true // after being called with nil item ignore the next call
+        return
+      } else if ignoreNextHighlight {
+        ignoreNextHighlight = false // after getting that following call, back to normal
+        return
+      } else {
+        setDeleteEnabled(forHighlightedItem: item)
+        lastHighlightedItem = item as? HistoryMenuItem
+      }
     }
-
+    
     guard let item = item as? HistoryMenuItem else {
       return
     }
@@ -229,6 +234,20 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     }
   }
   
+  func validationShouldEnable(item: NSMenuItem) -> Bool {
+    let gotQueueItems = Maccy.isQueueModeOn && Maccy.queueSize > 0
+    if item == queuedPasteItem {
+      return gotQueueItems
+    }
+    if item == queuedPasteMultipleItem || item == queuedPasteAllItem {
+      return gotQueueItems
+    }
+    if item == deleteItem {
+      return false // until programmatically enabled later as items are highlighted
+    }
+    return true
+  }
+  
   func add(_ item: HistoryItem) {
     let sortedItems = history.all
     guard let insertionIndex = sortedItems.firstIndex(where: { $0 == item }) else {
@@ -272,11 +291,16 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   
   func updateHeadOfQueue(index: Int?) {
     headOfQueueIndexedItem?.menuItems.forEach { $0.isHeadOfQueue = false }
-    
     if let index = index, index >= 0, index < indexedItems.count {
-      headOfQueueIndexedItem = indexedItems[index]
-      headOfQueueIndexedItem?.menuItems.forEach { $0.isHeadOfQueue = true }
+      setHeadOfQueueItem(indexedItems[index])
+    } else {
+      setHeadOfQueueItem(nil)
     }
+  }
+  
+  func setHeadOfQueueItem(_ item: IndexedItem?) {
+    headOfQueueIndexedItem = item
+    item?.menuItems.forEach { $0.isHeadOfQueue = true }
   }
   
   func updateFilter(filter: String) {
@@ -363,45 +387,57 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     return historyMenuItem
   }
   
+  @discardableResult
   func delete(position: Int) -> String? {
-    guard indexedItems.count > position else {
+    guard position >= 0 && position < indexedItems.count else {
       return nil
     }
     
     let indexedItem = indexedItems[position]
     let value = indexedItem.value
     
-    // check if this menu item is highlighted
-    var rehighlightMenuIndex: Int? = nil
-    if let historyMenuItem = highlightedItem as? HistoryMenuItem, historyMenuItem.item == indexedItem {
-      rehighlightMenuIndex = index(of: historyMenuItem)
-    }
+    // leave this out until we figure out how to leave menu up after cmd-delete
+//    // check if this menu item is highlighted
+//    var wasHighlighted = false
+//    var itemToRehighlight: IndexedItem?
+//    if let highlightedHistoryMenuItem = highlightedItem as? HistoryMenuItem {
+//      wasHighlighted = highlightedHistoryMenuItem.item == indexedItem
+//    }
     
     // remove menu items, history item, this class's indexing item
     indexedItem.menuItems.forEach(safeRemoveItem)
     history.remove(indexedItem.item)
     indexedItems.remove(at: position)
     
+    // clean up head of queue item
     if indexedItem == headOfQueueIndexedItem {
-      headOfQueueIndexedItem = nil
+      setHeadOfQueueItem(position > 0 ? indexedItems[position - 1] : nil)
     }
+//    // update highlight
+//    if wasHighlighted && indexedItem != headOfQueueIndexedItem && position < indexedItems.count {
+//      // in most cases, deleting selected item selects the new one in this positon
+//      if position < indexedItems.count {
+//        highlight(indexedItems[position].menuItems[0])
+//      }
+//    } else if indexedItem == headOfQueueIndexedItem && wasHighlighted && position > 0 {
+//      // but deleting the selected last-queued item selects the previous item (new last one in queue)
+//        highlight(indexedItems[position - 1].menuItems[0])
+//    }
     
-    // if deleted item was highlighted, highlight next one in the menu now at the same index
-    if let menuIndex = rehighlightMenuIndex {
-      highlight(items[menuIndex])
-    }
     return value
   }
   
-  func deleteHighlightedItem() {
+  func deleteHighlightedItem() -> Int? {
     guard let item = lastHighlightedItem,
           let index = indexedItems.firstIndex(where: { $0.menuItems.contains(item) }) else {
-      return
+      return nil
     }
-    _ = delete(position: index)
+    delete(position: index)
+    
+    return index
   }
   
-  private func enableDelete(forHighlightedItem item: NSMenuItem?) {
+  private func setDeleteEnabled(forHighlightedItem item: NSMenuItem?) {
     guard let item = item else {
       return
     }
@@ -465,8 +501,8 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
   }
   
   private func updateShortcuts() {
-    queueCopyItem?.setShortcut(for: .queueCopy)
-    queuePasteItem?.setShortcut(for: .queuePaste)
+    queuedCopyItem?.setShortcut(for: .queueCopy)
+    queuedPasteItem?.setShortcut(for: .queuePaste)
     // might have a start stop hotkey at some point, something like:
     //if !Maccy.queueModeOn {
     //  queueStartItem?.setShortcut(for: .queueStartStop)
@@ -661,6 +697,11 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     
     // Allow/prohibit alternate to queueStopItem
     advanceItem?.isAlternate = gotQueueItems // when not alternate to queueStopItem it ends up hidden (Hidden must be set in nib)
+    
+    // Bonus features to hide when not purchased
+    queuedPasteAllItem?.isHidden = !Maccy.allowPasteMultiple
+    queuedPasteMultipleItem?.isAlternate = Maccy.allowPasteMultiple // when not alternate to pasteall item it ends up hidden
+    undoCopyItem?.isHidden = !Maccy.allowUndoCopy
     
     // Delete item visibility
     deleteItem?.isHidden = !historyItemsShowing
