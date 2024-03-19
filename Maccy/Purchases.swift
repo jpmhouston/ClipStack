@@ -24,17 +24,7 @@ enum PurchaseError: Error, CaseIterable {
   case unknown
 }
 
-//protocol PurchaseObserver: AnyObject {
-//  func paymentStateChanged()
-//  func paymentFailure(_ error: PurchaseError)
-//}
-
 class Purchases: NSObject {
-  // observer scheme described in https://www.swiftbysundell.com/articles/observers-in-swift-part-1/
-  //  struct Observation {
-  //      weak var observer: ?
-  //  }
-  //  private var observations = [ObjectIdentifier : Observation]()
   // observer scheme described in https://www.swiftbysundell.com/articles/observers-in-swift-part-2/
   class ObservationToken {
       private let cancellationClosure: () -> Void
@@ -50,33 +40,21 @@ class Purchases: NSObject {
   typealias PurchaseResult = Result<Void, PurchaseError>
   private var observations: [UUID: (ObservationUpdate) -> Void] = [:]
   
-  static let shared = Purchases()
+  #if FOR_APP_STORE
+  private var receiptValidator: AppleReceiptValidator
   
-  static let bonusProductIdentifier = "lol.bananameter.cleepp.extras"
+  private static let bonusProductIdentifier = "lol.bananameter.cleepp.extras"
   private static var sharedSecret: String {
     "banana" // how do we have a shared secret, and safely commit it to sourcecode?
   }
-  
-  #if FOR_APP_STORE
-  var receiptValidator: AppleReceiptValidator
   #endif
   
-  var hasBoughtExtras: Bool {
-    //boughtItems.contains(.bonus)
-    // for now debug code can set this to true/false
-    get {
-      boughtItems.contains(.bonus)
-    }
-    set {
-      boughtItems.removeAll()
-      if newValue == true {
-        boughtItems.insert(.bonus)
-      }
-    }
-  }
+  static let shared = Purchases()
+  
+  var hasBoughtExtras: Bool { boughtItems.contains(.bonus) }
   var boughtItems: Set<PurchaseItem> = []
   var lastError: PurchaseError?
-  
+
   // MARK: -
   
   override init() {
@@ -89,10 +67,6 @@ class Purchases: NSObject {
     #endif // FOR_APP_STORE
     
     super.init()
-    
-    #if FOR_APP_STORE
-    checkReceipt()
-    #endif
   }
   
 //  override init() {
@@ -129,11 +103,22 @@ class Purchases: NSObject {
   }
   
   func start() {
-    #if FOR_APP_STORE
-    SwiftyStoreKit.completeTransactions(atomically: false, completion: completeTransactionsAtLaunchCallback)
-    #elseif DEBUG
+    #if BONUS_FEATUES_ON
+    boughtItems.insert(.bonus)
+    callObservers(withUpdate: .success(.bonus))
+    #elseif !FOR_APP_STORE
     callObservers(withUpdate: .failure(.prohibited))
-    #endif
+    #else
+    
+    SwiftyStoreKit.completeTransactions(atomically: false, completion: completeTransactionsAtLaunchCallback)
+    
+    if case .success(let items) = checkReceipt() {
+      for item in items {
+        callObservers(withUpdate: .success(item))
+      }
+    }
+    
+    #endif // FOR_APP_STORE
   }
   
   func finish(andRemoveObserver token: ObservationToken? = nil) {
@@ -282,10 +267,10 @@ class Purchases: NSObject {
       switch result {
       case .success(let receiptData):
         switch self?.validateReceipt(receiptData) {
-        case .success(let items):
+        case .success(_ /*let items*/):
           // TODO: finished this. probably pass in a completion closure and call it here
           break
-        case .failure(let error):
+        case .failure(_ /*let error*/):
           // TODO: finished this
           break
         case nil:

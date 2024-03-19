@@ -541,9 +541,6 @@ class Maccy: NSObject, NSMenuItemValidation {
   }
   
   private func setFeatureFlags(givenPurchase hasPurchased: Bool) {
-    #if DEBUG
-    //var hasPurchased = true
-    #endif
     Self.allowFullyExpandedHistory = hasPurchased
     Self.allowHistorySearch = hasPurchased
     Self.allowReplayFromHistory = hasPurchased

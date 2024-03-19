@@ -3,7 +3,9 @@ import Intents
 import KeyboardShortcuts
 import LaunchAtLogin
 import Sauce
+#if ALLOW_SPARKLE_UPDATES
 import Sparkle
+#endif
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -54,7 +56,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     guard let url = urls.first else {
       return
     }
-    print("received url \(url.absoluteString)")
     if url.absoluteString == "cleeppapp:intro" {
       maccy.showIntro(self)
     }

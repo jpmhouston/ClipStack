@@ -19,6 +19,11 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   private let purchases = Purchases.shared
   private var token: Purchases.ObservationToken?
+  #if DEBUG
+  private var showBonusFeaturesPurchased = false
+  #else
+  private var showBonusFeaturesPurchased: Bool { purchases.hasBoughtExtras }
+  #endif
   
   @IBOutlet weak var pleasePurchaseLabel: NSTextField!
   @IBOutlet weak var havePurchasedLabel: NSTextField!
@@ -41,8 +46,9 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   }
   
   override func viewWillAppear() {
-    // TODO: reset state for testing, to be removed
-    purchases.hasBoughtExtras = false
+    #if DEBUG
+    showBonusFeaturesPurchased = false // TODO: reset state for testing, to be removed
+    #endif
     
     token = purchases.addObserver(self, callback: { [weak self] s, update in
       guard let self = self, self == s else {
@@ -69,27 +75,28 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   @IBAction
   func purchase(_ sender: AnyObject) {
+    #if DEBUG
     errorLabel.stringValue = "All features already enabled. Purchases will work in the 1.0 App Store version. Try the other button."
+    #endif
     
 //    purchaseButton.isEnabled = false
 //    restoreButton.isEnabled = false
 //    errorLabel.stringValue = ""
 //    
 //    progressIndicator.startAnimation(sender)
-//    Purchase.purchaseExtras() { [weak self] error in
+//    Purchase.purchaseExtras() { [weak self] result in
 //      guard let self = self else {
 //        return
 //      }
 //      progressIndicator.stopAnimation(self)
-//      updatePurchaseButtons()
-//      updateTitleLabel()
+//
 //      // maybe want something like:
-//      switch error {
-//      case nil:
-//        updateTitleLabel()
-//      case .cancelled:
+//      updateTitleLabel()
+//      updatePurchaseButtons()
+//      switch result {
+//      case .failure(.cancelled):
 //        break
-//      case .networkFailure:
+//      case .failure(.networkFailure):
 //        displayError("Failed to reach network and complete purchase")
 //      default:
 //        displayError("Failed to complete purchase")
@@ -104,23 +111,23 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     errorLabel.stringValue = ""
     
     progressIndicator.startAnimation(sender)
-    Purchases.restore() { [weak self] error in
+    Purchases.restore() { [weak self] result in
       guard let self = self else {
         return
       }
       progressIndicator.stopAnimation(self)
       
-      // TODO: hardcode success, to be removed
-      // its just a dummy error value for now anyway, ignore it and switch to Purchased
-      purchases.hasBoughtExtras = true
+      #if DEBUG
+      showBonusFeaturesPurchased = true
       errorLabel.stringValue = "For now this just exercises the 2 states of this window. Purchases will work in the 1.0 App Store version."
-      
       updatePurchaseButtons()
       updateTitleLabel()
+      #endif
+      
 //      // maybe want something like:
-//      switch error {
-//      case nil:
-//        updateTitleLabel()
+//      updateTitleLabel()
+//      updatePurchaseButtons()
+//      switch result {
 //      case .cancelled:
 //        break
 //      case .noneToRestore:
@@ -136,13 +143,13 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   // MARK: -
   
   private func updateTitleLabel() {
-    pleasePurchaseLabel.isHidden = purchases.hasBoughtExtras
-    havePurchasedLabel.isHidden = !purchases.hasBoughtExtras
+    pleasePurchaseLabel.isHidden = showBonusFeaturesPurchased
+    havePurchasedLabel.isHidden = !showBonusFeaturesPurchased
   }
   
   private func updatePurchaseButtons() {
-    purchaseButton.isEnabled = !purchases.hasBoughtExtras
-    restoreButton.isEnabled = !purchases.hasBoughtExtras
+    purchaseButton.isEnabled = !showBonusFeaturesPurchased
+    restoreButton.isEnabled = !showBonusFeaturesPurchased
   }
   
   private func clearError() {
