@@ -30,8 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     LaunchAtLogin.migrateIfNeeded()
-    migrateUserDefaults()
-    clearOrphanRecords()
+    setupUsersDefaults()
 
     maccy = Maccy()
     copyHotKey = GlobalCopyHotKey(maccy.queuedCopy)
@@ -39,10 +38,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   // TODO: figure out if this can just be removed since popUp() call now gone, does it affect using the menu normally
-  func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-    //maccy.popUp()
-    return true
-  }
+//  func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+//    //maccy.popUp()
+//    return true
+//  }
 
   func applicationWillTerminate(_ notification: Notification) {
     if UserDefaults.standard.clearOnQuit {
@@ -76,10 +75,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     return nil
   }
 
+  private func setupUsersDefaults() {
+    //migrateUserDefaults()
+    
+    UserDefaults.standard.register(defaults: [UserDefaults.Keys.size: UserDefaults.Values.size])
+  }
+
+  /*
   // swiftlint:disable cyclomatic_complexity
   // swiftlint:disable function_body_length
   private func migrateUserDefaults() {
-    /*
     if UserDefaults.standard.migrations["2020-04-25-allow-custom-ignored-types"] != true {
       UserDefaults.standard.ignoredPasteboardTypes = [
         "de.petermaurer.TransientPasteboardType",
@@ -194,21 +199,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
       UserDefaults.standard.migrations["2023-01-22-add-regexp-search-mode"] = true
     }
-    */
-  }
-
-  private func clearOrphanRecords() {
-    let fetchRequest = NSFetchRequest<HistoryItemContent>(entityName: "HistoryItemContent")
-    fetchRequest.predicate = NSPredicate(format: "item == nil")
-    do {
-      try CoreDataManager.shared.viewContext
-        .fetch(fetchRequest)
-        .forEach(CoreDataManager.shared.viewContext.delete(_:))
-      CoreDataManager.shared.saveContext()
-    } catch {
-      // Something went wrong, but it's no big deal.
-    }
   }
   // swiftlint:enable cyclomatic_complexity
   // swiftlint:enable function_body_length
+  */
 }

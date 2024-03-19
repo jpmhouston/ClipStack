@@ -27,7 +27,7 @@ class History {
   private var sessionLog: [Int: HistoryItem] = [:]
 
   init() {
-    UserDefaults.standard.register(defaults: [UserDefaults.Keys.size: UserDefaults.Values.size])
+    clearOrphanRecords()
     if ProcessInfo.processInfo.arguments.contains("ui-testing") {
       clear()
     }
@@ -87,4 +87,19 @@ class History {
 
     return nil
   }
+  
+  private func clearOrphanRecords() {
+    // this is maintenance done on launch only, any need to also run periodically somehow?
+    let fetchRequest = NSFetchRequest<HistoryItemContent>(entityName: "HistoryItemContent")
+    fetchRequest.predicate = NSPredicate(format: "item == nil")
+    do {
+      try CoreDataManager.shared.viewContext
+        .fetch(fetchRequest)
+        .forEach(CoreDataManager.shared.viewContext.delete(_:))
+      CoreDataManager.shared.saveContext()
+    } catch {
+      // Something went wrong, but it's no big deal.
+    }
+  }
+  
 }
