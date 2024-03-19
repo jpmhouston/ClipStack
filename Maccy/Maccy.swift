@@ -179,6 +179,10 @@ class Maccy: NSObject, NSMenuItemValidation {
   
   @IBAction
   func queuedCopy(_ sender: AnyObject) {
+    guard Accessibility.check() else {
+      return
+    }
+    
     queuedCopy()
   }
   
@@ -216,6 +220,10 @@ class Maccy: NSObject, NSMenuItemValidation {
   
   @IBAction
   func queuedPaste(_ sender: AnyObject) {
+    guard Accessibility.check() else {
+      return
+    }
+    
     queuedPaste()
   }
   
@@ -258,6 +266,10 @@ class Maccy: NSObject, NSMenuItemValidation {
   
   @IBAction
   func queuedPasteMultiple(_ sender: AnyObject) {
+    guard Accessibility.check() else {
+      return
+    }
+    
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     withNumberToPasteAlert() { number in
       // Tricky! See MenuController for how `withFocus` normally uses NSApp.hide
@@ -279,6 +291,10 @@ class Maccy: NSObject, NSMenuItemValidation {
   
   @IBAction
   func queuedPasteAll(_ sender: AnyObject) {
+    guard Accessibility.check() else {
+      return
+    }
+    
     queuedPasteMultiple(Self.queueSize)
   }
   
