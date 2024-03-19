@@ -347,7 +347,7 @@ can be changed in the Storage Settings panel)\
 \
     *This menu may be longer than will fit on your screen and require
 scrolling down to see all of them. This is where the following feature
-may be helpfu;...*
+may be helpful...*
 
 - A Filter search box will be available above all of the history menu items.
 Use it to textually filter the history items below, making it easier to
