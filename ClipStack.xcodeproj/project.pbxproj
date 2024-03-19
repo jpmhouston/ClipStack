@@ -249,7 +249,7 @@
 		8F7BAF882B9ED7A800F85BF3 /* PurchaseSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseSettingsViewController.xib; sourceTree = "<group>"; };
 		8F7BAF8B2B9ED8C300F85BF3 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
 		8F7C81A62B9EE4B900627F08 /* NSAttributedString+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Style.swift"; sourceTree = "<group>"; };
-		8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cleepp (App Store).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FBC10D42B88980400DD5481 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FBC10D82B889A0B00DD5481 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
@@ -607,7 +607,7 @@
 				DAEE38431E3DBEB100DD2966 /* Cleepp.app */,
 				DA360DB01E3DF137005C6F6B /* CleeppTests.xctest */,
 				DA0EE7B6204657830025FC60 /* CleeppUITests.xctest */,
-				8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */,
+				8FBC10D42B88980400DD5481 /* Cleepp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -695,7 +695,7 @@
 				8F0D3BF72BA4F75300DDB603 /* TPInAppReceipt */,
 			);
 			productName = Maccy;
-			productReference = 8FBC10D42B88980400DD5481 /* Cleepp (App Store).app */;
+			productReference = 8FBC10D42B88980400DD5481 /* Cleepp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DA0EE7B5204657830025FC60 /* CleeppUITests */ = {
@@ -1309,7 +1309,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Cleepp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP FOR_APP_STORE BONUS_FEATUES_ON DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1345,7 +1345,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Cleepp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP FOR_APP_STORE BONUS_FEATUES_ON";
 				SWIFT_VERSION = 5.0;
