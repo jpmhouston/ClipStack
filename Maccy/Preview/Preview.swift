@@ -6,8 +6,6 @@ class Preview: NSViewController {
   @IBOutlet weak var imageView: NSImageView!
   @IBOutlet weak var applicationValueLabel: NSTextField!
   @IBOutlet weak var firstCopyTimeValueLabel: NSTextField!
-  @IBOutlet weak var lastCopyTimeValueLabel: NSTextField!
-  @IBOutlet weak var numberOfCopiesValueLabel: NSTextField!
   @IBOutlet weak var copyLabel: NSTextField!
   @IBOutlet weak var startLabel: NSTextField!
 
@@ -59,7 +57,6 @@ class Preview: NSViewController {
     }
     
     firstCopyTimeValueLabel.stringValue = formatDate(item.firstCopiedAt)
-    lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
     
     copyLabel.isHidden = Maccy.isQueueModeOn
     startLabel.isHidden = Maccy.isQueueModeOn || !Maccy.allowReplayFromHistory
