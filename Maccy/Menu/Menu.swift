@@ -689,7 +689,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     let gotQueueItems = Maccy.isQueueModeOn && Maccy.queueSize > 0
     let historyItemsShowing = gotQueueItems || showsExpandedMenu
     let historyItemsPresent = gotQueueItems || (showsExpandedMenu && indexedItems.count > 0)
-    let showSearchHeader = showsExpandedMenu && !UserDefaults.standard.hideSearch
+    let showSearchHeader = showsExpandedMenu && Maccy.allowHistorySearch && !UserDefaults.standard.hideSearch
     
     // Switch visibility of start vs stop menu item
     queueStartItem?.isHidden = Maccy.isQueueModeOn
@@ -705,7 +705,7 @@ class StatusItemMenu: NSMenu, NSMenuDelegate {
     
     // Delete item visibility
     deleteItem?.isHidden = !historyItemsShowing
-    clearItem?.isAlternate = showsExpandedMenu // when not alternate to deleteItem it ends up hidden
+    clearItem?.isHidden = !showsExpandedMenu || !historyItemsShowing
     
     // Visiblity of the history header and trailing separator
     // (the expanded menu means the search header and all of the history items)

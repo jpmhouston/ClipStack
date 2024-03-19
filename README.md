@@ -19,7 +19,7 @@ Cleepp works on macOS Mojave 10.14 or higher.
 * [Install](#install)
 * [Usage](#usage)
     * [Basic Usage](#basic-usage)
-    * [Alternate Usage](#alternate-usage)
+    * [Optional Alternatives](#optional-alternatives)
 * [The Cleepp Menu](#the-cleepp-menu)
     * [Menu Icon State](#menu-icon-state)
     * [Special Menu Icon Actions](#special-menu-icon-actions)
@@ -27,7 +27,7 @@ Cleepp works on macOS Mojave 10.14 or higher.
     * [Replay Clipboard Items](#replay-clipboard-items)
     * [Expanded Clipboard History Items](#expanded-clipboard-history-items)
 * [Settings](#settings)
-*  [Additional Features](#additional-features)
+*  [Bonus Features for the Mac App Store Version Version](#bonus-features-for-the-mac-app-store-version)
     * [Undo Last Copy](#undo-last-copy)
     * [Start Replaying From History](#start-replaying-from-history)
     * [Additional History Features](#additional-history-features)
@@ -81,7 +81,7 @@ or the Mac App Store
 	return to normal, and copying and pasting will return to normal behavior.*
 
 
-### Alternate Usage
+### Optional Alternatives
 
 - You may click the Cleepp menu bar icon with <kbd>CONTROL (^)</kbd> pressed
 to start collecting a set of clipboard items, or choose the "Start Collecting" item in the Cleepp menu.
@@ -131,7 +131,10 @@ Clicking with these modifiers pressed will have the effects described below
 (the menu won't open):
 
 - With <kbd>CONTROL (^)</kbd> pressed: start Cleepp collecting a set of clipboard items,
-see also the **Start Collecting** menu item, below.
+see also the **Start Collecting** menu item, below.\
+\
+    If currently collecting or replaying menu items then this will instead cancel
+and return the clipboard to its normal behaviour.
 
 - With <kbd>SHIFT (⇧)</kbd> + <kbd>CONTROL (^)</kbd> + <kbd>OPTION (⌥)</kbd>
 pressed:
@@ -154,7 +157,7 @@ See [Expanded Clipboard History Items](#expanded-clipboard-history-items) and
 
 ### Menu Items
 
-<img width="300px" height="236px" src="Designs/Normal menu.png" alt="Normal Menu" />
+<img width="300px" height="192px" src="Designs/Normal menu.png" alt="Normal Menu" />
 
 **About...** will open an about window with buttons for going to the Cleepp webpage,
 it's source code on GitHub, and a link for sending support email.
@@ -175,12 +178,6 @@ clipboard behavior will revert back to normal. The default shortcut
 <kbd>CONTROL (^)</kbd> + <kbd>COMMAND (⌘)</kbd> + <kbd>V</kbd>
 can be changed in the settings.
 
-**Clear History...** will empty the saved clipboard history. If currently collecting clipboard items
-then all collected will also be cleared and clipboard behavior will return to normal.
-The shortcut for this menu item,
-<kbd>COMMAND (⌘)</kbd> + <kbd>OPTION (⌥)</kbd> +  <kbd>DELETE (⌫)</kbd>
-is not global and will only work when the Cleepp menu is open.
-
 **Settings...** will open a settings window, see [Settings](#settings) below.
 The shortcut for this menu item, <kbd>COMMAND (⌘)</kbd> + <kbd>,</kbd>
 is not global and will only work when the Cleepp menu is open.
@@ -193,7 +190,18 @@ is not global and will only work when the Cleepp menu is open.
 
 ### Replay Clipboard Items
 
-(image TBD)
+Having used Cleepp's special copy shortcut or the **Start Collecting** mewnu item
+and then collected some clipboard items, each collected item will be shown in
+the menu:
+
+<img width="479px" height="313px" src="Designs/Replay items menu.png" alt="Replay Items Menu" />
+
+**Cancel Collecting / Replaying** is available in place of **Start Collecting** 
+Choosing this will exit this mode and return the clippboard to its normal behavior.
+The most recent item copied will be left in the clipboard.
+Clicking the menu icon with <kbd>CONTROL (^)</kbd> pressed will do the same
+thing (toggles in and out of Cleepp's collecting / replaying mode).
+
 
 When collecting and replaying a set of clipboard items, those items remaining
 to paste are shows in the middle section of the Cleepp menu. The item at the top
@@ -206,7 +214,9 @@ the item to be pasted next will simply be the one at the bottom on the history)
 ### Expanded Clipboard History Items
 
 Clicking the menu icon with <kbd>OPTION (⌥)</kbd> pressed will show the
-expanded menu which also includes recent history of everything on the clipboard.
+expanded menu which also includes recent history of everything on the clipboard:
+
+<img width="405px" height="445px" src="Designs/Expanded menu.png" alt="Expanded Menu" />
 
 When collecting and replaying a set of clipboard items, the item to be pasted
 next will probably not be at the bottom but will still be indicated by the
@@ -224,13 +234,27 @@ What you can do with the expanded history items:
 - To see the full text of a history item, mouse over, or arrow-key to highlight it,
 and wait a couple of seconds for tooltip.
 
-- To replay pasting a clipboard item, select that item. It will be placed on the clipboard
-and you can use your application's normal Paste command to paste it.
+- To replay pasting a clipboard item, select that item. It will be placed on the
+clipboard and you can use your application's normal Paste command to paste it.
 
-The number of history items displayed can be changed in the settings window,
-see [Settings](#settings) below.
+- You can delete a history item. Mouse over, or use arrow-keys to highlight it,
+then press <kbd>COMMAND (⌘)</kbd> + <kbd>DELETE (⌫)</kbd>.
 
-See also [Start Replaying From History](#start-replaying-from-history) below.
+- A **Clear History...** menu item will be added at the bottom of the menu.
+Use this if you want to completely empty the saved clipboard history.
+If currently collecting clipboard items, then all such items will also be
+cleared and clipboard behavior will return to normal.
+The shortcut for this menu item,
+<kbd>COMMAND (⌘)</kbd> + <kbd>OPTION (⌥)</kbd> +  <kbd>DELETE (⌫)</kbd>
+is not global and will only work when the Cleepp menu is open. \
+\
+    *If you're wanting to delete a record of sensitive data you may have copied,
+consider instead temporarily pausing Cleepp's monitoring of the clipboard
+in the first place, see [Ignore Copied Items](#ignore-copied-items) below*
+
+
+The number of history items displayed in the menu can be changed in the settings
+window, see [Settings](#settings) below.
 
 
 ## Settings
@@ -239,18 +263,18 @@ See also [Start Replaying From History](#start-replaying-from-history) below.
 
 
 
-## Additional Features
+## Bonus Features for the Mac App Store Version
 
 These following extra features are unavailable for versions downloaded
-from GitHub, and unlocked by the "Extras" In-App Purchase for
+from GitHub, and unlocked by the "Bonus Features" In-App Purchase for
 downloads from the Mac App Store.
 Purchases can be made in the Settings window, see [Settings](#settings) above.
 
 
 ### Undo Last Copy
 
-The "Extras" purchase unlocks this convenience clipboard feature at the
-end of the Cleepp menu.
+Purchasing the Bonus Features unlocks this convenience clipboard feature at
+the end of the Cleepp menu.
 
 It can be easy to accidentally do
 <kbd>COMMAND (⌘)</kbd> + <kbd>C</kbd> to Copy when you instead
@@ -271,10 +295,19 @@ The **Undo Last Copy** command also removes the accidental copy from the history
 There is no Redo feature.
 
 
+### Paste All / Paste Multiple...
+
+Purchasing the Bonus Features unlocks a Paste All menu item. This will
+automatically paste each item to be replayed all at once.
+
+With <kbd>OPTION (⌥)</kbd> pressed, an alert will be opened allowing you
+to enter a number of items to automatically paste instead of all them.
+
+
 ### Start Replaying From History
 
-In addition to collecting a set of clipboard items by copying them anew,
-the "Extras" purchase unlocks adds the ability to replay from items
+In addition to collecting a set of clipboard items by copying them normally,
+purchasing the Bonus Features unlocks adds the ability to replay from items
 previously copied and in the expanded Cleepp menu:
 
 1. Click the Cleepp menu icon with <kbd>OPTION (⌥)</kbd> pressed.
@@ -294,24 +327,35 @@ has been pasted, copying and pasting will return to normal behavior.
 But when replaying from history, if's easy for there to be more items
 in the history above the items you need.*\
 \
-	*As mentioned in [Alternate Usage](#alternate-usage),  you can
-return to normal clipboard behavior after pasting the last item you want
-by clicking the Cleepp menu bar icon with
+	*As mentioned in [Optional Alternatives](#optional-alternatives), you can
+return to normal clipboard behavior after pasting the last item you want to
+paste by clicking the Cleepp menu bar icon with
 <kbd>CONTROL (^)</kbd> pressed,
 or using the “Cancel Collecting / Replaying” menu item*
 
 
 ### Additional History Features
 
-- There is a "Filter" search box to filter the history. Use it to make it easier to find a
-specific item previously copied for replay from there, or of just that item.
+Purchasing the Bonus Features also unlocks these features:
 
-- To delete the history item, mouse over, or arrow-key to highlight it, then press
-<kbd>COMMAND (⌘)</kbd> + <kbd>DELETE (⌫)</kbd>.\
+- Open the expanded Cleepp menu with <kbd>SHIFT (⇧)</kbd> pressed as well,
+(ie. with <kbd>SHIFT (⇧)</kbd> + <kbd>OPTION (⌥)</kbd> pressed) to
+include all stored history items in the menu, not just the size set
+in the Appearance Settings panel, see [Settings](#settings) above.
+(There is a separate limit on the size of the overall history which
+can be changed in the Storage Settings panel)\
 \
-	*If you're wanting to delete a record of sensitive data you may have copied,
-consider instead temporarily pausing Cleepp's monitoring of the clipboard
-in the first place, see [Ignore Copied Items](#ignore-copied-items) below*
+    *This menu may be longer than will fit on your screen and require
+scrolling down to see all of them. This is where the following feature
+may be helpfu;...*
+
+- A Filter search box will be available above all of the history menu items.
+Use it to textually filter the history items below, making it easier to
+find a specific item within the menu, or not shown in the menu but still
+within the saved history. You can then select an item to again put that in
+the clipboard for copying, or select with <kbd>OPTION (⌥)</kbd> pressed
+to start replaying all the items from that one forward.
+See [Start Replaying From History](#start-replaying-from-history) above.
 
 
 ## Advanced

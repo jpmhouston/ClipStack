@@ -168,10 +168,10 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       setupOptionKeyObserver() { [weak self] event in
         self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
       }
-//      #if !FOR_APP_STORE // TODO: uncomment this to make non-appstore builds not show these items
-//      inAppPurchageTitle.isHidden = true
-//      inAppPurchageLabel.isHidden = true
-//      #endif
+      #if !FOR_APP_STORE
+      inAppPurchageTitle.isHidden = true
+      inAppPurchageLabel.isHidden = true
+      #endif
       
     default:
       break

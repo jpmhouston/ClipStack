@@ -142,7 +142,7 @@ CA
                         <action selector="deleteHighlightedHistoryItem:" target="-2" id="KSd-tR-ybd"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Clear History…" tag="105" hidden="YES" alternate="YES" id="u3d-qz-ihN">
+                <menuItem title="Clear History…" tag="105" id="u3d-qz-ihN">
                     <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>

@@ -8,7 +8,7 @@
 
 import AppKit
 import StoreKit
-#if CLEEPP // replace with FOR_APP_STORE throughout this file
+#if FOR_APP_STORE
 import SwiftyStoreKit
 import TPInAppReceipt
 #endif
@@ -52,12 +52,15 @@ class Purchases: NSObject {
   
   static let shared = Purchases()
   
-  static let bonusProductIdentifier = "banana"
+  static let bonusProductIdentifier = "lol.bananameter.cleepp.extras"
   private static var sharedSecret: String {
     "banana" // how do we have a shared secret, and safely commit it to sourcecode?
   }
   
+  #if FOR_APP_STORE
   var receiptValidator: AppleReceiptValidator
+  #endif
+  
   var hasBoughtExtras: Bool {
     //boughtItems.contains(.bonus)
     // for now debug code can set this to true/false
@@ -77,13 +80,19 @@ class Purchases: NSObject {
   // MARK: -
   
   override init() {
+    #if FOR_APP_STORE
     #if DEBUG
     receiptValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: Purchases.sharedSecret)
     #else
     receiptValidator = AppleReceiptValidator(service: .production, sharedSecret: Purchases.sharedSecret)
     #endif
+    #endif // FOR_APP_STORE
+    
     super.init()
+    
+    #if FOR_APP_STORE
     checkReceipt()
+    #endif
   }
   
 //  override init() {
@@ -114,13 +123,16 @@ class Purchases: NSObject {
   
   @discardableResult
   func start<T: AnyObject>(withObserver observer: T, callback: @escaping (T, ObservationUpdate) -> Void) -> ObservationToken {
+    let token = addObserver(observer, callback: callback)
     start()
-    return addObserver(observer, callback: callback)
+    return token
   }
   
   func start() {
-    #if CLEEPP
+    #if FOR_APP_STORE
     SwiftyStoreKit.completeTransactions(atomically: false, completion: completeTransactionsAtLaunchCallback)
+    #elseif DEBUG
+    callObservers(withUpdate: .failure(.prohibited))
     #endif
   }
   
@@ -153,7 +165,7 @@ class Purchases: NSObject {
   // MARK: -
   
   func buyExtras() -> PurchaseResult {
-    #if CLEEPP
+    #if FOR_APP_STORE
     guard SKPaymentQueue.canMakePayments() else {
       return .failure(.prohibited)
     }
@@ -165,7 +177,7 @@ class Purchases: NSObject {
   }
   
   func restore() -> ReceiptResult {
-    #if CLEEPP
+    #if FOR_APP_STORE
     guard SKPaymentQueue.canMakePayments() else {
       return .failure(.prohibited)
     }
@@ -229,7 +241,7 @@ class Purchases: NSObject {
   
   // MARK: -
   
-  #if CLEEPP
+  #if FOR_APP_STORE
   
   @discardableResult
   private func checkReceipt() -> ReceiptResult {

@@ -11,11 +11,11 @@ class Maccy: NSObject, NSMenuItemValidation {
   static var busy = false
   
   static var allowExpandedHistory = true
-  static var allowFullyExpandedHistory = true
-  static var allowHistorySearch = true
-  static var allowReplayFromHistory = true
-  static var allowPasteMultiple = true
-  static var allowUndoCopy = true
+  static var allowFullyExpandedHistory = false
+  static var allowHistorySearch = false
+  static var allowReplayFromHistory = false
+  static var allowPasteMultiple = false
+  static var allowUndoCopy = false
   static var allowDictinctStorageSize: Bool { Self.allowFullyExpandedHistory || Self.allowHistorySearch }
   
   @objc let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -65,18 +65,28 @@ class Maccy: NSObject, NSMenuItemValidation {
     return alert
   }
 
+  #if FOR_APP_STORE
   private lazy var settingsWindowController = SettingsWindowController(
     panes: [
       GeneralSettingsViewController(),
-      //#if FOR_APP_STORE // TODO: uncomment this to restore conditional
-      PurchaseSettingsViewController(),
-      //#endif
+      PurchaseSettingsViewController(), // app store build gets the purchase panel
       StorageSettingsViewController(),
       AppearanceSettingsViewController(),
       IgnoreSettingsViewController(),
       AdvancedSettingsViewController()
     ]
   )
+  #else
+  private lazy var settingsWindowController = SettingsWindowController(
+    panes: [
+      GeneralSettingsViewController(),
+      StorageSettingsViewController(),
+      AppearanceSettingsViewController(),
+      IgnoreSettingsViewController(),
+      AdvancedSettingsViewController()
+    ]
+  )
+  #endif
   
   private var enabledPasteboardTypesObserver: NSKeyValueObservation?
   private var ignoreEventsObserver: NSKeyValueObservation?
@@ -114,8 +124,8 @@ class Maccy: NSObject, NSMenuItemValidation {
     super.init()
     initializeObservers()
     
-    purchases.start(withObserver: self) { [weak self] s, update in
-      guard let self = self, self == s else {
+    purchases.start(withObserver: self) { [weak self] _, update in
+      guard let self = self else {
         return
       }
       purchasesUpdated(update)
@@ -239,7 +249,7 @@ class Maccy: NSObject, NSMenuItemValidation {
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
     
-    #if FOR_APP_STORE
+    #if FOR_APP_STORE && !DEBUG
     if !Self.isQueueModeOn {
       AppStoreReview.ask()
     }
@@ -511,12 +521,13 @@ class Maccy: NSObject, NSMenuItemValidation {
   }
   
   private func purchasesUpdated(_ update: Purchases.ObservationUpdate) {
-    if case .success(_) = update {
-      setFeatureFlags(givenPurchase: purchases.hasBoughtExtras)
-    }
+    setFeatureFlags(givenPurchase: purchases.hasBoughtExtras)
   }
   
   private func setFeatureFlags(givenPurchase hasPurchased: Bool) {
+    #if DEBUG
+    //var hasPurchased = true
+    #endif
     Self.allowFullyExpandedHistory = hasPurchased
     Self.allowHistorySearch = hasPurchased
     Self.allowReplayFromHistory = hasPurchased
