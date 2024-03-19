@@ -1,4 +1,4 @@
-<img width="128px" src="Designs/Cleepp GitHub logo.png" alt="Logo"/>
+<img width="128px" src="Designs/Cleepp GitHub logo.gif" alt="Logo"/>
 
 [![Downloads](https://img.shields.io/github/downloads/jpmhouston/Cleepp/total.svg)](https://github.com/jpmhouston/Cleepp/releases/latest)
 <!--- [![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314 -->

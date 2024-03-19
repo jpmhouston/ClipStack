@@ -18,6 +18,10 @@
 		8F0D3BFC2BA4F77400DDB603 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3BFB2BA4F77400DDB603 /* SwiftyStoreKit */; };
 		8F0D3BFE2BA62D7F00DDB603 /* RangedIntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */; };
 		8F0D3BFF2BA62D7F00DDB603 /* RangedIntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */; };
+		8F0D3C082BA8E11500DDB603 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C062BA8E11500DDB603 /* introAnimatedLogo.gif */; };
+		8F0D3C092BA8E11500DDB603 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C062BA8E11500DDB603 /* introAnimatedLogo.gif */; };
+		8F0D3C0A2BA8E11500DDB603 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C072BA8E11500DDB603 /* introAnimatedLogo@2x.gif */; };
+		8F0D3C0B2BA8E11500DDB603 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C072BA8E11500DDB603 /* introAnimatedLogo@2x.gif */; };
 		8F408C242B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C252B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C282B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
@@ -235,6 +239,8 @@
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF124F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		8F0D3BFD2BA62D7F00DDB603 /* RangedIntegerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangedIntegerTextField.swift; sourceTree = "<group>"; };
+		8F0D3C062BA8E11500DDB603 /* introAnimatedLogo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = introAnimatedLogo.gif; sourceTree = "<group>"; };
+		8F0D3C072BA8E11500DDB603 /* introAnimatedLogo@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "introAnimatedLogo@2x.gif"; sourceTree = "<group>"; };
 		8F408C232B930C51002582C2 /* Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
 		8F408C272B9314A9002582C2 /* Intro.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
 		8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedWindow.swift; sourceTree = "<group>"; };
@@ -460,6 +466,8 @@
 				8F408C232B930C51002582C2 /* Intro.swift */,
 				8F408C272B9314A9002582C2 /* Intro.xib */,
 				8F7BAF7F2B9A0B0E00F85BF3 /* PagedWindow.swift */,
+				8F0D3C062BA8E11500DDB603 /* introAnimatedLogo.gif */,
+				8F0D3C072BA8E11500DDB603 /* introAnimatedLogo@2x.gif */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -837,10 +845,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FBC10C02B88980400DD5481 /* GeneralSettingsViewController.xib in Resources */,
+				8F0D3C092BA8E11500DDB603 /* introAnimatedLogo.gif in Resources */,
 				8FBC10C12B88980400DD5481 /* IgnoreSettingsViewController.xib in Resources */,
 				8FBC10C22B88980400DD5481 /* Write.caf in Resources */,
 				8FBC10C32B88980400DD5481 /* container-migration.plist in Resources */,
 				8FBC10C42B88980400DD5481 /* Assets.xcassets in Resources */,
+				8F0D3C0B2BA8E11500DDB603 /* introAnimatedLogo@2x.gif in Resources */,
 				8FBC10C52B88980400DD5481 /* Localizable.strings in Resources */,
 				8FBC10C62B88980400DD5481 /* LICENSE in Resources */,
 				8FBC10C72B88980400DD5481 /* Knock.caf in Resources */,
@@ -877,10 +887,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA05E7CC2483EF83005CB8AA /* GeneralSettingsViewController.xib in Resources */,
+				8F0D3C082BA8E11500DDB603 /* introAnimatedLogo.gif in Resources */,
 				DA20EBB5268E54E80032D360 /* IgnoreSettingsViewController.xib in Resources */,
 				DA20FA762B082E0800056DD5 /* Write.caf in Resources */,
 				DAB8CE4224E368F200A2500E /* container-migration.plist in Resources */,
 				DA6373981E4AB9BB00263391 /* Assets.xcassets in Resources */,
+				8F0D3C0A2BA8E11500DDB603 /* introAnimatedLogo@2x.gif in Resources */,
 				4762D6972467226100B3A2BA /* Localizable.strings in Resources */,
 				DA009934256411F90030E697 /* LICENSE in Resources */,
 				DA20FA742B082E0100056DD5 /* Knock.caf in Resources */,

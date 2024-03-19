@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -123,15 +124,23 @@ DQ
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="4HE-o8-4GT" userLabel="one">
                     <rect key="frame" x="0.0" y="0.0" width="592" height="324"/>
                     <subviews>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i1Q-RH-xvd">
-                            <rect key="frame" x="36" y="196" width="90" height="112"/>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="18M-Uy-H9x">
+                            <rect key="frame" x="36" y="204" width="332" height="94"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="112" id="KhO-R8-WXI"/>
+                                <constraint firstAttribute="height" constant="94" id="kek-JB-KvM"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="IntroBigIcon" id="hMN-Ku-ybl"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="IntroLogo" id="cLl-LY-Isp"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dAC-wT-V2b">
+                            <rect key="frame" x="38" y="206" width="328" height="90"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="328" id="MNG-B4-kVR"/>
+                                <constraint firstAttribute="height" constant="90" id="rns-H0-5in"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="introAnimatedLogo" id="yi0-pt-hiF"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ed-EA-huu">
-                            <rect key="frame" x="34" y="96" width="510" height="80"/>
+                            <rect key="frame" x="34" y="100" width="510" height="80"/>
                             <textFieldCell key="cell" id="136-X1-mq3">
                                 <font key="font" metaFont="system" size="17"/>
                                 <string key="title">Cleepp is a simple clipboard utility that lets you copy multiple items in one place, then paste them into another in sequence.
@@ -149,14 +158,6 @@ But there's a tiny bit of setup you need to do first …</string>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ffv-oy-lal">
-                            <rect key="frame" x="146" y="195" width="297" height="115"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Cleepp" id="aJk-Gn-9VY">
-                                <font key="font" size="97" name="SFProRounded-Regular"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-o6-hWz">
                             <rect key="frame" x="34" y="20" width="275" height="45"/>
                             <textFieldCell key="cell" title="to open this window again use the About Cleepp menu item, then using the Show Intro button within" id="nAg-nr-2O5">
@@ -165,39 +166,66 @@ But there's a tiny bit of setup you need to do first …</string>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="cZS-Ny-vCa" userLabel="Stop">
+                            <rect key="frame" x="376" y="201" width="16" height="22"/>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="0Pj-ax-B9e">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <imageReference key="image" image="stop.circle" catalog="system" symbolScale="medium"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="stopLogoAnimation:" target="o5X-kK-gzk" id="6Kz-Wp-RaE"/>
+                            </connections>
+                        </button>
+                        <button id="VW6-3z-458" userLabel="Restart">
+                            <rect key="frame" x="376" y="200.5" width="16" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="3qP-vS-bAf">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <imageReference key="image" image="arrow.counterclockwise" catalog="system" symbolScale="small"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="restartLogoAnimation:" target="o5X-kK-gzk" id="aeH-Op-RwF"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="cZS-Ny-vCa" firstAttribute="bottom" secondItem="18M-Uy-H9x" secondAttribute="bottom" id="14r-Wi-8Gg"/>
                         <constraint firstItem="uw2-o6-hWz" firstAttribute="leading" secondItem="4Ed-EA-huu" secondAttribute="leading" id="6xM-31-qwx"/>
-                        <constraint firstItem="4Ed-EA-huu" firstAttribute="top" secondItem="i1Q-RH-xvd" secondAttribute="bottom" constant="20" id="7l8-w3-XLq"/>
-                        <constraint firstItem="Ffv-oy-lal" firstAttribute="leading" secondItem="i1Q-RH-xvd" secondAttribute="trailing" constant="22" id="Dxu-Ev-NIx"/>
                         <constraint firstAttribute="trailing" secondItem="Vey-Vh-Zet" secondAttribute="trailing" constant="20" symbolic="YES" id="FwU-FM-dLX"/>
-                        <constraint firstItem="Ffv-oy-lal" firstAttribute="centerY" secondItem="i1Q-RH-xvd" secondAttribute="centerY" id="NgW-h8-ag4"/>
+                        <constraint firstItem="18M-Uy-H9x" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="Li4-aB-9Ot"/>
+                        <constraint firstItem="VW6-3z-458" firstAttribute="centerY" secondItem="cZS-Ny-vCa" secondAttribute="centerY" id="O8U-6w-4zz"/>
+                        <constraint firstItem="dAC-wT-V2b" firstAttribute="leading" secondItem="18M-Uy-H9x" secondAttribute="leading" constant="2" id="Qce-El-uqg"/>
+                        <constraint firstItem="cZS-Ny-vCa" firstAttribute="leading" secondItem="18M-Uy-H9x" secondAttribute="trailing" constant="8" symbolic="YES" id="S0f-3H-qbS"/>
+                        <constraint firstItem="dAC-wT-V2b" firstAttribute="top" secondItem="18M-Uy-H9x" secondAttribute="top" constant="2" id="WlZ-HO-VLB"/>
+                        <constraint firstItem="4Ed-EA-huu" firstAttribute="top" secondItem="18M-Uy-H9x" secondAttribute="bottom" constant="24" id="aLY-GB-QWR"/>
                         <constraint firstItem="uw2-o6-hWz" firstAttribute="bottom" secondItem="Vey-Vh-Zet" secondAttribute="bottom" id="b2H-AX-lpz"/>
                         <constraint firstAttribute="height" constant="324" id="eUW-mG-UwV"/>
-                        <constraint firstItem="i1Q-RH-xvd" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="fmO-QU-UVD"/>
                         <constraint firstItem="4Ed-EA-huu" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="keG-Wl-zUh"/>
-                        <constraint firstItem="i1Q-RH-xvd" firstAttribute="top" secondItem="4HE-o8-4GT" secondAttribute="top" constant="16" id="rJN-tw-6JQ"/>
                         <constraint firstItem="uw2-o6-hWz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4Ed-EA-huu" secondAttribute="bottom" constant="8" symbolic="YES" id="rUg-o9-Vvh"/>
+                        <constraint firstItem="VW6-3z-458" firstAttribute="centerX" secondItem="cZS-Ny-vCa" secondAttribute="centerX" id="sIr-lT-QtH"/>
                         <constraint firstItem="Vey-Vh-Zet" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uw2-o6-hWz" secondAttribute="trailing" constant="40" id="shz-vq-BOh"/>
                         <constraint firstAttribute="trailing" secondItem="4Ed-EA-huu" secondAttribute="trailing" constant="50" id="sjP-Xh-CbY"/>
                         <constraint firstAttribute="width" constant="592" id="txT-NI-R8k"/>
                         <constraint firstAttribute="bottom" secondItem="Vey-Vh-Zet" secondAttribute="bottom" constant="20" symbolic="YES" id="utV-Km-wQz"/>
                         <constraint firstItem="Vey-Vh-Zet" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4Ed-EA-huu" secondAttribute="bottom" constant="8" symbolic="YES" id="ylt-c0-BQu"/>
+                        <constraint firstItem="18M-Uy-H9x" firstAttribute="top" secondItem="4HE-o8-4GT" secondAttribute="top" constant="26" id="zed-Km-oWh"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="DiN-8O-NU2" userLabel="two">
                     <rect key="frame" x="594" y="0.0" width="594" height="324"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJb-ZW-iAj">
-                            <rect key="frame" x="34" y="76" width="170" height="212"/>
+                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="gJb-ZW-iAj">
+                            <rect key="frame" x="34" y="76" width="200" height="212"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="🛂" id="ebn-Q0-N6T">
                                 <font key="font" metaFont="system" size="180"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-fS-N36">
-                            <rect key="frame" x="34" y="76" width="170" height="212"/>
+                        <textField hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-fS-N36">
+                            <rect key="frame" x="34" y="76" width="200" height="212"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="✅" id="gnG-ZT-UMf">
                                 <font key="font" metaFont="system" size="180"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -205,10 +233,10 @@ But there's a tiny bit of setup you need to do first …</string>
                             </textFieldCell>
                         </textField>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDA-eq-AfB">
-                            <rect key="frame" x="238" y="94" width="320" height="182"/>
+                            <rect key="frame" x="268" y="75" width="290" height="201"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-cs-oZY">
-                                    <rect key="frame" x="-2" y="125" width="324" height="57"/>
+                                    <rect key="frame" x="-2" y="144" width="294" height="57"/>
                                     <textFieldCell key="cell" title="Cleepp needs your authorization to be able to instruct the frontmost application to perform a Copy or Paste." id="VI8-q1-aOr">
                                         <font key="font" metaFont="system" size="16"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -216,7 +244,7 @@ But there's a tiny bit of setup you need to do first …</string>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EvF-0r-9Z1">
-                                    <rect key="frame" x="-2" y="90" width="324" height="19"/>
+                                    <rect key="frame" x="-2" y="90" width="294" height="38"/>
                                     <textFieldCell key="cell" title="This authorization has not yet been granted." id="lhN-0D-29x">
                                         <font key="font" metaFont="system" size="16"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -224,7 +252,7 @@ But there's a tiny bit of setup you need to do first …</string>
                                     </textFieldCell>
                                 </textField>
                                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DkE-IU-Osz">
-                                    <rect key="frame" x="-2" y="109" width="233" height="38"/>
+                                    <rect key="frame" x="-2" y="128" width="233" height="38"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" title="This authorization has already been granted." id="Jti-hB-gYF">
                                         <font key="font" metaFont="system" size="16"/>
@@ -259,7 +287,7 @@ But there's a tiny bit of setup you need to do first …</string>
                                     </customSpacing>
                                 </stackView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-zK-yMR">
-                                    <rect key="frame" x="-2" y="0.0" width="324" height="38"/>
+                                    <rect key="frame" x="-2" y="0.0" width="294" height="38"/>
                                     <textFieldCell key="cell" title="Use the button to open the panel then return to this window for what to do next." id="naz-h7-dY3">
                                         <font key="font" metaFont="system" size="15"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -291,10 +319,8 @@ But there's a tiny bit of setup you need to do first …</string>
                         <constraint firstItem="EDA-eq-AfB" firstAttribute="leading" secondItem="gJb-ZW-iAj" secondAttribute="trailing" constant="36" id="PJ8-tI-10c"/>
                         <constraint firstAttribute="trailing" secondItem="EDA-eq-AfB" secondAttribute="trailing" constant="36" id="R2l-V7-dky"/>
                         <constraint firstItem="gJb-ZW-iAj" firstAttribute="leading" secondItem="DiN-8O-NU2" secondAttribute="leading" constant="36" id="eqa-Gy-jML"/>
-                        <constraint firstItem="Blh-fS-N36" firstAttribute="bottom" secondItem="gJb-ZW-iAj" secondAttribute="bottom" id="gKe-9K-nub"/>
                         <constraint firstAttribute="width" constant="594" id="icX-x8-tfp"/>
                         <constraint firstAttribute="height" constant="324" id="mQD-yY-GRk"/>
-                        <constraint firstItem="Blh-fS-N36" firstAttribute="trailing" secondItem="gJb-ZW-iAj" secondAttribute="trailing" id="mvt-9Z-LMO"/>
                         <constraint firstItem="gJb-ZW-iAj" firstAttribute="top" secondItem="DiN-8O-NU2" secondAttribute="top" constant="36" id="rhR-Pb-uaU"/>
                     </constraints>
                 </customView>
@@ -1021,6 +1047,7 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
         </customView>
         <viewController id="o5X-kK-gzk" customClass="IntroViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
+                <outlet property="animatedLogoImage" destination="dAC-wT-V2b" id="UYc-BF-gYg"/>
                 <outlet property="authorizationDeniedEmoji" destination="4k3-Do-TDL" id="m2H-5T-AZy"/>
                 <outlet property="authorizationVerifiedEmoji" destination="vGq-Jf-faS" id="dee-ww-Uph"/>
                 <outlet property="copyL10nEmailButton" destination="AGe-vu-v96" id="FkQ-wu-Gk7"/>
@@ -1032,6 +1059,8 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
                 <outlet property="hasAuthorizationLabel" destination="DkE-IU-Osz" id="H3p-a5-uM4"/>
                 <outlet property="inAppPurchageLabel" destination="P2t-k7-gU7" id="a6G-Nu-gN5"/>
                 <outlet property="inAppPurchageTitle" destination="UGh-0A-tPy" id="TLr-MX-UKf"/>
+                <outlet property="logoRestartButton" destination="VW6-3z-458" id="SHF-Tc-OkX"/>
+                <outlet property="logoStopButton" destination="cZS-Ny-vCa" id="lZS-OV-sql"/>
                 <outlet property="needsAuthorizationEmoji" destination="gJb-ZW-iAj" id="xNI-2L-jsS"/>
                 <outlet property="needsAuthorizationLabel" destination="EvF-0r-9Z1" id="Ffe-yk-KRE"/>
                 <outlet property="nextAuthorizationDirectionsLabel" destination="rEx-zK-yMR" id="yK3-0r-SVQ"/>
@@ -1040,15 +1069,19 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
                 <outlet property="sendL10nEmailButton" destination="K04-rZ-O0s" id="gpt-xG-oUo"/>
                 <outlet property="sendSupportEmailButton" destination="Jez-C6-oFa" id="Lkh-Vo-TqX"/>
                 <outlet property="specialCopyPasteBehaviorLabel" destination="Sed-8H-0RI" id="hoL-y1-4oZ"/>
+                <outlet property="staticLogoImage" destination="18M-Uy-H9x" id="EM4-PV-Tgn"/>
                 <outlet property="view" destination="rWC-ZD-zO1" id="4ON-h7-R9g"/>
             </connections>
         </viewController>
     </objects>
     <resources>
-        <image name="IntroBigIcon" width="89.5" height="112"/>
+        <image name="IntroLogo" width="332" height="94"/>
+        <image name="arrow.counterclockwise" catalog="system" width="11" height="13"/>
+        <image name="introAnimatedLogo" width="328" height="90"/>
         <image name="introDemo1" width="300" height="284"/>
         <image name="introFilledNumberedMenuIcon" width="100" height="35"/>
         <image name="introOutlineMenuIcon" width="31" height="35"/>
         <image name="introSettingsPanel" width="315.5" height="276"/>
+        <image name="stop.circle" catalog="system" width="15" height="15"/>
     </resources>
 </document>

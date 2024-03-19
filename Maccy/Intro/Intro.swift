@@ -60,6 +60,10 @@ public class IntroWindowController: PagedWindowController {
 
 
 public class IntroViewController: NSViewController, PagedWindowControllerDelegate {
+  @IBOutlet var staticLogoImage: NSImageView!
+  @IBOutlet var animatedLogoImage: NSImageView!
+  @IBOutlet var logoStopButton: NSButton!
+  @IBOutlet var logoRestartButton: NSButton!
   @IBOutlet var openSecurityPanelButton: NSButton!
   @IBOutlet var openSecurityPanelSpinner: NSProgressIndicator!
   @IBOutlet var hasAuthorizationEmoji: NSTextField!
@@ -85,6 +89,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private var preAuthorizationPageFirsTime = true
   private var skipSetAuthorizationPage = false
   private var optionKeyEventMonitor: Any?
+  private var logoPollTimer: DispatchSourceTimer?
+  private let logoPollInterval = 0.5
   private var demoTimer: DispatchSourceTimer?
   private var demoCanceled = false
   var maccy: Maccy!
@@ -96,6 +102,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   public override func viewDidLoad() {
     styleLabels()
+    limitAnimatedLogoLooping()
   }
   
   deinit {
@@ -106,13 +113,14 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   // MARK: -
   
   func willOpen() {
-    visited.removeAll()
-    openSecurityPanelSpinner.stopAnimation(self)
   }
   
   func willClose() {
     teardownOptionKeyObserver()
     cancelDemo()
+    openSecurityPanelSpinner.stopAnimation(self)
+
+    visited.removeAll()
     
     // if leaving with accessibility now authorized then don't auto-open again
     if Accessibility.allowed {
@@ -129,6 +137,12 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     
     switch page {
+    case .welcome:
+      if !visited.contains(page) {
+        startAnimatedLogo()
+      } else {
+        animatedLogoImage.isHidden = true // show only static logo behind
+      }
     case .checkAuth:
       let isAuthorized = Accessibility.allowed
       hasAuthorizationEmoji.isHidden = !isAuthorized
@@ -180,6 +194,58 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
   }
   
+  private var animatedLogoImageRep: NSBitmapImageRep? {
+    guard let imageReps = animatedLogoImage.image?.representations else {
+      return nil
+    }
+    for r in imageReps {
+      if let imageRep = r as? NSBitmapImageRep,
+         let frames = imageRep.value(forProperty: .frameCount) as? NSNumber,
+         frames.intValue > 0
+      {
+        return imageRep
+      }
+    }
+    return nil
+  }
+  
+  private func limitAnimatedLogoLooping() {
+    animatedLogoImageRep?.setProperty(.loopCount, withValue: NSNumber(1))
+  }
+  
+  private func stopAnimatedLogo() {
+    cancelLogoPollTimer()
+    animatedLogoImage.animates = false
+    animatedLogoImage.isHidden = true
+    logoStopButton.isHidden = true
+    logoRestartButton.isHidden = false
+  }
+  
+  private func startAnimatedLogo() {
+    animatedLogoImage.animates = false
+    animatedLogoImage.isHidden = false
+    animatedLogoImage.animates = true
+    logoStopButton.isHidden = false
+    logoRestartButton.isHidden = true
+    
+    // poll to spot when animation ends, and when it does swap the buttons
+    if let imageRep = animatedLogoImageRep,
+       let numFrames = (imageRep.value(forProperty: .frameCount) as? NSNumber)?.intValue
+    {
+      runOnLogoPollTimer(withInterval: 2) { [weak self] in
+        guard let current = (imageRep.value(forProperty: .currentFrame) as? NSNumber)?.intValue else {
+          return false
+        }
+        if current >= numFrames - 1 {
+          self?.logoStopButton.isHidden = true
+          self?.logoRestartButton.isHidden = false
+          return false
+        }
+        return true
+      }
+    }
+  }
+  
   private func setupOptionKeyObserver(_ observe: @escaping (NSEvent) -> Void) {
     if let previousMonitor = optionKeyEventMonitor {
       NSEvent.removeMonitor(previousMonitor)
@@ -207,20 +273,20 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private func runDemo() {
     // swift bug? using these causes build errors "Undefined symbol: unsafeMutableAddressor of demoCopyDelay" etc
     // when they were used in default values of enum case arguments :( decided to just use literals for all
-    let startInterval: Float = 2.5
-    let normalFrameInterval: Float = 2.0
-    let cursorMoveFrameInterval: Float = 1.0
-    let swapFrameInterval: Float = 2.5
-    let copyBalloonTime: Float = 0.75
-    let prePasteBalloonTime: Float = 0.25
-    let postPasteBalloonTime: Float = 0.5
-    let endHoldInterval: Float = 5.0
-    let repeatTransitionInterval: Float = 1.0
+    let startInterval: Double = 2.5
+    let normalFrameInterval: Double = 2.0
+    let cursorMoveFrameInterval: Double = 1.0
+    let swapFrameInterval: Double = 2.5
+    let copyBalloonTime: Double = 0.75
+    let prePasteBalloonTime: Double = 0.25
+    let postPasteBalloonTime: Double = 0.5
+    let endHoldInterval: Double = 5.0
+    let repeatTransitionInterval: Double = 1.0
 
     enum Frame {
-      case img(_ name: String?, keepBubble: Bool = false, _ interval: Float)
-      case copybubble(show: Bool = true, _ interval: Float)
-      case pastebubble(show: Bool = true, _ interval: Float)
+      case img(_ name: String?, keepBubble: Bool = false, _ interval: Double)
+      case copybubble(show: Bool = true, _ interval: Double)
+      case pastebubble(show: Bool = true, _ interval: Double)
     }
     let frames: [Frame] = [
       .img("introDemo1", startInterval),
@@ -242,7 +308,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     
     func showFrame(_ index: Int) {
-      let interval: Float
+      let interval: Double
       switch frames[index] {
       case .img(let name, let keepBubble, let t):
         if !keepBubble {
@@ -299,6 +365,14 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   // MARK: -
   
+  @IBAction func stopLogoAnimation(_ sender: AnyObject) {
+    stopAnimatedLogo()
+  }
+  
+  @IBAction func restartLogoAnimation(_ sender: AnyObject) {
+    startAnimatedLogo()
+  }
+
   @IBAction func openGeneralSettings(_ sender: AnyObject) {
     maccy.showSettings(selectingPane: .general)
   }
@@ -366,7 +440,25 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   // MARK: -
   
-  private func runOnDemoTimer(afterInterval interval: Float, _ action: @escaping () -> Void) {
+  private func runOnLogoPollTimer(withInterval interval: Double, _ action: @escaping () -> Bool) {
+    if logoPollTimer != nil {
+      cancelLogoPollTimer()
+    }
+    logoPollTimer = timerForRunningOnMainQueueRepeatedWithInterval(interval) { [weak self] in
+      if !action() {
+        self?.logoPollTimer = nil
+        return false
+      }
+      return true
+    }
+  }
+  
+  private func cancelLogoPollTimer() {
+    logoPollTimer?.cancel()
+    logoPollTimer = nil
+  }
+  
+  private func runOnDemoTimer(afterInterval interval: Double, _ action: @escaping () -> Void) {
     if demoTimer != nil {
       cancelDemoTimer()
     }
@@ -381,7 +473,21 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     demoTimer = nil
   }
   
-  private func timerForRunningOnMainQueueAfterDelay(_ seconds: Float, _ action: @escaping () -> Void) -> DispatchSourceTimer {
+  private func timerForRunningOnMainQueueRepeatedWithInterval(_ seconds: Double, _ action: @escaping () -> Bool) -> DispatchSourceTimer {
+    let timer = DispatchSource.makeTimerSource()
+    timer.schedule(wallDeadline: .now() + .milliseconds(Int(seconds * 1000)), repeating: seconds)
+    timer.setEventHandler {
+      DispatchQueue.main.async {
+        if !action() {
+          timer.cancel()
+        }
+      }
+    }
+    timer.resume()
+    return timer
+  }
+  
+  private func timerForRunningOnMainQueueAfterDelay(_ seconds: Double, _ action: @escaping () -> Void) -> DispatchSourceTimer {
     let timer = DispatchSource.makeTimerSource()
     timer.schedule(wallDeadline: .now() + .milliseconds(Int(seconds * 1000)))
     timer.setEventHandler {
