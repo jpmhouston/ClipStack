@@ -139,7 +139,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     switch page {
     case .welcome:
       if !visited.contains(page) {
-        startAnimatedLogo()
+        startAnimatedLogo(withDelay: true)
       } else {
         animatedLogoImage.isHidden = true // show only static logo behind
       }
@@ -221,24 +221,36 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     logoRestartButton.isHidden = false
   }
   
-  private func startAnimatedLogo() {
-    animatedLogoImage.animates = false
-    animatedLogoImage.isHidden = false
-    animatedLogoImage.animates = true
+  private func startAnimatedLogo(withDelay useDelay: Bool = false) {
+    let initialDelay = 2.5
+    let pollInterval = 0.5
+    
+    // start with gif hidden, for a few seconds if useDelay is true
+    animatedLogoImage.animates = false // so we can set it to true again below and reset it
+    animatedLogoImage.isHidden = true
     logoStopButton.isHidden = false
     logoRestartButton.isHidden = true
     
-    // poll to spot when animation ends, and when it does swap the buttons
+    // poll to spot when animation ends, and when it does restore the static logo & swap the stop/play buttons
     if let imageRep = animatedLogoImageRep,
-       let numFrames = (imageRep.value(forProperty: .frameCount) as? NSNumber)?.intValue
+       let numFrames = (imageRep.value(forProperty: .frameCount) as? NSNumber)?.intValue,
+       numFrames > 0
     {
-      runOnLogoPollTimer(withInterval: 2) { [weak self] in
+      runOnLogoPollTimer(withDelay: useDelay ? initialDelay : 0.0, interval: pollInterval) { [weak self] in
+        guard let self = self else {
+          return false
+        }
+        if self.animatedLogoImage.isHidden {
+          self.animatedLogoImage.isHidden = false // make gif visible if not, ie. on first time in
+          self.animatedLogoImage.animates = true // reset it so it plays from the beginning
+        }
         guard let current = (imageRep.value(forProperty: .currentFrame) as? NSNumber)?.intValue else {
           return false
         }
         if current >= numFrames - 1 {
-          self?.logoStopButton.isHidden = true
-          self?.logoRestartButton.isHidden = false
+          self.animatedLogoImage.isHidden = true
+          self.logoStopButton.isHidden = true
+          self.logoRestartButton.isHidden = false
           return false
         }
         return true
@@ -271,8 +283,6 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   private func runDemo() {
-    // swift bug? using these causes build errors "Undefined symbol: unsafeMutableAddressor of demoCopyDelay" etc
-    // when they were used in default values of enum case arguments :( decided to just use literals for all
     let startInterval: Double = 2.5
     let normalFrameInterval: Double = 2.0
     let cursorMoveFrameInterval: Double = 1.0
@@ -334,7 +344,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       guard !self.demoCanceled else {
         return
       }
-      runOnDemoTimer(afterInterval: interval) { [weak self] in
+      runOnDemoTimer(afterDelay: interval) { [weak self] in
         guard let self = self, !self.demoCanceled else {
           return
         }
@@ -440,11 +450,11 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   // MARK: -
   
-  private func runOnLogoPollTimer(withInterval interval: Double, _ action: @escaping () -> Bool) {
+  private func runOnLogoPollTimer(withDelay delay: Double, interval: Double, _ action: @escaping () -> Bool) {
     if logoPollTimer != nil {
       cancelLogoPollTimer()
     }
-    logoPollTimer = timerForRunningOnMainQueueRepeatedWithInterval(interval) { [weak self] in
+    logoPollTimer = timerForRunningOnMainQueueRepeated(afterDelay: delay, interval: interval) { [weak self] in
       if !action() {
         self?.logoPollTimer = nil
         return false
@@ -458,11 +468,11 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     logoPollTimer = nil
   }
   
-  private func runOnDemoTimer(afterInterval interval: Double, _ action: @escaping () -> Void) {
+  private func runOnDemoTimer(afterDelay delay: Double, _ action: @escaping () -> Void) {
     if demoTimer != nil {
       cancelDemoTimer()
     }
-    demoTimer = timerForRunningOnMainQueueAfterDelay(interval) { [weak self] in
+    demoTimer = timerForRunningOnMainQueue(afterDelay: delay) { [weak self] in
       self?.demoTimer = nil // doing this before calling closure supports closure itself calling runOnDemoTimer
       action()
     }
@@ -473,9 +483,9 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     demoTimer = nil
   }
   
-  private func timerForRunningOnMainQueueRepeatedWithInterval(_ seconds: Double, _ action: @escaping () -> Bool) -> DispatchSourceTimer {
+  private func timerForRunningOnMainQueueRepeated(afterDelay delaySeconds: Double, interval intervalSeconds: Double, _ action: @escaping () -> Bool) -> DispatchSourceTimer {
     let timer = DispatchSource.makeTimerSource()
-    timer.schedule(wallDeadline: .now() + .milliseconds(Int(seconds * 1000)), repeating: seconds)
+    timer.schedule(wallDeadline: .now() + .milliseconds(Int(delaySeconds * 1000)), repeating: intervalSeconds)
     timer.setEventHandler {
       DispatchQueue.main.async {
         if !action() {
@@ -487,9 +497,9 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     return timer
   }
   
-  private func timerForRunningOnMainQueueAfterDelay(_ seconds: Double, _ action: @escaping () -> Void) -> DispatchSourceTimer {
+  private func timerForRunningOnMainQueue(afterDelay delaySeconds: Double, _ action: @escaping () -> Void) -> DispatchSourceTimer {
     let timer = DispatchSource.makeTimerSource()
-    timer.schedule(wallDeadline: .now() + .milliseconds(Int(seconds * 1000)))
+    timer.schedule(wallDeadline: .now() + .milliseconds(Int(delaySeconds * 1000)))
     timer.setEventHandler {
       DispatchQueue.main.async {
         action()
