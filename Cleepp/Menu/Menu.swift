@@ -147,10 +147,6 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     isVisible = true
     previewController.menuWillOpen()
     
-//    if showsExpandedMenu {
-//      historyHeader?.queryField.refusesFirstResponder = false
-//      historyHeader?.queryField.becomeFirstResponder()
-//    }
     if showsExpandedMenu, let field = historyHeader?.queryField {
       field.refusesFirstResponder = false
       field.window?.makeFirstResponder(field)
@@ -172,6 +168,19 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   
   func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
     previewController.cancelPopover()
+    
+    if !Maccy.busy {
+      if item == nil {
+        ignoreNextHighlight = true // after being called with nil item ignore the next call
+        return
+      } else if ignoreNextHighlight {
+        ignoreNextHighlight = false // after getting that following call, back to normal
+        return
+      } else {
+        setDeleteEnabled(forHighlightedItem: item)
+        lastHighlightedItem = item as? HistoryMenuItem
+      }
+    }
     
     guard let item = item as? HistoryMenuItem else {
       return

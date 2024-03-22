@@ -7,7 +7,7 @@ typealias Cleepp = Maccy
 #endif
 
 // swiftlint:disable type_body_length
-class Maccy: NSObject {
+class Maccy: NSObject, NSMenuItemValidation {
   static var returnFocusToPreviousApp = true
   static var isQueueModeOn = false
   static var queueSize = 0
@@ -33,8 +33,8 @@ class Maccy: NSObject {
   private var menuController: MenuController!
 
 #if CLEEPP
-  // TODO: enable this once purchases and intro added
-//  private let purchases = Purchases.shared
+  private let purchases = Purchases.shared
+// TODO: enable this once intro added
 //  private var intro = IntroWindowController()
   
   internal var queueHeadIndex: Int? {
@@ -76,11 +76,12 @@ class Maccy: NSObject {
   }
 
 #if CLEEPP
+  // omits the pins panel, app store build gets the purchase panel
   #if FOR_APP_STORE
   internal lazy var settingsWindowController = SettingsWindowController(
     panes: [
       GeneralSettingsViewController(),
-      //PurchaseSettingsViewController(), // app store build gets the purchase panel TODO: enable this once purchases added
+      PurchaseSettingsViewController(),
       StorageSettingsViewController(),
       AppearanceSettingsViewController(),
       IgnoreSettingsViewController(),
@@ -152,10 +153,9 @@ class Maccy: NSObject {
     initializeObservers()
 
     #if CLEEPP
-    // TODO: enable this once purchases added
-//    purchases.start(withObserver: self) { [weak self] _, update in
-//      self?.purchasesUpdated(update)
-//    }
+    purchases.start(withObserver: self) { [weak self] _, update in
+      self?.purchasesUpdated(update)
+    }
     #endif
 
     #if !CLEEPP
@@ -266,9 +266,35 @@ class Maccy: NSObject {
     #endif
   }
 
+  func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    #if CLEEPP
+    if Self.busy {
+      return false
+    } else {
+      return menu.validationShouldEnable(item: menuItem)
+    }
+    #else
+    return true
+    #endif
+  }
+
 #if CLEEPP
-  // non-history items in the cleepp menu are defined in a nib file instead of programmatically
-  // many action methods are added for cleepp in a class extension
+  private func purchasesUpdated(_ update: Purchases.ObservationUpdate) {
+    setFeatureFlags(givenPurchase: purchases.hasBoughtExtras)
+  }
+  
+  private func setFeatureFlags(givenPurchase hasPurchased: Bool) {
+    Self.allowFullyExpandedHistory = hasPurchased
+    Self.allowHistorySearch = hasPurchased
+    Self.allowReplayFromHistory = hasPurchased
+    Self.allowPasteMultiple = hasPurchased
+    Self.allowUndoCopy = hasPurchased
+  }
+  
+  // Non-history items in the cleepp menu are defined in a nib file instead of programmatically
+  // (the best code is no code), action methods for those items now live in this class, defined
+  // in a class extension. Also history menu item subclasses no longer exist, actions for those
+  // are also defined in the extension, and other "business logic" for the queueing feature.
 #else
   private func populateHeader() {
     let headerItem = NSMenuItem()

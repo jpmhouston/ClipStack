@@ -188,7 +188,7 @@ CA
             </connections>
             <point key="canvasLocation" x="-22" y="-81"/>
         </menu>
-        <customView misplaced="YES" id="XAP-KR-RlP" userLabel="Note Item View">
+        <customView id="XAP-KR-RlP" userLabel="Note Item View">
             <rect key="frame" x="0.0" y="0.0" width="296" height="32"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
