@@ -138,7 +138,9 @@ class Clipboard {
       keyVDown?.post(tap: .cgAnnotatedSessionEventTap)
       keyVUp?.post(tap: .cgAnnotatedSessionEventTap)
       
-      action?()
+      DispatchQueue.main.async {
+        action?()
+      }
     }
   }
 

@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     LaunchAtLogin.migrateIfNeeded()
-    setupUsersDefaults()
+    //migrateUserDefaults()
 
     maccy = Maccy()
     copyHotKey = GlobalCopyHotKey(maccy.queuedCopy)
@@ -73,12 +73,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     return nil
-  }
-
-  private func setupUsersDefaults() {
-    //migrateUserDefaults()
-    
-    UserDefaults.standard.register(defaults: [UserDefaults.Keys.size: UserDefaults.Values.size])
   }
 
   /*

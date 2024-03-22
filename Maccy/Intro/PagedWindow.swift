@@ -9,7 +9,7 @@
 import AppKit
 
 @objc protocol PagedWindowControllerDelegate {
-  func willOpen()
+  func willOpen() -> Int // return desired starting page number
   func willShowPage(_ number: Int)
   func shouldSkipPage(_ number: Int) -> Bool
   func willClose()
@@ -64,7 +64,11 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
   }
   
   func reset(opening: Bool = true) {
-    var firstPageNumber = 0
+    // if resetting without opening then reset to page 0, was going to have a separate delegate method but :shrug:
+    var startingPageNumber = 0
+    if opening {
+      startingPageNumber = pageDelegate?.willOpen() ?? 0
+    }
     
     if contentSubview == nil { // perhaps should wrap in #if DEBUG
       setupTestViews()
@@ -72,25 +76,24 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
     
     if let delegate = pageDelegate {
       // when there's a page delegate some pages may be invisible, skip over those
-      while firstPageNumber <= lastPageNumber {
-        if !delegate.shouldSkipPage(firstPageNumber) {
+      while startingPageNumber <= lastPageNumber {
+        if !delegate.shouldSkipPage(startingPageNumber) {
           break
         }
-        firstPageNumber += 1
+        startingPageNumber += 1
       }
-      if firstPageNumber > lastPageNumber {
-        firstPageNumber = 0 // if all invisible then show page 0 after all, tough noogies
+      if startingPageNumber > lastPageNumber {
+        startingPageNumber = 0 // if all invisible then show page 0 after all, tough noogies
       }
       
       // and call the delegate
-      delegate.willShowPage(firstPageNumber)
+      delegate.willShowPage(startingPageNumber)
     }
     
-    scroll(toPage: firstPageNumber)
+    scroll(toPage: startingPageNumber)
     updateButtons()
     
     if opening {
-      pageDelegate?.willOpen()
       isOpen = true
     }
   }

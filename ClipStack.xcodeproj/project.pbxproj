@@ -22,6 +22,7 @@
 		8F0D3C092BA8E11500DDB603 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C062BA8E11500DDB603 /* introAnimatedLogo.gif */; };
 		8F0D3C0A2BA8E11500DDB603 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C072BA8E11500DDB603 /* introAnimatedLogo@2x.gif */; };
 		8F0D3C0B2BA8E11500DDB603 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C072BA8E11500DDB603 /* introAnimatedLogo@2x.gif */; };
+		8F0D3CDC2BABD4BB00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFEF0B7249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift */; };
 		8F408C242B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C252B930C51002582C2 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F408C232B930C51002582C2 /* Intro.swift */; };
 		8F408C282B9314A9002582C2 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F408C272B9314A9002582C2 /* Intro.xib */; };
@@ -186,7 +187,6 @@
 		DAEE38541E3DD6F100DD2966 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE38531E3DD6F100DD2966 /* History.swift */; };
 		DAFE2DDA268A521B00990986 /* String+Shortened.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE2DD9268A521A00990986 /* String+Shortened.swift */; };
 		DAFE2DE9268A9B1B00990986 /* HistoryItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE2DE8268A9B1B00990986 /* HistoryItemTests.swift */; };
-		DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFEF0B7249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -931,7 +931,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F0D3C0E2BAA58BB00DDB603 /* Patch CFBundleVersion Script */ = {
@@ -1109,7 +1109,6 @@
 				DA181170247B405B00066D55 /* GeneralSettingsViewController.swift in Sources */,
 				DAAEB196219694AE00A7883C /* About.swift in Sources */,
 				DA6D98E22AEABE03008A77CE /* Accessibility.swift in Sources */,
-				DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
 				8F7BAF8C2B9ED8C300F85BF3 /* Purchases.swift in Sources */,
 				DAB65E0D2440B0D4000AECA8 /* HistoryItemContent.swift in Sources */,
 				DA696BCE240177E800DE80CF /* Sorter.swift in Sources */,
@@ -1129,6 +1128,7 @@
 				DA8953B91E446A4E00884EAB /* Maccy.swift in Sources */,
 				DA3EAE0C2AE30F7500F39108 /* NSApplication+Windows.swift in Sources */,
 				DAB65E0B2440B078000AECA8 /* HistoryItem.swift in Sources */,
+				8F0D3CDC2BABD4BB00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
 				DA68F91E28BD7DEB007E2F25 /* ClearIntentHandler.swift in Sources */,
 				8F408C242B930C51002582C2 /* Intro.swift in Sources */,
 				DAFE2DDA268A521B00990986 /* String+Shortened.swift in Sources */,

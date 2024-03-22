@@ -19,7 +19,7 @@ public class IntroWindowController: PagedWindowController {
     self.init(windowNibName: "Intro")
   }
   
-  func openIntro(with object: Maccy) {
+  func openIntro(atPage page: IntroViewController.Pages? = nil, with object: Maccy) {
     // accessing window triggers loading from nib, do this before showWindow so we can setup before showing
     guard let _ = window, let viewController = viewController else {
       return
@@ -27,6 +27,7 @@ public class IntroWindowController: PagedWindowController {
     useView(viewController.view) // might be redundant, should by ok
     
     viewController.maccy = object
+    viewController.startPage = page
     pageDelegate = viewController
     
     reset()
@@ -84,7 +85,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var inAppPurchageTitle: NSTextField!
   @IBOutlet var inAppPurchageLabel: NSView!
   
-  var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel].compactMap({$0}) }
+  private var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel].compactMap({$0}) }
   
   private var preAuthorizationPageFirsTime = true
   private var skipSetAuthorizationPage = false
@@ -94,6 +95,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private var demoTimer: DispatchSourceTimer?
   private var demoCanceled = false
   var maccy: Maccy!
+  var startPage: Pages?
   
   enum Pages: Int {
     case welcome = 0, checkAuth, setAuth, demo, aboutMenu, aboutMore, links
@@ -112,7 +114,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   // MARK: -
   
-  func willOpen() {
+  func willOpen() -> Int {
+    return startPage?.rawValue ?? Pages.welcome.rawValue
   }
   
   func willClose() {

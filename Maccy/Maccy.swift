@@ -474,6 +474,13 @@ class Maccy: NSObject, NSMenuItemValidation {
   }
   
   @IBAction
+  func showIntroAtPermissionPage(_ sender: AnyObject) {
+    Self.returnFocusToPreviousApp = false
+    intro.openIntro(atPage: .checkAuth, with: self)
+    Self.returnFocusToPreviousApp = true
+  }
+  
+  @IBAction
   func showSettings(_ sender: AnyObject) {
     showSettings(selectingPane: .general)
   }
@@ -578,7 +585,7 @@ class Maccy: NSObject, NSMenuItemValidation {
     Self.returnFocusToPreviousApp = false
     DispatchQueue.main.async {
       if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-        //alert.window.orderOut(nil)
+        alert.window.orderOut(nil) // i think withClearAlert above should call this too
         let number = Int(field.stringValue) ?? Self.queueSize
         closure(number)
       }
