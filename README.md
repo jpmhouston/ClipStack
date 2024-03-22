@@ -1,7 +1,8 @@
 <img width="656px" height="180px" src="Designs/Cleepp/Cleepp GitHub logo.gif" alt="Logo"/>
 
 [![Downloads](https://img.shields.io/github/downloads/jpmhouston/Cleepp/total.svg)](https://github.com/jpmhouston/Cleepp/releases/latest)
-[![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/bananameterlabs
+[![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/bananameterlabs)
+
 <!--- [![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314 -->
 
 Cleepp is a menu bar utility for macOS that adds the ability to copy multiple items
@@ -412,7 +413,7 @@ If you need to find what custom types are used by an application, you can use th
 free application [Pasteboard-Viewer](https://github.com/sindresorhus/Pasteboard-Viewer).
 Simply download the application, open it, copy something from the application you
 want to ignore and look for any custom types in the left sidebar.
-[Here](https://github.com/p0deje/Maccy/issues/125)  is an example of using this approach
+[Here](https://github.com/p0deje/Maccy/issues/125) is an example of using this approach
 to ignore Adobe InDesign *(however where "org.p0deje.Maccy" is mentioned in that
 forum thread, substitute "lol.bananameter.cleepp")*.
 
