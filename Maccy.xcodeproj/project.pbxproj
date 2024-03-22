@@ -177,6 +177,16 @@
 		8F8C48BA2BAD549300C3A219 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C47EE2BACD0D200C3A219 /* PurchaseSettingsViewController.xib */; };
 		8F8C48BC2BAD570F00C3A219 /* Preview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3CC92BABB31600DDB603 /* Preview.xib */; };
 		8F8C48BD2BAD570F00C3A219 /* Preview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3CC92BABB31600DDB603 /* Preview.xib */; };
+		8F8C48C32BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */; };
+		8F8C48C42BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */; };
+		8F8C48C52BAD5ED500C3A219 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */; };
+		8F8C48C62BAD5ED500C3A219 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */; };
+		8F8C48C72BAD5ED500C3A219 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48C02BAD5ED400C3A219 /* Intro.swift */; };
+		8F8C48C82BAD5ED500C3A219 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48C02BAD5ED400C3A219 /* Intro.swift */; };
+		8F8C48C92BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */; };
+		8F8C48CA2BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */; };
+		8F8C48CB2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
+		8F8C48CC2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -429,6 +439,11 @@
 		8F8C48462BAD33BB00C3A219 /* Application.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 		8F8C484B2BAD4E6300C3A219 /* Purchases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
 		8F8C48AF2BAD51B000C3A219 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = introAnimatedLogo.gif; sourceTree = "<group>"; };
+		8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedWindow.swift; sourceTree = "<group>"; };
+		8F8C48C02BAD5ED400C3A219 /* Intro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
+		8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "introAnimatedLogo@2x.gif"; sourceTree = "<group>"; };
+		8F8C48C22BAD5ED500C3A219 /* Intro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285F283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
@@ -791,6 +806,11 @@
 		8F0D3CE32BABDC0D00DDB603 /* Intro */ = {
 			isa = PBXGroup;
 			children = (
+				8F8C48C02BAD5ED400C3A219 /* Intro.swift */,
+				8F8C48C22BAD5ED500C3A219 /* Intro.xib */,
+				8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */,
+				8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */,
+				8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -1203,13 +1223,16 @@
 				8F8C48432BACD3CB00C3A219 /* GeneralSettingsViewController.xib in Resources */,
 				8F8C48442BACD3E600C3A219 /* StorageSettingsViewController.xib in Resources */,
 				8F8C48422BACD3C400C3A219 /* AppearanceSettingsViewController.xib in Resources */,
+				8F8C48C32BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */,
 				8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */,
 				8F8C48412BACD3B700C3A219 /* AdvancedSettingsViewController.xib in Resources */,
+				8F8C48CB2BAD5ED500C3A219 /* Intro.xib in Resources */,
 				8F8C48482BAD344700C3A219 /* Application.xib in Resources */,
 				8F8C48BC2BAD570F00C3A219 /* Preview.xib in Resources */,
 				8F0D3C902BABB17200DDB603 /* Menu.xib in Resources */,
 				8F0D3C6A2BAB8F5A00DDB603 /* Assets.xcassets in Resources */,
 				8F0D3C6B2BAB8F5A00DDB603 /* Localizable.strings in Resources */,
+				8F8C48C92BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */,
 				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
 				8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */,
 				8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */,
@@ -1225,7 +1248,10 @@
 				8F8C48A02BAD51B000C3A219 /* AppearanceSettingsViewController.xib in Resources */,
 				8F8C48A12BAD51B000C3A219 /* IgnoreSettingsViewController.xib in Resources */,
 				8F8C48A22BAD51B000C3A219 /* AdvancedSettingsViewController.xib in Resources */,
+				8F8C48C42BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */,
+				8F8C48CA2BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */,
 				8F8C48A32BAD51B000C3A219 /* Application.xib in Resources */,
+				8F8C48CC2BAD5ED500C3A219 /* Intro.xib in Resources */,
 				8F8C48BD2BAD570F00C3A219 /* Preview.xib in Resources */,
 				8F8C48BA2BAD549300C3A219 /* PurchaseSettingsViewController.xib in Resources */,
 				8F8C48A42BAD51B000C3A219 /* Menu.xib in Resources */,
@@ -1400,6 +1426,7 @@
 				8F0D3C232BAB8F5A00DDB603 /* Intents.intentdefinition in Sources */,
 				8F0D3C242BAB8F5A00DDB603 /* MenuController.swift in Sources */,
 				8F0D3C252BAB8F5A00DDB603 /* DeleteIntentHandler.swift in Sources */,
+				8F8C48C52BAD5ED500C3A219 /* PagedWindow.swift in Sources */,
 				8F0D3C272BAB8F5A00DDB603 /* KeyChord.swift in Sources */,
 				8F8C47F72BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */,
 				8F0D3C832BABAD7F00DDB603 /* Maccy+MenubarIcon.swift in Sources */,
@@ -1441,6 +1468,7 @@
 				8F0D3C4F2BAB8F5A00DDB603 /* ClearIntentHandler.swift in Sources */,
 				8F0D3C512BAB8F5A00DDB603 /* String+Shortened.swift in Sources */,
 				8F0D3CE12BABD57300DDB603 /* About.swift in Sources */,
+				8F8C48C72BAD5ED500C3A219 /* Intro.swift in Sources */,
 				8F0D3C522BAB8F5A00DDB603 /* Search.swift in Sources */,
 				8F0D3C532BAB8F5A00DDB603 /* AppDelegate.swift in Sources */,
 				8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */,
@@ -1460,6 +1488,7 @@
 				8F8C485B2BAD51B000C3A219 /* SelectIntentHandler.swift in Sources */,
 				8F8C485C2BAD51B000C3A219 /* AppearanceSettingsViewController.swift in Sources */,
 				8F8C485D2BAD51B000C3A219 /* Equatable+IsIn.swift in Sources */,
+				8F8C48C82BAD5ED500C3A219 /* Intro.swift in Sources */,
 				8F8C485E2BAD51B000C3A219 /* AppStoreReview.swift in Sources */,
 				8F8C485F2BAD51B000C3A219 /* HistoryMenuItem.swift in Sources */,
 				8F8C48602BAD51B000C3A219 /* Intents.intentdefinition in Sources */,
@@ -1482,6 +1511,7 @@
 				8F8C48702BAD51B000C3A219 /* Clipboard.swift in Sources */,
 				8F8C48712BAD51B000C3A219 /* GlobalHotKeys.swift in Sources */,
 				8F8C48722BAD51B000C3A219 /* IgnorePasteboardTypesViewController.swift in Sources */,
+				8F8C48C62BAD5ED500C3A219 /* PagedWindow.swift in Sources */,
 				8F8C48732BAD51B000C3A219 /* Purchases.swift in Sources */,
 				8F8C48742BAD51B000C3A219 /* PreviewPopoverController.swift in Sources */,
 				8F8C48752BAD51B000C3A219 /* HistoryItemContent.swift in Sources */,

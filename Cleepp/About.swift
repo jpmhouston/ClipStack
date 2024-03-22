@@ -11,7 +11,8 @@ class About {
   static var supportEmailURL = "mailto:cleepp@bananameter.lol"
   static var localizeVolunteerEmailURL = "mailto:cleepp.l10nhelp@bananameter.lol"
   static var showIntroInAppURL = "cleeppapp:intro"
-  
+  static var showIntroPermissionPageInAppURL = "cleeppapp:intro_permissions"
+
   private var blurb: NSAttributedString {
     return NSAttributedString(
       string: "Cleepp adds a new mode to the clipboard\nthat lets you copy multiple times from one\nplace then paste them all in order elsewhere.",
@@ -28,7 +29,7 @@ class About {
   private var forkCredits: NSMutableAttributedString {
     let string = NSMutableAttributedString(
       string: "Thank you to the authors of Maccy which this app is a derivative of. Check it out here for a more full-featured clipboard history manager.",
-      attributes: [.foregroundColor: NSColor.labelColor])
+      attributes: [.foregroundColor: NSColor.secondaryLabelColor])
     string.addAttribute(.link, value: About.maccyURL, range: NSRange(location: 82, length: 4))
     return string
   }
@@ -44,7 +45,7 @@ class About {
   
   private var shortSpacingLine: NSAttributedString {
     let spacingStyle = NSMutableParagraphStyle()
-    spacingStyle.maximumLineHeight = 6
+    spacingStyle.maximumLineHeight = 8
     return NSAttributedString(string: "\n", attributes: [.paragraphStyle: spacingStyle])
   }
   

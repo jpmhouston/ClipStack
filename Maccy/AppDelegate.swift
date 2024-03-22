@@ -63,11 +63,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     guard let url = urls.first else {
       return
     }
-    if url.absoluteString == "cleeppapp:intro" {
-      //maccy.showIntro(self)
+    if url.absoluteString == About.showIntroInAppURL {
+      maccy.showIntro(self)
     }
-    if url.absoluteString == "cleeppapp:introatpermissions" {
-      //maccy.showIntroAtPersmissionPage(self)(self)
+    if url.absoluteString == About.showIntroPermissionPageInAppURL {
+      maccy.showIntroAtPermissionPage(self)
     }
   }
   #endif

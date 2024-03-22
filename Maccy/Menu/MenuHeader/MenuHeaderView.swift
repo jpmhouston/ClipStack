@@ -241,7 +241,7 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       return
     }
     
-    queryField.window?.makeFirstResponder(queryField) // TODO: why did i change this from queryField.becomeFirstResponder()
+    queryField.window?.makeFirstResponder(queryField) // why did i switch from becomeFirstResponder to this?
     
     // Making text field a first responder selects all the text by default.
     // We need to make sure events are appended to existing text.

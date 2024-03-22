@@ -34,8 +34,7 @@ class Maccy: NSObject, NSMenuItemValidation {
 
 #if CLEEPP
   private let purchases = Purchases.shared
-// TODO: enable this once intro added
-//  private var intro = IntroWindowController()
+  internal var intro = IntroWindowController()
   
   internal var queueHeadIndex: Int? {
     if Self.queueSize < 1 {
@@ -190,8 +189,8 @@ class Maccy: NSObject, NSMenuItemValidation {
     statusItemVisibilityObserver?.invalidate()
     statusItemChangeObserver?.invalidate()
     
-    //cancelIconBlinkTimer()
-    //purchases.finish()
+    cancelIconBlinkTimer()
+    purchases.finish()
   }
 
   func popUp() {
@@ -257,12 +256,11 @@ class Maccy: NSObject, NSMenuItemValidation {
     updateStatusItemEnabledness()
     
     #if CLEEPP
-    // TODO: enable this once intro added
-//    if !UserDefaults.standard.completedIntro {
-//      showIntro(self)
-//    else if !Accessibility.allowed {
-//      showIntroAtPersmissionPage(self)
-//    }
+    if !UserDefaults.standard.completedIntro {
+      showIntro(self)
+    } else if !Accessibility.allowed {
+      showIntroAtPermissionPage(self)
+    }
     #endif
   }
 

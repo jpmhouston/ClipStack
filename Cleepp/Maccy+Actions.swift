@@ -321,15 +321,14 @@ extension Maccy {
   @IBAction
   func showIntro(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
-    // TODO: enable this once intro added
-    //intro.openIntro(with: self)
+    intro.openIntro(with: self)
     Self.returnFocusToPreviousApp = true
   }
   
   @IBAction
   func showIntroAtPermissionPage(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
-    //intro.openIntro(atPage: .checkAuth, with: self)
+    intro.openIntro(atPage: .checkAuth, with: self)
     Self.returnFocusToPreviousApp = true
   }
   

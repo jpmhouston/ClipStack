@@ -85,7 +85,7 @@ extension Maccy {
     }
   }
   
-  private func cancelIconBlinkTimer() {
+  internal func cancelIconBlinkTimer() {
     iconBlinkTimer?.cancel()
     iconBlinkTimer = nil
   }
