@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• Seleziona con %@ premuto per copiare l'elemento.";
 "paste_modifiers_config" = "• Seleziona con %@ premuto per copiare e incollare l'elemento.";
 "format_modifiers_config" = "• Seleziona con %@ premuto per copiare, eliminare la formattazione e incollare l'elemento.";
-"accessibility_alert_message" = "“Maccy” vorrebbe controllare questo computer utilizzando le funzionalità di accessibilità.";
-"accessibility_alert_comment" = "Concedi l'accesso a questa applicazione nella sezione {pane}, situata in {settings}.\n\nFai clic sul pulsante “+“, seleziona “Maccy“ e attiva la casella di controllo accanto ad esso.";
+"accessibility_alert_message" = "“Cleepp” vorrebbe controllare questo computer utilizzando le funzionalità di accessibilità.";
+"accessibility_alert_comment" = "Concedi l'accesso a questa applicazione nella sezione {pane}, situata in {settings}.\n\nFai clic sul pulsante “+“, seleziona “Cleepp“ e attiva la casella di controllo accanto ad esso.";
 "accessibility_alert_deny" = "Nega";
 "accessibility_alert_open" = "Apri Preferenze di Sistema";
 "clear_alert_message" = "Sei sicuro di voler cancellare la cronologia?";
@@ -32,3 +32,12 @@
 "system_settings_pane" = "Privacy e sicurezza";
 "system_preferences_name" = "Preferenze di Sistema";
 "system_preferences_pane" = "Sicurezza e Privacy";
+// TODO: translate:
+"preferences_purchase" = "Purchase";
+"accessibility_alert_show_intro" = "Reopen Intro Window";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";
+"number_alert_message" = "Paste how many items?";
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
+"number_alert_confirm" = "Paste";
+"number_alert_cancel" = "Annulla";

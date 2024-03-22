@@ -18,7 +18,11 @@ class MenuController {
   }
 
   func popUp() {
+    #if CLEEPP
+    let location = PopupLocation.inMenuBar // always
+    #else
     let location = PopupLocation.forUserDefaults
+    #endif
 
     withFocus {
       switch location {
@@ -26,7 +30,12 @@ class MenuController {
         self.simulateStatusItemClick()
       default:
         self.linkingMenuToStatusItem {
-          self.menu.popUpMenu(at: location.location(for: self.menu.size) ?? .zero, ofType: location)
+          // Since simulateStatusItemClick below takes responsibility to opening the menu in that case,
+          // this class should take responsibility of opening in this case too, eliminating menu.popUpMenu(at:ofType:)
+          // Cleepp never gets here anyway, but I preferred to rewrite for Maccy target sake rather than
+          // adding another ifdef here or adding an dummy popUpMenu in Cleepp's menu class
+          self.menu.prepareForPopup(location: location)
+          self.menu.popUp(positioning: nil, at: location.location(for: self.menu.size) ?? .zero, in: nil)
         }
       }
     }
@@ -37,6 +46,29 @@ class MenuController {
     if let event = event {
       let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
 
+      #if CLEEPP
+      if !Cleepp.busy {
+        if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
+          UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
+          
+          if !modifierFlags.contains(.shift) && UserDefaults.standard.ignoreEvents {
+            UserDefaults.standard.ignoreOnlyNextEvent = true
+          }
+          return
+        }
+        
+        if !modifierFlags.contains(.option) &&
+            (modifierFlags.contains(.control) || modifierFlags.contains(.shift)) {
+          menu.performQueueModeToggle()
+          return
+        }
+      }
+      
+      if modifierFlags.contains(.option) {
+        menu.enableExpandedMenu(true, full: modifierFlags.contains(.shift))
+      }
+      
+      #else
       if modifierFlags.contains(.option) {
         UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
 
@@ -46,6 +78,7 @@ class MenuController {
 
         return
       }
+      #endif
     }
 
     withFocus {

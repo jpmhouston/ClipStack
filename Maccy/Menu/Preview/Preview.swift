@@ -10,6 +10,10 @@ class Preview: NSViewController {
   @IBOutlet weak var numberOfCopiesValueLabel: NSTextField!
   @IBOutlet weak var deleteLabel: NSTextField!
   @IBOutlet weak var pinLabel: NSTextField!
+  #if CLEEPP
+  @IBOutlet weak var copyLabel: NSTextField!
+  @IBOutlet weak var startLabel: NSTextField!
+  #endif
 
   private let maxTextSize = 1_500
 
@@ -60,6 +64,12 @@ class Preview: NSViewController {
     }
 
     firstCopyTimeValueLabel.stringValue = formatDate(item.firstCopiedAt)
+
+    #if CLEEPP
+    copyLabel.isHidden = Cleepp.isQueueModeOn
+    startLabel.isHidden = Cleepp.isQueueModeOn || !Cleepp.allowReplayFromHistory
+    
+    #else
     lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
     numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
 
@@ -76,6 +86,7 @@ class Preview: NSViewController {
     } else {
       pinLabel.removeFromSuperview()
     }
+    #endif
   }
 
   private func formatDate(_ date: Date) -> String {

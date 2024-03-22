@@ -62,13 +62,18 @@ class Clipboard {
     start()
   }
 
-  func copy(_ string: String) {
+  func copy(_ string: String, excludeFromHistory: Bool = true) {
     pasteboard.clearContents()
     pasteboard.setString(string, forType: .string)
-    checkForChangesInPasteboard()
+    
+    if excludeFromHistory {
+      changeCount = pasteboard.changeCount
+    } else {
+      checkForChangesInPasteboard()
+    }
   }
 
-  func copy(_ item: HistoryItem?, removeFormatting: Bool = false) {
+  func copy(_ item: HistoryItem?, removeFormatting: Bool = false, excludeFromHistory: Bool = true) {
     guard let item else { return }
 
     pasteboard.clearContents()
@@ -105,26 +110,49 @@ class Clipboard {
 
     pasteboard.setString("", forType: .fromMaccy)
 
+    #if !CLEEPP
     Notifier.notify(body: item.title, sound: .knock)
+    #endif
 
-    checkForChangesInPasteboard()
+    if excludeFromHistory {
+      changeCount = pasteboard.changeCount
+    } else {
+      checkForChangesInPasteboard()
+    }
   }
 
-  // Based on https://github.com/Clipy/Clipy/blob/develop/Clipy/Sources/Services/PasteService.swift.
+  #if CLEEPP
+  func invokeApplicationCopy(then action: (() -> Void)? = nil) {
+    postKeypress(KeyChord.copyKeyModifiers, KeyChord.copyKey, then: action)
+  }
+  
+  func invokeApplicationPaste(then action: (() -> Void)? = nil) {
+    postKeypress(KeyChord.pasteKeyModifiers, KeyChord.pasteKey, then: action)
+  }
+  #else
   func paste() {
+    postKeypress(KeyChord.pasteKeyModifiers, KeyChord.pasteKey)
+  }
+  #endif
+  
+  // Based on https://github.com/Clipy/Clipy/blob/develop/Clipy/Sources/Services/PasteService.swift.
+  func postKeypress(_ modifiers: NSEvent.ModifierFlags, _ key: Key, then action: (() -> Void)? = nil) {
+    // cleepp moves repsonsibility of triggering a check up into the caller
+    #if !CLEEPP
     Accessibility.check()
+    #endif
 
     DispatchQueue.main.async {
       // Add flag that left/right modifier key has been pressed.
       // See https://github.com/TermiT/Flycut/pull/18 for details.
-      let cmdFlag = CGEventFlags(rawValue: UInt64(KeyChord.pasteKeyModifiers.rawValue) | 0x000008)
-      var vCode = Sauce.shared.keyCode(for: KeyChord.pasteKey)
+      let cmdFlag = CGEventFlags(rawValue: UInt64(modifiers.rawValue) | 0x000008)
+      var vCode = Sauce.shared.keyCode(for: key)
 
       // Force QWERTY keycode when keyboard layout switches to
       // QWERTY upon pressing ⌘ key (e.g. "Dvorak - QWERTY ⌘").
       // See https://github.com/p0deje/Maccy/issues/482 for details.
       if KeyboardLayout.current.commandSwitchesToQWERTY && cmdFlag.contains(.maskCommand) {
-        vCode = KeyChord.pasteKey.QWERTYKeyCode
+        vCode = key.QWERTYKeyCode
       }
 
       let source = CGEventSource(stateID: .combinedSessionState)
@@ -138,6 +166,12 @@ class Clipboard {
       keyVUp?.flags = cmdFlag
       keyVDown?.post(tap: .cgAnnotatedSessionEventTap)
       keyVUp?.post(tap: .cgAnnotatedSessionEventTap)
+
+      // cleepp needs an action method when pasting for advancing the queue afterwards
+      // dispatch to the main thread again to add delay for the paste to happen (seems to work)
+      DispatchQueue.main.async {
+        action?()
+      }
     }
   }
 

@@ -1,0 +1,35 @@
+/* Class = "NSButtonCell"; title = "Launch at login"; ObjectID = "Cfl-qm-UkM"; */
+"Cfl-qm-UkM.title" = "Girişte başlat";
+
+/* Class = "NSButtonCell"; title = "Check for updates automatically"; ObjectID = "avb-QJ-T0h"; */
+"avb-QJ-T0h.title" = "Güncellemeleri otomatik olarak denetle";
+
+\/* Class = "NSButtonCell"; title = "Check now"; ObjectID = "8Rb-OS-d59"; */
+"8Rb-OS-d59.title" = "Şimdi denetle";
+
+/* Class = "NSTextFieldCell"; title = "Search:"; ObjectID = "eLD-CL-D8J"; */
+"eLD-CL-D8J.title" = "Arama:";
+
+/* Class = "NSMenuItem"; title = "Fuzzy"; ObjectID = "IGh-5B-6RG"; */
+"IGh-5B-6RG.title" = "Bulanık";
+
+/* Class = "NSMenuItem"; title = "Exact"; ObjectID = "OJz-OA-cKK"; */
+"OJz-OA-cKK.title" = "Kesin";
+
+/* Class = "NSMenuItem"; title = "Regular expressions"; ObjectID = "mhw-kS-4Wk"; */
+"mhw-kS-4Wk.title" = "Düzenli ifadeler";
+
+/* Class = "NSMenuItem"; title = "Mixed"; ObjectID = "dTc-O1-HqW"; */
+"dTc-O1-HqW.title" = "Karışık";
+
+/* Class = "NSTextFieldCell"; title = "Queued Copy:"; ObjectID = "hdM-75-pvO"; */
+"hdM-75-pvO.title" = "Açmak:"; // TODO: update
+
+/* Class = "NSTextFieldCell"; title = "Queued Paste:"; ObjectID = "1Tw-Z5-00F"; */
+"1Tw-Z5-00F.title" = "İğnelemek:"; // TODO: update
+
+/* Class = "NSView"; ibShadowedToolTip = "Global shortcut key to copy into the queue.\nDefault: ^⌘C."; ObjectID = "gv6-rV-zkI"; */
+"gv6-rV-zkI.ibShadowedToolTip" = "Uygulamayı açmak için global kısayol düğmesi.\nSaptanmış: ^⌘C."; // TODO: update
+
+/* Class = "NSView"; ibShadowedToolTip = "Global shortcut key to paste next item from the queue.\nDefault: ^⌘P."; ObjectID = "pPs-rF-k8m"; */
+"pPs-rF-k8m.ibShadowedToolTip" = "Geçmiş öğesini sabitlemek için kısayol düğmesi.\nVarsayılan: ^⌘P."; // TODO: update

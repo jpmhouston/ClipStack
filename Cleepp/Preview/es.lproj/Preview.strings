@@ -1,0 +1,14 @@
+/* Class = "NSTextFieldCell"; title = "Application:"; ObjectID = "v53-2O-7HD"; */
+"v53-2O-7HD.title" = "Aplicación:";
+
+/* Class = "NSTextFieldCell"; title = "Copy time:"; ObjectID = "Ot3-5Y-zfU"; */
+"Ot3-5Y-zfU.title" = "Hora de la primera copia:"; // TODO: update
+
+/* Class = "NSTextFieldCell"; title = "Select to replay paste of this item."; ObjectID = "Hz7-tJ-kat"; */
+"Hz7-tJ-kat.title" = "Select to replay paste of this item."; // TODO: translate
+
+/* Class = "NSTextFieldCell"; title = "With ⌥ to replay all from here upwards."; ObjectID = "PxB-sa-HD1"; */
+"PxB-sa-HD1.title" = "With ⌥ to replay all from here upwards." // TODO: translate
+
+/* Class = "NSTextFieldCell"; title = "Press ⌘⌫ to delete."; ObjectID = "oTv-7u-tbp"; */
+"oTv-7u-tbp.title" = "Presiona ⌘⌫ para borrar.";

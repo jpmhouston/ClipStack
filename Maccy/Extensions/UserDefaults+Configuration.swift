@@ -36,6 +36,9 @@ extension UserDefaults {
     static let suppressClearAlert = "suppressClearAlert"
     static let ignoreRegexp = "ignoreRegexp"
     static let highlightMatch = "highlightMatch"
+    #if CLEEPP
+    static let completedIntro = "completedIntro"
+    #endif
 
     static var showInStatusBar: String {
       ProcessInfo.processInfo.arguments.contains("ui-testing") ? "showInStatusBarUITests" : "showInStatusBar"
@@ -49,10 +52,19 @@ extension UserDefaults {
   public struct Values {
     static let clipboardCheckInterval = 0.5
     static let ignoredApps: [String] = []
+    #if CLEEPP
+    static let enabledPasteboardTypes: [String] = [ "public.rtf", "public.utf8-plain-text", "public.file-url", "public.tiff", "public.png", "public.html" ]
+    static let ignoredPasteboardTypes: [String] = [ "net.antelle.keeweb", "com.agilebits.onepassword", "com.typeit4me.clipping", "Pasteboard generator type", "de.petermaurer.TransientPasteboardType" ]
+    #else
     static let ignoredPasteboardTypes: [String] = []
+    #endif
     static let ignoreRegexp: [String] = []
     static let imageMaxHeight = 40.0
+    #if CLEEPP
+    static let maxMenuItems = 25
+    #else
     static let maxMenuItems = 0
+    #endif
     static let maxMenuItemLength = 50
     static let migrations: [String: Bool] = [:]
     static let pinTo = "top"
@@ -247,4 +259,11 @@ extension UserDefaults {
     get { string(forKey: Keys.highlightMatch) ?? Values.highlightMatch }
     set { set(newValue, forKey: Keys.highlightMatch) }
   }
+
+  #if CLEEPP
+  public var completedIntro: Bool {
+    get { bool(forKey: Keys.completedIntro) }
+    set { set(newValue, forKey: Keys.completedIntro) }
+  }
+  #endif
 }

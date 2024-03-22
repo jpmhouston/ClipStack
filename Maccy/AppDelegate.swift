@@ -3,16 +3,25 @@ import Intents
 import KeyboardShortcuts
 import LaunchAtLogin
 import Sauce
+#if !CLEEPP || ALLOW_SPARKLE_UPDATES
 import Sparkle
+#endif
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+  @IBOutlet weak var copyMenuItem: NSMenuItem!
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
+  #if CLEEPP
+  private var copyHotKey: GlobalCopyHotKey!
+  private var pasteHotKey: GlobalPasteHotKey!
+  #else
   private var hotKey: GlobalHotKey!
+  #endif
   private var maccy: Maccy!
 
   func applicationWillFinishLaunching(_ notification: Notification) {
+    #if !CLEEPP || ALLOW_SPARKLE_UPDATES
     if ProcessInfo.processInfo.arguments.contains("ui-testing") {
       SPUUpdater(hostBundle: Bundle.main,
                  applicationBundle: Bundle.main,
@@ -20,6 +29,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                  delegate: nil)
         .automaticallyChecksForUpdates = false
     }
+    #endif
+    #if CLEEPP && ALLOW_SPARKLE_UPDATES
+    if !ProcessInfo.processInfo.arguments.contains("ui-testing") {
+      // cleepp doesn't instantiate SPUStandardUpdaterController in its GeneralSettingViewController nib
+      let _ = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+    }
+    #endif
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -28,7 +44,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     clearOrphanRecords()
 
     maccy = Maccy()
+    #if CLEEPP
+    copyHotKey = GlobalCopyHotKey(maccy.queuedCopy)
+    pasteHotKey = GlobalPasteHotKey(maccy.queuedPaste)
+    #else
     hotKey = GlobalHotKey(maccy.popUp)
+    #endif
   }
 
   func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -36,6 +57,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     return true
   }
 
+  #if CLEEPP
+  func application(_ application: NSApplication, open urls: [URL]) {
+    // get the first of the url,s ignore the rest
+    guard let url = urls.first else {
+      return
+    }
+    if url.absoluteString == "cleeppapp:intro" {
+      //maccy.showIntro(self)
+    }
+    if url.absoluteString == "cleeppapp:introatpermissions" {
+      //maccy.showIntroAtPersmissionPage(self)(self)
+    }
+  }
+  #endif
+  
   func applicationWillTerminate(_ notification: Notification) {
     if UserDefaults.standard.clearOnQuit {
       maccy.clearUnpinned(suppressClearAlert: true)
@@ -61,6 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   // swiftlint:disable cyclomatic_complexity
   // swiftlint:disable function_body_length
   private func migrateUserDefaults() {
+    #if !CLEEPP
     if UserDefaults.standard.migrations["2020-04-25-allow-custom-ignored-types"] != true {
       UserDefaults.standard.ignoredPasteboardTypes = [
         "de.petermaurer.TransientPasteboardType",
@@ -175,6 +212,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
       UserDefaults.standard.migrations["2023-01-22-add-regexp-search-mode"] = true
     }
+    #endif
   }
 
   private func clearOrphanRecords() {

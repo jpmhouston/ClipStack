@@ -365,7 +365,7 @@ See [Start Replaying From History](#start-replaying-from-history) above.
 You can tell Cleepp to ignore all copied items:
 
 ```sh
-defaults write lol.bananameter.Cleepp ignoreEvents true # default is false
+defaults write lol.bananameter.cleepp ignoreEvents true # default is false
 ```
 
 This is useful if you have some workflow for copying sensitive data.
@@ -405,7 +405,7 @@ or overwritten:
 You can add additional custom types using preferences or `defaults`:
 
 ```sh
-defaults write lol.bananameter.Cleepp ignoredPasteboardTypes -array-add "com.myapp.CustomType"
+defaults write lol.bananameter.cleepp ignoredPasteboardTypes -array-add "com.myapp.CustomType"
 ```
 
 If you need to find what custom types are used by an application, you can use the
@@ -414,12 +414,12 @@ Simply download the application, open it, copy something from the application yo
 want to ignore and look for any custom types in the left sidebar.
 [Here](https://github.com/p0deje/Maccy/issues/125)  is an example of using this approach
 to ignore Adobe InDesign *(however where "org.p0deje.Maccy" is mentioned in that
-forum thread, substitute "lol.bananameter.Cleepp")*.
+forum thread, substitute "lol.bananameter.cleepp")*.
 
 If you accidentally removed default types, you can restore the original configuration:
 
 ```sh
-defaults write lol.bananameter.Cleepp ignoredPasteboardTypes -array "de.petermaurer.TransientPasteboardType" "com.typeit4me.clipping" "Pasteboard generator type" "com.agilebits.onepassword" "net.antelle.keeweb"
+defaults write lol.bananameter.cleepp ignoredPasteboardTypes -array "de.petermaurer.TransientPasteboardType" "com.typeit4me.clipping" "Pasteboard generator type" "com.agilebits.onepassword" "net.antelle.keeweb"
 ```
 
 

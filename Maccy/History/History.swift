@@ -1,14 +1,43 @@
 import AppKit
 
 class History {
+  #if CLEEPP
+  private var sortBy = "lastCopiedAt"
+  #else
+  private var sortBy: String { UserDefaults.standard.sortBy }
+  #endif
+
   var all: [HistoryItem] {
-    let sorter = Sorter(by: UserDefaults.standard.sortBy)
+    #if CLEEPP
+    let sorter = Sorter(by: sortBy)
+    var items = sorter.sort(HistoryItem.all)
+    
+    // trim results and the database based on size setting, but also if queueing then include all those
+    let maxItems = max(UserDefaults.standard.size, UserDefaults.standard.maxMenuItems, CleeppMenu.minNumMenuItems, Cleepp.queueSize)
+    while items.count > maxItems {
+      remove(items.removeLast())
+    }
+    
+    return items
+    
+    #else
+    let sorter = Sorter(by: sortBy)
     var unpinned = sorter.sort(HistoryItem.unpinned)
     while unpinned.count > UserDefaults.standard.size {
       remove(unpinned.removeLast())
     }
 
     return sorter.sort(HistoryItem.all)
+    #endif
+  }
+
+  var first: HistoryItem? {
+    let sorter = Sorter(by: sortBy)
+    return sorter.first(HistoryItem.all)
+  }
+
+  var count: Int {
+    HistoryItem.count
   }
 
   private var sessionLog: [Int: HistoryItem] = [:]
@@ -34,7 +63,9 @@ class History {
       }
       remove(existingHistoryItem)
     } else {
+      #if !CLEEPP
       Notifier.notify(body: item.title, sound: .write)
+      #endif
     }
 
     sessionLog[Clipboard.shared.changeCount] = item

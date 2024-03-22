@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• เลือกแล้วกด %@ เพื่อคัดลอก";
 "paste_modifiers_config" = "• เลือกแล้วกด %@ เพื่อคัดลอกและวางรายการ";
 "format_modifiers_config" = "• เลือกแล้วกด %@ เพื่อคัดลอก, ล้างรูปแบบและวางรายการ";
-"accessibility_alert_message" = "“Maccy” ต้องการใช้สิทธิ์ฟีเจอร์การช่วยการเข้าถึง";
-"accessibility_alert_comment" = "ให้สิทธิ์แอปพลิเคชันนี้ในเมนูการตั้งค่า{pane} ใน {settings}.\n\nคลิกปุ่ม ”+” เลือก ”Maccy” และสลับช่องทำเครื่องหมายถัดจากนั้น.";
+"accessibility_alert_message" = "“Cleepp” ต้องการใช้สิทธิ์ฟีเจอร์การช่วยการเข้าถึง";
+"accessibility_alert_comment" = "ให้สิทธิ์แอปพลิเคชันนี้ในเมนูการตั้งค่า{pane} ใน {settings}.\n\nคลิกปุ่ม ”+” เลือก ”Cleepp” และสลับช่องทำเครื่องหมายถัดจากนั้น.";
 "accessibility_alert_deny" = "ปฎิเสธ";
 "accessibility_alert_open" = "เปิดการตั้งค่าระบบ";
 "clear_alert_message" = "คุณต้องการล้างประวัติหรือไม่?";
@@ -32,3 +32,12 @@
 "system_settings_pane" = "ความเป็นส่วนตัวและความปลอดภัย";
 "system_preferences_name" = "การตั้งค่าระบบ";
 "system_preferences_pane" = "ความปลอดภัยและความเป็นส่วนตัว";
+// TODO: translate:
+"preferences_purchase" = "Purchase";
+"accessibility_alert_show_intro" = "Reopen Intro Window";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Cleepp Menu";
+"number_alert_message" = "Paste how many items?";
+"number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
+"number_alert_confirm" = "Paste";
+"number_alert_cancel" = "ยกเลิก";

@@ -4,6 +4,11 @@ class HistoryMenuItem: NSMenuItem {
   var isPinned = false
   var item: HistoryItem?
   var value = ""
+  #if CLEEPP
+  var isHeadOfQueue = false {
+    didSet { updateHeadOfQueueIndication() }
+  }
+  #endif
 
   internal var clipboard: Clipboard!
 
@@ -53,6 +58,31 @@ class HistoryMenuItem: NSMenuItem {
     super.init(coder: coder)
   }
 
+#if CLEEPP
+  // define this to avoid this mysterious runtime failure:
+  // Fatal error: Use of unimplemented initializer 'init(title:action:keyEquivalent:)' for class 'Cleepp.HistoryMenuItem'
+  override init(title: String, action: Selector?, keyEquivalent: String) {
+    super.init(title: title, action: action, keyEquivalent: keyEquivalent)
+  }
+  
+  func configured(withItem item: HistoryItem) -> Self {
+    self.item = item
+    
+    if isImage(item) {
+      loadImage(item)
+    } else if isFile(item) {
+      loadFile(item)
+    } else if isText(item) {
+      loadText(item)
+    } else if isRTF(item) {
+      loadRTF(item)
+    } else if isHTML(item) {
+      loadHTML(item)
+    }
+    return self
+  }
+  
+#else
   init(item: HistoryItem, clipboard: Clipboard) {
     super.init(title: "", action: #selector(onSelect(_:)), keyEquivalent: "")
 
@@ -86,6 +116,7 @@ class HistoryMenuItem: NSMenuItem {
       self.title = item.title ?? ""
     })
   }
+#endif
 
   deinit {
     editPinObserver?.invalidate()
@@ -247,4 +278,43 @@ class HistoryMenuItem: NSMenuItem {
     self.title = item.title ?? ""
     self.image = ColorImage.from(title)
   }
+  
+#if CLEEPP
+  private func updateHeadOfQueueIndication() {
+    if #unavailable(macOS 14) {
+      styleToIndicateHeadOfQueue()
+    } else {
+      badgeToIndicateHeadOfQueue()
+    }
+  }
+  
+  private var headOfQueueAttributes: [NSAttributedString.Key: Any]? {
+    if #unavailable(macOS 14) {
+      [.underlineStyle: NSUnderlineStyle.single.rawValue]
+    } else {
+      nil
+    }
+  }
+  
+  private func styleToIndicateHeadOfQueue() {
+    // NB: if item has had highlight called, will now lose the styling it set; just assume that won't happen maybe?
+    if #unavailable(macOS 14), isHeadOfQueue {
+      guard title != imageTitle else { return }
+      attributedTitle = NSMutableAttributedString(string: title, attributes: headOfQueueAttributes)
+    } else {
+      attributedTitle = nil
+    }
+  }
+  
+  private func badgeToIndicateHeadOfQueue() {
+    if #available(macOS 14, *) {
+      if isHeadOfQueue {
+        badge = NSMenuItemBadge(string: NSLocalizedString("first_replay_item_badge", comment: "") + " \u{2BAD}")
+      } else {
+        badge = nil
+      }
+    }
+  }
+#endif
+  
 }

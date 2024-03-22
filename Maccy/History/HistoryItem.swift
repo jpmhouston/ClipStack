@@ -32,6 +32,15 @@ class HistoryItem: NSManagedObject {
     }
   }
 
+  static var count: Int {
+    let fetchRequest = NSFetchRequest<HistoryItem>(entityName: "HistoryItem")
+    do {
+      return try CoreDataManager.shared.viewContext.count(for: fetchRequest)
+    } catch {
+      return 0
+    }
+  }
+
   static var pinned: [HistoryItem] {
     all.filter({ $0.pin != nil })
   }

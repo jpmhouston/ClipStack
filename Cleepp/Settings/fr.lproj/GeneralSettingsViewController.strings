@@ -1,0 +1,35 @@
+/* Class = "NSButtonCell"; title = "Launch at login"; ObjectID = "Cfl-qm-UkM"; */
+"Cfl-qm-UkM.title" = "Lancer au démarrage";
+
+/* Class = "NSButtonCell"; title = "Check for updates automatically"; ObjectID = "avb-QJ-T0h"; */
+"avb-QJ-T0h.title" = "Vérifier les mises à jour automatiquement";
+
+/* Class = "NSButtonCell"; title = "Check now"; ObjectID = "8Rb-OS-d59"; */
+"8Rb-OS-d59.title" = "Vérifier maintenant";
+
+/* Class = "NSTextFieldCell"; title = "Search:"; ObjectID = "eLD-CL-D8J"; */
+"eLD-CL-D8J.title" = "Recherche:";
+
+/* Class = "NSMenuItem"; title = "Fuzzy"; ObjectID = "IGh-5B-6RG"; */
+"IGh-5B-6RG.title" = "Approximative";
+
+/* Class = "NSMenuItem"; title = "Exact"; ObjectID = "OJz-OA-cKK"; */
+"OJz-OA-cKK.title" = "Exacte";
+
+/* Class = "NSMenuItem"; title = "Regular expressions"; ObjectID = "mhw-kS-4Wk"; */
+"mhw-kS-4Wk.title" = "Expressions régulières";
+
+/* Class = "NSMenuItem"; title = "Mixed"; ObjectID = "dTc-O1-HqW"; */
+"dTc-O1-HqW.title" = "Mixte";
+
+/* Class = "NSTextFieldCell"; title = "Queued Copy:"; ObjectID = "hdM-75-pvO"; */
+"hdM-75-pvO.title" = "Ouvrir:"; // TODO: update
+
+/* Class = "NSTextFieldCell"; title = "Queued Paste:"; ObjectID = "1Tw-Z5-00F"; */
+"1Tw-Z5-00F.title" = "Accrocher:"; // TODO: update
+
+/* Class = "NSView"; ibShadowedToolTip = "Global shortcut key to copy into the queue.\nDefault: ^⌘C."; ObjectID = "gv6-rV-zkI"; */
+"gv6-rV-zkI.ibShadowedToolTip" = "Raccourci pour ouvrir l'application.\nPar défaut: ^⌘C."; // TODO: update
+
+/* Class = "NSView"; ibShadowedToolTip = "Global shortcut key to paste next item from the queue.\nDefault: ^⌘P."; ObjectID = "pPs-rF-k8m"; */
+"pPs-rF-k8m.ibShadowedToolTip" = "Touche de raccourci pour épingler un élément de l'historique.\nPar défaut: ^⌘P."; // TODO: update

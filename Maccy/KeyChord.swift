@@ -11,6 +11,16 @@ enum KeyChord: CaseIterable {
   static var pasteKeyModifiers: NSEvent.ModifierFlags {
     (NSApp.delegate as? AppDelegate)?.pasteMenuItem.keyEquivalentModifierMask ?? [.command]
   }
+  
+  #if CLEEPP
+  static var copyKey: Key {
+    (NSApp.delegate as? AppDelegate)?.copyMenuItem.key ?? .c
+  }
+  static var copyKeyModifiers: NSEvent.ModifierFlags {
+    (NSApp.delegate as? AppDelegate)?.copyMenuItem.keyEquivalentModifierMask ?? [.command]
+  }
+  #endif
+
   static var deleteKey: Key? {
     if let shortcut = KeyboardShortcuts.Shortcut(name: .delete) {
       return Sauce.shared.key(for: shortcut.carbonKeyCode)
@@ -60,14 +70,19 @@ enum KeyChord: CaseIterable {
   // swiftlint:disable cyclomatic_complexity
   init(_ key: Key, _ modifierFlags: NSEvent.ModifierFlags) {
     switch (key, modifierFlags) {
+#if !CLEEPP
     case (.delete, MenuFooter.clear.keyEquivalentModifierMask):
       self = .clearHistory
     case (.delete, MenuFooter.clearAll.keyEquivalentModifierMask):
       self = .clearHistoryAll
-    case (.delete, [.command]), (.u, [.control]):
-      self = .clearSearch
     case (KeyChord.deleteKey, KeyChord.deleteModifiers):
       self = .deleteCurrentItem
+    case (.delete, [.command]), (.u, [.control]):
+      self = .clearSearch
+#else
+    case (.escape, []), (.u, [.control]):
+      self = .clearSearch
+#endif
     case (.delete, []), (.h, [.control]):
       self = .deleteOneCharFromSearch
     case (.w, [.control]):
@@ -76,12 +91,14 @@ enum KeyChord: CaseIterable {
       self = .moveToNext
     case (.k, [.control]):
       self = .moveToPrevious
+#if !CLEEPP
     case (KeyChord.pinKey, KeyChord.pinModifiers):
       self = .pinOrUnpin
     case (GlobalHotKey.key, GlobalHotKey.modifierFlags):
       self = .hide
     case (.comma, MenuFooter.preferences.keyEquivalentModifierMask):
       self = .openPreferences
+#endif
     case (KeyChord.pasteKey, KeyChord.pasteKeyModifiers):
       self = .paste
     case (.return, _), (.keypadEnter, _):

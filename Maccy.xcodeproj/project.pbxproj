@@ -18,65 +18,41 @@
 		5ACA94F52AD4D1E200ECAB6A /* IgnoreRegexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACA94F42AD4D1E200ECAB6A /* IgnoreRegexViewController.swift */; };
 		8F0D3C1F2BAB8F5A00DDB603 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8F0D3C202BAB8F5A00DDB603 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB082952A2B7B850053E463 /* AppStoreReview.swift */; };
-		8F0D3C212BAB8F5A00DDB603 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA043DDF247D171C00488756 /* AppearanceSettingsViewController.swift */; };
-		8F0D3C222BAB8F5A00DDB603 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6DB59620AA7D55003C255E /* GlobalHotKey.swift */; };
 		8F0D3C232BAB8F5A00DDB603 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91728BD6E21007E2F25 /* Intents.intentdefinition */; };
 		8F0D3C242BAB8F5A00DDB603 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3205B82AE3EDCA002EA545 /* MenuController.swift */; };
 		8F0D3C252BAB8F5A00DDB603 /* DeleteIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB9442C2B0583D700451E7C /* DeleteIntentHandler.swift */; };
-		8F0D3C262BAB8F5A00DDB603 /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AE952693DD7100D640D2 /* MenuLoader.swift */; };
 		8F0D3C272BAB8F5A00DDB603 /* KeyChord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD665652898A1C000975096 /* KeyChord.swift */; };
 		8F0D3C282BAB8F5A00DDB603 /* GetIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83EC252974EEA400A95531 /* GetIntentHandler.swift */; };
 		8F0D3C292BAB8F5A00DDB603 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE38531E3DD6F100DD2966 /* History.swift */; };
 		8F0D3C2A2BAB8F5A00DDB603 /* NSPasteboard.PasteboardType+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC929D6297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift */; };
-		8F0D3C2B2BAB8F5A00DDB603 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA19F18D2984943E0091F26C /* Preview.swift */; };
-		8F0D3C2C2BAB8F5A00DDB603 /* PasteMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF65F4624D396FE00F3978F /* PasteMenuItem.swift */; };
-		8F0D3C2D2BAB8F5A00DDB603 /* MenuFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA57C64D249E2A550032707A /* MenuFooter.swift */; };
 		8F0D3C2E2BAB8F5A00DDB603 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB65DFE2440AE29000AECA8 /* CoreDataManager.swift */; };
-		8F0D3C2F2BAB8F5A00DDB603 /* PreviewMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F73DF2B2AE2749E00DB654E /* PreviewMenuItem.swift */; };
 		8F0D3C302BAB8F5A00DDB603 /* UserDefaults+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B0AF1234201E500EFAD72 /* UserDefaults+Configuration.swift */; };
 		8F0D3C312BAB8F5A00DDB603 /* RunLoopLocalEventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7AFAE2A801C92006081BB /* RunLoopLocalEventMonitor.swift */; };
 		8F0D3C322BAB8F5A00DDB603 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0EF1871E444B2A00E58577 /* Clipboard.swift */; };
 		8F0D3C332BAB8F5A00DDB603 /* IgnorePasteboardTypesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9C83F2AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift */; };
-		8F0D3C342BAB8F5A00DDB603 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18116E247B405B00066D55 /* GeneralSettingsViewController.swift */; };
 		8F0D3C352BAB8F5A00DDB603 /* PreviewPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C6B502B5EFC1D00FA41BE /* PreviewPopoverController.swift */; };
-		8F0D3C362BAB8F5A00DDB603 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAEB195219694AE00A7883C /* About.swift */; };
-		8F0D3C372BAB8F5A00DDB603 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D98E12AEABE03008A77CE /* Accessibility.swift */; };
-		8F0D3C382BAB8F5A00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFEF0B7249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift */; };
 		8F0D3C392BAB8F5A00DDB603 /* HistoryItemContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB65E0C2440B0D4000AECA8 /* HistoryItemContent.swift */; };
 		8F0D3C3A2BAB8F5A00DDB603 /* Sorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA696BCD240177E800DE80CF /* Sorter.swift */; };
 		8F0D3C3B2BAB8F5A00DDB603 /* KeyboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABDE97E2974706C005B32E9 /* KeyboardLayout.swift */; };
 		8F0D3C3C2BAB8F5A00DDB603 /* NSRunningApplication+WindowFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49EE7828B594DC002752E0 /* NSRunningApplication+WindowFrame.swift */; };
 		8F0D3C3D2BAB8F5A00DDB603 /* NSScreen+ForPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6491AF29ABCF2400837D93 /* NSScreen+ForPopup.swift */; };
-		8F0D3C3E2BAB8F5A00DDB603 /* PasteWithoutFormattingMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF65F4524D396FE00F3978F /* PasteWithoutFormattingMenuItem.swift */; };
-		8F0D3C3F2BAB8F5A00DDB603 /* PinsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE2DD72688018100990986 /* PinsSettingsViewController.swift */; };
 		8F0D3C402BAB8F5A00DDB603 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81D673252A056B009977BC /* Throttler.swift */; };
-		8F0D3C412BAB8F5A00DDB603 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FA712B082DD600056DD5 /* Notifier.swift */; };
 		8F0D3C422BAB8F5A00DDB603 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA196A9228AB0D4500ADD8A2 /* MenuHeaderView.swift */; };
-		8F0D3C432BAB8F5A00DDB603 /* HistoryMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA573EAC1EDD410F00561FB2 /* HistoryMenuItem.swift */; };
-		8F0D3C442BAB8F5A00DDB603 /* PinComboBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1B0FD5289DFEA200E641BE /* PinComboBoxCell.swift */; };
-		8F0D3C452BAB8F5A00DDB603 /* StorageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1DF95127AF8BBA006839E0 /* StorageSettingsViewController.swift */; };
-		8F0D3C462BAB8F5A00DDB603 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C752B2029FE990090965D /* Menu.swift */; };
 		8F0D3C472BAB8F5A00DDB603 /* IgnoreSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35278B268D645700C92EBB /* IgnoreSettingsViewController.swift */; };
-		8F0D3C482BAB8F5A00DDB603 /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA181172247B409A00066D55 /* AdvancedSettingsViewController.swift */; };
 		8F0D3C492BAB8F5A00DDB603 /* IgnoreApplicationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20EBB1268E279F0032D360 /* IgnoreApplicationsViewController.swift */; };
 		8F0D3C4A2BAB8F5A00DDB603 /* NSRect+Centered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49EE7428B59468002752E0 /* NSRect+Centered.swift */; };
-		8F0D3C4B2BAB8F5A00DDB603 /* CopyMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF65F4724D396FE00F3978F /* CopyMenuItem.swift */; };
 		8F0D3C4C2BAB8F5A00DDB603 /* Maccy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8953B81E446A4E00884EAB /* Maccy.swift */; };
 		8F0D3C4D2BAB8F5A00DDB603 /* NSApplication+Windows.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EAE0B2AE30F7500F39108 /* NSApplication+Windows.swift */; };
 		8F0D3C4E2BAB8F5A00DDB603 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB65E0A2440B078000AECA8 /* HistoryItem.swift */; };
 		8F0D3C4F2BAB8F5A00DDB603 /* ClearIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91D28BD7DEA007E2F25 /* ClearIntentHandler.swift */; };
-		8F0D3C502BAB8F5A00DDB603 /* PopupLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89CC922AE2C9E000959C91 /* PopupLocation.swift */; };
 		8F0D3C512BAB8F5A00DDB603 /* String+Shortened.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE2DD9268A521A00990986 /* String+Shortened.swift */; };
 		8F0D3C522BAB8F5A00DDB603 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC14123232367B200FCFA30 /* Search.swift */; };
 		8F0D3C532BAB8F5A00DDB603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE38461E3DBEB100DD2966 /* AppDelegate.swift */; };
-		8F0D3C542BAB8F5A00DDB603 /* Settings.PaneIdentifier+Panes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA181176247D14DA00066D55 /* Settings.PaneIdentifier+Panes.swift */; };
 		8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE284FF232257D20080E394 /* ColorImage.swift */; };
 		8F0D3C562BAB8F5A00DDB603 /* IgnoreRegexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACA94F42AD4D1E200ECAB6A /* IgnoreRegexViewController.swift */; };
-		8F0D3C572BAB8F5A00DDB603 /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA196A8E28AB0A6800ADD8A2 /* MenuHeader.swift */; };
 		8F0D3C582BAB8F5A00DDB603 /* NSImage+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7A753D26A52F0F00DC16EF /* NSImage+Names.swift */; };
 		8F0D3C592BAB8F5A00DDB603 /* NSSound+Named.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20FA772B082E1A00056DD5 /* NSSound+Named.swift */; };
 		8F0D3C5A2BAB8F5A00DDB603 /* Storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAB65DFB2440AD63000AECA8 /* Storage.xcdatamodeld */; };
-		8F0D3C5C2BAB8F5A00DDB603 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C1A2BAB8F5A00DDB603 /* Sparkle */; };
 		8F0D3C5D2BAB8F5A00DDB603 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C162BAB8F5A00DDB603 /* KeyboardShortcuts */; };
 		8F0D3C5E2BAB8F5A00DDB603 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA5F464F2020E4DF00425C11 /* Carbon.framework */; };
 		8F0D3C5F2BAB8F5A00DDB603 /* SwiftHEXColors in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C142BAB8F5A00DDB603 /* SwiftHEXColors */; };
@@ -84,23 +60,39 @@
 		8F0D3C612BAB8F5A00DDB603 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C1C2BAB8F5A00DDB603 /* Settings */; };
 		8F0D3C622BAB8F5A00DDB603 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C182BAB8F5A00DDB603 /* LaunchAtLogin */; };
 		8F0D3C632BAB8F5A00DDB603 /* Fuse in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C122BAB8F5A00DDB603 /* Fuse */; };
-		8F0D3C652BAB8F5A00DDB603 /* PinsSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAFE2DDD268A8E4E00990986 /* PinsSettingsViewController.xib */; };
-		8F0D3C662BAB8F5A00DDB603 /* GeneralSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA05E7CE2483EF83005CB8AA /* GeneralSettingsViewController.xib */; };
 		8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA20EBB7268E54E80032D360 /* IgnoreSettingsViewController.xib */; };
-		8F0D3C682BAB8F5A00DDB603 /* Write.caf in Resources */ = {isa = PBXBuildFile; fileRef = DA20FA752B082E0800056DD5 /* Write.caf */; };
 		8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB8CE4124E368F200A2500E /* container-migration.plist */; };
 		8F0D3C6A2BAB8F5A00DDB603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA6373971E4AB9BB00263391 /* Assets.xcassets */; };
 		8F0D3C6B2BAB8F5A00DDB603 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
-		8F0D3C6D2BAB8F5A00DDB603 /* Knock.caf in Resources */ = {isa = PBXBuildFile; fileRef = DA20FA732B082E0100056DD5 /* Knock.caf */; };
 		8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
-		8F0D3C6F2BAB8F5A00DDB603 /* AppearanceSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA05E7D42483F70B005CB8AA /* AppearanceSettingsViewController.xib */; };
-		8F0D3C702BAB8F5A00DDB603 /* Preview.xib in Resources */ = {isa = PBXBuildFile; fileRef = DADBA9602985C7AA00EC46FB /* Preview.xib */; };
-		8F0D3C712BAB8F5A00DDB603 /* StorageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA1DF95327AF8BCD006839E0 /* StorageSettingsViewController.xib */; };
-		8F0D3C722BAB8F5A00DDB603 /* MenuHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA196A8F28AB0A6800ADD8A2 /* MenuHeader.xib */; };
-		8F0D3C732BAB8F5A00DDB603 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
-		8F0D3C742BAB8F5A00DDB603 /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA05E7D92483F988005CB8AA /* AdvancedSettingsViewController.xib */; };
-		8F0D3C752BAB8F5A00DDB603 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA246D601E56C9EA001E40F3 /* Application.xib */; };
+		8F0D3C812BABAD6500DDB603 /* Maccy+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C802BABAD6500DDB603 /* Maccy+Actions.swift */; };
+		8F0D3C832BABAD7F00DDB603 /* Maccy+MenubarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C822BABAD7F00DDB603 /* Maccy+MenubarIcon.swift */; };
+		8F0D3C852BABB0B000DDB603 /* RangedIntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C842BABB0B000DDB603 /* RangedIntegerTextField.swift */; };
+		8F0D3C8E2BABB17200DDB603 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C892BABB17200DDB603 /* Menu.swift */; };
+		8F0D3C902BABB17200DDB603 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C8B2BABB17200DDB603 /* Menu.xib */; };
+		8F0D3CDE2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CDD2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift */; };
+		8F0D3CE12BABD57300DDB603 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CDF2BABD57300DDB603 /* About.swift */; };
+		8F0D3CE22BABD57300DDB603 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CE02BABD57300DDB603 /* Accessibility.swift */; };
+		8F0D3CE42BACA50E00DDB603 /* HistoryMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA573EAC1EDD410F00561FB2 /* HistoryMenuItem.swift */; };
+		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
+		8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */; };
+		8F8C47E62BACB3E600C3A219 /* Equatable+IsIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E42BACB3E600C3A219 /* Equatable+IsIn.swift */; };
+		8F8C47E72BACB3E700C3A219 /* NSAttributedString+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E52BACB3E600C3A219 /* NSAttributedString+Style.swift */; };
+		8F8C47E92BACBE7800C3A219 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E82BACBE7800C3A219 /* Preview.swift */; };
+		8F8C47EA2BACBE7800C3A219 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E82BACBE7800C3A219 /* Preview.swift */; };
+		8F8C47EB2BACC2F800C3A219 /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AE952693DD7100D640D2 /* MenuLoader.swift */; };
+		8F8C47EC2BACC37C00C3A219 /* PopupLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89CC922AE2C9E000959C91 /* PopupLocation.swift */; };
+		8F8C47F52BACD0D300C3A219 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47EF2BACD0D200C3A219 /* GeneralSettingsViewController.swift */; };
+		8F8C47F62BACD0D300C3A219 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47F02BACD0D200C3A219 /* AppearanceSettingsViewController.swift */; };
+		8F8C47F72BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47F12BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift */; };
+		8F8C47F82BACD0D300C3A219 /* StorageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47F22BACD0D300C3A219 /* StorageSettingsViewController.swift */; };
+		8F8C48412BACD3B700C3A219 /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C47F92BACD17900C3A219 /* AdvancedSettingsViewController.xib */; };
+		8F8C48422BACD3C400C3A219 /* AppearanceSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C480B2BACD1A300C3A219 /* AppearanceSettingsViewController.xib */; };
+		8F8C48432BACD3CB00C3A219 /* GeneralSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C481D2BACD1A900C3A219 /* GeneralSettingsViewController.xib */; };
+		8F8C48442BACD3E600C3A219 /* StorageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */; };
+		8F8C48452BACD41200C3A219 /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA181172247B409A00066D55 /* AdvancedSettingsViewController.swift */; };
+		8F8C48482BAD344700C3A219 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48462BAD33BB00C3A219 /* Application.xib */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -120,7 +112,6 @@
 		DA196A9028AB0A6800ADD8A2 /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA196A8E28AB0A6800ADD8A2 /* MenuHeader.swift */; };
 		DA196A9128AB0A6800ADD8A2 /* MenuHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA196A8F28AB0A6800ADD8A2 /* MenuHeader.xib */; };
 		DA196A9328AB0D4500ADD8A2 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA196A9228AB0D4500ADD8A2 /* MenuHeaderView.swift */; };
-		DA19F18F2984943E0091F26C /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA19F18D2984943E0091F26C /* Preview.swift */; };
 		DA1B0FD6289DFEA200E641BE /* PinComboBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1B0FD5289DFEA200E641BE /* PinComboBoxCell.swift */; };
 		DA1DF95227AF8BBA006839E0 /* StorageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1DF95127AF8BBA006839E0 /* StorageSettingsViewController.swift */; };
 		DA1DF95527AF8BCD006839E0 /* StorageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA1DF95327AF8BCD006839E0 /* StorageSettingsViewController.xib */; };
@@ -245,9 +236,113 @@
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF124F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0D3C7B2BAB8F5A00DDB603 /* Maccy copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Maccy copy-Info.plist"; path = "/Users/pierre/Code/BML/Clipboard/Cleepp/Maccy copy-Info.plist"; sourceTree = "<absolute>"; };
 		8F0D3C7D2BAB992D00DDB603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F0D3C7E2BAB992D00DDB603 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
+		8F0D3C802BABAD6500DDB603 /* Maccy+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Maccy+Actions.swift"; sourceTree = "<group>"; };
+		8F0D3C822BABAD7F00DDB603 /* Maccy+MenubarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Maccy+MenubarIcon.swift"; sourceTree = "<group>"; };
+		8F0D3C842BABB0B000DDB603 /* RangedIntegerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangedIntegerTextField.swift; sourceTree = "<group>"; };
+		8F0D3C892BABB17200DDB603 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		8F0D3C8B2BABB17200DDB603 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
+		8F0D3CCA2BABB31600DDB603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Preview.xib; sourceTree = "<group>"; };
+		8F0D3CCB2BABB31600DDB603 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CCC2BABB31600DDB603 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Preview.strings"; sourceTree = "<group>"; };
+		8F0D3CCD2BABB31600DDB603 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Preview.strings"; sourceTree = "<group>"; };
+		8F0D3CCE2BABB31600DDB603 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CCF2BABB31600DDB603 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD02BABB31600DDB603 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD12BABB31600DDB603 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD22BABB31600DDB603 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD32BABB31600DDB603 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD42BABB31600DDB603 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD52BABB31600DDB603 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD62BABB31600DDB603 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD72BABB31600DDB603 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD82BABB31600DDB603 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CD92BABB31600DDB603 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CDA2BABB31600DDB603 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Preview.strings; sourceTree = "<group>"; };
+		8F0D3CDD2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts.Name+Shortcuts.swift"; sourceTree = "<group>"; };
+		8F0D3CDF2BABD57300DDB603 /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		8F0D3CE02BABD57300DDB603 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CleeppNames.swift"; sourceTree = "<group>"; };
+		8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKeys.swift; sourceTree = "<group>"; };
+		8F8C47E42BACB3E600C3A219 /* Equatable+IsIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Equatable+IsIn.swift"; sourceTree = "<group>"; };
+		8F8C47E52BACB3E600C3A219 /* NSAttributedString+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Style.swift"; sourceTree = "<group>"; };
+		8F8C47E82BACBE7800C3A219 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
+		8F8C47ED2BACD0D200C3A219 /* PurchaseSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseSettingsViewController.swift; sourceTree = "<group>"; };
+		8F8C47EE2BACD0D200C3A219 /* PurchaseSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseSettingsViewController.xib; sourceTree = "<group>"; };
+		8F8C47EF2BACD0D200C3A219 /* GeneralSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewController.swift; sourceTree = "<group>"; };
+		8F8C47F02BACD0D200C3A219 /* AppearanceSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsViewController.swift; sourceTree = "<group>"; };
+		8F8C47F12BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings.PaneIdentifier+Panes.swift"; sourceTree = "<group>"; };
+		8F8C47F22BACD0D300C3A219 /* StorageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageSettingsViewController.swift; sourceTree = "<group>"; };
+		8F8C47FA2BACD17900C3A219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
+		8F8C47FB2BACD17900C3A219 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C47FC2BACD17900C3A219 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C47FD2BACD17900C3A219 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AdvancedSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C47FE2BACD17900C3A219 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C47FF2BACD17900C3A219 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48002BACD17900C3A219 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48012BACD17900C3A219 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48022BACD17900C3A219 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48032BACD17900C3A219 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48042BACD17900C3A219 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AdvancedSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48052BACD17900C3A219 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48062BACD17900C3A219 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48072BACD17900C3A219 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48082BACD17900C3A219 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48092BACD17900C3A219 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C480A2BACD17900C3A219 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C480C2BACD1A300C3A219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AppearanceSettingsViewController.xib; sourceTree = "<group>"; };
+		8F8C480D2BACD1A300C3A219 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C480E2BACD1A300C3A219 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C480F2BACD1A300C3A219 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48102BACD1A300C3A219 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48112BACD1A300C3A219 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48122BACD1A300C3A219 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48132BACD1A300C3A219 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48142BACD1A300C3A219 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48152BACD1A300C3A219 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48162BACD1A300C3A219 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48172BACD1A300C3A219 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48182BACD1A300C3A219 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48192BACD1A300C3A219 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C481A2BACD1A300C3A219 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C481B2BACD1A300C3A219 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C481C2BACD1A300C3A219 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C481E2BACD1A900C3A219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/GeneralSettingsViewController.xib; sourceTree = "<group>"; };
+		8F8C481F2BACD1A900C3A219 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48202BACD1A900C3A219 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48212BACD1A900C3A219 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48222BACD1A900C3A219 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48232BACD1A900C3A219 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48242BACD1A900C3A219 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48252BACD1A900C3A219 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48262BACD1A900C3A219 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48272BACD1A900C3A219 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48282BACD1A900C3A219 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48292BACD1A900C3A219 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C482A2BACD1A900C3A219 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C482B2BACD1A900C3A219 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C482C2BACD1A900C3A219 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C482D2BACD1A900C3A219 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C482E2BACD1A900C3A219 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48302BACD1B100C3A219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/StorageSettingsViewController.xib; sourceTree = "<group>"; };
+		8F8C48312BACD1B100C3A219 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48322BACD1B100C3A219 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/StorageSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48332BACD1B100C3A219 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/StorageSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F8C48342BACD1B100C3A219 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48352BACD1B100C3A219 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48362BACD1B100C3A219 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48372BACD1B100C3A219 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48382BACD1B100C3A219 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48392BACD1B100C3A219 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C483A2BACD1B100C3A219 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C483B2BACD1B100C3A219 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C483C2BACD1B100C3A219 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C483D2BACD1B100C3A219 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C483E2BACD1B100C3A219 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C483F2BACD1B100C3A219 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48402BACD1B100C3A219 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/StorageSettingsViewController.strings; sourceTree = "<group>"; };
+		8F8C48462BAD33BB00C3A219 /* Application.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285F283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
@@ -283,7 +378,6 @@
 		DA196A8E28AB0A6800ADD8A2 /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
 		DA196A8F28AB0A6800ADD8A2 /* MenuHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuHeader.xib; sourceTree = "<group>"; };
 		DA196A9228AB0D4500ADD8A2 /* MenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
-		DA19F18D2984943E0091F26C /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		DA1B0FD5289DFEA200E641BE /* PinComboBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinComboBoxCell.swift; sourceTree = "<group>"; };
 		DA1DF95127AF8BBA006839E0 /* StorageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageSettingsViewController.swift; sourceTree = "<group>"; };
 		DA1DF95427AF8BCD006839E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/StorageSettingsViewController.xib; sourceTree = "<group>"; };
@@ -445,9 +539,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F0D3C5C2BAB8F5A00DDB603 /* Sparkle in Frameworks */,
-				8F0D3C5D2BAB8F5A00DDB603 /* KeyboardShortcuts in Frameworks */,
 				8F0D3C5E2BAB8F5A00DDB603 /* Carbon.framework in Frameworks */,
+				8F0D3C5D2BAB8F5A00DDB603 /* KeyboardShortcuts in Frameworks */,
 				8F0D3C5F2BAB8F5A00DDB603 /* SwiftHEXColors in Frameworks */,
 				8F0D3C602BAB8F5A00DDB603 /* Sauce in Frameworks */,
 				8F0D3C612BAB8F5A00DDB603 /* Settings in Frameworks */,
@@ -538,8 +631,65 @@
 			children = (
 				8F0D3C7E2BAB992D00DDB603 /* Info-MAS.plist */,
 				8F0D3C7D2BAB992D00DDB603 /* Info.plist */,
+				8F0D3CE32BABDC0D00DDB603 /* Intro */,
+				8F0D3C862BABB11C00DDB603 /* Menu */,
+				8F0D3CC42BABB2B300DDB603 /* Preivew */,
+				8F0D3CDB2BABCF3000DDB603 /* Settings */,
+				8F8C48462BAD33BB00C3A219 /* Application.xib */,
+				8F0D3CDF2BABD57300DDB603 /* About.swift */,
+				8F0D3CE02BABD57300DDB603 /* Accessibility.swift */,
+				8F8C47E42BACB3E600C3A219 /* Equatable+IsIn.swift */,
+				8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */,
+				8F0D3CDD2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift */,
+				8F0D3C802BABAD6500DDB603 /* Maccy+Actions.swift */,
+				8F0D3C822BABAD7F00DDB603 /* Maccy+MenubarIcon.swift */,
+				8F8C47E52BACB3E600C3A219 /* NSAttributedString+Style.swift */,
+				8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */,
+				8F0D3C842BABB0B000DDB603 /* RangedIntegerTextField.swift */,
 			);
 			path = Cleepp;
+			sourceTree = "<group>";
+		};
+		8F0D3C862BABB11C00DDB603 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8F0D3C892BABB17200DDB603 /* Menu.swift */,
+				8F0D3C8B2BABB17200DDB603 /* Menu.xib */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		8F0D3CC42BABB2B300DDB603 /* Preivew */ = {
+			isa = PBXGroup;
+			children = (
+				8F0D3CC92BABB31600DDB603 /* Preview.xib */,
+			);
+			name = Preivew;
+			path = Preview;
+			sourceTree = "<group>";
+		};
+		8F0D3CDB2BABCF3000DDB603 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8F8C47F92BACD17900C3A219 /* AdvancedSettingsViewController.xib */,
+				8F8C47F02BACD0D200C3A219 /* AppearanceSettingsViewController.swift */,
+				8F8C480B2BACD1A300C3A219 /* AppearanceSettingsViewController.xib */,
+				8F8C47EF2BACD0D200C3A219 /* GeneralSettingsViewController.swift */,
+				8F8C481D2BACD1A900C3A219 /* GeneralSettingsViewController.xib */,
+				8F8C47ED2BACD0D200C3A219 /* PurchaseSettingsViewController.swift */,
+				8F8C47EE2BACD0D200C3A219 /* PurchaseSettingsViewController.xib */,
+				8F8C47F12BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift */,
+				8F8C47F22BACD0D300C3A219 /* StorageSettingsViewController.swift */,
+				8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		8F0D3CE32BABDC0D00DDB603 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Intro;
 			sourceTree = "<group>";
 		};
 		C2D16D1C2EE365D52E1EE446 /* Frameworks */ = {
@@ -593,7 +743,7 @@
 		DA19F18C2984940B0091F26C /* Preview */ = {
 			isa = PBXGroup;
 			children = (
-				DA19F18D2984943E0091F26C /* Preview.swift */,
+				8F8C47E82BACBE7800C3A219 /* Preview.swift */,
 				DADBA9602985C7AA00EC46FB /* Preview.xib */,
 			);
 			path = Preview;
@@ -676,7 +826,6 @@
 				DA00992D256411F90030E697 /* README.md */,
 				DAEE38441E3DBEB100DD2966 /* Products */,
 				C2D16D1C2EE365D52E1EE446 /* Frameworks */,
-				8F0D3C7B2BAB8F5A00DDB603 /* Maccy copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -764,7 +913,6 @@
 				8F0D3C142BAB8F5A00DDB603 /* SwiftHEXColors */,
 				8F0D3C162BAB8F5A00DDB603 /* KeyboardShortcuts */,
 				8F0D3C182BAB8F5A00DDB603 /* LaunchAtLogin */,
-				8F0D3C1A2BAB8F5A00DDB603 /* Sparkle */,
 				8F0D3C1C2BAB8F5A00DDB603 /* Settings */,
 			);
 			productName = Maccy;
@@ -843,7 +991,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 1520;
-				ORGANIZATIONNAME = p0deje;
+				ORGANIZATIONNAME = "Bananameter Labs";
 				TargetAttributes = {
 					DA0EE7B5204657830025FC60 = {
 						CreatedOnToolsVersion = 9.2;
@@ -916,23 +1064,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F0D3C652BAB8F5A00DDB603 /* PinsSettingsViewController.xib in Resources */,
-				8F0D3C662BAB8F5A00DDB603 /* GeneralSettingsViewController.xib in Resources */,
+				8F8C48432BACD3CB00C3A219 /* GeneralSettingsViewController.xib in Resources */,
+				8F8C48442BACD3E600C3A219 /* StorageSettingsViewController.xib in Resources */,
+				8F8C48422BACD3C400C3A219 /* AppearanceSettingsViewController.xib in Resources */,
 				8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */,
-				8F0D3C682BAB8F5A00DDB603 /* Write.caf in Resources */,
-				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
+				8F8C48412BACD3B700C3A219 /* AdvancedSettingsViewController.xib in Resources */,
+				8F8C48482BAD344700C3A219 /* Application.xib in Resources */,
+				8F0D3C902BABB17200DDB603 /* Menu.xib in Resources */,
 				8F0D3C6A2BAB8F5A00DDB603 /* Assets.xcassets in Resources */,
 				8F0D3C6B2BAB8F5A00DDB603 /* Localizable.strings in Resources */,
-				8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */,
-				8F0D3C6D2BAB8F5A00DDB603 /* Knock.caf in Resources */,
+				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
 				8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */,
-				8F0D3C6F2BAB8F5A00DDB603 /* AppearanceSettingsViewController.xib in Resources */,
-				8F0D3C702BAB8F5A00DDB603 /* Preview.xib in Resources */,
-				8F0D3C712BAB8F5A00DDB603 /* StorageSettingsViewController.xib in Resources */,
-				8F0D3C722BAB8F5A00DDB603 /* MenuHeader.xib in Resources */,
-				8F0D3C732BAB8F5A00DDB603 /* README.md in Resources */,
-				8F0D3C742BAB8F5A00DDB603 /* AdvancedSettingsViewController.xib in Resources */,
-				8F0D3C752BAB8F5A00DDB603 /* Application.xib in Resources */,
+				8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,62 +1193,59 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F0D3C1F2BAB8F5A00DDB603 /* SelectIntentHandler.swift in Sources */,
+				8F8C47F62BACD0D300C3A219 /* AppearanceSettingsViewController.swift in Sources */,
+				8F8C47E62BACB3E600C3A219 /* Equatable+IsIn.swift in Sources */,
 				8F0D3C202BAB8F5A00DDB603 /* AppStoreReview.swift in Sources */,
-				8F0D3C212BAB8F5A00DDB603 /* AppearanceSettingsViewController.swift in Sources */,
-				8F0D3C222BAB8F5A00DDB603 /* GlobalHotKey.swift in Sources */,
+				8F0D3CE42BACA50E00DDB603 /* HistoryMenuItem.swift in Sources */,
 				8F0D3C232BAB8F5A00DDB603 /* Intents.intentdefinition in Sources */,
 				8F0D3C242BAB8F5A00DDB603 /* MenuController.swift in Sources */,
 				8F0D3C252BAB8F5A00DDB603 /* DeleteIntentHandler.swift in Sources */,
-				8F0D3C262BAB8F5A00DDB603 /* MenuLoader.swift in Sources */,
 				8F0D3C272BAB8F5A00DDB603 /* KeyChord.swift in Sources */,
+				8F8C47F72BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */,
+				8F0D3C832BABAD7F00DDB603 /* Maccy+MenubarIcon.swift in Sources */,
+				8F8C47F52BACD0D300C3A219 /* GeneralSettingsViewController.swift in Sources */,
 				8F0D3C282BAB8F5A00DDB603 /* GetIntentHandler.swift in Sources */,
 				8F0D3C292BAB8F5A00DDB603 /* History.swift in Sources */,
 				8F0D3C2A2BAB8F5A00DDB603 /* NSPasteboard.PasteboardType+Types.swift in Sources */,
-				8F0D3C2B2BAB8F5A00DDB603 /* Preview.swift in Sources */,
-				8F0D3C2C2BAB8F5A00DDB603 /* PasteMenuItem.swift in Sources */,
-				8F0D3C2D2BAB8F5A00DDB603 /* MenuFooter.swift in Sources */,
+				8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */,
+				8F8C47E92BACBE7800C3A219 /* Preview.swift in Sources */,
+				8F8C48452BACD41200C3A219 /* AdvancedSettingsViewController.swift in Sources */,
 				8F0D3C2E2BAB8F5A00DDB603 /* CoreDataManager.swift in Sources */,
-				8F0D3C2F2BAB8F5A00DDB603 /* PreviewMenuItem.swift in Sources */,
 				8F0D3C302BAB8F5A00DDB603 /* UserDefaults+Configuration.swift in Sources */,
 				8F0D3C312BAB8F5A00DDB603 /* RunLoopLocalEventMonitor.swift in Sources */,
 				8F0D3C322BAB8F5A00DDB603 /* Clipboard.swift in Sources */,
+				8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */,
 				8F0D3C332BAB8F5A00DDB603 /* IgnorePasteboardTypesViewController.swift in Sources */,
-				8F0D3C342BAB8F5A00DDB603 /* GeneralSettingsViewController.swift in Sources */,
 				8F0D3C352BAB8F5A00DDB603 /* PreviewPopoverController.swift in Sources */,
-				8F0D3C362BAB8F5A00DDB603 /* About.swift in Sources */,
-				8F0D3C372BAB8F5A00DDB603 /* Accessibility.swift in Sources */,
-				8F0D3C382BAB8F5A00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
 				8F0D3C392BAB8F5A00DDB603 /* HistoryItemContent.swift in Sources */,
 				8F0D3C3A2BAB8F5A00DDB603 /* Sorter.swift in Sources */,
+				8F0D3C852BABB0B000DDB603 /* RangedIntegerTextField.swift in Sources */,
+				8F0D3C812BABAD6500DDB603 /* Maccy+Actions.swift in Sources */,
+				8F0D3CDE2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
 				8F0D3C3B2BAB8F5A00DDB603 /* KeyboardLayout.swift in Sources */,
 				8F0D3C3C2BAB8F5A00DDB603 /* NSRunningApplication+WindowFrame.swift in Sources */,
 				8F0D3C3D2BAB8F5A00DDB603 /* NSScreen+ForPopup.swift in Sources */,
-				8F0D3C3E2BAB8F5A00DDB603 /* PasteWithoutFormattingMenuItem.swift in Sources */,
-				8F0D3C3F2BAB8F5A00DDB603 /* PinsSettingsViewController.swift in Sources */,
 				8F0D3C402BAB8F5A00DDB603 /* Throttler.swift in Sources */,
-				8F0D3C412BAB8F5A00DDB603 /* Notifier.swift in Sources */,
 				8F0D3C422BAB8F5A00DDB603 /* MenuHeaderView.swift in Sources */,
-				8F0D3C432BAB8F5A00DDB603 /* HistoryMenuItem.swift in Sources */,
-				8F0D3C442BAB8F5A00DDB603 /* PinComboBoxCell.swift in Sources */,
-				8F0D3C452BAB8F5A00DDB603 /* StorageSettingsViewController.swift in Sources */,
-				8F0D3C462BAB8F5A00DDB603 /* Menu.swift in Sources */,
 				8F0D3C472BAB8F5A00DDB603 /* IgnoreSettingsViewController.swift in Sources */,
-				8F0D3C482BAB8F5A00DDB603 /* AdvancedSettingsViewController.swift in Sources */,
 				8F0D3C492BAB8F5A00DDB603 /* IgnoreApplicationsViewController.swift in Sources */,
+				8F0D3CE22BABD57300DDB603 /* Accessibility.swift in Sources */,
 				8F0D3C4A2BAB8F5A00DDB603 /* NSRect+Centered.swift in Sources */,
-				8F0D3C4B2BAB8F5A00DDB603 /* CopyMenuItem.swift in Sources */,
 				8F0D3C4C2BAB8F5A00DDB603 /* Maccy.swift in Sources */,
 				8F0D3C4D2BAB8F5A00DDB603 /* NSApplication+Windows.swift in Sources */,
 				8F0D3C4E2BAB8F5A00DDB603 /* HistoryItem.swift in Sources */,
+				8F8C47E72BACB3E700C3A219 /* NSAttributedString+Style.swift in Sources */,
+				8F8C47EC2BACC37C00C3A219 /* PopupLocation.swift in Sources */,
+				8F8C47EB2BACC2F800C3A219 /* MenuLoader.swift in Sources */,
 				8F0D3C4F2BAB8F5A00DDB603 /* ClearIntentHandler.swift in Sources */,
-				8F0D3C502BAB8F5A00DDB603 /* PopupLocation.swift in Sources */,
 				8F0D3C512BAB8F5A00DDB603 /* String+Shortened.swift in Sources */,
+				8F0D3CE12BABD57300DDB603 /* About.swift in Sources */,
 				8F0D3C522BAB8F5A00DDB603 /* Search.swift in Sources */,
 				8F0D3C532BAB8F5A00DDB603 /* AppDelegate.swift in Sources */,
-				8F0D3C542BAB8F5A00DDB603 /* Settings.PaneIdentifier+Panes.swift in Sources */,
 				8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */,
+				8F0D3C8E2BABB17200DDB603 /* Menu.swift in Sources */,
+				8F8C47F82BACD0D300C3A219 /* StorageSettingsViewController.swift in Sources */,
 				8F0D3C562BAB8F5A00DDB603 /* IgnoreRegexViewController.swift in Sources */,
-				8F0D3C572BAB8F5A00DDB603 /* MenuHeader.swift in Sources */,
 				8F0D3C582BAB8F5A00DDB603 /* NSImage+Names.swift in Sources */,
 				8F0D3C592BAB8F5A00DDB603 /* NSSound+Named.swift in Sources */,
 				8F0D3C5A2BAB8F5A00DDB603 /* Storage.xcdatamodeld in Sources */,
@@ -1154,7 +1294,6 @@
 				DA83EC262974EEA400A95531 /* GetIntentHandler.swift in Sources */,
 				DAEE38541E3DD6F100DD2966 /* History.swift in Sources */,
 				DAC929D7297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift in Sources */,
-				DA19F18F2984943E0091F26C /* Preview.swift in Sources */,
 				DAF65F4924D396FE00F3978F /* PasteMenuItem.swift in Sources */,
 				DA57C64E249E2A550032707A /* MenuFooter.swift in Sources */,
 				DAB65DFF2440AE29000AECA8 /* CoreDataManager.swift in Sources */,
@@ -1165,6 +1304,7 @@
 				5AA9C8402AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift in Sources */,
 				DA181170247B405B00066D55 /* GeneralSettingsViewController.swift in Sources */,
 				2F3C6B512B5EFC1D00FA41BE /* PreviewPopoverController.swift in Sources */,
+				8F8C47EA2BACBE7800C3A219 /* Preview.swift in Sources */,
 				DAAEB196219694AE00A7883C /* About.swift in Sources */,
 				DA6D98E22AEABE03008A77CE /* Accessibility.swift in Sources */,
 				DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
@@ -1243,6 +1383,126 @@
 				DA7E87232B7EC74100CA9EDF /* he */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		8F0D3CC92BABB31600DDB603 /* Preview.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F0D3CCA2BABB31600DDB603 /* Base */,
+				8F0D3CCB2BABB31600DDB603 /* bs */,
+				8F0D3CCC2BABB31600DDB603 /* zh-Hans */,
+				8F0D3CCD2BABB31600DDB603 /* zh-Hant */,
+				8F0D3CCE2BABB31600DDB603 /* hr */,
+				8F0D3CCF2BABB31600DDB603 /* fr */,
+				8F0D3CD02BABB31600DDB603 /* de */,
+				8F0D3CD12BABB31600DDB603 /* it */,
+				8F0D3CD22BABB31600DDB603 /* ja */,
+				8F0D3CD32BABB31600DDB603 /* ko */,
+				8F0D3CD42BABB31600DDB603 /* nb */,
+				8F0D3CD52BABB31600DDB603 /* ru */,
+				8F0D3CD62BABB31600DDB603 /* es */,
+				8F0D3CD72BABB31600DDB603 /* th */,
+				8F0D3CD82BABB31600DDB603 /* tr */,
+				8F0D3CD92BABB31600DDB603 /* uk */,
+				8F0D3CDA2BABB31600DDB603 /* he */,
+			);
+			name = Preview.xib;
+			sourceTree = "<group>";
+		};
+		8F8C47F92BACD17900C3A219 /* AdvancedSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F8C47FA2BACD17900C3A219 /* Base */,
+				8F8C47FB2BACD17900C3A219 /* ru */,
+				8F8C47FC2BACD17900C3A219 /* es */,
+				8F8C47FD2BACD17900C3A219 /* zh-Hans */,
+				8F8C47FE2BACD17900C3A219 /* fr */,
+				8F8C47FF2BACD17900C3A219 /* nb */,
+				8F8C48002BACD17900C3A219 /* hr */,
+				8F8C48012BACD17900C3A219 /* it */,
+				8F8C48022BACD17900C3A219 /* de */,
+				8F8C48032BACD17900C3A219 /* ko */,
+				8F8C48042BACD17900C3A219 /* zh-Hant */,
+				8F8C48052BACD17900C3A219 /* ja */,
+				8F8C48062BACD17900C3A219 /* th */,
+				8F8C48072BACD17900C3A219 /* tr */,
+				8F8C48082BACD17900C3A219 /* bs */,
+				8F8C48092BACD17900C3A219 /* uk */,
+				8F8C480A2BACD17900C3A219 /* he */,
+			);
+			name = AdvancedSettingsViewController.xib;
+			sourceTree = "<group>";
+		};
+		8F8C480B2BACD1A300C3A219 /* AppearanceSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F8C480C2BACD1A300C3A219 /* Base */,
+				8F8C480D2BACD1A300C3A219 /* ru */,
+				8F8C480E2BACD1A300C3A219 /* es */,
+				8F8C480F2BACD1A300C3A219 /* zh-Hans */,
+				8F8C48102BACD1A300C3A219 /* fr */,
+				8F8C48112BACD1A300C3A219 /* nb */,
+				8F8C48122BACD1A300C3A219 /* hr */,
+				8F8C48132BACD1A300C3A219 /* it */,
+				8F8C48142BACD1A300C3A219 /* de */,
+				8F8C48152BACD1A300C3A219 /* ko */,
+				8F8C48162BACD1A300C3A219 /* zh-Hant */,
+				8F8C48172BACD1A300C3A219 /* ja */,
+				8F8C48182BACD1A300C3A219 /* th */,
+				8F8C48192BACD1A300C3A219 /* tr */,
+				8F8C481A2BACD1A300C3A219 /* bs */,
+				8F8C481B2BACD1A300C3A219 /* uk */,
+				8F8C481C2BACD1A300C3A219 /* he */,
+			);
+			name = AppearanceSettingsViewController.xib;
+			sourceTree = "<group>";
+		};
+		8F8C481D2BACD1A900C3A219 /* GeneralSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F8C481E2BACD1A900C3A219 /* Base */,
+				8F8C481F2BACD1A900C3A219 /* ru */,
+				8F8C48202BACD1A900C3A219 /* es */,
+				8F8C48212BACD1A900C3A219 /* zh-Hans */,
+				8F8C48222BACD1A900C3A219 /* fr */,
+				8F8C48232BACD1A900C3A219 /* nb */,
+				8F8C48242BACD1A900C3A219 /* hr */,
+				8F8C48252BACD1A900C3A219 /* it */,
+				8F8C48262BACD1A900C3A219 /* de */,
+				8F8C48272BACD1A900C3A219 /* ko */,
+				8F8C48282BACD1A900C3A219 /* zh-Hant */,
+				8F8C48292BACD1A900C3A219 /* ja */,
+				8F8C482A2BACD1A900C3A219 /* th */,
+				8F8C482B2BACD1A900C3A219 /* tr */,
+				8F8C482C2BACD1A900C3A219 /* bs */,
+				8F8C482D2BACD1A900C3A219 /* uk */,
+				8F8C482E2BACD1A900C3A219 /* he */,
+			);
+			name = GeneralSettingsViewController.xib;
+			sourceTree = "<group>";
+		};
+		8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F8C48302BACD1B100C3A219 /* Base */,
+				8F8C48312BACD1B100C3A219 /* bs */,
+				8F8C48322BACD1B100C3A219 /* zh-Hans */,
+				8F8C48332BACD1B100C3A219 /* zh-Hant */,
+				8F8C48342BACD1B100C3A219 /* hr */,
+				8F8C48352BACD1B100C3A219 /* fr */,
+				8F8C48362BACD1B100C3A219 /* de */,
+				8F8C48372BACD1B100C3A219 /* it */,
+				8F8C48382BACD1B100C3A219 /* ja */,
+				8F8C48392BACD1B100C3A219 /* ko */,
+				8F8C483A2BACD1B100C3A219 /* nb */,
+				8F8C483B2BACD1B100C3A219 /* ru */,
+				8F8C483C2BACD1B100C3A219 /* es */,
+				8F8C483D2BACD1B100C3A219 /* th */,
+				8F8C483E2BACD1B100C3A219 /* tr */,
+				8F8C483F2BACD1B100C3A219 /* uk */,
+				8F8C48402BACD1B100C3A219 /* he */,
+			);
+			name = StorageSettingsViewController.xib;
 			sourceTree = "<group>";
 		};
 		DA05E7CE2483EF83005CB8AA /* GeneralSettingsViewController.xib */ = {
@@ -1884,14 +2144,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		8F0D3C1B2BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.0;
-			};
-		};
 		8F0D3C1D2BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "Settings" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Settings.git";
@@ -1977,11 +2229,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F0D3C192BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
 			productName = LaunchAtLogin;
-		};
-		8F0D3C1A2BAB8F5A00DDB603 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8F0D3C1B2BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		8F0D3C1C2BAB8F5A00DDB603 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;

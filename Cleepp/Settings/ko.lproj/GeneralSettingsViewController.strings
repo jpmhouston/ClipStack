@@ -1,0 +1,35 @@
+/* Class = "NSButtonCell"; title = "Launch at login"; ObjectID = "Cfl-qm-UkM"; */
+"Cfl-qm-UkM.title" = "로그인 시 실행";
+
+/* Class = "NSButtonCell"; title = "Check for updates automatically"; ObjectID = "avb-QJ-T0h"; */
+"avb-QJ-T0h.title" = "자동으로 업데이트 확인";
+
+/* Class = "NSButtonCell"; title = "Check now"; ObjectID = "8Rb-OS-d59"; */
+"8Rb-OS-d59.title" = "지금 확인하기";
+
+/* Class = "NSTextFieldCell"; title = "Search:"; ObjectID = "eLD-CL-D8J"; */
+"eLD-CL-D8J.title" = "검색:";
+
+/* Class = "NSMenuItem"; title = "Fuzzy"; ObjectID = "IGh-5B-6RG"; */
+"IGh-5B-6RG.title" = "퍼지";
+
+/* Class = "NSMenuItem"; title = "Exact"; ObjectID = "OJz-OA-cKK"; */
+"OJz-OA-cKK.title" = "정확한";
+
+/* Class = "NSMenuItem"; title = "Regular expressions"; ObjectID = "mhw-kS-4Wk"; */
+"mhw-kS-4Wk.title" = "정규식";
+
+/* Class = "NSMenuItem"; title = "Mixed"; ObjectID = "dTc-O1-HqW"; */
+"dTc-O1-HqW.title" = "혼합";
+
+/* Class = "NSTextFieldCell"; title = "Queued Copy:"; ObjectID = "hdM-75-pvO"; */
+"hdM-75-pvO.title" = "열려 있는:"; // TODO: update
+
+/* Class = "NSTextFieldCell"; title = "Queued Paste:"; ObjectID = "1Tw-Z5-00F"; */
+"1Tw-Z5-00F.title" = "핀:"; // TODO: update
+
+/* Class = "NSView"; ibShadowedToolTip = "Global shortcut key to copy into the queue.\nDefault: ^⌘C."; ObjectID = "gv6-rV-zkI"; */
+"gv6-rV-zkI.ibShadowedToolTip" = "어디에서나 어플리케이션을 여는 단축키입니다.\n기본값: ^⌘C."; // TODO: update
+
+/* Class = "NSView"; ibShadowedToolTip = "Global shortcut key to paste next item from the queue.\nDefault: ^⌘P."; ObjectID = "pPs-rF-k8m"; */
+"pPs-rF-k8m.ibShadowedToolTip" = "고정 기록 항목에 대한 단축키입니다.\n기본값: ^⌘P."; // TODO: update
