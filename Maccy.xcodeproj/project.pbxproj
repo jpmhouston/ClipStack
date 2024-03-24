@@ -2580,7 +2580,7 @@
 			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.16.4;
+				minimumVersion = 0.16.0;
 			};
 		};
 		8F8C48B42BAD538600C3A219 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */ = {
@@ -2588,7 +2588,7 @@
 			repositoryURL = "https://github.com/tikhop/TPInAppReceipt";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.4.0;
+				minimumVersion = 3.0.0;
 			};
 		};
 		DA00993E256414560030E697 /* XCRemoteSwiftPackageReference "fuse-swift" */ = {
