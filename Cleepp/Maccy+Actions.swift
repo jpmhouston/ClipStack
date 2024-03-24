@@ -20,6 +20,11 @@ extension Maccy {
     guard Accessibility.check() else {
       return
     }
+    guard !Self.isQueueModeOn else {
+      return
+    }
+    
+    restoreClipboardMonitoring()
     
     Self.isQueueModeOn = true
     Self.queueSize = 0
@@ -27,6 +32,13 @@ extension Maccy {
     
     updateStatusMenuIcon()
     updateMenuTitle()
+  }
+  
+  private func restoreClipboardMonitoring() {
+    if UserDefaults.standard.ignoreEvents {
+      UserDefaults.standard.ignoreEvents = false
+      UserDefaults.standard.ignoreOnlyNextEvent = false
+    }
   }
   
   @IBAction
@@ -38,6 +50,8 @@ extension Maccy {
     guard Accessibility.check() else {
       return
     }
+    
+    restoreClipboardMonitoring()
     
     if !Self.isQueueModeOn {
       Self.isQueueModeOn = true
@@ -76,6 +90,10 @@ extension Maccy {
   }
   
   func queuedPaste() {
+    guard Self.isQueueModeOn && Self.queueSize > 0 else {
+      return
+    }
+    
     guard Accessibility.check() else {
       return
     }
@@ -87,6 +105,12 @@ extension Maccy {
       self.decrementQueue()
       
       Self.busy = false
+      
+      #if FOR_APP_STORE && !DEBUG
+      if !Self.isQueueModeOn {
+        Purchases.shared.askForReview()
+      }
+      #endif
     }
   }
   
@@ -108,12 +132,6 @@ extension Maccy {
     }
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
-    
-    #if FOR_APP_STORE && !DEBUG
-    if !Self.isQueueModeOn {
-      AppStoreReview.ask()
-    }
-    #endif
   }
   
   @IBAction
