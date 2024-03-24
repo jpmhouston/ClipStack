@@ -15,11 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set Default Scheme
-        uses: Cleepp
+        run: |
+          default=Cleepp
+          echo $default | cat >default
+          echo Using scheme: $default
       - name: Build
         env:
-          scheme: Cleepp
+          scheme: ${{ 'default' }}
         run: |
+          if [ $scheme = default ]; then scheme=$(cat default); fi
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
           xcodebuild clean build analyze -scheme "$scheme" -"$filetype_parameter" "$file_to_build" | xcpretty && exit ${PIPESTATUS[0]}
