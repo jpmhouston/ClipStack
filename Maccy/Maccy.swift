@@ -33,7 +33,9 @@ class Maccy: NSObject, NSMenuItemValidation {
   private var menuController: MenuController!
 
 #if CLEEPP
+  #if FOR_APP_STORE
   private let purchases = Purchases.shared
+  #endif
   internal var intro = IntroWindowController()
   
   internal var queueHeadIndex: Int? {
@@ -152,18 +154,13 @@ class Maccy: NSObject, NSMenuItemValidation {
     initializeObservers()
 
     #if CLEEPP
-    purchases.start(withObserver: self) { [weak self] _, update in
-      self?.purchasesUpdated(update)
-    }
-    #endif
-
-    #if !CLEEPP
-    disableUnusedGlobalHotkeys()
-    #endif
-
-    #if CLEEPP
-    menu = CleeppMenu.load(withHistory: history, owner: self) // its not clear why history is not a shared instance
+    initializeFeatureFlags()
+    
+    menu = CleeppMenu.load(withHistory: history, owner: self) // its not clear why history isn't a shared instance also
+    
     #else
+    disableUnusedGlobalHotkeys()
+
     menu = Menu(history: history, clipboard: Clipboard.shared)
     #endif
 
@@ -190,7 +187,9 @@ class Maccy: NSObject, NSMenuItemValidation {
     statusItemChangeObserver?.invalidate()
     
     cancelIconBlinkTimer()
+    #if FOR_APP_STORE
     purchases.finish()
+    #endif
   }
 
   func popUp() {
@@ -277,9 +276,24 @@ class Maccy: NSObject, NSMenuItemValidation {
   }
 
 #if CLEEPP
-  private func purchasesUpdated(_ update: Purchases.ObservationUpdate) {
-    setFeatureFlags(givenPurchase: purchases.hasBoughtExtras)
+  private func initializeFeatureFlags() {
+    #if BONUS_FEATUES_ON
+    setFeatureFlags(givenPurchase: true)
+    #endif
+    #if FOR_APP_STORE
+    purchases.start(withObserver: self) { [weak self] _, update in
+      self?.purchasesUpdated(update)
+    }
+    #endif
   }
+  
+  #if FOR_APP_STORE
+  private func purchasesUpdated(_ update: Purchases.ObservationUpdate) {
+    #if !BONUS_FEATUES_ON
+    setFeatureFlags(givenPurchase: purchases.hasBoughtExtras)
+    #endif
+  }
+  #endif
   
   private func setFeatureFlags(givenPurchase hasPurchased: Bool) {
     Self.allowFullyExpandedHistory = hasPurchased
@@ -293,6 +307,7 @@ class Maccy: NSObject, NSMenuItemValidation {
   // (the best code is no code), action methods for those items now live in this class, defined
   // in a class extension. Also history menu item subclasses no longer exist, actions for those
   // are also defined in the extension, and other "business logic" for the queueing feature.
+  
 #else
   private func populateHeader() {
     let headerItem = NSMenuItem()

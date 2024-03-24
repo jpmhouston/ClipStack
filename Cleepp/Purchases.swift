@@ -8,10 +8,8 @@
 
 import AppKit
 import StoreKit
-#if FOR_APP_STORE
 import SwiftyStoreKit
 import TPInAppReceipt
-#endif
 
 enum PurchaseItem {
   case bonus
@@ -103,13 +101,6 @@ class Purchases: NSObject {
   }
   
   func start() {
-    #if BONUS_FEATUES_ON
-    boughtItems.insert(.bonus)
-    callObservers(withUpdate: .success(.bonus))
-    #elseif !FOR_APP_STORE
-    callObservers(withUpdate: .failure(.prohibited))
-    #else
-    
     SwiftyStoreKit.completeTransactions(atomically: false, completion: completeTransactionsAtLaunchCallback)
     
     if case .success(let items) = checkReceipt() {
@@ -117,8 +108,6 @@ class Purchases: NSObject {
         callObservers(withUpdate: .success(item))
       }
     }
-    
-    #endif // FOR_APP_STORE
   }
   
   func finish(andRemoveObserver token: ObservationToken? = nil) {
@@ -147,22 +136,22 @@ class Purchases: NSObject {
     token.cancel()
   }
   
+  func askForReview() {
+    // TODO: count times entering this function, only ask the Nth time
+    AppStoreReview.ask()
+  }
+  
   // MARK: -
   
   func buyExtras() -> PurchaseResult {
-    #if FOR_APP_STORE
     guard SKPaymentQueue.canMakePayments() else {
       return .failure(.prohibited)
     }
     // ...
     return .success(())
-    #else
-    return .failure(.prohibited)
-    #endif
   }
   
   func restore() -> ReceiptResult {
-    #if FOR_APP_STORE
     guard SKPaymentQueue.canMakePayments() else {
       return .failure(.prohibited)
     }
@@ -184,9 +173,6 @@ class Purchases: NSObject {
     //}
     
     return .success([])
-    #else
-    return .failure(.prohibited)
-    #endif
   }
   
   // remove all of these:
@@ -225,8 +211,6 @@ class Purchases: NSObject {
   }
   
   // MARK: -
-  
-  #if FOR_APP_STORE
   
   @discardableResult
   private func checkReceipt() -> ReceiptResult {
@@ -338,7 +322,5 @@ class Purchases: NSObject {
       }
     }
   }
-  
-  #endif // FOR_APP_STORE
   
 }

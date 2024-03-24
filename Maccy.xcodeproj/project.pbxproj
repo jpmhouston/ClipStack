@@ -93,7 +93,6 @@
 		8F8C48442BACD3E600C3A219 /* StorageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */; };
 		8F8C48452BACD41200C3A219 /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA181172247B409A00066D55 /* AdvancedSettingsViewController.swift */; };
 		8F8C48482BAD344700C3A219 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48462BAD33BB00C3A219 /* Application.xib */; };
-		8F8C484C2BAD4E6300C3A219 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C484B2BAD4E6300C3A219 /* Purchases.swift */; };
 		8F8C485B2BAD51B000C3A219 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8F8C485C2BAD51B000C3A219 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47F02BACD0D200C3A219 /* AppearanceSettingsViewController.swift */; };
 		8F8C485D2BAD51B000C3A219 /* Equatable+IsIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E42BACB3E600C3A219 /* Equatable+IsIn.swift */; };
@@ -1443,7 +1442,6 @@
 				8F0D3C322BAB8F5A00DDB603 /* Clipboard.swift in Sources */,
 				8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */,
 				8F0D3C332BAB8F5A00DDB603 /* IgnorePasteboardTypesViewController.swift in Sources */,
-				8F8C484C2BAD4E6300C3A219 /* Purchases.swift in Sources */,
 				8F0D3C352BAB8F5A00DDB603 /* PreviewPopoverController.swift in Sources */,
 				8F0D3C392BAB8F5A00DDB603 /* HistoryItemContent.swift in Sources */,
 				8F0D3C3A2BAB8F5A00DDB603 /* Sorter.swift in Sources */,
