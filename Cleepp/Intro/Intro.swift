@@ -65,6 +65,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var animatedLogoImage: NSImageView!
   @IBOutlet var logoStopButton: NSButton!
   @IBOutlet var logoRestartButton: NSButton!
+  @IBOutlet var setupNeededLabel: NSTextField!
   @IBOutlet var openSecurityPanelButton: NSButton!
   @IBOutlet var openSecurityPanelSpinner: NSProgressIndicator!
   @IBOutlet var hasAuthorizationEmoji: NSTextField!
@@ -146,6 +147,10 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       } else {
         animatedLogoImage.isHidden = true // show only static logo behind
       }
+      if Accessibility.allowed {
+        setupNeededLabel.isHidden = true
+      }
+      
     case .checkAuth:
       let isAuthorized = Accessibility.allowed
       hasAuthorizationEmoji.isHidden = !isAuthorized

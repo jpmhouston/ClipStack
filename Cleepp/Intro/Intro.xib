@@ -139,13 +139,39 @@ DQ
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="introAnimatedLogo" id="yi0-pt-hiF"/>
                         </imageView>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ed-EA-huu">
-                            <rect key="frame" x="34" y="100" width="510" height="80"/>
-                            <textFieldCell key="cell" id="136-X1-mq3">
-                                <font key="font" metaFont="system" size="17"/>
-                                <string key="title">Cleepp is a simple clipboard utility that lets you copy multiple items in one place, then paste them into another in sequence.
-
-But there's a tiny bit of setup you need to do first …</string>
+                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VNn-Zg-RaA">
+                            <rect key="frame" x="36" y="104" width="506" height="76"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g8m-UI-Ipo">
+                                    <rect key="frame" x="-2" y="36" width="510" height="40"/>
+                                    <textFieldCell key="cell" title="Cleepp is a simple clipboard utility that lets you copy multiple items in one place, then paste them into another in sequence." id="u3E-8K-Lim">
+                                        <font key="font" metaFont="system" size="17"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ed-EA-huu">
+                                    <rect key="frame" x="-2" y="0.0" width="393" height="20"/>
+                                    <textFieldCell key="cell" title="But there's a tiny bit of setup you need to do first …" id="136-X1-mq3">
+                                        <font key="font" metaFont="system" size="17"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-o6-hWz">
+                            <rect key="frame" x="34" y="20" width="275" height="45"/>
+                            <textFieldCell key="cell" title="to open this window again use the About Cleepp menu item, then using the Show Intro button within" id="nAg-nr-2O5">
+                                <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
@@ -153,14 +179,6 @@ But there's a tiny bit of setup you need to do first …</string>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vey-Vh-Zet">
                             <rect key="frame" x="345" y="20" width="229" height="15"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="press the next button below to continue" id="997-1T-N4Q">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-o6-hWz">
-                            <rect key="frame" x="34" y="20" width="275" height="45"/>
-                            <textFieldCell key="cell" title="to open this window again use the About Cleepp menu item, then using the Show Intro button within" id="nAg-nr-2O5">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -192,24 +210,23 @@ But there's a tiny bit of setup you need to do first …</string>
                     </subviews>
                     <constraints>
                         <constraint firstItem="cZS-Ny-vCa" firstAttribute="bottom" secondItem="18M-Uy-H9x" secondAttribute="bottom" id="14r-Wi-8Gg"/>
-                        <constraint firstItem="uw2-o6-hWz" firstAttribute="leading" secondItem="4Ed-EA-huu" secondAttribute="leading" id="6xM-31-qwx"/>
+                        <constraint firstAttribute="trailing" secondItem="VNn-Zg-RaA" secondAttribute="trailing" constant="50" id="1vg-AR-IgX"/>
+                        <constraint firstItem="VNn-Zg-RaA" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="7Af-PK-NDJ"/>
+                        <constraint firstItem="VNn-Zg-RaA" firstAttribute="top" secondItem="18M-Uy-H9x" secondAttribute="bottom" constant="24" id="DHr-z8-N6t"/>
                         <constraint firstAttribute="trailing" secondItem="Vey-Vh-Zet" secondAttribute="trailing" constant="20" symbolic="YES" id="FwU-FM-dLX"/>
                         <constraint firstItem="18M-Uy-H9x" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="Li4-aB-9Ot"/>
                         <constraint firstItem="VW6-3z-458" firstAttribute="centerY" secondItem="cZS-Ny-vCa" secondAttribute="centerY" id="O8U-6w-4zz"/>
                         <constraint firstItem="dAC-wT-V2b" firstAttribute="leading" secondItem="18M-Uy-H9x" secondAttribute="leading" constant="2" id="Qce-El-uqg"/>
                         <constraint firstItem="cZS-Ny-vCa" firstAttribute="leading" secondItem="18M-Uy-H9x" secondAttribute="trailing" constant="8" symbolic="YES" id="S0f-3H-qbS"/>
+                        <constraint firstItem="uw2-o6-hWz" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="V6A-Dk-bKi"/>
                         <constraint firstItem="dAC-wT-V2b" firstAttribute="top" secondItem="18M-Uy-H9x" secondAttribute="top" constant="2" id="WlZ-HO-VLB"/>
-                        <constraint firstItem="4Ed-EA-huu" firstAttribute="top" secondItem="18M-Uy-H9x" secondAttribute="bottom" constant="24" id="aLY-GB-QWR"/>
                         <constraint firstItem="uw2-o6-hWz" firstAttribute="bottom" secondItem="Vey-Vh-Zet" secondAttribute="bottom" id="b2H-AX-lpz"/>
                         <constraint firstAttribute="height" constant="324" id="eUW-mG-UwV"/>
-                        <constraint firstItem="4Ed-EA-huu" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="keG-Wl-zUh"/>
-                        <constraint firstItem="uw2-o6-hWz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4Ed-EA-huu" secondAttribute="bottom" constant="8" symbolic="YES" id="rUg-o9-Vvh"/>
+                        <constraint firstItem="uw2-o6-hWz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VNn-Zg-RaA" secondAttribute="bottom" constant="8" symbolic="YES" id="i73-PL-CcL"/>
                         <constraint firstItem="VW6-3z-458" firstAttribute="centerX" secondItem="cZS-Ny-vCa" secondAttribute="centerX" id="sIr-lT-QtH"/>
                         <constraint firstItem="Vey-Vh-Zet" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uw2-o6-hWz" secondAttribute="trailing" constant="40" id="shz-vq-BOh"/>
-                        <constraint firstAttribute="trailing" secondItem="4Ed-EA-huu" secondAttribute="trailing" constant="50" id="sjP-Xh-CbY"/>
                         <constraint firstAttribute="width" constant="592" id="txT-NI-R8k"/>
                         <constraint firstAttribute="bottom" secondItem="Vey-Vh-Zet" secondAttribute="bottom" constant="20" symbolic="YES" id="utV-Km-wQz"/>
-                        <constraint firstItem="Vey-Vh-Zet" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4Ed-EA-huu" secondAttribute="bottom" constant="8" symbolic="YES" id="ylt-c0-BQu"/>
                         <constraint firstItem="18M-Uy-H9x" firstAttribute="top" secondItem="4HE-o8-4GT" secondAttribute="top" constant="26" id="zed-Km-oWh"/>
                     </constraints>
                 </customView>
@@ -1068,6 +1085,7 @@ If Cleepp is not in the list, use the + button and select it from your Applicati
                 <outlet property="openSecurityPanelSpinner" destination="w2D-dO-d7T" id="U9Z-8M-Muf"/>
                 <outlet property="sendL10nEmailButton" destination="K04-rZ-O0s" id="gpt-xG-oUo"/>
                 <outlet property="sendSupportEmailButton" destination="Jez-C6-oFa" id="Lkh-Vo-TqX"/>
+                <outlet property="setupNeededLabel" destination="4Ed-EA-huu" id="ArX-3F-qVD"/>
                 <outlet property="specialCopyPasteBehaviorLabel" destination="Sed-8H-0RI" id="hoL-y1-4oZ"/>
                 <outlet property="staticLogoImage" destination="18M-Uy-H9x" id="EM4-PV-Tgn"/>
                 <outlet property="view" destination="rWC-ZD-zO1" id="4ON-h7-R9g"/>
