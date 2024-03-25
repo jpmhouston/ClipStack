@@ -24,6 +24,7 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var pasteHotkeyContainerView: NSView!
   @IBOutlet weak var launchAtLoginButton: NSButton!
   @IBOutlet weak var automaticUpdatesButton: NSButton!
+  @IBOutlet weak var searchModeSeparator: NSView!
   @IBOutlet weak var searchModeLabel: NSTextField!
   @IBOutlet weak var searchModeButton: NSPopUpButton!
   @IBOutlet weak var checkForUpdatesOptionRow: NSGridRow!
@@ -44,7 +45,7 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     populateLaunchAtLogin()
     populateSparkleAutomaticUpdates()
     populateSearchMode()
-    enableSearchOptions(Cleepp.allowExpandedHistory)
+    showSearchOption(Cleepp.allowHistorySearch)
   }
 
   @IBAction func sparkleAutomaticUpdatesChanged(_ sender: NSButton) {
@@ -99,14 +100,15 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     }
   }
 
-  private func enableSearchOptions(_ enable: Bool) {
-    searchModeLabel?.isEnabled = enable
-    searchModeButton?.isEnabled = enable
+  private func showSearchOption(_ show: Bool) {
+    searchModeSeparator.isHidden = !show
+    searchModeLabel.isHidden = !show
+    searchModeButton.isHidden = !show
   }
 
   private func hideSparkleUpdateRows() {
-    checkForUpdatesOptionRow?.isHidden = true
-    checkForUpdatesButtonRow?.isHidden = true
+    checkForUpdatesOptionRow.isHidden = true
+    checkForUpdatesButtonRow.isHidden = true
   }
   
 }
