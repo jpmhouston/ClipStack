@@ -63,7 +63,6 @@
 		8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA20EBB7268E54E80032D360 /* IgnoreSettingsViewController.xib */; };
 		8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB8CE4124E368F200A2500E /* container-migration.plist */; };
 		8F0D3C6A2BAB8F5A00DDB603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA6373971E4AB9BB00263391 /* Assets.xcassets */; };
-		8F0D3C6B2BAB8F5A00DDB603 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
 		8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		8F0D3C812BABAD6500DDB603 /* Maccy+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C802BABAD6500DDB603 /* Maccy+Actions.swift */; };
@@ -166,7 +165,6 @@
 		8F8C48A32BAD51B000C3A219 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48462BAD33BB00C3A219 /* Application.xib */; };
 		8F8C48A42BAD51B000C3A219 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C8B2BABB17200DDB603 /* Menu.xib */; };
 		8F8C48A52BAD51B000C3A219 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA6373971E4AB9BB00263391 /* Assets.xcassets */; };
-		8F8C48A62BAD51B000C3A219 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		8F8C48A72BAD51B000C3A219 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB8CE4124E368F200A2500E /* container-migration.plist */; };
 		8F8C48A82BAD51B000C3A219 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		8F8C48A92BAD51B000C3A219 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -1136,7 +1134,6 @@
 				8F0D3C6A2BAB8F5A00DDB603 /* Assets.xcassets in Resources */,
 				8F8C48C92BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */,
 				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
-				8FBDF6AA2BB2385A00219889 /* Localizable.strings in Resources */,
 				8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */,
 				8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */,
 			);
@@ -1146,7 +1143,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FBDF6AB2BB2385A00219889 /* Localizable.strings in Resources */,
 				8F8C489E2BAD51B000C3A219 /* GeneralSettingsViewController.xib in Resources */,
 				8F8C489F2BAD51B000C3A219 /* StorageSettingsViewController.xib in Resources */,
 				8F8C48A02BAD51B000C3A219 /* AppearanceSettingsViewController.xib in Resources */,
@@ -1805,7 +1801,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 0.9.0;
+				MARKETING_VERSION = 0.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1841,7 +1837,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 0.9.0;
+				MARKETING_VERSION = 0.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1876,7 +1872,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 0.9.0;
+				MARKETING_VERSION = 0.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = Cleepp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1912,7 +1908,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 0.9.0;
+				MARKETING_VERSION = 0.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
 				PRODUCT_NAME = Cleepp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
