@@ -5,22 +5,22 @@
 "avb-QJ-T0h.title" = "自動檢查更新";
 
 /* Class = "NSButtonCell"; title = "Check now"; ObjectID = "8Rb-OS-d59"; */
-"8Rb-OS-d59.title" = "立即檢查更新";
+"8Rb-OS-d59.title" = "立即檢查";
 
 /* Class = "NSTextFieldCell"; title = "Search:"; ObjectID = "eLD-CL-D8J"; */
-"eLD-CL-D8J.title" = "搜尋:";
+"eLD-CL-D8J.title" = "搜尋：";
 
 /* Class = "NSMenuItem"; title = "Fuzzy"; ObjectID = "IGh-5B-6RG"; */
 "IGh-5B-6RG.title" = "模糊";
 
 /* Class = "NSMenuItem"; title = "Exact"; ObjectID = "OJz-OA-cKK"; */
-"OJz-OA-cKK.title" = "精確的";
+"OJz-OA-cKK.title" = "精確";
 
 /* Class = "NSMenuItem"; title = "Regular expressions"; ObjectID = "mhw-kS-4Wk"; */
-"mhw-kS-4Wk.title" = "常用表達";
+"mhw-kS-4Wk.title" = "正規表示式";
 
 /* Class = "NSMenuItem"; title = "Mixed"; ObjectID = "dTc-O1-HqW"; */
-"dTc-O1-HqW.title" = "混合的";
+"dTc-O1-HqW.title" = "混合";
 
 /* Class = "NSTextFieldCell"; title = "Queued Copy:"; ObjectID = "hdM-75-pvO"; */
 "hdM-75-pvO.title" = "打開:"; // TODO: update

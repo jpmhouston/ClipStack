@@ -20,7 +20,7 @@
 "a8Y-aG-9on.ibShadowedToolTip" = "在選單中顯示條項目。\n隱藏項目仍保留在歷史記錄，可透過搜尋查找。\n設定為 0 以顯示所有項目。\n預設: 0。";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum number of characters in the item title.\nDefault: 50."; ObjectID = "XGd-Fg-wS9"; */
-"XGd-Fg-wS9.ibShadowedToolTip" = "項目標題中的最大字符數。\n預設：50。";
+"XGd-Fg-wS9.ibShadowedToolTip" = "項目標題的最大字元數。\n預設：50。";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Delay in milliseconds until a preview popup is shown.\nDefault: 1500."; ObjectID = "7SP-tN-nLD"; */
-"7SP-tN-nLD.ibShadowedToolTip" = "延遲以毫秒為單位，直到顯示預覽彈出窗口。\n預設: 1500。";
+"7SP-tN-nLD.ibShadowedToolTip" = "顯示預覽彈出視窗的延遲，單位為毫秒。\n預設：1500。";

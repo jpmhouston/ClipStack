@@ -16,20 +16,5 @@
 /* Class = "NSTextFieldCell"; title = "Size:"; ObjectID = "5og-JF-cpR"; */
 "5og-JF-cpR.title" = "Размер:";
 
-/* Class = "NSTextFieldCell"; title = "Sort by:"; ObjectID = "0Vh-es-5I5"; */
-"0Vh-es-5I5.title" = "Сортировать:";
-
-/* Class = "NSMenuItem"; title = "Time of last copy"; ObjectID = "zrg-H1-TjU"; */
-"zrg-H1-TjU.title" = "Время последнего копирования";
-
-/* Class = "NSMenuItem"; title = "Time of first copy"; ObjectID = "2yi-R0-4up"; */
-"2yi-R0-4up.title" = "Время первого копирования";
-
-/* Class = "NSMenuItem"; title = "Number of copies"; ObjectID = "mf5-QH-x1u"; */
-"mf5-QH-x1u.title" = "Количество копирований";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Default: Time of last copy."; ObjectID = "PWC-Rx-PPN"; */
-"PWC-Rx-PPN.ibShadowedToolTip" = "По умолчанию: Время последнего копирования.";
-
 /* Class = "NSStackView"; ibShadowedToolTip = "Number of history items to keep.\nDefault: 200."; ObjectID = "b49-c6-irW"; */
 "b49-c6-irW.ibShadowedToolTip" = "Количество записей в истории для хранения.\nПо умолчанию: 200";
