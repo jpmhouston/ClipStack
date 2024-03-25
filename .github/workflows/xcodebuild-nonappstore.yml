@@ -27,7 +27,7 @@ jobs:
           if [ $scheme = default ]; then scheme=$(cat default); fi
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild clean build analyze -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild clean build analyze -scheme "$scheme" -configuration Release -"$filetype_parameter" "$file_to_build" -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
       - name: "Codesign app bundle"
         # Extract the secrets we defined earlier as environment variables
         env: 
@@ -37,7 +37,9 @@ jobs:
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
           
-          ls -al Build/Products/Debug/Cleepp.app 2>/dev/null || echo "uh-oh, it's not in ./Build/Products/Debug"
+          ls -ald Build/Products/Debug/Cleepp.app 2>/dev/null || echo "no built app in ./Build/Products/Debug"
+          ls -ald Build/Products/Release/Cleepp.app 2>/dev/null || echo "no built app in ./Build/Products/Release"
+          file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Turn our base64-encoded certificate back to a regular .p12 file
@@ -56,7 +58,7 @@ jobs:
           
           # We finally codesign our app bundle, specifying the Hardened runtime option
           
-          /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime Build/Products/Debug/Cleepp.app -v
+          /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime Build/Products/Release/Cleepp.app -v
       - name: "Notarize app bundle"
         # Extract the secrets we defined earlier as environment variables
         env:
@@ -65,6 +67,7 @@ jobs:
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           
+          file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Store the notarization credentials so that we can prevent a UI password dialog
@@ -91,10 +94,17 @@ jobs:
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "Attach staple"
-          xcrun stapler staple "Build/Products/Debug/Cleepp.app"
+          xcrun stapler staple "Build/Products/Release/Cleepp.app"
+      - name: Rename readme
+        run: |
+          file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Build/Products/Release/Cleepp.app/Contents/Info.plist)
+          cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf Build/Products/Release/Cleepp\ version\ $VERSION\ read\ me.rtf
       - name: Save app artifact
         uses: actions/upload-artifact@v4
         with:
           # use name nonappstore-app-signed-notarized
           name: nonappstore-app-unsigned-unnotarized
-          path: Build/Products/Debug/Cleepp.app
+          path: |
+            Build/Products/Release/Cleepp.app
+            Build/Products/Release/*.rtf
