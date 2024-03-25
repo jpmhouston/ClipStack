@@ -1,10 +1,10 @@
-name: Build Sign & Notarize Cleepp
+name: Build Sign Notarize and Release Cleepp
 
 on:
   push:
     branches: [ "forkmain" ]
-  pull_request:
-    branches: [ "forkmain" ]
+  #tags:
+  #  - v*
 
 jobs:
   build:
@@ -95,16 +95,37 @@ jobs:
           # validated by macOS even when an internet connection is not available.
           echo "Attach staple"
           xcrun stapler staple "Build/Products/Release/Cleepp.app"
-      - name: Rename readme
+      - name: Extract Version
+          run: |
+            file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
+            echo "::set-output name=version::$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Build/Products/Release/Cleepp.app/Contents/Info.plist)
+          id: version
+      - name: Build Zip
         run: |
           file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
-          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Build/Products/Release/Cleepp.app/Contents/Info.plist)
-          cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf Build/Products/Release/Cleepp\ version\ $VERSION\ read\ me.rtf
-      - name: Save app artifact
-        uses: actions/upload-artifact@v4
+          cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf Build/Products/Release/Cleepp\ version\ ${{ steps.version.outputs.version }}\ read\ me.rtf
+          zip --junk-paths Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }} Build/Products/Release/Cleepp.app Build/Products/Release/*.rtf
+      - name: Draft Release
+        uses: actions/create-release@v1
+        id: release
         with:
-          # use name nonappstore-app-signed-notarized
-          name: nonappstore-app-unsigned-unnotarized
-          path: |
-            Build/Products/Release/Cleepp.app
-            Build/Products/Release/*.rtf
+          tag_name: ${{ github.ref }}
+          release_name: "Cleepp ${{ steps.version.outputs.version }}"
+          draft: true
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      #- name: Save app artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: nonappstore-app-signed-notarized
+      #    path: Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
+      - name: Add Artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
+          asset_name: Cleepp\ ${{ steps.version.outputs.version }}
+          asset_content_type: application/zip
