@@ -2,7 +2,8 @@ name: Build Sign Notarize and Release Cleepp
 
 on:
   push:
-    branches: [ "forkmain" ]
+    branches-ignore:
+      - '!forkmain'
     tags:
       - v*
 
@@ -98,7 +99,7 @@ jobs:
         run: |
           test -e Build/Products/Release/Cleepp.app || exit 1
           test -e Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
-          echo "::set-output name=version::$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)"
+          echo "version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)" >> $GITHUB_OUTPUT
         id: version
       - name: Build Zip
         run: |
@@ -125,7 +126,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
           asset_name: Cleepp\ ${{ steps.version.outputs.version }}
           asset_content_type: application/zip
