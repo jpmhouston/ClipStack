@@ -98,7 +98,7 @@ jobs:
       - name: Extract Version
           run: |
             file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
-            echo "::set-output name=version::$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Build/Products/Release/Cleepp.app/Contents/Info.plist)
+            echo "::set-output name=version::$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)"
           id: version
       - name: Build Zip
         run: |
