@@ -1,15 +1,3 @@
-/* Class = "NSTextFieldCell"; title = "Sort by:"; ObjectID = "0Vh-es-5I5"; */
-"0Vh-es-5I5.title" = "정렬 기준:";
-
-/* Class = "NSMenuItem"; title = "Time of first copy"; ObjectID = "2yi-R0-4up"; */
-"2yi-R0-4up.title" = "처음 복사한 시간";
-
-/* Class = "NSTextFieldCell"; title = "Size:"; ObjectID = "5og-JF-cpR"; */
-"5og-JF-cpR.title" = "크기:";
-
-/* Class = "NSTextFieldCell"; title = "Save:"; ObjectID = "Cal-Kj-TqV"; */
-"Cal-Kj-TqV.title" = "저장:";
-
 /* Class = "NSTextFieldCell"; title = "Change what types of copied content should be stored."; ObjectID = "GDB-hB-d75"; */
 "GDB-hB-d75.title" = "보관할 복사 컨텐츠 타입을 변경합니다.";
 
@@ -27,9 +15,6 @@
 
 /* Class = "NSMenuItem"; title = "Time of last copy"; ObjectID = "zrg-H1-TjU"; */
 "zrg-H1-TjU.title" = "마지막 복사한 시간";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Default: Time of last copy."; ObjectID = "PWC-Rx-PPN"; */
-"PWC-Rx-PPN.ibShadowedToolTip" = "기본값: 마지막 복사한 시간.";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Number of history items to keep.\nDefault: 200."; ObjectID = "b49-c6-irW"; */
 "b49-c6-irW.ibShadowedToolTip" = "보관할 기록 항목 수.\n기본값: 200.";

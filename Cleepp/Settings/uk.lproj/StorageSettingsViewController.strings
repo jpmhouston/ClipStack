@@ -1,15 +1,3 @@
-/* Class = "NSTextFieldCell"; title = "Sort by:"; ObjectID = "0Vh-es-5I5"; */
-"0Vh-es-5I5.title" = "Сортувати за:";
-
-/* Class = "NSMenuItem"; title = "Time of first copy"; ObjectID = "2yi-R0-4up"; */
-"2yi-R0-4up.title" = "Часом першої копії";
-
-/* Class = "NSTextFieldCell"; title = "Size:"; ObjectID = "5og-JF-cpR"; */
-"5og-JF-cpR.title" = "Розмір:";
-
-/* Class = "NSTextFieldCell"; title = "Save:"; ObjectID = "Cal-Kj-TqV"; */
-"Cal-Kj-TqV.title" = "Зберегти:";
-
 /* Class = "NSTextFieldCell"; title = "Change what types of copied content should be stored."; ObjectID = "GDB-hB-d75"; */
 "GDB-hB-d75.title" = "Змінити, які типи скопійованого вмісту слід зберігати.";
 
@@ -27,9 +15,6 @@
 
 /* Class = "NSMenuItem"; title = "Time of last copy"; ObjectID = "zrg-H1-TjU"; */
 "zrg-H1-TjU.title" = "Часом останньої копії";
-
-/* Class = "NSPopUpButton"; ibShadowedToolTip = "Default: Time of last copy."; ObjectID = "PWC-Rx-PPN"; */
-"PWC-Rx-PPN.ibShadowedToolTip" = "За замовчуванням: Час останньої копії.";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Number of history items to keep.\nDefault: 200."; ObjectID = "b49-c6-irW"; */
 "b49-c6-irW.ibShadowedToolTip" = "Кількість елементів історії, які потрібно зберегти.\nЗа замовчуванням: 200.";
