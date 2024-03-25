@@ -79,6 +79,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var demoCopyBubble: NSView!
   @IBOutlet var demoPasteBubble: NSView!
   @IBOutlet var specialCopyPasteBehaviorLabel: NSTextField!
+  @IBOutlet var filledIconLabel: NSTextField!
+  @IBOutlet var enteringQueueModeLabel: NSTextField!
   @IBOutlet var sendSupportEmailButton: NSButton!
   @IBOutlet var copySupportEmailButton: NSButton!
   @IBOutlet var sendL10nEmailButton: NSButton!
@@ -86,7 +88,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var inAppPurchageTitle: NSTextField!
   @IBOutlet var inAppPurchageLabel: NSView!
   
-  private var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel].compactMap({$0}) }
+  private var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel, filledIconLabel, enteringQueueModeLabel].compactMap({$0}) }
   
   private var preAuthorizationPageFirsTime = true
   private var skipSetAuthorizationPage = false
@@ -286,8 +288,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private func showAltCopyEmailButtons(_ showCopy: Bool) {
     sendSupportEmailButton.isHidden = showCopy
     copySupportEmailButton.isHidden = !showCopy
-    sendL10nEmailButton.isHidden = showCopy
-    copyL10nEmailButton.isHidden = !showCopy
+    sendL10nEmailButton.isHidden = true // showCopy  // for now hide the translation buttons
+    copyL10nEmailButton.isHidden = true // !showCopy  // until i form some l10n plans
   }
   
   private func runDemo() {
