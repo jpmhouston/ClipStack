@@ -9,20 +9,18 @@ on:
 jobs:
   build:
     name: Build and analyse default scheme using xcodebuild command
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          xcode: 15
-          configuration: release
       - name: Set Default Scheme
         run: |
           default=Cleepp
           echo $default | cat >default
           echo Using scheme: $default
       - name: Build
+        # requires "runs-on: macos-14" above to use Xcode 15, "macos-latest" is actually older and uses Xcode 14
         env:
           scheme: ${{ 'default' }}
         run: |
