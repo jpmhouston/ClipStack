@@ -1,0 +1,123 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2759
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 HelveticaNeue-Bold;\f2\fnil\fcharset0 HelveticaNeue-BoldItalic;
+\f3\fnil\fcharset0 LucidaGrande;\f4\froman\fcharset0 TimesNewRomanPSMT;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid101\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\margl1440\margr1440\vieww11520\viewh16060\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f0\fs26 \cf0 Hello tester, thanks for volunteering to try this out! \
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b \cf0 About
+\f0\b0 \
+\
+Cleepp is a menu that gets added to the top-right of your menu bar that mainly implements one feature: a new mode for the clipboard that lets you copy multiple times from one place, then paste them all in order elsewhere.\
+\
+A portion of Cleepp is adapted from the open source project {\field{\*\fldinst{HYPERLINK "https://maccy.app"}}{\fldrslt Maccy}}, a full featured clipboard history manager, which I've simplified greatly and added the multiple-clipboard feature. Under open source licenses such as the one used by Maccy, remixes such as this are allowed and even encouraged (this software license can be read at the bottom of this file). Cleepp 1.0 will be available to download from github.com, plus will be in the Mac App Store for free with an in-app purchase that unlocks some extra features.\
+\
+\
+
+\f1\b First of All
+\f0\b0 \
+\
+Drag Cleepp from where it was unzipped to your Mac's Applications folder, and then open it from your Applications folder. For now, the first time you launch the app your Mac will ask you to confirm that you want to launch an unsigned app. On macOS Sonoma choose the \'93Open Anyway\'94 button, on older versions of the OS the alert might be different but similar. If instead this alert only shows you a \'93Cancel\'94 button, try opening the app by right-clicking (/control-clicking) its icon and choosing \'93Open\'94 in the contextual menu.\
+\
+In future versions, this first step will be streamlined away.\
+\
+The apps also needs you to grant access for controlling the computer with accessibility features. A intro window should walk you through doing this.\
+\
+\
+
+\f1\b Basic Usage
+\f0\b0 \
+\
+This should be described in the intro walkthrough as well, but briefly:\
+\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\cf0 The app lives in the menu bar, with an icon that looks like a outline clipboard, but you don't really need to use the menu, just this:\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	1.	}In one document, select and then copy a number of things in sequence using the special shortcut 
+\f2\i\b Control-Command-C
+\f0\i0\b0 .\uc0\u8232 \u8232 The menu bar icon will change and have a number beside counting the things you copied.\u8232 \
+{\listtext	2.	}In your destination document window paste then all in order using the special shortcut 
+\f2\i\b Control-Command-C
+\f0\i0\b0 . Magic!\uc0\u8232 \u8232 After they're all pasted the menu bar icon returns to normal, as does the normal one-at-a-time behaviour of the clipboard.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+In other words, ^
+\f3 \uc0\u8984 
+\f0 C ^
+\f3 \uc0\u8984 
+\f0 C \'85, then ^
+\f3 \uc0\u8984 
+\f0 V ^
+\f3 \uc0\u8984 
+\f0 V \'85\
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b \cf0 Possible Surprises
+\f0\b0 \
+\
+\pard\tx220\tx720\pardeftab560\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	\uc0\u8259 	}Cleepp doesn't have its own separate clipboard, but after first using ^
+\f3 \uc0\u8984 
+\f0 C, everything copied or cut in any application gets collected into the sequence.\uc0\u8232 \
+{\listtext	\uc0\u8259 	}Use it for a set of things you want to copy and then paste, and then return the icon to normal (if you change you mind and don't paste all the things, use the 
+\f1\b Cancel Collecting / Replaying
+\f0\b0  item in the menu, read about it below if you like).\uc0\u8232 \
+{\listtext	\uc0\u8259 	}If you get side-tracked while copying, or don't paste all the items, leaving Cleepp's special mode on with the menu bar icon filled-in instead of outlined, you will get confused if you try to use the clipboard as normal. Use the 
+\f1\b Cancel Collecting / Replaying
+\f0\b0  menu item.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+That should be everything you need to know. There's more ways to get to this feature and use the app, and more things to read about in the documentation pages for the app at {\field{\*\fldinst{HYPERLINK "http://cleepp.bananameter.lol"}}{\fldrslt http://cleepp.bananameter.lol}}.\
+\
+\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f1\b \cf0 Legalese
+\f0\b0 \
+\
+You can ignore this. It's not like an End User License Agreement that users are bound by, but an agreement that I, the software developer, are bound by. One part of doing so is including this text in any distribution of the software (though it's in a file within the app bundle and maybe that's good enough):\
+\
+\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f4 \cf0 The MIT License (MIT)\
+\
+Original work Copyright (c) 2022 Alex Rodionov\
+Modified work Copyright (c) 2024 Bananameter Labs\
+\
+Permission is hereby granted, free of charge, to any person obtaining a copy\
+of this software and associated documentation files (the "Software"), to deal\
+in the Software without restriction, including without limitation the rights\
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\
+copies of the Software, and to permit persons to whom the Software is\
+furnished to do so, subject to the following conditions:\
+\
+The above copyright notice and this permission notice shall be included in\
+all copies or substantial portions of the Software.\
+\
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\
+THE SOFTWARE.\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f0 \cf0 \
+}
