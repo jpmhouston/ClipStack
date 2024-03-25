@@ -37,9 +37,8 @@ jobs:
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
           
-          ls -ald Build/Products/Debug/Cleepp.app 2>/dev/null || echo "no built app in ./Build/Products/Debug"
-          ls -ald Build/Products/Release/Cleepp.app 2>/dev/null || echo "no built app in ./Build/Products/Release"
-          file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
+          test -e Build/Products/Release/Cleepp.app || exit 1
+          ls -ald Build/Products/Release/*.app
           exit 0 # !!! until the above env vars are correctly defined
           
           # Turn our base64-encoded certificate back to a regular .p12 file
@@ -67,7 +66,7 @@ jobs:
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           
-          file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
+          test -e Build/Products/Release/Cleepp.app || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Store the notarization credentials so that we can prevent a UI password dialog
@@ -96,13 +95,14 @@ jobs:
           echo "Attach staple"
           xcrun stapler staple "Build/Products/Release/Cleepp.app"
       - name: Extract Version
-          run: |
-            file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
-            echo "::set-output name=version::$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)"
-          id: version
+        run: |
+          test -e Build/Products/Release/Cleepp.app || exit 1
+          test -e Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
+          echo "::set-output name=version::$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)"
+        id: version
       - name: Build Zip
         run: |
-          file Build/Products/Release/Cleepp.app/Contents/Info.plist >/dev/null 2>&1 || exit 1
+          test -e Build/Products/Release/Cleepp.app || exit 1
           cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf Build/Products/Release/Cleepp\ version\ ${{ steps.version.outputs.version }}\ read\ me.rtf
           zip --junk-paths Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }} Build/Products/Release/Cleepp.app Build/Products/Release/*.rtf
       - name: Draft Release
