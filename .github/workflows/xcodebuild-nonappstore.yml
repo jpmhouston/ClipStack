@@ -6,6 +6,7 @@ on:
       - '!forkmain'
     tags:
       - v*
+  workflow_dispatch:
 
 jobs:
   build:
