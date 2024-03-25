@@ -3,8 +3,8 @@ name: Build Sign Notarize and Release Cleepp
 on:
   push:
     branches: [ "forkmain" ]
-  tags:
-    - v*
+    tags:
+      - v*
 
 jobs:
   build:
