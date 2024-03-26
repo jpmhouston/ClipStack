@@ -7,12 +7,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PurchaseSettingsViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
-                <outlet property="errorLabel" destination="cS0-7r-tvX" id="3ow-5E-WZQ"/>
                 <outlet property="featureLabel1" destination="ohj-O7-Fpt" id="jIT-oN-OwT"/>
                 <outlet property="featureLabel2" destination="wNq-P5-ExR" id="WIt-FV-tG1"/>
                 <outlet property="featureLabel3" destination="Eot-fj-3MD" id="fEl-zD-Dzu"/>
                 <outlet property="featureLabel4" destination="cgM-Fz-t6L" id="SCY-XB-GMj"/>
                 <outlet property="havePurchasedLabel" destination="b3j-CV-4u9" id="YL1-4S-6Ef"/>
+                <outlet property="messageLabel" destination="cS0-7r-tvX" id="3ow-5E-WZQ"/>
                 <outlet property="pleasePurchaseLabel" destination="aYU-VL-gLu" id="D9N-oj-ug2"/>
                 <outlet property="progressIndicator" destination="NDF-Mx-c0w" id="nl1-af-y5H"/>
                 <outlet property="purchaseButton" destination="jnZ-Qh-5c6" id="Eoc-r6-anf"/>
@@ -219,8 +219,8 @@
                             <rect key="frame" x="0.0" y="0.0" width="594" height="56"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="801" translatesAutoresizingMaskIntoConstraints="NO" id="jnZ-Qh-5c6">
-                                    <rect key="frame" x="-7" y="27" width="189" height="32"/>
-                                    <buttonCell key="cell" type="push" title="Purchase Bonus Features" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jf3-8K-QTi">
+                                    <rect key="frame" x="-7" y="27" width="199" height="32"/>
+                                    <buttonCell key="cell" type="push" title="Purchase Bonus Features…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jf3-8K-QTi">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -229,7 +229,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="V1h-hV-aKU">
-                                    <rect key="frame" x="178" y="27" width="148" height="32"/>
+                                    <rect key="frame" x="188" y="27" width="148" height="32"/>
                                     <buttonCell key="cell" type="push" title="Restore Purchases" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hpi-6Z-0cV">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -239,11 +239,11 @@
                                     </connections>
                                 </button>
                                 <progressIndicator horizontalCompressionResistancePriority="1000" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="NDF-Mx-c0w">
-                                    <rect key="frame" x="329" y="32" width="16" height="24"/>
+                                    <rect key="frame" x="339" y="32" width="16" height="24"/>
                                 </progressIndicator>
                                 <textField horizontalHuggingPriority="100" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cS0-7r-tvX">
-                                    <rect key="frame" x="353" y="37" width="232" height="16"/>
-                                    <textFieldCell key="cell" title="Error" id="67P-t7-Vlk">
+                                    <rect key="frame" x="363" y="37" width="222" height="16"/>
+                                    <textFieldCell key="cell" title="Message" id="67P-t7-Vlk">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

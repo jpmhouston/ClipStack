@@ -19,11 +19,16 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   private let purchases = Purchases.shared
   private var token: Purchases.ObservationToken?
+  private var cancelToken: Purchases.ObservationToken?
+  private var state: State = .idle
   #if DEBUG
   private var showBonusFeaturesPurchased = false
   #else
   private var showBonusFeaturesPurchased: Bool { purchases.hasBoughtExtras }
   #endif
+  
+  private var labelsToStyle: [NSTextField] { [featureLabel1, featureLabel2, featureLabel3, featureLabel4] }
+  private var errorMessageColor: NSColor?
   
   @IBOutlet weak var pleasePurchaseLabel: NSTextField!
   @IBOutlet weak var havePurchasedLabel: NSTextField!
@@ -34,9 +39,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var purchaseButton: NSButton!
   @IBOutlet weak var restoreButton: NSButton!
   @IBOutlet weak var progressIndicator: NSProgressIndicator!
-  @IBOutlet weak var errorLabel: NSTextField!
-  
-  var labelsToStyle: [NSTextField] { [featureLabel1, featureLabel2, featureLabel3, featureLabel4] }
+  @IBOutlet weak var messageLabel: NSTextField!
   
   // MARK: -
   
@@ -46,25 +49,31 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   }
   
   override func viewWillAppear() {
+    super.viewWillAppear()
+    
     #if DEBUG
     showBonusFeaturesPurchased = false // TODO: reset state for testing, to be removed
     #endif
     
-    token = purchases.addObserver(self, callback: { [weak self] s, update in
+    updateTitleLabel()
+    updatePurchaseButtons()
+    clearMessage()
+    
+    cancelToken = purchases.addObserver(self, callback: { [weak self] s, update in
       guard let self = self, self == s else {
         return
       }
       self.purchasesUpdated(update)
     })
-    
-    super.viewWillAppear()
-    updateTitleLabel()
-    updatePurchaseButtons()
-    clearError()
   }
   
   override func viewWillDisappear() {
+    cancelTimeoutTimer()
     
+    if let token = cancelToken {
+      purchases.removeObserver(token)
+      cancelToken = nil
+    }
   }
   
   // MARK: -
@@ -76,39 +85,15 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   @IBAction
   func purchase(_ sender: AnyObject) {
     #if DEBUG
-    errorLabel.stringValue = "All features already enabled. Purchases will work in the 1.0 App Store version. Try the other button."
+    messageLabel.stringValue = "All features already enabled. Purchases will work in the 1.0 App Store version. Try the other button."
     #endif
     
-//    purchaseButton.isEnabled = false
-//    restoreButton.isEnabled = false
-//    errorLabel.stringValue = ""
-//    
-//    progressIndicator.startAnimation(sender)
-//    Purchase.purchaseExtras() { [weak self] result in
-//      guard let self = self else {
-//        return
-//      }
-//      progressIndicator.stopAnimation(self)
-//
-//      // maybe want something like:
-//      updateTitleLabel()
-//      updatePurchaseButtons()
-//      switch result {
-//      case .failure(.cancelled):
-//        break
-//      case .failure(.networkFailure):
-//        displayError("Failed to reach network and complete purchase")
-//      default:
-//        displayError("Failed to complete purchase")
-//      }
-//    }
   }
   
   @IBAction
   func restorePurchases(_ sender: AnyObject) {
-    purchaseButton.isEnabled = false
-    restoreButton.isEnabled = false
-    errorLabel.stringValue = ""
+    disablePurchaseButtons()
+    clearMessage()
     
     progressIndicator.startAnimation(sender)
     Purchases.restore() { [weak self] result in
@@ -119,7 +104,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
       
       #if DEBUG
       showBonusFeaturesPurchased = true
-      errorLabel.stringValue = "For now this just exercises the 2 states of this window. Purchases will work in the 1.0 App Store version."
+      displayError("For now this just exercises the 2 states of this window. Purchases will work in the 1.0 App Store version.")
       updatePurchaseButtons()
       updateTitleLabel()
       #endif
@@ -147,20 +132,33 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     havePurchasedLabel.isHidden = !showBonusFeaturesPurchased
   }
   
+  private func disablePurchaseButtons() {
+    purchaseButton.isEnabled = !showBonusFeaturesPurchased
+    restoreButton.isEnabled = !showBonusFeaturesPurchased
+  }
+  
   private func updatePurchaseButtons() {
     purchaseButton.isEnabled = !showBonusFeaturesPurchased
     restoreButton.isEnabled = !showBonusFeaturesPurchased
   }
   
-  private func clearError() {
-    errorLabel.stringValue = ""
+  private func clearMessage() {
+    messageLabel.stringValue = ""
+  }
+  
+  private func displayMessage(_ message: String) {
+    messageLabel.stringValue = message
+    messageLabel.textColor = nil
   }
   
   private func displayError(_ message: String) {
-    errorLabel.stringValue = message
+    messageLabel.stringValue = message
+    messageLabel.textColor = errorMessageColor
   }
   
   private func styleLabels() {
+    errorMessageColor = messageLabel.textColor
+    
     for label in labelsToStyle {
       let styled = NSMutableAttributedString(attributedString: label.attributedStringValue)
       styled.applySimpleStyles(basedOnFont: label.font ?? NSFont.labelFont(ofSize: NSFont.labelFontSize))
