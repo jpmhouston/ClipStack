@@ -2,11 +2,16 @@ name: Build Sign Notarize and Release Cleepp
 
 on:
   push:
-    branches-ignore:
-      - '!forkmain'
-    tags:
-      - v*
+    branches:
+      - forkmain
   workflow_dispatch:
+    branches:
+      - forkmain
+    inputs:
+      buildRelease:
+        description: 'Build Release?'
+        required: false
+        type: boolean
 
 jobs:
   build:
@@ -101,17 +106,25 @@ jobs:
           echo "Fetching Version"
           test -d Build/Products/Release/Cleepp.app || exit 1
           test -f Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
+          
           echo "version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)" >> $GITHUB_OUTPUT
         id: version
       - name: Build Zip File
+        if: ${{ fromJSON(github.event.inputs.buildRelease) }} || startsWith(github.ref, 'refs/tags/')
         run: |
-          echo "Building .zip"
+          echo "Making Archive Directory"
           test -d Build/Products/Release/Cleepp.app || exit 1
-          cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf Build/Products/Release/Cleepp\ version\ ${{ steps.version.outputs.version }}\ read\ me.rtf
-          ditto -c -k --sequesterRsrc --keepParent Build/Products/Release/Cleepp.app Build/Products/Release/*.rtf Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
+          
+          ARCHIVEDIR=Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
+          mkdir "$ARCHIVEDIR"
+          cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf "$ARCHIVEDIR"/Cleepp\ version\ ${{ steps.version.outputs.version }}\ read\ me.rtf
+          mv Build/Products/Release/Cleepp.app "$ARCHIVEDIR"
+          
+          echo "Building .zip"
+          ditto -c -k --sequesterRsrc --keepParent "$ARCHIVEDIR" "${ARCHIVEDIR}.zip"
       - name: Draft Release
         uses: softprops/action-gh-release@v2
-        #if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ fromJSON(github.event.inputs.buildRelease) }} || startsWith(github.ref, 'refs/tags/')
         with:
           name: "Cleepp ${{ steps.version.outputs.version }}"
           draft: true
