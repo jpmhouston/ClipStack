@@ -8,7 +8,7 @@
 
 import AppKit
 
-extension Maccy {
+extension Cleepp {
   
   enum QueueChangeDirection {
     case none, increment, decrement

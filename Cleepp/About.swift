@@ -2,17 +2,9 @@ import Cocoa
 
 // TODO: replace with a custom window
 // so that: 1) intro button can be a real button 2) less cramped 3) can easily close programmatically
-// should leave Maccy source unchanged and add a new AboutCleepp.swift/xib
 
 class About {
-  static var githubURL = "https://github.com/jpmhouston/Cleepp"
-  static var homepageURL = "http://cleepp.bananameter.lol"
-  static var maccyURL = "https://maccy.app"
-  static var supportEmailURL = "mailto:cleepp@bananameter.lol"
-  static var localizeVolunteerEmailURL = "mailto:cleepp.l10nhelp@bananameter.lol"
-  static var showIntroInAppURL = "cleeppapp:intro"
-  static var showIntroPermissionPageInAppURL = "cleeppapp:intro_permissions"
-
+  
   private var blurb: NSAttributedString {
     return NSAttributedString(
       string: "Cleepp adds a new mode to the clipboard\nthat lets you copy multiple times from one\nplace then paste them all in order elsewhere.",
@@ -22,7 +14,7 @@ class About {
   private var introLink: NSAttributedString {
     let string = NSMutableAttributedString(string: "More information: Show Intro",
                                            attributes: [.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: About.showIntroInAppURL, range: NSRange(location: 18, length: 10))
+    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 18, length: 10))
     return string
   }
   
@@ -30,16 +22,16 @@ class About {
     let string = NSMutableAttributedString(
       string: "Thank you to the authors of Maccy which this app is a derivative of. Check it out here for a more full-featured clipboard history manager.",
       attributes: [.foregroundColor: NSColor.secondaryLabelColor])
-    string.addAttribute(.link, value: About.maccyURL, range: NSRange(location: 82, length: 4))
+    string.addAttribute(.link, value: Cleepp.maccyURL, range: NSRange(location: 82, length: 4))
     return string
   }
   
   private var links: NSAttributedString {
     let string = NSMutableAttributedString(string: "Website│GitHub│Support",
                                            attributes: [.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: About.homepageURL, range: NSRange(location: 0, length: 7))
-    string.addAttribute(.link, value: About.githubURL, range: NSRange(location: 8, length: 6))
-    string.addAttribute(.link, value: About.supportEmailURL, range: NSRange(location: 15, length: 7))
+    string.addAttribute(.link, value: Cleepp.homepageURL, range: NSRange(location: 0, length: 7))
+    string.addAttribute(.link, value: Cleepp.githubURL, range: NSRange(location: 8, length: 6))
+    string.addAttribute(.link, value: Cleepp.supportEmailURL, range: NSRange(location: 15, length: 7))
     return string
   }
   

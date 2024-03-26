@@ -9,7 +9,7 @@
 import AppKit
 import Settings
 
-extension Maccy {
+extension Cleepp {
   
   private var pasteMultipleDelaySeconds: Float { 0.333 }
   private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(pasteMultipleDelaySeconds * 1000)) }

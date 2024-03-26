@@ -59,7 +59,7 @@ struct Accessibility {
   }
   
   static func openIntro() {
-    guard let url = URL(string: About.showIntroPermissionPageInAppURL) else {
+    guard let url = URL(string: Cleepp.showIntroPermissionPageInAppURL) else {
       // TODO: log url failure
       return
     }

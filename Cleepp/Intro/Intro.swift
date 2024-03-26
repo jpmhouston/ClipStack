@@ -431,31 +431,31 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func openDocumentationWebpage(_ sender: AnyObject) {
-    openURL(string: About.homepageURL)
+    openURL(string: Cleepp.homepageURL)
   }
   
   @IBAction func openMaccyWebpage(_ sender: AnyObject) {
-    openURL(string: About.maccyURL)
+    openURL(string: Cleepp.maccyURL)
   }
   
   @IBAction func openGitHubWebpage(_ sender: AnyObject) {
-    openURL(string: About.githubURL)
+    openURL(string: Cleepp.githubURL)
   }
   
   @IBAction func sendSupportEmail(_ sender: AnyObject) {
-    openURL(string: About.supportEmailURL)
+    openURL(string: Cleepp.supportEmailURL)
   }
   
   @IBAction func sendLocalizeVolunteerEmail(_ sender: AnyObject) {
-    openURL(string: About.localizeVolunteerEmailURL)
+    openURL(string: Cleepp.localizeVolunteerEmailURL)
   }
   
   @IBAction func copySupportEmail(_ sender: AnyObject) {
-    maccy.copy(string: About.supportEmailURL, excludedFromHistory: false)
+    maccy.copy(string: Cleepp.supportEmailAddress, excludedFromHistory: false)
   }
   
   @IBAction func copyLocalizeVolunteerEmail(_ sender: AnyObject) {
-    maccy.copy(string: About.localizeVolunteerEmailURL, excludedFromHistory: false)
+    maccy.copy(string: Cleepp.localizeVolunteerEmailAddress, excludedFromHistory: false)
   }
   
   // MARK: -

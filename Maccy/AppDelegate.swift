@@ -63,10 +63,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     guard let url = urls.first else {
       return
     }
-    if url.absoluteString == About.showIntroInAppURL {
+    if url.absoluteString == Cleepp.showIntroInAppURL {
       maccy.showIntro(self)
     }
-    if url.absoluteString == About.showIntroPermissionPageInAppURL {
+    if url.absoluteString == Cleepp.showIntroPermissionPageInAppURL {
       maccy.showIntroAtPermissionPage(self)
     }
   }
