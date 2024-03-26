@@ -38,8 +38,8 @@ jobs:
           MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
-          
-          test -e Build/Products/Release/Cleepp.app || exit 1
+          echo "Codesigning"
+          test -d Build/Products/Release/Cleepp.app || exit 1
           ls -ald Build/Products/Release/*.app
           exit 0 # !!! until the above env vars are correctly defined
           
@@ -67,8 +67,8 @@ jobs:
           PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
-          
-          test -e Build/Products/Release/Cleepp.app || exit 1
+          echo "Notarizing"
+          test -d Build/Products/Release/Cleepp.app || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Store the notarization credentials so that we can prevent a UI password dialog
@@ -96,38 +96,25 @@ jobs:
           # validated by macOS even when an internet connection is not available.
           echo "Attach staple"
           xcrun stapler staple "Build/Products/Release/Cleepp.app"
-      - name: Extract Version
+      - name: Extract Version Number
         run: |
-          test -e Build/Products/Release/Cleepp.app || exit 1
-          test -e Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
+          echo "Fetching Version"
+          test -d Build/Products/Release/Cleepp.app || exit 1
+          test -f Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
           echo "version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)" >> $GITHUB_OUTPUT
         id: version
-      - name: Build Zip
+      - name: Build Zip File
         run: |
-          test -e Build/Products/Release/Cleepp.app || exit 1
+          echo "Building .zip"
+          test -d Build/Products/Release/Cleepp.app || exit 1
           cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf Build/Products/Release/Cleepp\ version\ ${{ steps.version.outputs.version }}\ read\ me.rtf
-          zip --junk-paths Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }} Build/Products/Release/Cleepp.app Build/Products/Release/*.rtf
+          ditto -c -k --sequesterRsrc --keepParent Build/Products/Release/Cleepp.app Build/Products/Release/*.rtf Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
       - name: Draft Release
-        uses: actions/create-release@v1
-        id: release
+        uses: softprops/action-gh-release@v2
+        #if: startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: ${{ github.ref }}
-          release_name: "Cleepp ${{ steps.version.outputs.version }}"
+          name: "Cleepp ${{ steps.version.outputs.version }}"
           draft: true
           prerelease: true
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      #- name: Save app artifact
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: nonappstore-app-signed-notarized
-      #    path: Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
-      - name: Add Artifact to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
-          asset_name: Cleepp\ ${{ steps.version.outputs.version }}
-          asset_content_type: application/zip
+          files: Build/Products/Release/Cleepp*.zip
+          fail_on_unmatched_files: true
