@@ -191,6 +191,12 @@
 		8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
 		8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
 		8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */; };
+		8FCDFC0C2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */; };
+		8FCDFC0D2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */; };
+		8FCDFC0E2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */; };
+		8FCDFC0F2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
+		8FCDFC102BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
+		8FCDFC112BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -378,6 +384,8 @@
 		8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cleepp+Links.swift"; sourceTree = "<group>"; };
 		8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchSource+scheduledTimer.swift"; sourceTree = "<group>"; };
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
+		8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ApplicationName.swift"; sourceTree = "<group>"; };
+		8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWorkspace+ApplicationName.swift"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285F283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
@@ -640,6 +648,7 @@
 		2FBB7A252B5FECBB00C65BBE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */,
 				DAFEF0B7249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift */,
 				DA3EAE0B2AE30F7500F39108 /* NSApplication+Windows.swift */,
 				DA7A753D26A52F0F00DC16EF /* NSImage+Names.swift */,
@@ -648,6 +657,7 @@
 				DA49EE7828B594DC002752E0 /* NSRunningApplication+WindowFrame.swift */,
 				DA6491AF29ABCF2400837D93 /* NSScreen+ForPopup.swift */,
 				DA20FA772B082E1A00056DD5 /* NSSound+Named.swift */,
+				8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */,
 				DAFE2DD9268A521A00990986 /* String+Shortened.swift */,
 				DA2B0AF1234201E500EFAD72 /* UserDefaults+Configuration.swift */,
 			);
@@ -1383,6 +1393,7 @@
 				8F0D3CE12BABD57300DDB603 /* About.swift in Sources */,
 				8F8C48C72BAD5ED500C3A219 /* Intro.swift in Sources */,
 				8F0D3C522BAB8F5A00DDB603 /* Search.swift in Sources */,
+				8FCDFC0C2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */,
 				8F0D3C532BAB8F5A00DDB603 /* AppDelegate.swift in Sources */,
 				8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */,
 				8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */,
@@ -1392,6 +1403,7 @@
 				8F0D3C582BAB8F5A00DDB603 /* NSImage+Names.swift in Sources */,
 				8F0D3C592BAB8F5A00DDB603 /* NSSound+Named.swift in Sources */,
 				8FBDF6AD2BB269A900219889 /* Cleepp+Links.swift in Sources */,
+				8FCDFC0F2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */,
 				8F0D3C5A2BAB8F5A00DDB603 /* Storage.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1410,6 +1422,7 @@
 				8F8C48612BAD51B000C3A219 /* MenuController.swift in Sources */,
 				8F8C48622BAD51B000C3A219 /* DeleteIntentHandler.swift in Sources */,
 				8F8C48632BAD51B000C3A219 /* KeyChord.swift in Sources */,
+				8FCDFC102BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */,
 				8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */,
 				8F8C48642BAD51B000C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */,
 				8F8C48652BAD51B000C3A219 /* Cleepp+MenubarIcon.swift in Sources */,
@@ -1455,6 +1468,7 @@
 				8F8C488A2BAD51B000C3A219 /* String+Shortened.swift in Sources */,
 				8F8C488B2BAD51B000C3A219 /* About.swift in Sources */,
 				8F8C488C2BAD51B000C3A219 /* Search.swift in Sources */,
+				8FCDFC0D2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */,
 				8F8C488D2BAD51B000C3A219 /* AppDelegate.swift in Sources */,
 				8F8C488E2BAD51B000C3A219 /* ColorImage.swift in Sources */,
 				8F8C488F2BAD51B000C3A219 /* Menu.swift in Sources */,
@@ -1523,6 +1537,7 @@
 				DAAEB196219694AE00A7883C /* About.swift in Sources */,
 				DA6D98E22AEABE03008A77CE /* Accessibility.swift in Sources */,
 				DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
+				8FCDFC112BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */,
 				DAB65E0D2440B0D4000AECA8 /* HistoryItemContent.swift in Sources */,
 				DA696BCE240177E800DE80CF /* Sorter.swift in Sources */,
 				DABDE97F2974706C005B32E9 /* KeyboardLayout.swift in Sources */,
@@ -1533,6 +1548,7 @@
 				DA81D674252A056B009977BC /* Throttler.swift in Sources */,
 				DA20FA722B082DD600056DD5 /* Notifier.swift in Sources */,
 				DA196A9328AB0D4500ADD8A2 /* MenuHeaderView.swift in Sources */,
+				8FCDFC0E2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */,
 				DA573EAD1EDD410F00561FB2 /* HistoryMenuItem.swift in Sources */,
 				DA1B0FD6289DFEA200E641BE /* PinComboBoxCell.swift in Sources */,
 				DA1DF95227AF8BBA006839E0 /* StorageSettingsViewController.swift in Sources */,
