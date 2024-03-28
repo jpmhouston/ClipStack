@@ -108,8 +108,10 @@ jobs:
           echo "Fetching Version"
           test -d Build/Products/Release/Cleepp.app || exit 1
           test -f Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
-          
-          echo "version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)" >> $GITHUB_OUTPUT
+
+          VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)
+          echo "$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
         id: version
       - name: Build Zip File
         if: startsWith(github.ref, 'refs/tags/') || ("${{ inputs.buildRelease != '' }}" && fromJSON(inputs.buildRelease))
@@ -122,13 +124,14 @@ jobs:
           cp Designs/Cleepp/Cleepp\ download\ read\ me.rtf "$ARCHIVEDIR"/Cleepp\ version\ ${{ steps.version.outputs.version }}\ read\ me.rtf
           mv Build/Products/Release/Cleepp.app "$ARCHIVEDIR"
           
-          echo "Building .zip"
+          echo "Building ${ARCHIVEDIR}.zip"
           ditto -c -k --sequesterRsrc --keepParent "$ARCHIVEDIR" "${ARCHIVEDIR}.zip"
       - name: Draft Release
         if: startsWith(github.ref, 'refs/tags/') || ("${{ inputs.buildRelease != '' }}" && fromJSON(inputs.buildRelease))
         uses: softprops/action-gh-release@v2
         with:
           name: "Cleepp ${{ steps.version.outputs.version }}"
+          tag_name: "v${{ steps.version.outputs.version }}"
           draft: true
           prerelease: true
           files: Build/Products/Release/Cleepp*.zip
