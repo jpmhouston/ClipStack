@@ -186,6 +186,8 @@
 		8F8C48CC2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
 		8FBDF6AD2BB269A900219889 /* Cleepp+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */; };
 		8FBDF6AE2BB269AE00219889 /* Cleepp+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */; };
+		8FBDF6B12BB4EE3600219889 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
+		8FBDF6B22BB4EE3600219889 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -1138,6 +1140,7 @@
 				8F0D3C6A2BAB8F5A00DDB603 /* Assets.xcassets in Resources */,
 				8F8C48C92BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */,
 				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
+				8FBDF6B22BB4EE3600219889 /* Localizable.strings in Resources */,
 				8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */,
 				8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */,
 			);
@@ -1147,6 +1150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FBDF6B12BB4EE3600219889 /* Localizable.strings in Resources */,
 				8F8C489E2BAD51B000C3A219 /* GeneralSettingsViewController.xib in Resources */,
 				8F8C489F2BAD51B000C3A219 /* StorageSettingsViewController.xib in Resources */,
 				8F8C48A02BAD51B000C3A219 /* AppearanceSettingsViewController.xib in Resources */,
