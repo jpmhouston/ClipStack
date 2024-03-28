@@ -11,7 +11,8 @@ import Foundation
 extension Cleepp {
   
   static var githubURL = "https://github.com/jpmhouston/Cleepp"
-  static var homepageURL = "http://cleepp.bananameter.lol"
+  static var homepageURL = "https://github.com/jpmhouston/Cleepp/wiki/About-Cleepp-for-macOS"
+  static var homepageBonusDocsURL = "https://github.com/jpmhouston/Cleepp/wiki/Bonus-Features-for-the-Mac-App-Store-Version"
   static var maccyURL = "https://maccy.app"
   static var supportEmailAddress = "cleepp@bananameter.lol"
   static var supportEmailURL = "mailto:" + Cleepp.supportEmailAddress

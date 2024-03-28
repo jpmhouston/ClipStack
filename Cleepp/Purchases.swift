@@ -11,17 +11,6 @@ import StoreKit
 import SwiftyStoreKit
 import TPInAppReceipt
 
-enum PurchaseItem {
-  case bonus
-}
-enum PurchaseError: Error, CaseIterable {
-  case unavailable, prohibited
-  case malformedReceipt, invalidReceipt
-  case unrecognized
-  case cancelled, declined, noneToRestore, unreachable
-  case unknown
-}
-
 class Purchases: NSObject {
   // observer scheme described in https://www.swiftbysundell.com/articles/observers-in-swift-part-2/
   class ObservationToken {
@@ -33,65 +22,48 @@ class Purchases: NSObject {
           cancellationClosure()
       }
   }
-  typealias ObservationUpdate = Result<PurchaseItem, PurchaseError>
-  typealias ReceiptResult = Result<Set<PurchaseItem>, PurchaseError>
-  typealias PurchaseResult = Result<Void, PurchaseError>
-  private var observations: [UUID: (ObservationUpdate) -> Void] = [:]
   
-  #if FOR_APP_STORE
-  private var receiptValidator: AppleReceiptValidator
-  
-  private static let bonusProductIdentifier = "lol.bananameter.cleepp.extras"
-  private static var sharedSecret: String {
-    "banana" // how do we have a shared secret, and safely commit it to sourcecode?
+  enum Item {
+    case bonus
   }
-  #endif
+  
+  struct ProductDetail {
+    var identifier: String
+    var localizedDescription: String
+    var localizedPrice: String
+  }
+  
+  enum UpdateItem {
+    case purchases(Set<Item>)
+    case restorations(Set<Item>)
+    case products([ProductDetail])
+  }
+  
+  enum PurchaseError: Error, CaseIterable {
+    case unavailable, prohibited
+    case malformedReceipt, invalidReceipt
+    //case unrecognized
+    case cancelled, declined, noneToRestore, unreachable
+    case unknown
+  }
+  
+  typealias ObservationUpdate = Result<UpdateItem, PurchaseError>
+  typealias ReceiptResult = Result<Set<Item>, PurchaseError>
+  typealias ImmediateResult = Result<Void, PurchaseError>
   
   static let shared = Purchases()
+  private var observations: [UUID: (ObservationUpdate) -> Void] = [:]
+  
+  // can we avoid hardcoding the product id's we expect, be driven entirely by the
+  // product details received? should the one(s) that link to purchasing the bonus features
+  // be tagged with some substring in the id? for now, any item gives the user the bonus
+  //private static let bonusProductIdentifier = "lol.bananameter.cleepp.extras"
   
   var hasBoughtExtras: Bool { boughtItems.contains(.bonus) }
-  var boughtItems: Set<PurchaseItem> = []
-  var lastError: PurchaseError?
+  var boughtItems: Set<Item> = []
+  var lastError: PurchaseError? // possibly not needed
 
   // MARK: -
-  
-  override init() {
-    #if FOR_APP_STORE
-    #if DEBUG
-    receiptValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: Purchases.sharedSecret)
-    #else
-    receiptValidator = AppleReceiptValidator(service: .production, sharedSecret: Purchases.sharedSecret)
-    #endif
-    #endif // FOR_APP_STORE
-    
-    super.init()
-  }
-  
-//  override init() {
-//    super.init()
-//    SKPaymentQueue.default().add(self)
-//  }
-  
-//  func addObserver(_ observer: PurchaseObserver) {
-//    let id = ObjectIdentifier(observer)
-//    observations[id] = Observation(observer: observer)
-//  }
-//  func removeObserver(_ observer: PurchaseObserver) {
-//    let id = ObjectIdentifier(observer)
-//    observations.removeValue(forKey: id)
-//  }
-//  var observers: [PurchaseObserver] {
-//    // while fetching weakly held observers, also remove observations whose observers are gone
-//    let verifyObservations = observations // is making this copy necessary? original modified within map below
-//    return verifyObservations.compactMap { (id, observation) in
-//      if let observer = observation.observer {
-//        return observer
-//      } else {
-//        observations.removeValue(forKey: id)
-//        return nil
-//      }
-//    }
-//  }
   
   @discardableResult
   func start<T: AnyObject>(withObserver observer: T, callback: @escaping (T, ObservationUpdate) -> Void) -> ObservationToken {
@@ -101,12 +73,13 @@ class Purchases: NSObject {
   }
   
   func start() {
-    SwiftyStoreKit.completeTransactions(atomically: false, completion: completeTransactionsAtLaunchCallback)
+    SwiftyStoreKit.completeTransactions(atomically: true, completion: completeTransactionsCallback)
     
-    if case .success(let items) = checkReceipt() {
-      for item in items {
-        callObservers(withUpdate: .success(item))
-      }
+    switch checkLocalReceipt() {
+    case .success(let items):
+      callObservers(withUpdate: .success(.purchases(items)))
+    case .failure(let err):
+      callObservers(withUpdate: .failure(err))
     }
   }
   
@@ -143,65 +116,61 @@ class Purchases: NSObject {
   
   // MARK: -
   
-  func buyExtras() -> PurchaseResult {
+  func startFetchingProductDetails() throws {
     guard SKPaymentQueue.canMakePayments() else {
-      return .failure(.prohibited)
-    }
-    // ...
-    return .success(())
-  }
-  
-  func restore() -> ReceiptResult {
-    guard SKPaymentQueue.canMakePayments() else {
-      return .failure(.prohibited)
+      throw PurchaseError.prohibited
     }
     
-    switch checkReceipt() {
-    case .success(let items):
-      if items.contains(.bonus) {
-        return .success(items)
-      }
-    case .failure(_):
-      // ignore this error and proceed to try refreshing/restoring
-      break
+    // temp test code:
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+      self?.callObservers(withUpdate: .success(.products([
+        ProductDetail(identifier: "lol.bananameeter.cleepp.bonusfeatures", localizedDescription: "Bonus Features", localizedPrice: "$3.99")
+      ])))
     }
+  }
+  
+  func startPurchase(_ identifer: String) throws {
+    guard SKPaymentQueue.canMakePayments() else {
+      throw PurchaseError.prohibited
+    }
+    
+    // temp test code:
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+      self?.boughtItems.insert(.bonus)
+      self?.callObservers(withUpdate: .success(.purchases([.bonus])))
+    }
+  }
+  
+  func startRestore() throws {
+    guard SKPaymentQueue.canMakePayments() else {
+      throw PurchaseError.prohibited
+    }
+    
+    // temp test code:
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+      self?.boughtItems.insert(.bonus)
+      self?.callObservers(withUpdate: .success(.restorations([.bonus])))
+    }
+    
+    // probably don't bother redoing checkLocalReceipt() here, it was done at launch
+    // and we always want to hit apple's servers to guarantee we're in sync
+//    switch checkLocalReceipt() {
+//    case .success(let items):
+//      if items.contains(.bonus) {
+//        //return .success(items)
+//      }
+//    case .failure(_):
+//      // ignore this error and proceed to try refreshing/restoring
+//      break
+//    }
     
     //refreshReceipt() {
     //  if ... {
-    //    restorePurchases()
+    //    restorePurchases() {
+    //
+    //    }
     //  }
     //}
-    
-    return .success([])
-  }
-  
-  // remove all of these:
-//  static var errorSampler: PurchaseError = .cancelled
-//  static func nextError() {
-//    let curr = PurchaseError.allCases.firstIndex(of: Self.errorSampler) ?? 0
-//    let next = (curr + 1) % PurchaseError.allCases.count
-//    Self.errorSampler = PurchaseError.allCases[next]
-//  }
-  
-  static func buyExtras(callback: @escaping (_ error: PurchaseError?) -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-      //if Self.errorSampler == .noneToRestore { Self.nextError() }
-      callback(nil)
-      //Self.nextError()
-    }
-  }
-  
-  static func restore(callback: @escaping (_ error: PurchaseError?) -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-      callback(nil)
-      //Self.nextError()
-    }
-  }
-  
-  static func verify(callback: @escaping (_ updated: Bool) -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-      callback(true)
-    }
   }
   
   func callObservers(withUpdate update: ObservationUpdate) {
@@ -213,7 +182,7 @@ class Purchases: NSObject {
   // MARK: -
   
   @discardableResult
-  private func checkReceipt() -> ReceiptResult {
+  private func checkLocalReceipt() -> ReceiptResult {
     boughtItems = []
     guard let receiptData = SwiftyStoreKit.localReceiptData else {
       return .failure(.unavailable)
@@ -226,10 +195,8 @@ class Purchases: NSObject {
     do {
       let receipt = try InAppReceipt(receiptData: receiptData)
       try receipt.validate()
-      
-      if receipt.containsPurchase(ofProductIdentifier: Self.bonusProductIdentifier) {
-        boughtItems.insert(.bonus)
-      }
+      // instead of comparing against a well-known product id, any purchase gets the user the bonus
+      boughtItems.insert(.bonus)
       return .success([.bonus])
       
     } catch IARError.initializationFailed { // let error as IARError.initializationFailed(let reason) .. doesn't work :(
@@ -252,10 +219,10 @@ class Purchases: NSObject {
       case .success(let receiptData):
         switch self?.validateReceipt(receiptData) {
         case .success(_ /*let items*/):
-          // TODO: finished this. probably pass in a completion closure and call it here
+          // TODO: finish this, probably pass in a completion closure and call it here
           break
         case .failure(_ /*let error*/):
-          // TODO: finished this
+          // TODO: finish this
           break
         case nil:
           break
@@ -269,45 +236,45 @@ class Purchases: NSObject {
   
   func restorePurchases() {
     SwiftyStoreKit.restorePurchases(atomically: true) { results in
-      if results.restoreFailedPurchases.count > 0 {
-        print("Restore Failed: \(results.restoreFailedPurchases)")
-        // TODO: finished this. probably pass in a completion closure and call it here
-      } else if results.restoredPurchases.count > 0 {
+      if results.restoredPurchases.count > 0 {
         print("Restore Success: \(results.restoredPurchases)")
-        // TODO: finished this
+        // TODO: finish this, probably pass in a completion closure and call it here
+        
+      } else if results.restoreFailedPurchases.count > 0 {
+        print("Restore Failed: \(results.restoreFailedPurchases)")
+        // TODO: finish this
       } else {
         print("Nothing to Restore")
-        // TODO: finished this
+        // TODO: finish this
       }
     }
   }
   
-  private func completeTransactionsAtLaunchCallback(withPurchases purchases: [Purchase]) {
+  private func completeTransactionsCallback(withPurchases purchases: [Purchase]) {
+    // TODO: probably should consolidate set of successful purchases with and failures and make just 1 call to observers
+    // and make ObservationUpdate value be an enum: transactions([Purchase]), products([ProductDetails])
+    
     for purchase in purchases {
       switch purchase.transaction.transactionState {
-      case .purchased, .restored:
+      case .purchased:
+        // when should we validate purchase receipts??
+        
+        // instead of comparing against a well-known product id, any purchase gets the user the bonus
+        boughtItems.insert(.bonus)
+        callObservers(withUpdate: .success(.purchases([.bonus])))
+        lastError = nil
+        
         if purchase.needsFinishTransaction {
           SwiftyStoreKit.finishTransaction(purchase.transaction)
         }
         
-        SwiftyStoreKit.verifyReceipt(using: receiptValidator, forceRefresh: false) { [weak self] result in
-          switch result {
-          case .success(let receipt):
-            print("Verify receipt success: \(receipt)")
-            if purchase.productId == Self.bonusProductIdentifier {
-              self?.boughtItems.insert(.bonus)
-              self?.callObservers(withUpdate: .success(.bonus))
-              self?.lastError = nil
-            } else {
-              self?.callObservers(withUpdate: .failure(.unrecognized))
-              self?.lastError = .unrecognized
-            }
-            
-          case .error(let error):
-            print("Verify receipt failed: \(error)")
-            self?.callObservers(withUpdate: .failure(.invalidReceipt))
-            self?.lastError = .invalidReceipt
-          }
+      case .restored:
+        boughtItems.insert(.bonus)
+        callObservers(withUpdate: .success(.restorations([.bonus])))
+        lastError = nil
+        
+        if purchase.needsFinishTransaction {
+          SwiftyStoreKit.finishTransaction(purchase.transaction)
         }
         
       case .failed:
@@ -316,6 +283,7 @@ class Purchases: NSObject {
         lastError = .unknown
         
       case .purchasing, .deferred:
+        // TODO: look into these cases and see if we need to do anything
         break
       @unknown default:
         break

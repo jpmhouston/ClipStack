@@ -188,6 +188,9 @@
 		8FBDF6AE2BB269AE00219889 /* Cleepp+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */; };
 		8FBDF6B12BB4EE3600219889 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		8FBDF6B22BB4EE3600219889 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
+		8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
+		8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
+		8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -373,6 +376,8 @@
 		8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "introAnimatedLogo@2x.gif"; sourceTree = "<group>"; };
 		8F8C48C22BAD5ED500C3A219 /* Intro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
 		8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cleepp+Links.swift"; sourceTree = "<group>"; };
+		8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchSource+scheduledTimer.swift"; sourceTree = "<group>"; };
+		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285F283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
@@ -664,8 +669,10 @@
 				8F0D3C802BABAD6500DDB603 /* Cleepp+Actions.swift */,
 				8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */,
 				8F0D3C822BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift */,
+				8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */,
 				8F8C47E42BACB3E600C3A219 /* Equatable+IsIn.swift */,
 				8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */,
+				8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */,
 				8F0D3CDD2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift */,
 				8F8C47E52BACB3E600C3A219 /* NSAttributedString+Style.swift */,
 				8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */,
@@ -1377,6 +1384,7 @@
 				8F8C48C72BAD5ED500C3A219 /* Intro.swift in Sources */,
 				8F0D3C522BAB8F5A00DDB603 /* Search.swift in Sources */,
 				8F0D3C532BAB8F5A00DDB603 /* AppDelegate.swift in Sources */,
+				8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */,
 				8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */,
 				8F0D3C8E2BABB17200DDB603 /* Menu.swift in Sources */,
 				8F8C47F82BACD0D300C3A219 /* StorageSettingsViewController.swift in Sources */,
@@ -1402,6 +1410,7 @@
 				8F8C48612BAD51B000C3A219 /* MenuController.swift in Sources */,
 				8F8C48622BAD51B000C3A219 /* DeleteIntentHandler.swift in Sources */,
 				8F8C48632BAD51B000C3A219 /* KeyChord.swift in Sources */,
+				8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */,
 				8F8C48642BAD51B000C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */,
 				8F8C48652BAD51B000C3A219 /* Cleepp+MenubarIcon.swift in Sources */,
 				8F8C48662BAD51B000C3A219 /* GeneralSettingsViewController.swift in Sources */,
@@ -1438,6 +1447,7 @@
 				8F8C48832BAD51B000C3A219 /* Maccy.swift in Sources */,
 				8F8C48842BAD51B000C3A219 /* NSApplication+Windows.swift in Sources */,
 				8F8C48852BAD51B000C3A219 /* HistoryItem.swift in Sources */,
+				8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */,
 				8F8C48862BAD51B000C3A219 /* NSAttributedString+Style.swift in Sources */,
 				8F8C48872BAD51B000C3A219 /* PopupLocation.swift in Sources */,
 				8F8C48882BAD51B000C3A219 /* MenuLoader.swift in Sources */,
