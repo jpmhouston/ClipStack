@@ -18,7 +18,7 @@ extension Cleepp {
     case blink(transitionIcon: NSImage.Name)
   }
   
-  private var iconBlinkIntervalSeconds: Float { 0.75 }
+  private var iconBlinkIntervalSeconds: Double { 0.75 }
   
   func setupStatusMenuIcon() {
     guard let button = statusItem.button else {
@@ -67,7 +67,7 @@ extension Cleepp {
     if case .blink(let transitionIcon) = transition, let transitionImage = NSImage(named: transitionIcon) {
       // first show transition symbol, then blink to the final symbol
       statusItem.button?.image = transitionImage
-      runOnIconBlinkTimer(afterInterval: iconBlinkIntervalSeconds) { [weak self] in
+      runOnIconBlinkTimer(afterDelay: iconBlinkIntervalSeconds) { [weak self] in
         self?.statusItem.button?.image = iconImage
       }
     } else {
@@ -75,11 +75,11 @@ extension Cleepp {
     }
   }
   
-  private func runOnIconBlinkTimer(afterInterval interval: Float, _ action: @escaping () -> Void) {
+  private func runOnIconBlinkTimer(afterDelay delay: Double, _ action: @escaping () -> Void) {
     if iconBlinkTimer != nil {
       cancelIconBlinkTimer()
     }
-    iconBlinkTimer = timerForRunningOnMainQueueAfterDelay(interval) { [weak self] in
+    iconBlinkTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: delay) { [weak self] in
       self?.iconBlinkTimer = nil // doing this before calling closure supports closure itself calling runOnIconBlinkTimer, fwiw
       action()
     }
@@ -88,18 +88,6 @@ extension Cleepp {
   internal func cancelIconBlinkTimer() {
     iconBlinkTimer?.cancel()
     iconBlinkTimer = nil
-  }
-  
-  private func timerForRunningOnMainQueueAfterDelay(_ seconds: Float, _ action: @escaping () -> Void) -> DispatchSourceTimer {
-    let timer = DispatchSource.makeTimerSource()
-    timer.schedule(wallDeadline: .now() + .milliseconds(Int(seconds * 1000)))
-    timer.setEventHandler {
-      DispatchQueue.main.async {
-        action()
-      }
-    }
-    timer.resume()
-    return timer
   }
   
 }

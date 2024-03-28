@@ -482,7 +482,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     if logoPollTimer != nil {
       cancelLogoPollTimer()
     }
-    logoPollTimer = timerForRunningOnMainQueueRepeated(afterDelay: delay, interval: interval) { [weak self] in
+    logoPollTimer = DispatchSource.scheduledTimerForRunningOnMainQueueRepeated(afterDelay: delay, interval: interval) { [weak self] in
       if !action() {
         self?.logoPollTimer = nil
         return false
@@ -500,7 +500,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     if demoTimer != nil {
       cancelDemoTimer()
     }
-    demoTimer = timerForRunningOnMainQueue(afterDelay: delay) { [weak self] in
+    demoTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: delay) { [weak self] in
       self?.demoTimer = nil // doing this before calling closure supports closure itself calling runOnDemoTimer
       action()
     }
@@ -509,32 +509,6 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private func cancelDemoTimer() {
     demoTimer?.cancel()
     demoTimer = nil
-  }
-  
-  private func timerForRunningOnMainQueueRepeated(afterDelay delaySeconds: Double, interval intervalSeconds: Double, _ action: @escaping () -> Bool) -> DispatchSourceTimer {
-    let timer = DispatchSource.makeTimerSource()
-    timer.schedule(wallDeadline: .now() + .milliseconds(Int(delaySeconds * 1000)), repeating: intervalSeconds)
-    timer.setEventHandler {
-      DispatchQueue.main.async {
-        if !action() {
-          timer.cancel()
-        }
-      }
-    }
-    timer.resume()
-    return timer
-  }
-  
-  private func timerForRunningOnMainQueue(afterDelay delaySeconds: Double, _ action: @escaping () -> Void) -> DispatchSourceTimer {
-    let timer = DispatchSource.makeTimerSource()
-    timer.schedule(wallDeadline: .now() + .milliseconds(Int(delaySeconds * 1000)))
-    timer.setEventHandler {
-      DispatchQueue.main.async {
-        action()
-      }
-    }
-    timer.resume()
-    return timer
   }
   
   private func openURL(string: String) {
