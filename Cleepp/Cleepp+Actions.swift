@@ -352,10 +352,10 @@ extension Cleepp {
   
   @IBAction
   func showSettings(_ sender: AnyObject) {
-    showSettings(selectingPane: .general)
+    showSettings()
   }
   
-  func showSettings(selectingPane pane: Settings.PaneIdentifier) {
+  func showSettings(selectingPane pane: Settings.PaneIdentifier? = nil) {
     Self.returnFocusToPreviousApp = false
     settingsWindowController.show(pane: pane)
     settingsWindowController.window?.orderFrontRegardless()
