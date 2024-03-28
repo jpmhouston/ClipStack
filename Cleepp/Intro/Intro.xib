@@ -8,9 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="IntroWindowController" customModule="Cleepp" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="Nx8-Ge-Pwg" id="eTb-pY-pBh"/>
                 <outlet property="doneButton" destination="gFf-JM-Tzj" id="2C3-sW-3Ts"/>
                 <outlet property="nextButton" destination="Nn0-3a-LL4" id="cPI-so-Zpx"/>
-                <outlet property="previousButton" destination="Nx8-Ge-Pwg" id="wsC-W5-4Vk"/>
+                <outlet property="pageDelegate" destination="o5X-kK-gzk" id="I8n-39-8c5"/>
                 <outlet property="scrollView" destination="UJc-WP-5nb" id="XDC-4J-FEp"/>
                 <outlet property="viewController" destination="o5X-kK-gzk" id="idU-NE-F0Y"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="Q5J-SM-nZg"/>

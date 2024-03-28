@@ -10,24 +10,30 @@ import AppKit
 
 @objc protocol PagedWindowControllerDelegate {
   func willOpen() -> Int // return desired starting page number
-  func willShowPage(_ number: Int)
+  func willShowPage(_ number: Int) -> NSButton?
+  func shouldLeavePage(_ number: Int) -> Bool
   func shouldSkipPage(_ number: Int) -> Bool
   func willClose()
 }
+
+// MARK: -
 
 public class PagedWindowController: NSWindowController, NSWindowDelegate {
   // should make its class UnresponsiveScrollView so it igores scroll gestures
   @IBOutlet var scrollView: NSScrollView!
   @IBOutlet var contentSubview: NSView! { didSet { if isWindowLoaded { useView(contentSubview) } } }
-  @IBOutlet var previousButton: NSButton!
+  @IBOutlet var backButton: NSButton!
   @IBOutlet var nextButton: NSButton!
   @IBOutlet var doneButton: NSButton!
   
   @IBOutlet weak var pageDelegate: PagedWindowControllerDelegate?
   
   var isOpen = false
+  weak var altDefaultButton: NSButton?
   
   private var rightToLeft: Bool { false } // TODO: set based on system language direction
+  
+  // MARK: -
   
   public override func windowDidLoad() {
     window?.delegate = self
@@ -41,6 +47,7 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
   }
   
   public func windowWillClose(_ notification: Notification) {
+    finishPreviousPage()
     pageDelegate?.willClose()
     isOpen = false
   }
@@ -83,47 +90,81 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
         startingPageNumber += 1
       }
       if startingPageNumber > lastPageNumber {
-        startingPageNumber = 0 // if all invisible then show page 0 after all, tough noogies
+        startingPageNumber = 0 // if all invisible then show page 0 after all, tough noogies delegate
+        // maybe instead scan backwards from the original startingPageNumber?
       }
-      
-      // and call the delegate
-      delegate.willShowPage(startingPageNumber)
     }
     
-    scroll(toPage: startingPageNumber)
-    updateButtons()
+    setupNextPage(startingPageNumber)
     
     if opening {
       isOpen = true
     }
   }
   
-  private func updateButtons() {
-    previousButton.isEnabled = !isAtTheStart
+  @discardableResult
+  private func finishPreviousPage() -> Bool {
+    altDefaultButton?.keyEquivalent = ""
+    altDefaultButton = nil
     
-    // window might be getting confused if multiple buttons have keyEquivalent set to Return
-    // clearing keyEquivalent on the button that's hidden, setting on the one showing, seems solid
+    return pageDelegate?.shouldLeavePage(currentPageNumber) ?? true
+  }
+  
+  private func setupNextPage(_ pageNumber: Int) {
+    altDefaultButton = pageDelegate?.willShowPage(pageNumber)
+    scroll(toPage: pageNumber)
+    updateButtons()
+  }
+  
+  private func updateButtons() {
+    backButton.isEnabled = !isAtTheStart
+    
+    // Window seems to get confused if multiple buttons have keyEquivalent set to Return
+    // even though the other buttons with it set are hidden, so here need to clear
+    // keyEquivalent on a button that's hidden.
+    
+    // pick which button, next or done, is visible
+    let visibleButton: NSButton
     let returnKey = "\r"
     if !isAtTheEnd {
-      doneButton.isHidden = true
-      doneButton.keyEquivalent = ""
       nextButton.isHidden = false
-      if nextButton.keyEquivalent.isEmpty {
-        nextButton.keyEquivalent = returnKey
+      visibleButton = nextButton // keyEquivalent set below if there's no altDefaultButton
+      doneButton.isHidden = true
+      if doneButton.keyEquivalent == returnKey {
+        doneButton.keyEquivalent = ""
       }
     } else {
-      nextButton.isHidden = true
-      nextButton.keyEquivalent = ""
       doneButton.isHidden = false
-      if doneButton.keyEquivalent.isEmpty {
-        doneButton.keyEquivalent = returnKey
+      visibleButton = doneButton // keyEquivalent set below if there's no altDefaultButton
+      nextButton.isHidden = true
+      if nextButton.keyEquivalent == returnKey {
+        nextButton.keyEquivalent = ""
+      }
+    }
+    
+    // pick which buttons is default (by having keyEquivalent set to the return character)
+    // the visible one picked above, or the one provided for the page
+    if let userButton = altDefaultButton {
+      if visibleButton.keyEquivalent == returnKey {
+        visibleButton.keyEquivalent = ""
+      }
+      userButton.keyEquivalent = returnKey
+    } else {
+      if visibleButton.keyEquivalent.isEmpty {
+        visibleButton.keyEquivalent = returnKey
       }
     }
   }
   
+  // MARK: -
+  
   @IBAction
   func advance(_ sender: AnyObject) {
     var nextPageNumber = currentPageNumber + 1
+    
+    if !finishPreviousPage() {
+      return
+    }
     
     if let delegate = pageDelegate {
       // when there's a page delegate some pages may be invisible, skip over those
@@ -136,9 +177,6 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
       if nextPageNumber > lastPageNumber {
         return
       }
-      
-      // and call the delegate
-      delegate.willShowPage(nextPageNumber)
     } else {
       // when no page delegate all pages are visible, just sanity check we're not already at the end
       guard !isAtTheEnd else {
@@ -146,14 +184,17 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
       }
     }
     
-    scroll(toPage: nextPageNumber)
-    updateButtons()
+    setupNextPage(nextPageNumber)
   }
   
   @IBAction
   func rewind(_ sender: AnyObject) {
     var nextPageNumber = currentPageNumber - 1
     
+    if !finishPreviousPage() {
+      return
+    }
+
     if let delegate = pageDelegate {
       // when there's a page delegate some pages may be invisible, skip over those
       while nextPageNumber >= 0 {
@@ -165,9 +206,6 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
       if nextPageNumber < 0 {
         return
       }
-      
-      // and call the delegate
-      delegate.willShowPage(nextPageNumber)
     } else {
       // when no page delegate all pages are visible, just sanity check we're not already at the start
       guard !isAtTheStart, nextPageNumber >= 0 else {
@@ -175,10 +213,10 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
       }
     }
     
-    scroll(toPage: nextPageNumber)
-    updateButtons()
+    setupNextPage(nextPageNumber)
   }
   
+  // MARK: -
   // TODO: respect rightToLeft
   
   var isAtTheStart: Bool {
@@ -300,6 +338,8 @@ public class PagedWindowController: NSWindowController, NSWindowDelegate {
   }
   
 }
+
+// MARK: -
 
 public class UnresponsiveScrollView : NSScrollView {
   override public func scrollWheel(with event: NSEvent) {

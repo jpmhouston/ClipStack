@@ -24,11 +24,13 @@ public class IntroWindowController: PagedWindowController {
     guard let _ = window, let viewController = viewController else {
       return
     }
-    useView(viewController.view) // might be redundant, should by ok
     
     viewController.maccy = object
     viewController.startPage = page
+    
+    // these might be redundant, ok to do either way
     pageDelegate = viewController
+    useView(viewController.view)
     
     reset()
     
@@ -122,25 +124,21 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   func willClose() {
-    teardownOptionKeyObserver()
-    cancelDemo()
-    openSecurityPanelSpinner.stopAnimation(self)
-
     visited.removeAll()
     
     // if leaving with accessibility now authorized then don't auto-open again
+    // thought about requiring that the user visit every page, but decided against it
     if Accessibility.allowed {
       UserDefaults.standard.completedIntro = true
     }
   }
   
-  func willShowPage(_ number: Int) {
-    teardownOptionKeyObserver()
-    cancelDemo()
-    
+  func willShowPage(_ number: Int) -> NSButton? {
     guard let page = Pages(rawValue: number) else {
-      return
+      return nil
     }
+    
+    var customDefaultButtonResult: NSButton? = nil
     
     switch page {
     case .welcome:
@@ -161,10 +159,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       needsAuthorizationLabel.isHidden = isAuthorized
       nextAuthorizationDirectionsLabel.isHidden = isAuthorized
       openSecurityPanelButton.isEnabled = !isAuthorized
-      if !visited.contains(page) {
-        skipSetAuthorizationPage = isAuthorized
-      }
-      openSecurityPanelSpinner.stopAnimation(self)
+      customDefaultButtonResult = !isAuthorized ? openSecurityPanelButton : nil
+      skipSetAuthorizationPage = isAuthorized
       
     case .setAuth:
       authorizationVerifiedEmoji.isHidden = true
@@ -188,6 +184,28 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     
     visited.insert(page)
+    return customDefaultButtonResult
+  }
+  
+  func shouldLeavePage(_ number: Int) -> Bool {
+    guard let page = Pages(rawValue: number) else {
+      return true
+    }
+    
+    switch page {
+    case .welcome:
+      stopAnimatedLogo()
+    case .checkAuth:
+      openSecurityPanelSpinner.stopAnimation(self)
+    case .demo:
+      cancelDemo()
+    case .links:
+      teardownOptionKeyObserver()
+    default:
+      break
+    }
+    
+    return true
   }
   
   func shouldSkipPage(_ number: Int) -> Bool {
@@ -375,9 +393,9 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   private func cancelDemo() {
     // If this func is called from the main thread, the runDemo sequence must be now blocked by the timer.
-    // If this cancel is too late and callback within runDemo runs anyhow, it will stop safelu because
-    // either a) self not nil but demoCanceled flag will cause abort, or b) self nil and closure aborts.
-    // When called from deinit it must be that all strong references to self are gone so its again
+    // If this cancel is too late and callback within runDemo runs anyhow, it will stop safely because
+    // either a) self not nil but demoCanceled flag will cause abort, or b) self=nil and closure aborts.
+    // When called from deinit it must be that all strong references to self are gone so it's again
     // in the timer or the async dispatch in the timerFor.. method below, so will have case b). A-ok.
     demoCanceled = true
     cancelDemoTimer()
@@ -418,14 +436,14 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     
     openSecurityPanelSpinner.startAnimation(sender)
-    DispatchQueue.main.asyncAfter(deadline: .now() + openSecurityPanelSpinnerTime) { [weak self] in
-      guard let self = self else {
+    DispatchQueue.main.asyncAfter(deadline: .now() + openSecurityPanelSpinnerTime) { [weak self, weak windowController] in
+      guard let self = self, let wc = windowController, wc.isOpen else {
         return
       }
       self.openSecurityPanelSpinner.stopAnimation(sender)
       
-      if windowController.isOpen && Pages(rawValue: windowController.currentPageNumber) == .checkAuth {
-        windowController.advance(self)
+      if wc.isOpen && Pages(rawValue: wc.currentPageNumber) == .checkAuth {
+        wc.advance(self)
       }
     }
   }
