@@ -207,10 +207,10 @@ extension Cleepp {
     Self.isQueueModeOn = false
     Self.queueSize = 0
     
-    menu.updateHeadOfQueue(index: nil)
     updateStatusMenuIcon()
     updateMenuTitle()
-    
+    menu.updateHeadOfQueue(index: nil)
+
     // in case pasteboard was left set to an item deeper in the queue, reset to the latest item copied
     if let newestItem = history.first {
       clipboard.copy(newestItem)
@@ -251,6 +251,16 @@ extension Cleepp {
     clipboard.copy(item)
   }
   
+  func deleteHistoryItem(_ index: Int) {
+    guard index < 1000 else {
+      return
+    }
+    
+    menu.delete(position: index)
+    
+    fixQueueAfterDeletingIndex(index)
+  }
+  
   @IBAction
   func deleteHistoryItem(_ sender: AnyObject) {
     guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else {
@@ -259,16 +269,7 @@ extension Cleepp {
     
     menu.delete(position: index)
     
-    if Self.isQueueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
-      Self.queueSize -= 1
-      if !permitEmptyQueueMode && Self.queueSize == 0 {
-        Self.isQueueModeOn = false
-      }
-      
-      updateStatusMenuIcon(.decrement)
-      updateMenuTitle()
-      // menu updates the head of queue item itself when deleting
-    }
+    fixQueueAfterDeletingIndex(index)
   }
   
   @IBAction
@@ -277,7 +278,11 @@ extension Cleepp {
       return
     }
     
-    if Self.isQueueModeOn && deletedIndex < Self.queueSize {
+    fixQueueAfterDeletingIndex(deletedIndex)
+  }
+  
+  func fixQueueAfterDeletingIndex(_ index: Int) {
+    if Self.isQueueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
       Self.queueSize -= 1
       if !permitEmptyQueueMode && Self.queueSize == 0 {
         Self.isQueueModeOn = false
@@ -307,14 +312,7 @@ extension Cleepp {
     menu.delete(position: 0)
     
     if Self.isQueueModeOn && Self.queueSize > 0 {
-      Self.queueSize -= 1
-      if !permitEmptyQueueMode && Self.queueSize == 0 {
-        Self.isQueueModeOn = false
-      }
-      
-      updateStatusMenuIcon(.decrement)
-      updateMenuTitle()
-      menu.updateHeadOfQueue(index: queueHeadIndex)
+      fixQueueAfterDeletingIndex(0)
     }
     
     // Normally set pasteboard to the previous history item, now first in the history after doing the

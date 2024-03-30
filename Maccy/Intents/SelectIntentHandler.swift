@@ -2,7 +2,7 @@ import Intents
 
 @available(macOS 11.0, *)
 class SelectIntentHandler: NSObject, SelectIntentHandling {
-  private let positionOffset = 1
+  private let positionOffset = 0
   private var maccy: Maccy!
 
   init(_ maccy: Maccy) {

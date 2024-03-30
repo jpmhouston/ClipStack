@@ -201,7 +201,13 @@ class Maccy: NSObject, NSMenuItemValidation {
   }
 
   func delete(position: Int) -> String? {
+    #if CLEEPP
+    let result = menu.delete(position: position)
+    fixQueueAfterDeletingIndex(position)
+    return result
+    #else
     return menu.delete(position: position)
+    #endif
   }
 
   func item(at position: Int) -> HistoryItem? {
