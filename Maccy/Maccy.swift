@@ -7,7 +7,7 @@ typealias Cleepp = Maccy
 #endif
 
 // swiftlint:disable type_body_length
-class Maccy: NSObject, NSMenuItemValidation {
+class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
   static var isQueueModeOn = false
   static var queueSize = 0
@@ -213,7 +213,7 @@ class Maccy: NSObject, NSMenuItemValidation {
   func item(at position: Int) -> HistoryItem? {
     return menu.historyItem(at: position)
   }
-
+  
   func clearUnpinned(suppressClearAlert: Bool = false) {
     #if CLEEPP
     clearAll(suppressClearAlert: suppressClearAlert)
@@ -266,18 +266,6 @@ class Maccy: NSObject, NSMenuItemValidation {
     } else if !Accessibility.allowed {
       showIntroAtPermissionPage(self)
     }
-    #endif
-  }
-
-  func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-    #if CLEEPP
-    if Self.busy {
-      return false
-    } else {
-      return menu.validationShouldEnable(item: menuItem)
-    }
-    #else
-    return true
     #endif
   }
 

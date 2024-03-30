@@ -243,18 +243,13 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     }
   }
   
-  func validationShouldEnable(item: NSMenuItem) -> Bool {
-    let gotQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
-    if item == queuedPasteItem {
-      return gotQueueItems
-    }
-    if item == queuedPasteMultipleItem || item == queuedPasteAllItem {
-      return gotQueueItems
-    }
-    if item == deleteItem {
-      return false // until programmatically enabled later as items are highlighted
-    }
-    return true
+  private func updateDisabledMenuItems() {
+    let haveQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
+    queuedPasteItem?.isEnabled = haveQueueItems
+    queuedPasteMultipleItem?.isEnabled = haveQueueItems
+    queuedPasteAllItem?.isEnabled = haveQueueItems
+    
+    deleteItem?.isEnabled = false // until programmatically enabled later as items are highlighted
   }
   
   func add(_ item: HistoryItem) {
