@@ -19,12 +19,12 @@ typealias Menu = CleeppMenu
 class CleeppMenu: NSMenu, NSMenuDelegate {
   static let menuWidth = 300
   static let popoverGap = 5.0
-  static let minNumMenuItems = 10 // things get weird if this setting goes down to 0
+  static let minNumMenuItems = 5 // things get weird if the effective menu size is 0
   
-  private var isVisible: Bool = false
+  private var isVisible = false
   private var history: History!
   private let previewController = PreviewPopoverController()
-
+  
   class IndexedItem: NSObject {
     var value: String
     var title: String { item?.title ?? "" }
@@ -41,6 +41,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   
   private var indexedItems: [IndexedItem] = []
   private var headOfQueueIndexedItem: IndexedItem?
+  private var queueItemsSeparator: NSMenuItem?
   
   internal var historyMenuItems: [HistoryMenuItem] {
     items.compactMap({ ($0 as? HistoryMenuItem)?.onlyIfNotIn([topAnchorItem].compactMap({ $0 })) })
@@ -59,12 +60,18 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     }
   }
   
-  private var usePopoverAnchors = false
+  private var usePopoverAnchors: Bool {
+    // hardcode false to exercise using popover anchors even on macOS 14 (now requires changes not yet made in PreviewPopoverController)
+    if #unavailable(macOS 14) { true } else { false }
+  }
+  private var useQueueItemsSeparator: Bool {
+    if #unavailable(macOS 14) { true } else { false }
+  }
   private var showsExpandedMenu = false
   private var showsFullExpansion = false
   private var isFiltered = false
   private var ignoreNextHighlight = false
-
+  
   private var historyHeader: MenuHeaderView? { historyHeaderItem?.view as? MenuHeaderView }
   private let search = Search()
   private var lastHighlightedItem: HistoryMenuItem?
@@ -91,7 +98,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   @IBOutlet weak var deleteItem: NSMenuItem?
   @IBOutlet weak var clearItem: NSMenuItem?
   @IBOutlet weak var undoCopyItem: NSMenuItem?
-
+  
   // MARK: -
   
   static func load(withHistory history: History, owner: Any) -> Self {
@@ -113,6 +120,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   
   override func awakeFromNib() {
     self.delegate = self
+    self.autoenablesItems = false
+    
     self.minimumWidth = CGFloat(Self.menuWidth)
     
     // save aside the prototype history menu items and remove them from the menu
@@ -128,23 +137,19 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       protoAnchorItem = prototypeAnchorItem
       removeItem(prototypeAnchorItem)
     }
-    
-    if #unavailable(macOS 14) {
-      self.usePopoverAnchors = true
-    }
-    
-    // to exercise using popover anchors even on macOS 14 (requires changes not yet made in PreviewPopoverController)
-    //self.usePopoverAnchors = true
   }
   
   func prepareForPopup(location: PopupLocation) {
     rebuildItemsAsNeeded()
     updateShortcuts()
+    updateDisabledMenuItems()
     updateItemVisibility()
+    checkQueueItemsSeparator()
   }
   
   func menuWillOpen(_ menu: NSMenu) {
     isVisible = true
+    
     previewController.menuWillOpen()
     
     if showsExpandedMenu, let field = historyHeader?.queryField {
@@ -197,7 +202,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     if usePopoverAnchors {
       insertTopAnchorItem()
     }
-
+    
     let historyItems = history.all
     
     for item in historyItems {
@@ -212,6 +217,29 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       )
       indexedItems.append(indexedItem)
       menuItems.forEach(appendMenuItem)
+    }
+  }
+  
+  private func checkQueueItemsSeparator() {
+    if !useQueueItemsSeparator {
+      return
+    }
+    
+    let shouldExist = showsExpandedMenu && !isFiltered && Cleepp.isQueueModeOn && Cleepp.queueSize > 0 && indexedItems.count > Cleepp.queueSize
+    if let separator = queueItemsSeparator, index(of: separator) < 0 {
+      queueItemsSeparator = nil
+    }
+    if let separator = queueItemsSeparator, !shouldExist {
+      removeItem(separator)
+      queueItemsSeparator = nil
+    } else if shouldExist {
+      let followingItem = indexedItems[Cleepp.queueSize]
+      guard let followingMenuItem = followingItem.menuItems.first, let index = safeIndex(of: followingMenuItem) else {
+        return
+      }
+      let separator = NSMenuItem.separator()
+      insertItem(separator, at: index)
+      queueItemsSeparator = separator
     }
   }
   
@@ -317,6 +345,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     isFiltered = results.count < indexedItems.count
     
+    checkQueueItemsSeparator()
+    
     highlight(historyMenuItems.first)
   }
   
@@ -362,12 +392,11 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     guard let menuItem = highlightedItem, let historyMenuItem = menuItem as? HistoryMenuItem else {
       return nil
     }
-    let menuIndex = index(of: historyMenuItem)
     
     // When deleting mulitple items by holding the removal keys
     // we sometimes get into a race condition with menu updating indices.
     // https://github.com/p0deje/Maccy/issues/628
-    guard menuIndex != -1 else {
+    guard index(of: historyMenuItem) >= 0 else {
       return nil
     }
     
@@ -392,6 +421,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
 //    }
     
     // remove menu items, history item, this class's indexing item
+    indexedItem.menuItems.forEach({ $0.isHidden = true })
     indexedItem.menuItems.forEach(safeRemoveItem)
     history.remove(indexedItem.item)
     indexedItems.remove(at: position)
@@ -570,11 +600,10 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     let maxItems = Cleepp.isQueueModeOn ? max(maxMenuItems, Cleepp.queueSize) : maxMenuItems
     
-    if (maxItems <= 0 || maxItems > availableHistoryCount) && presentItemsCount < availableHistoryCount {
-      appendItemsUntilLimit(availableHistoryCount)
-    } else if presentItemsCount < maxItems {
-      appendItemsUntilLimit(maxItems)
-    } else if presentItemsCount > maxItems {
+    let maxAvailableItems = maxItems <= 0 || maxItems > availableHistoryCount ? availableHistoryCount : maxItems
+    if presentItemsCount < maxAvailableItems {
+      appendItemsUntilLimit(maxAvailableItems)
+    } else if presentItemsCount > maxAvailableItems {
       removeItemsOverLimit(maxItems)
     }
   }
@@ -764,6 +793,11 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     sanityCheckIndexIsHistoryItemIndex(index)
     
     removeItem(at: index)
+  }
+  
+  private func safeIndex(of item: NSMenuItem) -> Int? {
+    let index = index(of: item)
+    return index >= 0 ? index : nil
   }
   
   private func sanityCheckIndexIsHistoryItemIndex(_ i: Int, forInserting inserting: Bool = false) {

@@ -118,6 +118,10 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
     fireNotification(throttle: throttle)
   }
   
+  public func queryChanged(throttle: Bool = true) {
+    fireNotification(throttle: throttle)
+  }
+
   private func processInterceptedEvent(_ event: NSEvent) -> Bool {
     if event.type != NSEvent.EventType.keyDown {
       return false
@@ -157,10 +161,7 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       return true
 #endif
     case .deleteOneCharFromSearch:
-      if !queryField.stringValue.isEmpty {
-        setQuery(String(queryField.stringValue.dropLast()))
-      }
-      return true
+      return processDeletion()
     case .deleteLastWordFromSearch:
       removeLastWordInSearchField()
       return true
@@ -223,7 +224,44 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
     if UserDefaults.standard.avoidTakingFocus || !NSApp.isActive {
       // append character to the search field to trigger
       // and stop event from being propagated
-      setQuery("\(queryField.stringValue)\(char)")
+      if let editor = queryField.currentEditor() {
+        editor.replaceCharacters(in: editor.selectedRange, with: "\(char)")
+        queryChanged()
+      } else {
+        setQuery("\(queryField.stringValue)\(char)")
+      }
+      return true
+    } else {
+      // make the search field first responder
+      // and propagate event to it
+      focusQueryField()
+      return false
+    }
+  }
+  
+  private func processDeletion() -> Bool {
+    guard !characterPickerVisible else {
+      return false
+    }
+    
+    if queryField.stringValue.isEmpty {
+      return true
+    }
+    
+    if UserDefaults.standard.avoidTakingFocus || !NSApp.isActive {
+      if let editor = queryField.currentEditor() {
+        let selection = editor.selectedRange
+        if selection.length > 0 {
+          editor.delete(self)
+          queryChanged()
+        } else if selection.location > 0 {
+          let previousCharRange = (editor.string as NSString).rangeOfComposedCharacterSequence(at: selection.location - 1)
+          editor.replaceCharacters(in: previousCharRange, with: "")
+          queryChanged()
+        }
+      } else {
+        setQuery(String(queryField.stringValue.dropLast()))
+      }
       return true
     } else {
       // make the search field first responder

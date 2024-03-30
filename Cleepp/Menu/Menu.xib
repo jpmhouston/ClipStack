@@ -42,7 +42,7 @@
         <customView id="9fv-At-xQC" userLabel="Placeholder Anchor Item View">
             <rect key="frame" x="0.0" y="0.0" width="100" height="0.0"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <point key="canvasLocation" x="-105" y="362"/>
+            <point key="canvasLocation" x="-106" y="373"/>
         </customView>
         <menu title="Cleepp" id="dqg-kI-Klz" customClass="CleeppMenu" customModule="Cleepp" customModuleProvider="target">
             <items>

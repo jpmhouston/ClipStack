@@ -1,5 +1,9 @@
 import Cocoa
 
+extension NSAttributedString.Key {
+  static let headIndicator: Self = .init("cleeppqueuehead")
+}
+
 class HistoryMenuItem: NSMenuItem {
   var isPinned = false
   var item: HistoryItem?
@@ -7,6 +11,11 @@ class HistoryMenuItem: NSMenuItem {
   #if CLEEPP
   var isHeadOfQueue = false {
     didSet { updateHeadOfQueueIndication() }
+  }
+  private let indicatorBadge = NSLocalizedString("first_replay_item_badge", comment: "") + " \u{2BAD}"
+  private var useBadges: Bool {
+    // hardcode false to exercise not using badged even on macOS 14
+    if #unavailable(macOS 14) { false } else { true }
   }
   #endif
 
@@ -195,6 +204,12 @@ class HistoryMenuItem: NSMenuItem {
     }
 
     self.attributedTitle = attributedTitle
+
+    #if CLEEPP
+    if isHeadOfQueue && !useBadges {
+      styleToIndicateHeadOfQueue()
+    }
+    #endif
   }
 
   private func isImage(_ item: HistoryItem) -> Bool {
@@ -281,39 +296,50 @@ class HistoryMenuItem: NSMenuItem {
   
 #if CLEEPP
   private func updateHeadOfQueueIndication() {
-    if #unavailable(macOS 14) {
-      styleToIndicateHeadOfQueue()
-    } else {
+    if useBadges {
       badgeToIndicateHeadOfQueue()
-    }
-  }
-  
-  private var headOfQueueAttributes: [NSAttributedString.Key: Any]? {
-    if #unavailable(macOS 14) {
-      [.underlineStyle: NSUnderlineStyle.single.rawValue]
     } else {
-      nil
-    }
-  }
-  
-  private func styleToIndicateHeadOfQueue() {
-    // NB: if item has had highlight called, will now lose the styling it set; just assume that won't happen maybe?
-    if #unavailable(macOS 14), isHeadOfQueue {
-      guard title != imageTitle else { return }
-      attributedTitle = NSMutableAttributedString(string: title, attributes: headOfQueueAttributes)
-    } else {
-      attributedTitle = nil
+      styleToIndicateHeadOfQueue()
     }
   }
   
   private func badgeToIndicateHeadOfQueue() {
     if #available(macOS 14, *) {
       if isHeadOfQueue {
-        badge = NSMenuItemBadge(string: NSLocalizedString("first_replay_item_badge", comment: "") + " \u{2BAD}")
+        badge = NSMenuItemBadge(string: indicatorBadge)
       } else {
         badge = nil
       }
     }
+  }
+  
+  private func styleToIndicateHeadOfQueue() {
+    // not bulletproof, adding to attributedTitle adds to title too
+//    let indicatorPrefix = "\u{261D}\u{FE0E} "
+//    var indicatorPrefixLength: Int { (indicatorPrefix as NSString).length }
+//    guard title != imageTitle else {
+//      return
+//    }
+//    if let currentStyledTitle = attributedTitle {
+//      let indicatorAttributes: [NSAttributedString.Key: Any] = [.font: systemBoldFont, .headIndicator: NSNumber(value: true)]
+//      let alreadyPrefixed = currentStyledTitle.attribute(.headIndicator, at: 0, effectiveRange: nil) != nil
+//      
+//      if isHeadOfQueue && !alreadyPrefixed {
+//        let prefixedTitle = NSMutableAttributedString(string: indicatorPrefix as String, attributes: indicatorAttributes)
+//        prefixedTitle.append(currentStyledTitle)
+//        attributedTitle = prefixedTitle
+//        
+//      } else if !isHeadOfQueue && !alreadyPrefixed {
+//        let unprefixedTitle = NSMutableAttributedString(attributedString: currentStyledTitle)
+//        unprefixedTitle.deleteCharacters(in: NSRange(location: 0, length: indicatorPrefixLength))
+//      }
+//          
+//    } else if isHeadOfQueue {
+//      let styledTitle = NSMutableAttributedString(string: title, attributes: [.font: systemFont])
+//      let prefixedTitle = NSMutableAttributedString(string: indicatorPrefix as String, attributes: [.font: systemBoldFont])
+//      prefixedTitle.append(styledTitle)
+//      attributedTitle = prefixedTitle
+//    }
   }
 #endif
   
