@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   #else
   private var hotKey: GlobalHotKey!
   #endif
-  private var maccy: Maccy!
+  var maccy: Maccy!
 
   func applicationWillFinishLaunching(_ notification: Notification) {
     #if !CLEEPP || ALLOW_SPARKLE_UPDATES

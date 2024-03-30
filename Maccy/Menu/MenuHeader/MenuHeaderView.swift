@@ -148,7 +148,13 @@ class MenuHeaderView: NSView, NSSearchFieldDelegate {
       #endif
       setQuery("")
       return true
-#if !CLEEPP
+#if CLEEPP
+    case .deleteCurrentItem:
+      if let maccy = (NSApp.delegate as? AppDelegate)?.maccy {
+        maccy.deleteHighlightedHistoryItem(self)
+      }
+      return true
+#else
     case .deleteCurrentItem:
       customMenu?.delete()
       setQuery("")

@@ -81,6 +81,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private var protoReplayItem: HistoryMenuItem?
   private var protoAnchorItem: HistoryMenuItem?
   private var menuWindow: NSWindow? { NSApp.menuWindow }
+  private var deleteAction: Selector?
   
   @IBOutlet weak var queueStartItem: NSMenuItem?
   @IBOutlet weak var queueStopItem: NSMenuItem?
@@ -137,13 +138,16 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       protoAnchorItem = prototypeAnchorItem
       removeItem(prototypeAnchorItem)
     }
+    
+    // sometimes clear this so search box key events can drive item deletions instead
+    deleteAction = deleteItem?.action
   }
   
   func prepareForPopup(location: PopupLocation) {
     rebuildItemsAsNeeded()
     updateShortcuts()
-    updateDisabledMenuItems()
     updateItemVisibility()
+    updateDisabledMenuItems()
     checkQueueItemsSeparator()
   }
   
@@ -250,6 +254,24 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     queuedPasteAllItem?.isEnabled = haveQueueItems
     
     deleteItem?.isEnabled = false // until programmatically enabled later as items are highlighted
+    
+    // clear delete actions when search box showing so its key events can drive item deletions instead
+    let searchHeaderVisible = !(historyHeaderItem?.isHidden ?? true) // ie. if not hidden
+    deleteItem?.action = searchHeaderVisible ? nil : deleteAction
+  }
+  
+  private func setDeleteEnabled(forHighlightedItem item: NSMenuItem?) {
+    guard let item = item else {
+      return
+    }
+    
+    var enable = false
+    if let historyMenuItem = item as? HistoryMenuItem {
+      enable = canDeleteHistoryMenuItem(historyMenuItem)
+    } else {
+      enable = false
+    }
+    deleteItem?.isEnabled = enable
   }
   
   func add(_ item: HistoryItem) {
@@ -406,14 +428,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     let indexedItem = indexedItems[position]
     let value = indexedItem.value
-    
-    // leave this out until we figure out how to leave menu up after cmd-delete
-//    // check if this menu item is highlighted
-//    var wasHighlighted = false
-//    var itemToRehighlight: IndexedItem?
-//    if let highlightedHistoryMenuItem = highlightedItem as? HistoryMenuItem {
-//      wasHighlighted = highlightedHistoryMenuItem.item == indexedItem
-//    }
+    let wasHighlighted = indexedItem.item == lastHighlightedItem?.item
     
     // remove menu items, history item, this class's indexing item
     indexedItem.menuItems.forEach({ $0.isHidden = true })
@@ -424,43 +439,27 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     // clean up head of queue item
     if indexedItem == headOfQueueIndexedItem {
       setHeadOfQueueItem(position > 0 ? indexedItems[position - 1] : nil)
+      
+      // after deleting the selected last-queued item, highlight the previous item (new last one in queue)
+      // instead of letting the system highlight the next one
+      if wasHighlighted && position > 0 {
+        let prevItem = indexedItems[position - 1].menuItems[0]
+        highlight(prevItem)
+        lastHighlightedItem = prevItem
+      }
     }
-//    // update highlight
-//    if wasHighlighted && indexedItem != headOfQueueIndexedItem && position < indexedItems.count {
-//      // in most cases, deleting selected item selects the new one in this positon
-//      if position < indexedItems.count {
-//        highlight(indexedItems[position].menuItems[0])
-//      }
-//    } else if indexedItem == headOfQueueIndexedItem && wasHighlighted && position > 0 {
-//      // but deleting the selected last-queued item selects the previous item (new last one in queue)
-//        highlight(indexedItems[position - 1].menuItems[0])
-//    }
     
     return value
   }
   
   func deleteHighlightedItem() -> Int? {
     guard let item = lastHighlightedItem,
-          let index = indexedItems.firstIndex(where: { $0.menuItems.contains(item) }) else {
+          let position = indexedItems.firstIndex(where: { $0.menuItems.contains(item) }) else {
       return nil
     }
-    delete(position: index)
+    delete(position: position)
     
-    return index
-  }
-  
-  private func setDeleteEnabled(forHighlightedItem item: NSMenuItem?) {
-    guard let item = item else {
-      return
-    }
-    
-    var enable = false
-    if let historyMenuItem = item as? HistoryMenuItem {
-      enable = canDeleteHistoryMenuItem(historyMenuItem)
-    } else {
-      enable = false
-    }
-    deleteItem?.isEnabled = enable
+    return position
   }
   
   func canDeleteHistoryMenuItem(_ item: HistoryMenuItem) -> Bool {

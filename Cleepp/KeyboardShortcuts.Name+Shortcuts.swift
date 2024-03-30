@@ -4,7 +4,9 @@ extension KeyboardShortcuts.Name {
   // define these merely so code referring to them need not change
   static let popup = Name("popup")
   static let pin = Name("pin")
-  static let delete = Name("delete")
+  
+  // this still used by the keyhandler for now to get the key and modifiers from, must keep in sync with the item menu :(
+  static let delete = Name("delete", default: Shortcut(.delete, modifiers: [.command]))
   
   // special copy that starts queue mode
   static let queuedCopy = Name("queuedCopy", default: Shortcut(.c, modifiers: [.command, .control]))

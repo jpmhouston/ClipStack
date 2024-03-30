@@ -20,7 +20,7 @@ enum KeyChord: CaseIterable {
     (NSApp.delegate as? AppDelegate)?.copyMenuItem.keyEquivalentModifierMask ?? [.command]
   }
   #endif
-
+  
   static var deleteKey: Key? {
     if let shortcut = KeyboardShortcuts.Shortcut(name: .delete) {
       return Sauce.shared.key(for: shortcut.carbonKeyCode)
@@ -75,8 +75,6 @@ enum KeyChord: CaseIterable {
       self = .clearHistory
     case (.delete, MenuFooter.clearAll.keyEquivalentModifierMask):
       self = .clearHistoryAll
-    case (KeyChord.deleteKey, KeyChord.deleteModifiers):
-      self = .deleteCurrentItem
     case (.delete, [.command]), (.u, [.control]):
       self = .clearSearch
 #else
@@ -91,6 +89,8 @@ enum KeyChord: CaseIterable {
       self = .moveToNext
     case (.k, [.control]):
       self = .moveToPrevious
+    case (KeyChord.deleteKey, KeyChord.deleteModifiers):
+      self = .deleteCurrentItem
 #if !CLEEPP
     case (KeyChord.pinKey, KeyChord.pinModifiers):
       self = .pinOrUnpin
