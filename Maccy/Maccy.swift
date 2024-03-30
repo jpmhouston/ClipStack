@@ -82,9 +82,9 @@ class Maccy: NSObject {
   internal lazy var settingsWindowController = SettingsWindowController(
     panes: [
       GeneralSettingsViewController(),
+      AppearanceSettingsViewController(),
       PurchaseSettingsViewController(),
       StorageSettingsViewController(),
-      AppearanceSettingsViewController(),
       IgnoreSettingsViewController(),
       AdvancedSettingsViewController()
     ]
@@ -93,8 +93,8 @@ class Maccy: NSObject {
   internal lazy var settingsWindowController = SettingsWindowController(
     panes: [
       GeneralSettingsViewController(),
-      StorageSettingsViewController(),
       AppearanceSettingsViewController(),
+      StorageSettingsViewController(),
       IgnoreSettingsViewController(),
       AdvancedSettingsViewController()
     ]
