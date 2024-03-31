@@ -191,9 +191,6 @@
 		8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
 		8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
 		8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */; };
-		8FCDFC0C2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */; };
-		8FCDFC0D2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */; };
-		8FCDFC0E2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */; };
 		8FCDFC0F2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
 		8FCDFC102BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
 		8FCDFC112BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
@@ -384,7 +381,6 @@
 		8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cleepp+Links.swift"; sourceTree = "<group>"; };
 		8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchSource+scheduledTimer.swift"; sourceTree = "<group>"; };
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
-		8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ApplicationName.swift"; sourceTree = "<group>"; };
 		8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWorkspace+ApplicationName.swift"; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
@@ -648,7 +644,6 @@
 		2FBB7A252B5FECBB00C65BBE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				8FCDFC0A2BBB999400A16FBE /* Bundle+ApplicationName.swift */,
 				DAFEF0B7249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift */,
 				DA3EAE0B2AE30F7500F39108 /* NSApplication+Windows.swift */,
 				DA7A753D26A52F0F00DC16EF /* NSImage+Names.swift */,
@@ -1393,7 +1388,6 @@
 				8F0D3CE12BABD57300DDB603 /* About.swift in Sources */,
 				8F8C48C72BAD5ED500C3A219 /* Intro.swift in Sources */,
 				8F0D3C522BAB8F5A00DDB603 /* Search.swift in Sources */,
-				8FCDFC0C2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */,
 				8F0D3C532BAB8F5A00DDB603 /* AppDelegate.swift in Sources */,
 				8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */,
 				8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */,
@@ -1468,7 +1462,6 @@
 				8F8C488A2BAD51B000C3A219 /* String+Shortened.swift in Sources */,
 				8F8C488B2BAD51B000C3A219 /* About.swift in Sources */,
 				8F8C488C2BAD51B000C3A219 /* Search.swift in Sources */,
-				8FCDFC0D2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */,
 				8F8C488D2BAD51B000C3A219 /* AppDelegate.swift in Sources */,
 				8F8C488E2BAD51B000C3A219 /* ColorImage.swift in Sources */,
 				8F8C488F2BAD51B000C3A219 /* Menu.swift in Sources */,
@@ -1548,7 +1541,6 @@
 				DA81D674252A056B009977BC /* Throttler.swift in Sources */,
 				DA20FA722B082DD600056DD5 /* Notifier.swift in Sources */,
 				DA196A9328AB0D4500ADD8A2 /* MenuHeaderView.swift in Sources */,
-				8FCDFC0E2BBB999400A16FBE /* Bundle+ApplicationName.swift in Sources */,
 				DA573EAD1EDD410F00561FB2 /* HistoryMenuItem.swift in Sources */,
 				DA1B0FD6289DFEA200E641BE /* PinComboBoxCell.swift in Sources */,
 				DA1DF95227AF8BBA006839E0 /* StorageSettingsViewController.swift in Sources */,
