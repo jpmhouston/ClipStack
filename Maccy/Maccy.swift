@@ -308,7 +308,12 @@ class Maccy: NSObject {
     headerItem.title = "Maccy"
     headerItem.view = MenuHeader().view
 
-    menu.addItem(headerItem)
+    menu.insertItem(headerItem, at: 0)
+  }
+
+  private func updateHeader() {
+    menu.removeItem(at: 0)
+    populateHeader()
   }
 
   private func populateItems() {
@@ -323,6 +328,13 @@ class Maccy: NSObject {
       item.target = self
       menu.addItem(item)
     })
+  }
+
+  private func updateFooter() {
+    MenuFooter.allCases.forEach({ _ in
+      menu.removeItem(at: menu.numberOfItems - 1)
+    })
+    populateFooter()
   }
 
   @objc
@@ -495,13 +507,13 @@ class Maccy: NSObject {
     // might also want to keep showSpecialSymbolsObserver
     #else
     hideFooterObserver = UserDefaults.standard.observe(\.hideFooter, options: .new) { _, _ in
-      self.rebuild()
+      self.updateFooter()
     }
     hideSearchObserver = UserDefaults.standard.observe(\.hideSearch, options: .new) { _, _ in
-      self.rebuild()
+      self.updateHeader()
     }
     hideTitleObserver = UserDefaults.standard.observe(\.hideTitle, options: .new) { _, _ in
-      self.rebuild()
+      self.updateHeader()
     }
     pasteByDefaultObserver = UserDefaults.standard.observe(\.pasteByDefault, options: .new) { _, _ in
       self.rebuild()
