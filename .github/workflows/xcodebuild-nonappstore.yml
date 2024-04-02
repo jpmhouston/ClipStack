@@ -12,8 +12,9 @@ on:
     inputs:
       buildRelease:
         description: 'Also draft a release?'
-        required: false
+        required: true
         type: boolean
+        default: false
 
 jobs:
   build:
@@ -108,7 +109,7 @@ jobs:
           echo "inputs.buildRelease: ${{ inputs.buildRelease }}"
         id: version
       - name: Build Zip File
-        if: startsWith(github.ref, 'refs/tags/') || ("${{ inputs.buildRelease != '' }}" && fromJSON(inputs.buildRelease))
+        if: startsWith(github.ref, 'refs/tags/') || fromJSON(inputs.buildRelease)
         run: |
           echo "Making Archive Directory"
           test -d Build/Products/Release/Cleepp.app || exit 1
@@ -121,7 +122,7 @@ jobs:
           echo "Building ${ARCHIVEDIR}.zip"
           ditto -c -k --sequesterRsrc --keepParent "$ARCHIVEDIR" "${ARCHIVEDIR}.zip"
       - name: Draft Release
-        if: startsWith(github.ref, 'refs/tags/') || ("${{ inputs.buildRelease != '' }}" && fromJSON(inputs.buildRelease))
+        if: startsWith(github.ref, 'refs/tags/') || fromJSON(inputs.buildRelease)
         uses: softprops/action-gh-release@v2
         with:
           name: "Cleepp ${{ steps.version.outputs.version }}"
