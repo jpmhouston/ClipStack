@@ -1,4 +1,4 @@
-<img width="656px" height="180px" src="Designs/Cleepp/Cleepp GitHub logo.gif" alt="Logo"/>
+<img height="180px" src="Designs/Cleepp/Cleepp GitHub logo.gif" alt="Logo" style="aspect-ratio: 656/180;"/>
 
 [![Downloads](https://img.shields.io/github/downloads/jpmhouston/Cleepp/total.svg)](https://github.com/jpmhouston/Cleepp/releases/latest)
 [![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/bananameterlabs)
@@ -33,7 +33,7 @@ Cleepp works on macOS Mojave 10.14 or higher.
 
 ### Thank you
 
-Please consider supporting development of this app by either the in-app purchase in the App Store version, or with a [tip at buymeacoffee.com](https://www.buymeacoffee.com/bananameterlabs). *Also please consider supporting the original authors of [Maccy](http:maccy.app) with a [donation at buymeacoffee.com](https://www.buymeacoffee.com/p0deje).*
+Please consider supporting development of this app by either the in-app purchase in the App Store version, or with a [tip at buymeacoffee.com](https://www.buymeacoffee.com/bananameterlabs). _Also please consider supporting the original authors of [Maccy](http:maccy.app) with a [donation at buymeacoffee.com](https://www.buymeacoffee.com/p0deje)._
 
 ### License
 
