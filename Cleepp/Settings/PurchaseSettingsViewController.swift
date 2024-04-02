@@ -110,8 +110,6 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     case (.success(.restorations(_)), _):
       displayMessage("Delayed purchase restoration has completed and you've got the bonus features, thank you!")
       
-    case (.failure(.cancelled), _): // maybe no such error? if so remove the enum case
-      clearMessage()
     case (.failure(.unreachable), .fetchingProducts):
       displayError("Failed to reach network and fetch the purchase details")
     case (.failure(.unreachable), .purchasing):

@@ -106,10 +106,11 @@ extension Cleepp {
       
       Self.busy = false
       
-      #if FOR_APP_STORE && !DEBUG
-      if !Self.isQueueModeOn {
-        Purchases.shared.askForReview()
-      }
+      #if FOR_APP_STORE
+        // TODO: enable reviews when this target is truly building for the app store
+//      if !Self.isQueueModeOn {
+//        AppStoreReview.ask(after: 20)
+//      }
       #endif
     }
   }

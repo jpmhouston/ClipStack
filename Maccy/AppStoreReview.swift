@@ -1,9 +1,9 @@
 import StoreKit
 
 class AppStoreReview {
-  class func ask() {
+  class func ask(after times: Int = 50) {
     UserDefaults.standard.numberOfUsages += 1
-    guard UserDefaults.standard.numberOfUsages > 50 else { return }
+    if UserDefaults.standard.numberOfUsages < times { return }
 
     let today = Date()
     let lastReviewRequestDate = UserDefaults.standard.lastReviewRequestedAt

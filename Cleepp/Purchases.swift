@@ -40,11 +40,11 @@ class Purchases: NSObject {
   }
   
   enum PurchaseError: Error, CaseIterable {
-    case unavailable, prohibited
+    case prohibited
     case malformedReceipt, invalidReceipt
-    //case unrecognized
-    case cancelled, declined, noneToRestore, unreachable
-    case unknown
+    case unreachable, unknown
+    //case unrecognized, unavailable, noneToRestore
+    //case cancelled, declined
   }
   
   typealias ObservationUpdate = Result<UpdateItem, PurchaseError>
@@ -62,6 +62,7 @@ class Purchases: NSObject {
   var hasBoughtExtras: Bool { boughtItems.contains(.bonus) }
   var boughtItems: Set<Item> = []
   var lastError: PurchaseError? // possibly not needed
+  var reviewFunctionCounter = 0
 
   // MARK: -
   
@@ -107,11 +108,6 @@ class Purchases: NSObject {
   
   func removeObserver(_ token: ObservationToken) {
     token.cancel()
-  }
-  
-  func askForReview() {
-    // TODO: count times entering this function, only ask the Nth time
-    AppStoreReview.ask()
   }
   
   // MARK: -
@@ -164,13 +160,32 @@ class Purchases: NSObject {
 //      break
 //    }
     
-    //refreshReceipt() {
-    //  if ... {
-    //    restorePurchases() {
-    //
-    //    }
-    //  }
-    //}
+    refreshReceipt() { [weak self] refreshResult in
+      guard let self = self else { return }
+      
+      switch refreshResult {
+      case .success(let items) where items.count > 0:
+        callObservers(withUpdate: .success(.restorations(items)))
+        
+      case .success(_): // does this matching pattern work?
+        restorePurchases()
+        
+//        restorePurchases() { [weak self] restoreResult in
+//          guard let self = self else { return }
+//          
+//          switch restoreResult {
+//          case .success(let items):
+//            callObservers(withUpdate: .success(.restorations(items))) // oh completeTransactionsCallback does this
+//          case .failure(let error):
+//            callObservers(withUpdate: .failure(error))
+//          }
+//        }
+        
+      default:
+        break
+      }
+    }
+    
   }
   
   func callObservers(withUpdate update: ObservationUpdate) {
@@ -185,7 +200,7 @@ class Purchases: NSObject {
   private func checkLocalReceipt() -> ReceiptResult {
     boughtItems = []
     guard let receiptData = SwiftyStoreKit.localReceiptData else {
-      return .failure(.unavailable)
+      return .success([])
     }
     return validateReceipt(receiptData)
   }
@@ -199,60 +214,79 @@ class Purchases: NSObject {
       boughtItems.insert(.bonus)
       return .success([.bonus])
       
-    } catch IARError.initializationFailed { // let error as IARError.initializationFailed(let reason) .. doesn't work :(
-      print("Receipt validation failed during initialization") // \(error)")
+    } catch IARError.initializationFailed {
+      // catch let error as IARError.initializationFailed(reason) .. can swift let us do this?
+      print("Failure validating receipt: validator itself")
       errorValue = .malformedReceipt
-    } catch IARError.validationFailed { // let error as IARError.validationFailed(let reason)
-      print("Receipt validation unsuccessful") // \(error)")
+      
+    } catch IARError.validationFailed {
+      // catch let error as IARError.validationFailed(reason)
+      print("Failure validating receipt: did not validate")
       errorValue = .invalidReceipt
+      
     } catch {
-      print("Unknown error during local receipt validation: \(error)")
+      print("Unknown error during local receipt validation: \(error)") // TODO: either ditch logging these or improve the manner & messages
       errorValue = .unknown
     }
+    
     lastError = errorValue
     return .failure(errorValue)
   }
   
-  func refreshReceipt() {
-    SwiftyStoreKit.fetchReceipt(forceRefresh: true) { [weak self] result in
-      switch result {
+  func refreshReceipt(_ completion: @escaping (ReceiptResult)->Void) {
+    SwiftyStoreKit.fetchReceipt(forceRefresh: true) { [weak self] fetchResult in
+      guard let self = self else { return }
+      
+      switch fetchResult {
       case .success(let receiptData):
-        switch self?.validateReceipt(receiptData) {
-        case .success(_ /*let items*/):
-          // TODO: finish this, probably pass in a completion closure and call it here
-          break
-        case .failure(_ /*let error*/):
-          // TODO: finish this
-          break
-        case nil:
-          break
-        }
+        let validationResult = self.validateReceipt(receiptData)
+        completion(validationResult)
+        
+      case .error(.noReceiptData), .error(.noRemoteData),
+           .error(.receiptInvalid(_, .subscriptionExpired)):
+        completion(.success([]))
+        
+      case .error(.networkError(let osError)):
+        print("Network failure fetching receipts: \(osError)")
+        completion(.failure(.unreachable))
+        
+      case .error(.receiptInvalid(_, .receiptServerUnavailable)):
+        print("Failure fetching receipts: some apple server reported to be down")
+        completion(.failure(.unreachable))
         
       case .error(let error):
-        print("Fetch receipt failed: \(error)")
+        print("Failure fetching receipts: \(error)") // TOOD: either ditch logging these or improve the manner & messages
+        // perhaps this error case shouldn't be named "unknown", maybe "other"
+        completion(.failure(.unknown))
       }
     }
   }
   
-  func restorePurchases() {
-    SwiftyStoreKit.restorePurchases(atomically: true) { results in
-      if results.restoredPurchases.count > 0 {
-        print("Restore Success: \(results.restoredPurchases)")
-        // TODO: finish this, probably pass in a completion closure and call it here
+  func restorePurchases() { // _ completion: @escaping (ReceiptResult)->Void
+    SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] restoreResult in
+      guard let self = self else { return }
+      
+      if restoreResult.restoredPurchases.count > 0 {
+        print("Success restoring purchases: \(restoreResult.restoredPurchases)")
+        // validation and invoking observers done in completeTransactionsCallback, does that make sense?
+        //completion(.success([]))
         
-      } else if results.restoreFailedPurchases.count > 0 {
-        print("Restore Failed: \(results.restoreFailedPurchases)")
-        // TODO: finish this
+      } else if restoreResult.restoreFailedPurchases.count > 0 {
+        print("Failure restoring purchases: \(restoreResult.restoreFailedPurchases)")
+        // invoking observers on failure in completeTransactionsCallback too? maybe don't need a completion parameter
+        //completion(.failure(.unknown)) // TODO: what error
+        
       } else {
         print("Nothing to Restore")
-        // TODO: finish this
+        // if no call to completeTransactionsCallback occurs in this case, invoke observers here?
+        //completion(.success([]))
+        self.callObservers(withUpdate: .success(.restorations([])))
       }
     }
   }
   
   private func completeTransactionsCallback(withPurchases purchases: [Purchase]) {
-    // TODO: probably should consolidate set of successful purchases with and failures and make just 1 call to observers
-    // and make ObservationUpdate value be an enum: transactions([Purchase]), products([ProductDetails])
+    // TODO: consolidate set of successful purchases and failures and make just 1 call to observers
     
     for purchase in purchases {
       switch purchase.transaction.transactionState {
