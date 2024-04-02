@@ -16,11 +16,17 @@
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum image preview height.\nDefault: 40.\nHint: Set to 16 to look like text items."; ObjectID = "Tsp-4i-Mym"; */
 "Tsp-4i-Mym.ibShadowedToolTip" = "Максимальна висота попереднього перегляду зображення.\nЗа замовчуванням: 40.\nПідказка: установіть значення 16, щоб виглядати як текстові елементи.";
 
-/* Class = "NSStackView"; ibShadowedToolTip = "Number of visible items.\nHidden items are still kept in history and can be found using search.\nSet to 0 to make all items visible.\nDefault: 0."; ObjectID = "a8Y-aG-9on"; */
-"a8Y-aG-9on.ibShadowedToolTip" = "Кількість видимих елементів.\nПриховані елементи все ще зберігаються в історії та їх можна знайти за допомогою пошуку.\nУстановіть 0, щоб зробити всі елементи видимими.\nЗа замовчуванням: 0.";
+/* Class = "NSStackView"; ibShadowedToolTip = "Number of visible items.\nHidden items are still kept in history and can be found using search.\nSet to 0 to make all items visible.\nDefault: 20."; ObjectID = "a8Y-aG-9on"; */
+"a8Y-aG-9on.ibShadowedToolTip" = "Кількість видимих елементів.\nПриховані елементи все ще зберігаються в історії та їх можна знайти за допомогою пошуку.\nУстановіть 0, щоб зробити всі елементи видимими.\nЗа замовчуванням: 20.";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum number of characters in the item title.\nDefault: 50."; ObjectID = "XGd-Fg-wS9"; */
 "XGd-Fg-wS9.ibShadowedToolTip" = "Максимальна кількість символів у назві елемента.\nЗа замовчуванням: 50.";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Delay in milliseconds until a preview popup is shown.\nDefault: 1500."; ObjectID = "7SP-tN-nLD"; */
 "7SP-tN-nLD.ibShadowedToolTip" = "Затримка в мілісекундах до появи спливаючого вікна попереднього перегляду.\nЗа замовчуванням: 1500.";
+
+/* Class = "NSButtonCell"; title = "Show special symbols"; ObjectID = "t7k-cr-U2Q"; */
+"t7k-cr-U2Q.title" = "Показати спеціальні символи";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Show newlines, tabs, leading and trailing spaces via special symbols."; ObjectID = "tC6-tV-7tl"; */
+"tC6-tV-7tl.ibShadowedToolTip" = "Показувати нові рядки, табуляції, пробіли на початку та в кінці за допомогою спеціальних символів.";

@@ -14,7 +14,7 @@
                 <outlet property="previewDelayField" destination="bWg-D5-ht1" id="vMb-ug-t34"/>
                 <outlet property="previewDelayStepper" destination="ULE-wI-xRy" id="ln7-x8-0ju"/>
                 <outlet property="showSearchFieldButton" destination="YIB-bg-Q16" id="Qln-5j-37O"/>
-                <outlet property="showSpecialSymbolsButton" destination="mqS-hD-ce4" id="f7a-qO-7Gq"/>
+                <outlet property="showSpecialSymbolsButton" destination="tC6-tV-7tl" id="f7a-qO-7Gq"/>
                 <outlet property="titleLengthField" destination="Wto-wB-Ijw" id="7T5-sc-gdI"/>
                 <outlet property="titleLengthStepper" destination="rCn-UZ-2qY" id="WLQ-6Y-rMm"/>
                 <outlet property="view" destination="O1T-Uq-VLh" id="Mag-yb-MBX"/>
@@ -59,7 +59,7 @@
                                 <string key="toolTip">Number of visible items.
 Hidden items are still kept in history and can be found using search.
 Set to 0 to make all items visible.
-Default: 0.</string>
+Default: 20.</string>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bLY-QC-Jck">
                                         <rect key="frame" x="0.0" y="0.0" width="96" height="21"/>
@@ -290,9 +290,9 @@ Default: 1500.</string>
                         <gridCell row="OdT-ff-FSd" column="7OC-Fv-eMr" headOfMergedCell="OeY-HC-jSl" id="fe5-7h-IxP"/>
                         <gridCell row="nuK-ef-5Um" column="KLa-7P-lgK" id="DS6-t0-CtZ"/>
                         <gridCell row="nuK-ef-5Um" column="7OC-Fv-eMr" id="Kye-ZS-ed3">
-                            <button key="contentView" toolTip="Show newlines, tabs, leading and trailing spaces via special symbols." verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mqS-hD-ce4">
+                            <button key="contentView" toolTip="Show newlines, tabs, leading and trailing spaces via special symbols." verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tC6-tV-7tl">
                                 <rect key="frame" x="198" y="31" width="160" height="18"/>
-                                <buttonCell key="cell" type="check" title="Show special symbols" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="K6E-CD-ec0">
+                                <buttonCell key="cell" type="check" title="Show special symbols" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="t7k-cr-U2Q">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>

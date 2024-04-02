@@ -16,11 +16,17 @@
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum image preview height.\nDefault: 40.\nHint: Set to 16 to look like text items."; ObjectID = "Tsp-4i-Mym"; */
 "Tsp-4i-Mym.ibShadowedToolTip" = "Altezza massima preview immagine.\nDefault: 40.\nSuggerimento: Impostala a 16 per farla sembrare come gli elementi testuali.";
 
-/* Class = "NSStackView"; ibShadowedToolTip = "Number of visible items.\nHidden items are still kept in history and can be found using search.\nSet to 0 to make all items visible.\nDefault: 0."; ObjectID = "a8Y-aG-9on"; */
-"a8Y-aG-9on.ibShadowedToolTip" = "Numero di elementi visibili.\nGli elementi nascosti sono salvati lo stesso nella cronologia e possono essere trovati utilizzando la ricerca.\nImposta a 0 per rendere visibili tutti gli elementi.\nDefault: 0.";
+/* Class = "NSStackView"; ibShadowedToolTip = "Number of visible items.\nHidden items are still kept in history and can be found using search.\nSet to 0 to make all items visible.\nDefault: 20."; ObjectID = "a8Y-aG-9on"; */
+"a8Y-aG-9on.ibShadowedToolTip" = "Numero di elementi visibili.\nGli elementi nascosti sono salvati lo stesso nella cronologia e possono essere trovati utilizzando la ricerca.\nImposta a 0 per rendere visibili tutti gli elementi.\nDefault: 20.";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Maximum number of characters in the item title.\nDefault: 50."; ObjectID = "XGd-Fg-wS9"; */
 "XGd-Fg-wS9.ibShadowedToolTip" = "Numero massimo di caratteri nel titolo dell'elemento.\nDefault: 50.";
 
 /* Class = "NSStackView"; ibShadowedToolTip = "Delay in milliseconds until a preview popup is shown.\nDefault: 1500."; ObjectID = "7SP-tN-nLD"; */
 "7SP-tN-nLD.ibShadowedToolTip" = "Ritardo in millisecondi prima che venga visualizzato un popup di anteprima.\nDefault: 1500.";
+
+/* Class = "NSButtonCell"; title = "Show special symbols"; ObjectID = "t7k-cr-U2Q"; */
+"t7k-cr-U2Q.title" = "Mostra simboli speciali";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Show newlines, tabs, leading and trailing spaces via special symbols."; ObjectID = "tC6-tV-7tl"; */
+"tC6-tV-7tl.ibShadowedToolTip" = "Mostra fine riga, tabulazioni, spazi iniziali e finali tramite simboli speciali.";
