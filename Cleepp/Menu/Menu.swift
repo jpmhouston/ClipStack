@@ -61,11 +61,15 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   }
   
   private var usePopoverAnchors: Bool {
-    // hardcode false to exercise using popover anchors even on macOS 14 (now requires changes not yet made in PreviewPopoverController)
+    // note: hardcoding false to exercise using anchors on >=sonoma won't work currently
+    // would require changes in PreviewPopoverController
     if #unavailable(macOS 14) { true } else { false }
   }
   private var useQueueItemsSeparator: Bool {
-    if #unavailable(macOS 14) { true } else { false }
+    // to use the separator _and_ badge on >=sonoma
+    true
+    // to skip using separator when using the badge on >=sonoma
+    //if #unavailable(macOS 14) { true } else { false }
   }
   private var showsExpandedMenu = false
   private var showsFullExpansion = false
