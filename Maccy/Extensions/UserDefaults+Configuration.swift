@@ -61,7 +61,7 @@ extension UserDefaults {
     static let ignoreRegexp: [String] = []
     static let imageMaxHeight = 40.0
     #if CLEEPP
-    static let maxMenuItems = 25
+    static let maxMenuItems = 20
     #else
     static let maxMenuItems = 0
     #endif
