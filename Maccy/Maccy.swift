@@ -203,7 +203,7 @@ class Maccy: NSObject {
   func delete(position: Int) -> String? {
     #if CLEEPP
     let result = menu.delete(position: position)
-    fixQueueAfterDeletingIndex(position)
+    fixQueueAfterDeletingItem(atIndex: position)
     return result
     #else
     return menu.delete(position: position)

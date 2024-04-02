@@ -258,7 +258,7 @@ extension Cleepp {
     
     menu.delete(position: index)
     
-    fixQueueAfterDeletingIndex(index)
+    fixQueueAfterDeletingItem(atIndex: index)
   }
   
   @IBAction
@@ -269,7 +269,7 @@ extension Cleepp {
     
     menu.delete(position: index)
     
-    fixQueueAfterDeletingIndex(index)
+    fixQueueAfterDeletingItem(atIndex: index)
   }
   
   @IBAction
@@ -278,10 +278,10 @@ extension Cleepp {
       return
     }
     
-    fixQueueAfterDeletingIndex(deletedIndex)
+    fixQueueAfterDeletingItem(atIndex: deletedIndex)
   }
   
-  func fixQueueAfterDeletingIndex(_ index: Int) {
+  func fixQueueAfterDeletingItem(atIndex index: Int) {
     if Self.isQueueModeOn, let headIndex = queueHeadIndex, index <= headIndex {
       Self.queueSize -= 1
       if !permitEmptyQueueMode && Self.queueSize == 0 {
@@ -312,7 +312,7 @@ extension Cleepp {
     menu.delete(position: 0)
     
     if Self.isQueueModeOn && Self.queueSize > 0 {
-      fixQueueAfterDeletingIndex(0)
+      fixQueueAfterDeletingItem(atIndex: 0)
     }
     
     // Normally set pasteboard to the previous history item, now first in the history after doing the
