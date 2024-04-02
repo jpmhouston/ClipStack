@@ -17,26 +17,16 @@ on:
 
 jobs:
   build:
-    name: Build and analyse default scheme using xcodebuild command
+    name: Non-AppStore Cleep Build, Conditionally Release
     runs-on: macos-14
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set Default Scheme
-        run: |
-          default=Cleepp
-          echo $default | cat >default
-          echo Using scheme: $default
       - name: Build
         # requires "runs-on: macos-14" above to use Xcode 15, "macos-latest" is actually older and uses Xcode 14
-        env:
-          scheme: ${{ 'default' }}
         run: |
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild clean build analyze -scheme "$scheme" -configuration Release -"$filetype_parameter" "$file_to_build" -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild clean build analyze -scheme Cleepp -configuration Release -project Maccy.xcodeproj -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
       - name: "Codesign app bundle"
         # Extract the secrets we defined earlier as environment variables
         env: 
@@ -108,10 +98,14 @@ jobs:
           echo "Fetching Version"
           test -d Build/Products/Release/Cleepp.app || exit 1
           test -f Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
-
+          
           VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)
           echo "$VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+          echo "to debug conditional release steps that follow:"
+          echo "github.ref: $github.ref"
+          echo "inputs.buildRelease: ${{ inputs.buildRelease }}"
         id: version
       - name: Build Zip File
         if: startsWith(github.ref, 'refs/tags/') || ("${{ inputs.buildRelease != '' }}" && fromJSON(inputs.buildRelease))
