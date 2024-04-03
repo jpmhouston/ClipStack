@@ -74,7 +74,7 @@ class HistoryMenuItem: NSMenuItem {
     super.init(title: title, action: action, keyEquivalent: keyEquivalent)
   }
   
-  func configured(withItem item: HistoryItem) -> Self {
+  func configured(withItem item: HistoryItem, distinguishForDebugging: Bool = false) -> Self {
     self.item = item
     
     if isImage(item) {
@@ -87,6 +87,11 @@ class HistoryMenuItem: NSMenuItem {
       loadRTF(item)
     } else if isHTML(item) {
       loadHTML(item)
+    }
+    
+    if distinguishForDebugging {
+      let attributedTitle = NSMutableAttributedString(string: title, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+      self.attributedTitle = attributedTitle
     }
     return self
   }

@@ -65,10 +65,13 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     // would require changes in PreviewPopoverController
     if #unavailable(macOS 14) { true } else { false }
   }
+  private var removeViewToHideMenuItem: Bool {
+    if #unavailable(macOS 14) { true } else { false }
+  }
   private var useQueueItemsSeparator: Bool {
     // to use the separator _and_ badge on >=sonoma
     true
-    // to skip using separator when using the badge on >=sonoma
+    // to skip using separator when using the badge on >=sonoma. still deciding
     //if #unavailable(macOS 14) { true } else { false }
   }
   private var showsExpandedMenu = false
@@ -76,7 +79,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private var isFiltered = false
   private var ignoreNextHighlight = false
   
-  private var historyHeader: MenuHeaderView? { historyHeaderItem?.view as? MenuHeaderView }
+  private var historyHeaderView: MenuHeaderView? { historyHeaderItem?.view as? MenuHeaderView ?? historyHeaderViewCache }
+  private var historyHeaderViewCache: MenuHeaderView?
   private let search = Search()
   private var lastHighlightedItem: HistoryMenuItem?
   private var topAnchorItem: HistoryMenuItem?
@@ -143,8 +147,11 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       removeItem(prototypeAnchorItem)
     }
     
-    // sometimes clear this so search box key events can drive item deletions instead
+    // save aside this action for when we clear it so search box key events can drive item deletions instead
     deleteAction = deleteItem?.action
+    
+    // remove this placeholder title just in case there's another bug and the headerview isn't shown
+    historyHeaderItem?.title = ""
   }
   
   func prepareForPopup(location: PopupLocation) {
@@ -160,7 +167,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     previewController.menuWillOpen()
     
-    if showsExpandedMenu, let field = historyHeader?.queryField {
+    if showsExpandedMenu, let field = historyHeaderView?.queryField {
       field.refusesFirstResponder = false
       field.window?.makeFirstResponder(field)
     }
@@ -174,8 +181,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     previewController.menuDidClose()
     
     DispatchQueue.main.async { // not sure why this is in a dispatch to the main thread, some timing thing i'm guessing
-      self.historyHeader?.setQuery("", throttle: false)
-      self.historyHeader?.queryField.refusesFirstResponder = true
+      self.historyHeaderView?.setQuery("", throttle: false)
+      self.historyHeaderView?.queryField.refusesFirstResponder = true
     }
   }
   
@@ -653,7 +660,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     var menuItems = [
       (protoCopyItem.copy() as! HistoryMenuItem).configured(withItem: item),
-      (protoReplayItem.copy() as! HistoryMenuItem).configured(withItem: item)
+      (protoReplayItem.copy() as! HistoryMenuItem).configured(withItem: item) // distinguishForDebugging:true
     ]
     menuItems.sort(by: { !$0.isAlternate && $1.isAlternate })
     
@@ -704,30 +711,39 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       return
     }
     let gotQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
-    let historyItemsShowing = gotQueueItems || showsExpandedMenu
-    let historyItemsPresent = gotQueueItems || (showsExpandedMenu && indexedItems.count > 0)
+    let gotHistoryItems = gotQueueItems || (showsExpandedMenu && indexedItems.count > 0)
     let showSearchHeader = showsExpandedMenu && Cleepp.allowHistorySearch && !UserDefaults.standard.hideSearch
     
     // Switch visibility of start vs stop menu item
-    queueStartItem?.isHidden = Cleepp.isQueueModeOn
-    queueStopItem?.isHidden = !Cleepp.isQueueModeOn
+    queueStartItem?.isVisible = !Cleepp.isQueueModeOn
+    queueStopItem?.isVisible = Cleepp.isQueueModeOn
     
     // Allow/prohibit alternate to queueStopItem
-    advanceItem?.isAlternate = gotQueueItems // when not alternate to queueStopItem it ends up hidden (Hidden must be set in nib)
+    advanceItem?.isVisibleAlternate = gotQueueItems
     
     // Bonus features to hide when not purchased
-    queuedPasteAllItem?.isHidden = !Cleepp.allowPasteMultiple
-    queuedPasteMultipleItem?.isAlternate = Cleepp.allowPasteMultiple // when not alternate to pasteall item it ends up hidden
-    undoCopyItem?.isHidden = !Cleepp.allowUndoCopy
+    queuedPasteAllItem?.isVisible = Cleepp.allowPasteMultiple
+    queuedPasteMultipleItem?.isVisibleAlternate = Cleepp.allowPasteMultiple
+    undoCopyItem?.isVisible = Cleepp.allowUndoCopy
     
     // Delete item visibility
-    deleteItem?.isHidden = !historyItemsShowing
-    clearItem?.isHidden = !showsExpandedMenu || !historyItemsShowing
+    deleteItem?.isVisible = gotQueueItems || showsExpandedMenu
+    clearItem?.isVisible = gotQueueItems || showsExpandedMenu
     
     // Visiblity of the history header and trailing separator
     // (the expanded menu means the search header and all of the history items)
-    historyHeaderItem.isHidden = !showSearchHeader
-    trailingSeparatorItem.isHidden = !showSearchHeader && !historyItemsPresent
+    // hiding items with views not working well in macOS <= 14! remove view when hiding
+    if removeViewToHideMenuItem {
+      if !showSearchHeader && historyHeaderItem.view != nil {
+        historyHeaderViewCache = historyHeaderItem.view as? MenuHeaderView
+        historyHeaderItem.view = nil
+      } else if showSearchHeader && historyHeaderItem.view == nil {
+        historyHeaderItem.view = historyHeaderViewCache
+        historyHeaderViewCache = nil
+      }
+    }
+    historyHeaderItem.isVisible = showSearchHeader
+    trailingSeparatorItem.isVisible = showSearchHeader || gotHistoryItems
     
     // Show or hide the desired history items
     let zerothHistoryHeaderItem = topAnchorItem ?? historyHeaderItem
@@ -740,11 +756,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       let endQueuedItemIndex = remainingHistoryMenuItemIndex + historyMenuItemsGroupCount * Cleepp.queueSize
       
       for index in firstHistoryMenuItemIndex ..< endQueuedItemIndex {
-        guard let menuItem = item(at: index) else { break }
-        menuItem.isHidden = false
-        if !menuItem.keyEquivalentModifierMask.isEmpty { // see the isAlternate comment below
-          menuItem.isAlternate = true
-        }
+        makeVisible(true, historyMenuItemAt: index)
       }
       
       remainingHistoryMenuItemIndex = endQueuedItemIndex
@@ -752,14 +764,16 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     // Remaining history items hidden unless showing the expanded menu
     for index in remainingHistoryMenuItemIndex  ..< endHistoryMenuItemIndex {
-      guard let menuItem = item(at: index) else { continue }
-      menuItem.isHidden = !showsExpandedMenu
-      
-      // must clear isAlternate for items that have modifiers when not showing expanded menu, otherwise
-      // while menu is up holding that modifier will show them even irrespective of isHidden
-      if !menuItem.keyEquivalentModifierMask.isEmpty {
-        menuItem.isAlternate = showsExpandedMenu
-      }
+      makeVisible(showsExpandedMenu, historyMenuItemAt: index)
+    }
+  }
+  
+  private func makeVisible(_ visible: Bool, historyMenuItemAt index: Int) {
+    guard let menuItem = item(at: index) else { return }
+    if menuItem.keyEquivalentModifierMask.isEmpty {
+      menuItem.isVisible = visible
+    } else {
+      menuItem.isVisibleAlternate = visible
     }
   }
   
@@ -875,4 +889,31 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   }
 }
 // swiftlint:enable type_body_length
+
+// an isVisible property made logic more clear than with the isHidden property,
+// eliminating many double negatives
+// and isVisibleAlternate isolates differences between macOS14 and earlier
+extension NSMenuItem {
+  var isVisible: Bool {
+    get {
+      !isHidden
+    }
+    set {
+      isHidden = !newValue
+    }
+  }
+  var isVisibleAlternate: Bool {
+    get {
+      if #unavailable(macOS 14) {
+        isAlternate && !isHidden
+      } else {
+        isAlternate
+      }
+    }
+    set {
+      isAlternate = newValue
+      isHidden = !newValue
+    }
+  }
+}
 // swiftlint:enable file_length
