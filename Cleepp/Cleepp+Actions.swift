@@ -14,6 +14,11 @@ extension Cleepp {
   private var pasteMultipleDelaySeconds: Float { 0.333 }
   private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(pasteMultipleDelaySeconds * 1000)) }
   
+  private var extraDelayOnQueuedPaste: Bool {
+    true // TODO: remove after testing determines the right conditions
+    //if #unavailable(macOS 14) { true } else { false } // or maybe intel vs arm
+  }
+  
   @IBAction
   func startQueueMode(_ sender: AnyObject) {
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
@@ -102,7 +107,14 @@ extension Cleepp {
     
     // make the frontmost application perform a paste
     clipboard.invokeApplicationPaste() {
-      self.decrementQueue()
+      
+      if self.extraDelayOnQueuedPaste {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+          self.decrementQueue()
+        }
+      } else {
+        self.decrementQueue()
+      }
       
       Self.busy = false
       
