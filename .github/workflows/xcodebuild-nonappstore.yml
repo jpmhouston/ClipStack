@@ -96,22 +96,38 @@ jobs:
           xcrun stapler staple "Build/Products/Release/Cleepp.app"
       - name: Extract Version Number
         run: |
-          echo "Fetching Version"
+          echo "Fetching version"
           test -d Build/Products/Release/Cleepp.app || exit 1
           test -f Build/Products/Release/Cleepp.app/Contents/Info.plist || exit 2
           
           VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Build/Products/Release/Cleepp.app/Contents/Info.plist)
-          echo "$VERSION"
+          echo "Found: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          
-          echo "to debug conditional release steps that follow:"
-          echo "github.ref: $github.ref"
-          echo "inputs.buildRelease: ${{ inputs.buildRelease }}"
+
+          echo "Testing continuation conditions"
+          if [[ "${{ inputs.buildRelease }}" == "true" ]] ; then
+            echo "Will continue and draft release because flag set (buildRelease == ${{ inputs.buildRelease }})"
+            echo "continue=1" >> $GITHUB_OUTPUT
+          else
+            echo "Checking if triggered by tag matching version (gihub.ref == ${{ github.ref }}, buildRelease == ${{ inputs.buildRelease }})"
+            if [[ "${{ github.ref }}" == "refs/tags/v${{ steps.version.outputs.version }}" ]] ; then
+              echo "Will continue and draft release because tag matched version"
+              echo "continue=1" >> $GITHUB_OUTPUT
+            else
+              echo "Will not draft release because this was some other trigger"
+              echo "continue=0" >> $GITHUB_OUTPUT
+            fi
+          fi
         id: version
       - name: Build Zip File
-        if: startsWith(github.ref, 'refs/tags/') || fromJSON(inputs.buildRelease)
+        if: ${{ steps.version.outputs.continue }}
         run: |
-          echo "Making Archive Directory"
+          echo "Verifying Tag"
+          if [ ${{ inputs.buildRelease }} != 'true' && $github.ref ]]; then
+          exit 0
+          fi
+          
+          echo "Making archive directory"
           test -d Build/Products/Release/Cleepp.app || exit 1
           
           ARCHIVEDIR=Build/Products/Release/Cleepp\ ${{ steps.version.outputs.version }}
@@ -122,7 +138,7 @@ jobs:
           echo "Building ${ARCHIVEDIR}.zip"
           ditto -c -k --sequesterRsrc --keepParent "$ARCHIVEDIR" "${ARCHIVEDIR}.zip"
       - name: Draft Release
-        if: startsWith(github.ref, 'refs/tags/') || fromJSON(inputs.buildRelease)
+        if: ${{ steps.version.outputs.continue }}
         uses: softprops/action-gh-release@v2
         with:
           name: "Cleepp ${{ steps.version.outputs.version }}"
