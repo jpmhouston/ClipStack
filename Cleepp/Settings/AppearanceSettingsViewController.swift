@@ -1,7 +1,7 @@
 import Cocoa
 import Settings
 
-class AppearanceSettingsViewController: NSViewController, SettingsPane {
+class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFieldDelegate {
   let paneIdentifier = Settings.PaneIdentifier.appearance
   let paneTitle = NSLocalizedString("preferences_appearance", comment: "")
   let toolbarItemIcon = NSImage(named: .paintpalette)!
@@ -11,6 +11,8 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var imageHeightField: NSTextField!
   @IBOutlet weak var imageHeightStepper: NSStepper!
   @IBOutlet weak var numberOfItemsField: NSTextField!
+  @IBOutlet weak var numberOfItemsDescription: NSTextField!
+  @IBOutlet weak var numberOfItemsAltDescription: NSTextField!
   @IBOutlet weak var numberOfItemsStepper: NSStepper!
   @IBOutlet weak var titleLengthField: NSTextField!
   @IBOutlet weak var titleLengthStepper: NSStepper!
@@ -66,6 +68,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
   @IBAction func numberOfItemsFieldChanged(_ sender: NSTextField) {
     UserDefaults.standard.maxMenuItems = sender.integerValue
     numberOfItemsStepper.integerValue = sender.integerValue
+    showAltNumberOfItemsDescription(sender.integerValue == 0)
   }
   
   @IBAction func numberOfItemsStepperChanged(_ sender: NSStepper) {
@@ -113,12 +116,29 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane {
   
   private func setMinAndMaxNumberOfItems() {
     numberOfItemsFormatter = NumberFormatter()
-    numberOfItemsFormatter.minimum = numberOfItemsMin as NSNumber
+    numberOfItemsFormatter.minimum = 0 as NSNumber // not numberOfItemsMin, that's enforced in delegate func
     numberOfItemsFormatter.maximum = numberOfItemsMax as NSNumber
     numberOfItemsFormatter.maximumFractionDigits = 0
     numberOfItemsField.formatter = numberOfItemsFormatter
+    numberOfItemsField.delegate = self
     numberOfItemsStepper.minValue = Double(numberOfItemsMin)
     numberOfItemsStepper.maxValue = Double(numberOfItemsMax)
+  }
+  
+  func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
+    guard let textField = control as? NSTextField, textField === numberOfItemsField else {
+      return true
+    }
+    let value = Int(fieldEditor.string) ?? 0
+    if value > 0 && value < numberOfItemsMin {
+      fieldEditor.string = String(numberOfItemsMin)
+    }
+    return true
+  }
+  
+  private func showAltNumberOfItemsDescription(_ showAltDescrition: Bool) {
+    numberOfItemsDescription.isHidden = showAltDescrition
+    numberOfItemsAltDescription.isHidden = !showAltDescrition
   }
   
   private func populateImageHeight() {

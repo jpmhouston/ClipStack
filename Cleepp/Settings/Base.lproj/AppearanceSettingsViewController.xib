@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="imageHeightField" destination="fcz-4Q-KUm" id="cyp-tO-tIe"/>
                 <outlet property="imageHeightStepper" destination="P1r-xd-oR8" id="Xjt-Gz-1OP"/>
+                <outlet property="numberOfItemsAltDescription" destination="hB7-M7-a6s" id="wAh-gK-Xe9"/>
+                <outlet property="numberOfItemsDescription" destination="lhl-S6-RoL" id="6fa-B6-ZbX"/>
                 <outlet property="numberOfItemsField" destination="bLY-QC-Jck" id="dri-mu-gwm"/>
                 <outlet property="numberOfItemsStepper" destination="4JK-Tt-Luc" id="84b-3U-Nuu"/>
                 <outlet property="previewDelayField" destination="bWg-D5-ht1" id="vMb-ug-t34"/>
@@ -73,6 +75,7 @@ Default: 20.</string>
                                         </textFieldCell>
                                         <connections>
                                             <action selector="numberOfItemsFieldChanged:" target="-2" id="1B2-S2-YfZ"/>
+                                            <outlet property="nextKeyView" destination="fcz-4Q-KUm" id="olx-v1-rr3"/>
                                         </connections>
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4JK-Tt-Luc">
@@ -103,15 +106,36 @@ Default: 20.</string>
                         </gridCell>
                         <gridCell row="ES8-fv-krj" column="KLa-7P-lgK" id="iJ9-3i-XqT"/>
                         <gridCell row="ES8-fv-krj" column="7OC-Fv-eMr" id="seq-WR-E8A">
-                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Jht-pQ-j9e">
-                                <rect key="frame" x="198" y="429" width="310" height="42"/>
-                                <textFieldCell key="cell" selectable="YES" id="5vg-CB-VKR">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <string key="title">Option-click the menu bar icon to view the expanded menu with this many history items, Shift-option-click to include all stored history items (size set in Storage panel).</string>
-                                    <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <stackView key="contentView" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IkI-KQ-foQ">
+                                <rect key="frame" x="200" y="429" width="306" height="42"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="lhl-S6-RoL">
+                                        <rect key="frame" x="-2" y="0.0" width="310" height="42"/>
+                                        <textFieldCell key="cell" selectable="YES" id="hHO-pl-7IR">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <string key="title">Option-click the menu bar icon to view the expanded menu with this many history items, Shift-option-click to include all stored history items (size set in Storage panel).</string>
+                                            <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hB7-M7-a6s">
+                                        <rect key="frame" x="-2" y="28" width="606" height="14"/>
+                                        <textFieldCell key="cell" selectable="YES" title="Option-click the menu bar icon to view the expanded menu with all stored history items (size set in Storage panel)." id="PM3-ni-HWu">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </gridCell>
                         <gridCell row="S9I-rv-Kfl" column="KLa-7P-lgK" id="vKh-KX-7Ph">
                             <textField key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3D7-Xe-sZo">
@@ -142,6 +166,7 @@ Hint: Set to 16 to look like text items.</string>
                                         </textFieldCell>
                                         <connections>
                                             <action selector="imageHeightFieldChanged:" target="-2" id="WE7-39-a7B"/>
+                                            <outlet property="nextKeyView" destination="Wto-wB-Ijw" id="nG1-8i-D4K"/>
                                         </connections>
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P1r-xd-oR8">
@@ -198,6 +223,7 @@ Default: 50.</string>
                                         </textFieldCell>
                                         <connections>
                                             <action selector="titleLengthFieldChanged:" target="-2" id="ruK-12-NXL"/>
+                                            <outlet property="nextKeyView" destination="bWg-D5-ht1" id="59K-kV-FhT"/>
                                         </connections>
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rCn-UZ-2qY">
@@ -254,6 +280,7 @@ Default: 1500.</string>
                                         </textFieldCell>
                                         <connections>
                                             <action selector="previewDelayFieldChanged:" target="-2" id="M9V-VM-uh9"/>
+                                            <outlet property="nextKeyView" destination="bLY-QC-Jck" id="11o-JI-bHr"/>
                                         </connections>
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ULE-wI-xRy">
