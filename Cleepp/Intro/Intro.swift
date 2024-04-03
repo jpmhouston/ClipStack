@@ -110,6 +110,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   public override func viewDidLoad() {
     styleLabels()
     limitAnimatedLogoLooping()
+    makeAnimatedGifWorkOnSomeOSVersions()
   }
   
   deinit {
@@ -239,6 +240,14 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   private func limitAnimatedLogoLooping() {
     animatedLogoImageRep?.setProperty(.loopCount, withValue: NSNumber(1))
+  }
+  
+  private func makeAnimatedGifWorkOnSomeOSVersions() {
+    animatedLogoImage.imageScaling = .scaleNone
+    animatedLogoImage.canDrawSubviewsIntoLayer = true
+    if let gifSuperview = animatedLogoImage.superview {
+      gifSuperview.wantsLayer = true
+    }
   }
   
   private func stopAnimatedLogo() {
