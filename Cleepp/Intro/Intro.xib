@@ -352,15 +352,17 @@ DQ
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="introSettingsPanel" id="eFq-ol-dLN"/>
                         </imageView>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NbK-HR-eEY">
-                            <rect key="frame" x="364" y="66" width="210" height="226"/>
+                            <rect key="frame" x="364" y="52" width="210" height="240"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avZ-Lx-MdF">
-                                    <rect key="frame" x="-2" y="36" width="214" height="190"/>
+                                    <rect key="frame" x="-2" y="36" width="214" height="204"/>
                                     <textFieldCell key="cell" id="gdT-wb-YBu">
-                                        <font key="font" metaFont="system" size="16"/>
-                                        <string key="title">The Accessibility subpanel of your Privacy &amp; Security settings should have opened. If Cleepp is in the list, switch it to On.
+                                        <font key="font" metaFont="system" size="14"/>
+                                        <string key="title">The Accessibility subpanel of your Privacy &amp; Security settings should have opened. Unlock using the lock icon at the bottom if you have that.
 
-If Cleepp is not in the list, use the + button and select it from your Applications folder.</string>
+If Cleepp is in the list, use the – button to remove it.
+
+Then use the + button and select Cleepp from your Applications folder.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
