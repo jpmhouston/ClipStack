@@ -1,0 +1,29 @@
+name: Build Cleepp
+
+on:
+  push:
+    branches: [forkmain]
+    paths-ignore:
+      - ".github/**"
+      - ".git/**"
+      - ".gitignore"
+      - "Designs/**"
+      - "*Tests/**"
+      - "*.md"
+      - "*.toml"
+      - "*.xml"
+  workflow_dispatch:
+    branches: [forkmain]
+
+jobs:
+  build:
+    name: Build Cleepp Non-AppStore Variant
+    runs-on: macos-14 # required to use Xcode 15, "macos-latest" is actually older and uses Xcode 14
+    if: ${{ ! contains(github.ref, 'refs/tags') }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          xcodebuild clean build analyze -scheme Cleepp -configuration Release -project Maccy.xcodeproj -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
