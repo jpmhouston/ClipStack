@@ -11,7 +11,7 @@ import Foundation
 extension Cleepp {
   
   static var githubURL = "https://github.com/jpmhouston/Cleepp"
-  static var homepageURL = "https://github.com/jpmhouston/Cleepp/wiki/About-Cleepp-for-macOS"
+  static var homepageURL = "https://cleepp.bananameter.lol"
   static var homepageBonusDocsURL = "https://github.com/jpmhouston/Cleepp/wiki/Bonus-Features-for-the-Mac-App-Store-Version"
   static var maccyURL = "https://maccy.app"
   static var supportEmailAddress = "cleepp@bananameter.lol"
@@ -19,6 +19,6 @@ extension Cleepp {
   static var localizeVolunteerEmailAddress = "cleepp.l10nhelp@bananameter.lol"
   static var localizeVolunteerEmailURL = "mailto:" + Cleepp.localizeVolunteerEmailAddress
   static var showIntroInAppURL = "cleeppapp:intro"
-  static var showIntroPermissionPageInAppURL = "cleeppapp:intro_permissions"
+  static var showIntroPermissionPageInAppURL = "cleeppapp:intro/permissions"
   
 }

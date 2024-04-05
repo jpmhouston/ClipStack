@@ -33,7 +33,9 @@ Cleepp works on macOS Mojave 10.14 or higher.
 
 ### Thank you
 
-Please consider supporting development of this app by either the in-app purchase in the App Store version, or with a [tip at buymeacoffee.com](https://www.buymeacoffee.com/bananameterlabs). _Also please consider supporting the original authors of [Maccy](http:maccy.app) with a [donation at buymeacoffee.com](https://www.buymeacoffee.com/p0deje)._
+Please consider supporting development of this app by either the in-app purchase in the App Store version, or with a [tip at buymeacoffee.com](https://www.buymeacoffee.com/bananameterlabs).
+
+_Also please consider supporting the original authors of [Maccy](https://maccy.app) with a [donation at buymeacoffee.com](https://www.buymeacoffee.com/p0deje)._
 
 ### License
 
