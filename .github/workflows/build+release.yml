@@ -27,8 +27,11 @@ jobs:
           echo "Found: $versnum"
           echo "version=$versnum" >> $GITHUB_OUTPUT
 
-          echo "Validating event trigger (gihub.ref == ${{ github.ref }})"
-          if [[ "${{ github.ref }}" == "refs/tags/v$versnum" ]] ; then
+          echo "Validating event trigger (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
+          if [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
+            echo "Continuing because triggered manually"
+            echo "continue=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/tags/v$versnum" ]] ; then
             echo "Continuing because triggered by tag matching the current version"
             echo "continue=true" >> $GITHUB_OUTPUT
           else
