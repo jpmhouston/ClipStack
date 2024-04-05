@@ -1,10 +1,8 @@
 name: Draft Cleepp Release
 
 on:
-  on:
-    create:
+  create:
   push:
-    branches: [forkmain]
     tags:
       - v*
   workflow_dispatch:
@@ -15,7 +13,6 @@ jobs:
   build:
     name: Build Cleepp Non-AppStore Variant and Draft Release
     runs-on: macos-14 # required to use Xcode 15, "macos-latest" is actually older and uses Xcode 14
-    if: contains(github.ref, 'refs/tags/v')
 
     steps:
       - name: Checkout
@@ -31,16 +28,21 @@ jobs:
           echo "version=$versnum" >> $GITHUB_OUTPUT
 
           echo "Validating event trigger (gihub.ref == ${{ github.ref }})"
-          if [[ "${{ github.ref }}" != "refs/tags/v$versnum" ]] ; then
+          if [[ "${{ github.ref }}" == "refs/tags/v$versnum" ]] ; then
+            echo "Continuing because triggered by tag matching the current version"
+            echo "continue=true" >> $GITHUB_OUTPUT
+          else
             echo "Aborting because not triggered by tag matching the current version"
-            exit 1
+            echo "continue=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Build
+        if: steps.version.outputs.continue == 'true'
         run: |
           xcodebuild clean build analyze -scheme Cleepp -configuration Release -project Maccy.xcodeproj -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: "Codesign app bundle"
+        if: steps.version.outputs.continue == 'true'
         # Extract the secrets we defined earlier as environment variables
         env:
           MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
@@ -72,6 +74,7 @@ jobs:
           /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime Build/Products/Release/Cleepp.app -v
 
       - name: "Notarize app bundle"
+        if: steps.version.outputs.continue == 'true'
         # Extract the secrets we defined earlier as environment variables
         env:
           PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
@@ -109,6 +112,7 @@ jobs:
           xcrun stapler staple "Build/Products/Release/Cleepp.app"
 
       - name: Build Zip File
+        if: steps.version.outputs.continue == 'true'
         run: |
           echo "Making archive directory"
           test -d Build/Products/Release/Cleepp.app || exit 1
@@ -122,6 +126,7 @@ jobs:
           ditto -c -k --sequesterRsrc --keepParent "$ARCHIVEDIR" "${ARCHIVEDIR}.zip"
 
       - name: Draft Release
+        if: steps.version.outputs.continue == 'true'
         uses: softprops/action-gh-release@v2
         with:
           name: "Cleepp ${{ steps.version.outputs.version }}"
