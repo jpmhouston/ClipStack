@@ -83,12 +83,22 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var specialCopyPasteBehaviorLabel: NSTextField!
   @IBOutlet var filledIconLabel: NSTextField!
   @IBOutlet var enteringQueueModeLabel: NSTextField!
-  @IBOutlet var sendSupportEmailButton: NSButton!
-  @IBOutlet var copySupportEmailButton: NSButton!
-  @IBOutlet var sendL10nEmailButton: NSButton!
-  @IBOutlet var copyL10nEmailButton: NSButton!
   @IBOutlet var inAppPurchageTitle: NSTextField!
   @IBOutlet var inAppPurchageLabel: NSView!
+  @IBOutlet var appStorePromoTitle: NSTextField!
+  @IBOutlet var appStorePromoLabel: NSView!
+  @IBOutlet var openDocsLinkButton: NSButton!
+  @IBOutlet var copyDocsLinkButton: NSButton!
+  @IBOutlet var sendSupportEmailButton: NSButton!
+  @IBOutlet var copySupportEmailButton: NSButton!
+  @IBOutlet var openDonationLinkButton: NSButton!
+  @IBOutlet var copyDonationLinkButton: NSButton!
+  //@IBOutlet var sendL10nEmailButton: NSButton!
+  //@IBOutlet var copyL10nEmailButton: NSButton!
+  @IBOutlet var openGitHubLinkButton: NSButton!
+  @IBOutlet var copyGitHubLinkButton: NSButton!
+  @IBOutlet var openMaccyLinkButton: NSButton!
+  @IBOutlet var copyMaccyLinkButton: NSButton!
   
   private var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel, filledIconLabel, enteringQueueModeLabel].compactMap({$0}) }
   
@@ -175,9 +185,16 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       setupOptionKeyObserver() { [weak self] event in
         self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
       }
-      #if !FOR_APP_STORE
+      #if FOR_APP_STORE
+      inAppPurchageTitle.isHidden = false
+      inAppPurchageLabel.isHidden = false
+      appStorePromoTitle.isHidden = true
+      appStorePromoLabel.isHidden = true
+      #else
       inAppPurchageTitle.isHidden = true
       inAppPurchageLabel.isHidden = true
+      appStorePromoTitle.isHidden = false
+      appStorePromoLabel.isHidden = false
       #endif
       
     default:
@@ -313,10 +330,18 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   private func showAltCopyEmailButtons(_ showCopy: Bool) {
+    openDocsLinkButton.isHidden = showCopy
+    copyDocsLinkButton.isHidden = !showCopy
     sendSupportEmailButton.isHidden = showCopy
     copySupportEmailButton.isHidden = !showCopy
-    sendL10nEmailButton.isHidden = true // showCopy  // for now hide the translation buttons
-    copyL10nEmailButton.isHidden = true // !showCopy  // until i form some l10n plans
+    //sendL10nEmailButton.isHidden = showCopy  // for now i've removed the translation buttons
+    //copyL10nEmailButton.isHidden = !showCopy  // until i form some l10n plans
+    openDonationLinkButton.isHidden = showCopy
+    copyDonationLinkButton.isHidden = !showCopy
+    openGitHubLinkButton.isHidden = showCopy
+    copyGitHubLinkButton.isHidden = !showCopy
+    openMaccyLinkButton.isHidden = showCopy
+    copyMaccyLinkButton.isHidden = !showCopy
   }
   
   private func runDemo() {
@@ -457,28 +482,52 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
   }
   
+  @IBAction func openCleeppInMacAppStore(_ sender: AnyObject) {
+    openURL(string: Cleepp.macAppStoreURL)
+  }
+  
   @IBAction func openDocumentationWebpage(_ sender: AnyObject) {
     openURL(string: Cleepp.homepageURL)
   }
   
-  @IBAction func openMaccyWebpage(_ sender: AnyObject) {
-    openURL(string: Cleepp.maccyURL)
+  @IBAction func copyDocumentationWebpage(_ sender: AnyObject) {
+    openURL(string: Cleepp.homepageURL)
   }
   
   @IBAction func openGitHubWebpage(_ sender: AnyObject) {
     openURL(string: Cleepp.githubURL)
   }
   
+  @IBAction func copyGitHubWebpage(_ sender: AnyObject) {
+    maccy.copy(string: Cleepp.githubURL, excludedFromHistory: false)
+  }
+  
+  @IBAction func openDonationWebpage(_ sender: AnyObject) {
+    openURL(string: Cleepp.donationURL)
+  }
+  
+  @IBAction func copyDonationWebpage(_ sender: AnyObject) {
+    maccy.copy(string: Cleepp.donationURL, excludedFromHistory: false)
+  }
+
+  @IBAction func openMaccyWebpage(_ sender: AnyObject) {
+    openURL(string: Cleepp.maccyURL)
+  }
+  
+  @IBAction func copyMaccyWebpage(_ sender: AnyObject) {
+    maccy.copy(string: Cleepp.maccyURL, excludedFromHistory: false)
+  }
+  
   @IBAction func sendSupportEmail(_ sender: AnyObject) {
     openURL(string: Cleepp.supportEmailURL)
   }
   
-  @IBAction func sendLocalizeVolunteerEmail(_ sender: AnyObject) {
-    openURL(string: Cleepp.localizeVolunteerEmailURL)
-  }
-  
   @IBAction func copySupportEmail(_ sender: AnyObject) {
     maccy.copy(string: Cleepp.supportEmailAddress, excludedFromHistory: false)
+  }
+  
+  @IBAction func sendLocalizeVolunteerEmail(_ sender: AnyObject) {
+    openURL(string: Cleepp.localizeVolunteerEmailURL)
   }
   
   @IBAction func copyLocalizeVolunteerEmail(_ sender: AnyObject) {

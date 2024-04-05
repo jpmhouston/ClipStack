@@ -845,6 +845,50 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
+                                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5i0-OJ-wh8">
+                                    <rect key="frame" x="-2" y="247" width="479" height="20"/>
+                                    <textFieldCell key="cell" title="A few more features are available in the Mac App Store version" id="l42-8A-rIE">
+                                        <font key="font" metaFont="system" size="17"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <stackView hidden="YES" distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-x3-0gT">
+                                    <rect key="frame" x="0.0" y="247" width="1192" height="20"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQJ-yb-PGa">
+                                            <rect key="frame" x="-2" y="0.0" width="1063" height="20"/>
+                                            <textFieldCell key="cell" id="Ff1-yi-L9o">
+                                                <font key="font" metaFont="system" size="14"/>
+                                                <string key="title">The download on the Mac App Store is free and has the same features as this direct-download. It also offers a one-time purchase that unlocks a few bonus features.</string>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="91r-ur-G2C">
+                                            <rect key="frame" x="1068" y="-7" width="131" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Open App Store" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vv9-OX-f76">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="openCleeppInMacAppStore:" target="o5X-kK-gzk" id="Wvp-mV-buT"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="CQJ-yb-PGa" secondAttribute="bottom" id="IoA-zw-KKD"/>
+                                        <constraint firstItem="CQJ-yb-PGa" firstAttribute="top" secondItem="dOo-x3-0gT" secondAttribute="top" id="phs-M0-NXf"/>
+                                    </constraints>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="fPf-Q6-YbK" userLabel="That's all.. title container">
                                     <rect key="frame" x="0.0" y="152" width="385" height="24"/>
                                     <subviews>
@@ -865,7 +909,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     </constraints>
                                 </customView>
                                 <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G2j-Zt-Dp4">
-                                    <rect key="frame" x="0.0" y="122" width="497" height="20"/>
+                                    <rect key="frame" x="0.0" y="122" width="433" height="20"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xpD-ga-KD6">
                                             <rect key="frame" x="-7" y="-7" width="161" height="32"/>
@@ -875,6 +919,16 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="openDocumentationWebpage:" target="o5X-kK-gzk" id="QRP-rq-RIv"/>
+                                            </connections>
+                                        </button>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gNg-tp-eyG">
+                                            <rect key="frame" x="-7" y="-7" width="190" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Copy Documentation Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cXv-Ew-T0w">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="copyDocumentationWebpage:" target="o5X-kK-gzk" id="lGr-Cy-yqt"/>
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jez-C6-oFa">
@@ -898,23 +952,23 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K04-rZ-O0s">
-                                            <rect key="frame" x="304" y="-7" width="200" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Be A Localization Volunteer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AO6-qj-kST">
+                                            <rect key="frame" x="304" y="-7" width="136" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Make a Donation" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AO6-qj-kST">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="sendLocalizeVolunteerEmail:" target="o5X-kK-gzk" id="zhx-i4-hFt"/>
+                                                <action selector="openDonationWebpage:" target="o5X-kK-gzk" id="tiA-cW-V6h"/>
                                             </connections>
                                         </button>
                                         <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AGe-vu-v96">
-                                            <rect key="frame" x="-7" y="-7" width="239" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Copy Localization Volunteer Email" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jDp-0X-CPr">
+                                            <rect key="frame" x="-7" y="-7" width="152" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Copy Donation Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jDp-0X-CPr">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="copyLocalizeVolunteerEmail:" target="o5X-kK-gzk" id="fzt-QF-vhn"/>
+                                                <action selector="copyDonationWebpage:" target="o5X-kK-gzk" id="OxY-R5-YAJ"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -924,8 +978,10 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
+                                        <integer value="1000"/>
                                     </visibilityPriorities>
                                     <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
@@ -956,7 +1012,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <rect key="frame" x="0.0" y="44" width="550" height="34"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-fV-YLk">
-                                            <rect key="frame" x="-2" y="0.0" width="441" height="34"/>
+                                            <rect key="frame" x="-2" y="0.0" width="405" height="34"/>
                                             <textFieldCell key="cell" title="It's source is available on GitHub where a non-App Store version can be downloaded." id="ncU-gg-tO7">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -964,8 +1020,8 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kdS-e2-KIB">
-                                            <rect key="frame" x="446" y="0.0" width="111" height="32"/>
-                                            <buttonCell key="cell" type="push" title="GitHub Page" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mXO-h5-5BP">
+                                            <rect key="frame" x="410" y="0.0" width="147" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Open GitHub Page" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mXO-h5-5BP">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -973,12 +1029,24 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                                 <action selector="openGitHubWebpage:" target="o5X-kK-gzk" id="o7a-I0-rq0"/>
                                             </connections>
                                         </button>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s0H-ax-VVd">
+                                            <rect key="frame" x="-7" y="7" width="140" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Copy GitHub Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wBs-50-vQg">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="copyGitHubWebpage:" target="o5X-kK-gzk" id="hhd-FF-Xbg"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <visibilityPriorities>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
+                                        <integer value="1000"/>
                                     </visibilityPriorities>
                                     <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
@@ -994,22 +1062,34 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DoP-zS-gJW">
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-0G-hUh">
                                             <rect key="frame" x="413" y="0.0" width="144" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Maccy Homepage" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TM7-2H-Cbz">
+                                            <buttonCell key="cell" type="push" title="Maccy Homepage" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ANa-5E-kf7">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="openMaccyWebpage:" target="o5X-kK-gzk" id="kUE-0w-Fjk"/>
+                                                <action selector="openMaccyWebpage:" target="o5X-kK-gzk" id="x5q-QV-mLt"/>
+                                            </connections>
+                                        </button>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DoP-zS-gJW">
+                                            <rect key="frame" x="-7" y="7" width="138" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Copy Maccy Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TM7-2H-Cbz">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="copyMaccyWebpage:" target="o5X-kK-gzk" id="LCW-zF-atB"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                     <visibilityPriorities>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
+                                        <integer value="1000"/>
                                     </visibilityPriorities>
                                     <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
@@ -1023,8 +1103,12 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                 <integer value="1000"/>
                                 <integer value="1000"/>
                                 <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
                             </visibilityPriorities>
                             <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
@@ -1078,9 +1162,14 @@ Then use the + button and select Cleepp from your Applications folder.</string>
         <viewController id="o5X-kK-gzk" customClass="IntroViewController" customModule="Cleepp" customModuleProvider="target">
             <connections>
                 <outlet property="animatedLogoImage" destination="dAC-wT-V2b" id="UYc-BF-gYg"/>
+                <outlet property="appStorePromoLabel" destination="dOo-x3-0gT" id="lyz-aE-wSq"/>
+                <outlet property="appStorePromoTitle" destination="5i0-OJ-wh8" id="ECQ-dY-ePn"/>
                 <outlet property="authorizationDeniedEmoji" destination="4k3-Do-TDL" id="m2H-5T-AZy"/>
                 <outlet property="authorizationVerifiedEmoji" destination="vGq-Jf-faS" id="dee-ww-Uph"/>
-                <outlet property="copyL10nEmailButton" destination="AGe-vu-v96" id="FkQ-wu-Gk7"/>
+                <outlet property="copyDocsLinkButton" destination="gNg-tp-eyG" id="T7l-gR-7sj"/>
+                <outlet property="copyDonationLinkButton" destination="AGe-vu-v96" id="eyU-dV-ixW"/>
+                <outlet property="copyGitHubLinkButton" destination="s0H-ax-VVd" id="87c-2j-cPP"/>
+                <outlet property="copyMaccyLinkButton" destination="DoP-zS-gJW" id="GjV-WB-fiQ"/>
                 <outlet property="copySupportEmailButton" destination="Hau-Kb-5xn" id="oyw-iY-ByW"/>
                 <outlet property="demoCopyBubble" destination="lnS-C6-5P3" id="sEQ-BR-4UA"/>
                 <outlet property="demoImage" destination="2Yt-bt-A1K" id="Rr2-18-Gdc"/>
@@ -1096,9 +1185,12 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                 <outlet property="needsAuthorizationEmoji" destination="gJb-ZW-iAj" id="xNI-2L-jsS"/>
                 <outlet property="needsAuthorizationLabel" destination="EvF-0r-9Z1" id="Ffe-yk-KRE"/>
                 <outlet property="nextAuthorizationDirectionsLabel" destination="rEx-zK-yMR" id="yK3-0r-SVQ"/>
+                <outlet property="openDocsLinkButton" destination="xpD-ga-KD6" id="uo7-xc-kBB"/>
+                <outlet property="openDonationLinkButton" destination="K04-rZ-O0s" id="tZ5-ra-2Zu"/>
+                <outlet property="openGitHubLinkButton" destination="kdS-e2-KIB" id="fMj-FS-eI5"/>
+                <outlet property="openMaccyLinkButton" destination="Fff-0G-hUh" id="t0C-46-bRx"/>
                 <outlet property="openSecurityPanelButton" destination="2VO-Pm-i8d" id="R4l-fD-bqu"/>
                 <outlet property="openSecurityPanelSpinner" destination="w2D-dO-d7T" id="U9Z-8M-Muf"/>
-                <outlet property="sendL10nEmailButton" destination="K04-rZ-O0s" id="gpt-xG-oUo"/>
                 <outlet property="sendSupportEmailButton" destination="Jez-C6-oFa" id="Lkh-Vo-TqX"/>
                 <outlet property="setupNeededLabel" destination="4Ed-EA-huu" id="ArX-3F-qVD"/>
                 <outlet property="specialCopyPasteBehaviorLabel" destination="Sed-8H-0RI" id="hoL-y1-4oZ"/>
