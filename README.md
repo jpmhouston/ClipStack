@@ -1,9 +1,8 @@
-<img height="180px" src="Designs/Cleepp/Cleepp GitHub logo.gif" alt="Logo" style="aspect-ratio: 656/180;"/>
+<img src="Designs/Cleepp/Cleepp GitHub logo.gif" alt="Logo"/>
 
 [![Downloads](https://img.shields.io/github/downloads/jpmhouston/Cleepp/total.svg)](https://github.com/jpmhouston/Cleepp/releases/latest)
 [![Donate](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/bananameterlabs)
-
-<!--- [![Build Status](https://img.shields.io/bitrise/716921b669780314/master?token=3pMiCb5dpFzlO-7jTYtO3Q)](https://app.bitrise.io/app/716921b669780314 -->
+![Build Status](https://github.com/jpmhouston/Cleepp/actions/workflows/build.yml/badge.svg)
 
 Cleepp is a menu bar utility for macOS that adds the ability to copy multiple items
 and then paste them in order elsewhere.
