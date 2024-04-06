@@ -1,0 +1,22 @@
+# eg: tartufo --output-format compact scan-local-repo .
+#
+[tool.tartufo]
+exclude-path-patterns = [
+ {path-pattern = '.*\.svg$'},
+ {path-pattern = '.*\.js$'},
+ {path-pattern = '.*\.pbxproj$'},
+ {path-pattern = '.*\.xcscheme$'},
+ {path-pattern = '.*\.xcdatamodel/contents$'},
+ {path-pattern = '\.git'},
+ {path-pattern = 'README\.md', reason='some old version of the readme had some binary blobs, not mine'},
+ {path-pattern = 'Sparkle', reason='framework and maybe examples include what look like secretsi, not mine'},
+ {path-pattern = 'Pods', reason='old versions used cocoapods instead of SPM and in it some uuid kind of things'},
+ {path-pattern = 'Podfile\.lock'},
+]
+exclude-signatures = [
+ {signature = '8b1a9ce78c2f35c8a55dcc95897573abd2cc4f6e', reason='commit hash in source reference comment'},
+ {signature = 'com/sindresorhus/KeyboardShortcuts/commit/8b1a9ce78c2f35c8a55dcc95897573abd2cc4f6e', reason='same'},
+ {signature = 'b/Maccy/Extensions/NSRunningApplication+WindowFrame', reason='false positive in some swift commit diff'},
+ {signature = '597c1b2c40adcf3c319f7feeade62ed4', reason='gist file hash in source reference comment'},
+]
+
