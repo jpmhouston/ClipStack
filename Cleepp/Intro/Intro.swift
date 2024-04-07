@@ -491,7 +491,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyDocumentationWebpage(_ sender: AnyObject) {
-    openURL(string: Cleepp.homepageURL)
+    maccy.copy(string: Cleepp.homepageURL, excludedFromHistory: false)
   }
   
   @IBAction func openGitHubWebpage(_ sender: AnyObject) {
