@@ -19,13 +19,13 @@ public class IntroWindowController: PagedWindowController {
     self.init(windowNibName: "Intro")
   }
   
-  func openIntro(atPage page: IntroViewController.Pages? = nil, with object: Maccy) {
+  func openIntro(atPage page: IntroViewController.Pages? = nil, with object: Cleepp) {
     // accessing window triggers loading from nib, do this before showWindow so we can setup before showing
     guard let _ = window, let viewController = viewController else {
       return
     }
     
-    viewController.maccy = object
+    viewController.cleepp = object
     viewController.startPage = page
     
     // these might be redundant, ok to do either way
@@ -109,7 +109,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private let logoPollInterval = 0.5
   private var demoTimer: DispatchSourceTimer?
   private var demoCanceled = false
-  var maccy: Maccy!
+  var cleepp: Cleepp!
   var startPage: Pages?
   
   enum Pages: Int {
@@ -446,11 +446,11 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
 
   @IBAction func openGeneralSettings(_ sender: AnyObject) {
-    maccy.showSettings(selectingPane: .general)
+    cleepp.showSettings(selectingPane: .general)
   }
   
   @IBAction func openInAppPurchaceSettings(_ sender: AnyObject) {
-    maccy.showSettings(selectingPane: .purchase)
+    cleepp.showSettings(selectingPane: .purchase)
   }
   
   @IBAction func checkAccessibilityAuthorization(_ sender: AnyObject) {
@@ -491,7 +491,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyDocumentationWebpage(_ sender: AnyObject) {
-    maccy.copy(string: Cleepp.homepageURL, excludedFromHistory: false)
+    cleepp.copy(string: Cleepp.homepageURL, excludedFromHistory: false)
   }
   
   @IBAction func openGitHubWebpage(_ sender: AnyObject) {
@@ -499,7 +499,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyGitHubWebpage(_ sender: AnyObject) {
-    maccy.copy(string: Cleepp.githubURL, excludedFromHistory: false)
+    cleepp.copy(string: Cleepp.githubURL, excludedFromHistory: false)
   }
   
   @IBAction func openDonationWebpage(_ sender: AnyObject) {
@@ -507,7 +507,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyDonationWebpage(_ sender: AnyObject) {
-    maccy.copy(string: Cleepp.donationURL, excludedFromHistory: false)
+    cleepp.copy(string: Cleepp.donationURL, excludedFromHistory: false)
   }
 
   @IBAction func openMaccyWebpage(_ sender: AnyObject) {
@@ -515,7 +515,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyMaccyWebpage(_ sender: AnyObject) {
-    maccy.copy(string: Cleepp.maccyURL, excludedFromHistory: false)
+    cleepp.copy(string: Cleepp.maccyURL, excludedFromHistory: false)
   }
   
   @IBAction func sendSupportEmail(_ sender: AnyObject) {
@@ -523,7 +523,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copySupportEmail(_ sender: AnyObject) {
-    maccy.copy(string: Cleepp.supportEmailAddress, excludedFromHistory: false)
+    cleepp.copy(string: Cleepp.supportEmailAddress, excludedFromHistory: false)
   }
   
   @IBAction func sendLocalizeVolunteerEmail(_ sender: AnyObject) {
@@ -531,7 +531,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyLocalizeVolunteerEmail(_ sender: AnyObject) {
-    maccy.copy(string: Cleepp.localizeVolunteerEmailAddress, excludedFromHistory: false)
+    cleepp.copy(string: Cleepp.localizeVolunteerEmailAddress, excludedFromHistory: false)
   }
   
   // MARK: -
