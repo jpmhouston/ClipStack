@@ -16,7 +16,13 @@ public extension Equatable {
   func onlyIfIn<S: Sequence>(_ s: S) -> Self? where S.Element == Self {
     return s.contains(self) ? self : nil
   }
+  func onlyIfIn<S: Sequence>(_ s: S) -> Self? where S.Element == Self? {
+    return s.contains(self) ? self : nil
+  }
   func onlyIfNotIn<S: Sequence>(_ s: S) -> Self? where S.Element == Self {
+    return s.contains(self) ? nil : self
+  }
+  func onlyIfNotIn<S: Sequence>(_ s: S) -> Self? where S.Element == Self? {
     return s.contains(self) ? nil : self
   }
   func isIn(_ s: Self...) -> Bool {
@@ -28,7 +34,13 @@ public extension Equatable {
   func onlyIfIn(_ s: Self...) -> Self? {
     return s.contains(self) ? self : nil
   }
+  func onlyIfIn(_ s: Self?...) -> Self? {
+    return s.contains(self) ? self : nil
+  }
   func onlyIfNotIn(_ s: Self...) -> Self? {
+    return s.contains(self) ? nil : self
+  }
+  func onlyIfNotIn(_ s: Self?...) -> Self? {
     return s.contains(self) ? nil : self
   }
 }

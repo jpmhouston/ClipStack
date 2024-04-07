@@ -44,7 +44,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private var queueItemsSeparator: NSMenuItem?
   
   internal var historyMenuItems: [HistoryMenuItem] {
-    items.compactMap({ ($0 as? HistoryMenuItem)?.onlyIfNotIn([topAnchorItem].compactMap({ $0 })) })
+    items.compactMap({ ($0 as? HistoryMenuItem)?.onlyIfNotIn([topAnchorItem]) })
   }
   
   private var historyMenuItemsGroupCount: Int { usePopoverAnchors ? 3 : 2 } // 1 main, 1 alternate, 1 popover anchor
