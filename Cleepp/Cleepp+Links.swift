@@ -16,7 +16,7 @@ extension Cleepp {
   static var donationURL = "https://www.buymeacoffee.com/bananameterlabs"
   static var macAppStoreURL = "https://github.com/jpmhouston/Cleepp/wiki/Available-in-the-Mac-App-Store-Soon"
   static var maccyURL = "https://maccy.app"
-  static var supportEmailAddress = "cleepp@bananameter.lol"
+  static var supportEmailAddress = "cleepp.support@bananameter.lol"
   static var supportEmailURL = "mailto:" + Cleepp.supportEmailAddress
   static var localizeVolunteerEmailAddress = "cleepp.l10nhelp@bananameter.lol"
   static var localizeVolunteerEmailURL = "mailto:" + Cleepp.localizeVolunteerEmailAddress
