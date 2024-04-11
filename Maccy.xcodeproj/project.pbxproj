@@ -194,6 +194,8 @@
 		8FCDFC112BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
 		8FCDFC132BC0CA2000A16FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */; };
 		8FCDFC142BC0CA2000A16FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */; };
+		8FCDFC172BC7E92400A16FBE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCDFC162BC7E92400A16FBE /* SDWebImage */; };
+		8FCDFC192BC7E96C00A16FBE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCDFC182BC7E96C00A16FBE /* SDWebImage */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -558,6 +560,7 @@
 			files = (
 				8F0D3C5E2BAB8F5A00DDB603 /* Carbon.framework in Frameworks */,
 				8F0D3C5D2BAB8F5A00DDB603 /* KeyboardShortcuts in Frameworks */,
+				8FCDFC172BC7E92400A16FBE /* SDWebImage in Frameworks */,
 				8F0D3C5F2BAB8F5A00DDB603 /* SwiftHEXColors in Frameworks */,
 				8F0D3C602BAB8F5A00DDB603 /* Sauce in Frameworks */,
 				8F0D3C612BAB8F5A00DDB603 /* Settings in Frameworks */,
@@ -574,6 +577,7 @@
 				8F8C48B32BAD536900C3A219 /* SwiftyStoreKit in Frameworks */,
 				8F8C48972BAD51B000C3A219 /* KeyboardShortcuts in Frameworks */,
 				8F8C48982BAD51B000C3A219 /* SwiftHEXColors in Frameworks */,
+				8FCDFC192BC7E96C00A16FBE /* SDWebImage in Frameworks */,
 				8F8C48992BAD51B000C3A219 /* Sauce in Frameworks */,
 				8F8C489A2BAD51B000C3A219 /* Settings in Frameworks */,
 				8F8C489B2BAD51B000C3A219 /* LaunchAtLogin in Frameworks */,
@@ -959,6 +963,7 @@
 				8F0D3C162BAB8F5A00DDB603 /* KeyboardShortcuts */,
 				8F0D3C182BAB8F5A00DDB603 /* LaunchAtLogin */,
 				8F0D3C1C2BAB8F5A00DDB603 /* Settings */,
+				8FCDFC162BC7E92400A16FBE /* SDWebImage */,
 			);
 			productName = Maccy;
 			productReference = 8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */;
@@ -988,6 +993,7 @@
 				8F8C48582BAD51B000C3A219 /* Settings */,
 				8F8C48B22BAD536900C3A219 /* SwiftyStoreKit */,
 				8F8C48B52BAD538600C3A219 /* TPInAppReceipt */,
+				8FCDFC182BC7E96C00A16FBE /* SDWebImage */,
 			);
 			productName = Maccy;
 			productReference = 8F8C48AF2BAD51B000C3A219 /* Cleepp.app */;
@@ -1122,6 +1128,7 @@
 				2F39CB082AD9AE1F00B749FD /* XCRemoteSwiftPackageReference "Settings" */,
 				8F8C48B12BAD536900C3A219 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 				8F8C48B42BAD538600C3A219 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */,
+				8FCDFC152BC7E92400A16FBE /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = DAEE38441E3DBEB100DD2966 /* Products */;
 			projectDirPath = "";
@@ -2426,6 +2433,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		8FCDFC152BC7E92400A16FBE /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.19.1;
+			};
+		};
 		DA00993E256414560030E697 /* XCRemoteSwiftPackageReference "fuse-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/krisk/fuse-swift";
@@ -2548,6 +2563,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F8C48B42BAD538600C3A219 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */;
 			productName = TPInAppReceipt;
+		};
+		8FCDFC162BC7E92400A16FBE /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FCDFC152BC7E92400A16FBE /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		8FCDFC182BC7E96C00A16FBE /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FCDFC152BC7E92400A16FBE /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 		DA00993F256414560030E697 /* Fuse */ = {
 			isa = XCSwiftPackageProductDependency;

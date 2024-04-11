@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import SDWebImage
 
 extension NSWindow.FrameAutosaveName {
   static let cleeppIntro: NSWindow.FrameAutosaveName = "lol.bananameter.cleepp.intro.FrameAutosaveName"
@@ -105,8 +106,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   private var preAuthorizationPageFirsTime = true
   private var skipSetAuthorizationPage = false
   private var optionKeyEventMonitor: Any?
-  private var logoPollTimer: DispatchSourceTimer?
-  private let logoPollInterval = 0.5
+  private var logoTimer: DispatchSourceTimer?
   private var demoTimer: DispatchSourceTimer?
   private var demoCanceled = false
   var cleepp: Cleepp!
@@ -119,8 +119,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   public override func viewDidLoad() {
     styleLabels()
-    limitAnimatedLogoLooping()
-    makeAnimatedGifWorkOnSomeOSVersions()
+    setupAnimatedLogo()
   }
   
   deinit {
@@ -153,11 +152,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     
     switch page {
     case .welcome:
-      if !visited.contains(page) {
-        startAnimatedLogo(withDelay: true)
-      } else {
-        animatedLogoImage.isHidden = true // show only static logo behind
-      }
+      resetAnimatedLogo()
       if Accessibility.allowed {
         setupNeededLabel.isHidden = true
       }
@@ -240,74 +235,56 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
   }
   
-  private var animatedLogoImageRep: NSBitmapImageRep? {
-    guard let imageReps = animatedLogoImage.image?.representations else {
-      return nil
+  private func setupAnimatedLogo() {
+    animatedLogoImage.autoPlayAnimatedImage = false
+    animatedLogoImage.isHidden = true
+    logoStopButton.isHidden = true
+    
+    // replace NSImage loaded from the nib with a SDAnimatedImage
+    guard let name = animatedLogoImage.image?.name(), let sdImage = SDAnimatedImage(named: name + ".gif") else {
+      logoRestartButton.isHidden = true
+      return
     }
-    for r in imageReps {
-      if let imageRep = r as? NSBitmapImageRep,
-         let frames = imageRep.value(forProperty: .frameCount) as? NSNumber,
-         frames.intValue > 0
-      {
-        return imageRep
-      }
-    }
-    return nil
+    animatedLogoImage.image = sdImage
+    logoRestartButton.isHidden = false
   }
   
-  private func limitAnimatedLogoLooping() {
-    animatedLogoImageRep?.setProperty(.loopCount, withValue: NSNumber(1))
-  }
-  
-  private func makeAnimatedGifWorkOnSomeOSVersions() {
-    animatedLogoImage.imageScaling = .scaleNone
-    animatedLogoImage.canDrawSubviewsIntoLayer = true
-    if let gifSuperview = animatedLogoImage.superview {
-      gifSuperview.wantsLayer = true
-    }
+  private func resetAnimatedLogo() {
+    stopAnimatedLogo() // show static logo initially
   }
   
   private func stopAnimatedLogo() {
-    cancelLogoPollTimer()
-    animatedLogoImage.animates = false
+    cancelLogoTimer()
+    animatedLogoImage.player?.stopPlaying()
     animatedLogoImage.isHidden = true
     logoStopButton.isHidden = true
     logoRestartButton.isHidden = false
   }
   
   private func startAnimatedLogo(withDelay useDelay: Bool = false) {
-    let initialDelay = 2.5
-    let pollInterval = 0.5
+    let initialDelay = 2.0
+    
+    // reset player to the start and setup to stop after a loop completes
+    guard let gifPlayer = animatedLogoImage.player else {
+      return
+    }
+    gifPlayer.seekToFrame(at: 0, loopCount: 0)
+    gifPlayer.animationLoopHandler = { [weak self] loop in
+      self?.stopAnimatedLogo()
+    }
     
     // start with gif hidden, for a few seconds if useDelay is true
-    animatedLogoImage.animates = false // so we can set it to true again below and reset it
     animatedLogoImage.isHidden = true
     logoStopButton.isHidden = false
     logoRestartButton.isHidden = true
     
-    // poll to spot when animation ends, and when it does restore the static logo & swap the stop/play buttons
-    if let imageRep = animatedLogoImageRep,
-       let numFrames = (imageRep.value(forProperty: .frameCount) as? NSNumber)?.intValue,
-       numFrames > 0
-    {
-      runOnLogoPollTimer(withDelay: useDelay ? initialDelay : 0.0, interval: pollInterval) { [weak self] in
-        guard let self = self else {
-          return false
-        }
-        if self.animatedLogoImage.isHidden {
-          self.animatedLogoImage.isHidden = false // make gif visible if not, ie. on first time in
-          self.animatedLogoImage.animates = true // reset it so it plays from the beginning
-        }
-        guard let current = (imageRep.value(forProperty: .currentFrame) as? NSNumber)?.intValue else {
-          return false
-        }
-        if current >= numFrames - 1 {
-          self.animatedLogoImage.isHidden = true
-          self.logoStopButton.isHidden = true
-          self.logoRestartButton.isHidden = false
-          return false
-        }
-        return true
+    if !useDelay {
+      animatedLogoImage.isHidden = false
+      gifPlayer.startPlaying()
+    } else {
+      runOnLogoDelayTimer(withDelay: initialDelay) { [weak self] in
+        self?.animatedLogoImage.isHidden = false
+        self?.animatedLogoImage.player?.startPlaying()
       }
     }
   }
@@ -536,22 +513,18 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   // MARK: -
   
-  private func runOnLogoPollTimer(withDelay delay: Double, interval: Double, _ action: @escaping () -> Bool) {
-    if logoPollTimer != nil {
-      cancelLogoPollTimer()
+  private func runOnLogoDelayTimer(withDelay delay: Double, _ action: @escaping () -> Void) {
+    if logoTimer != nil {
+      cancelLogoTimer()
     }
-    logoPollTimer = DispatchSource.scheduledTimerForRunningOnMainQueueRepeated(afterDelay: delay, interval: interval) { [weak self] in
-      if !action() {
-        self?.logoPollTimer = nil
-        return false
-      }
-      return true
+    logoTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: delay) {
+      action()
     }
   }
   
-  private func cancelLogoPollTimer() {
-    logoPollTimer?.cancel()
-    logoPollTimer = nil
+  func cancelLogoTimer() {
+    logoTimer?.cancel()
+    logoTimer = nil
   }
   
   private func runOnDemoTimer(afterDelay delay: Double, _ action: @escaping () -> Void) {

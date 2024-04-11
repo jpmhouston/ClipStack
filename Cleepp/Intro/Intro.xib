@@ -132,7 +132,7 @@ DQ
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="IntroLogo" id="cLl-LY-Isp"/>
                         </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dAC-wT-V2b">
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dAC-wT-V2b" customClass="SDAnimatedImageView">
                             <rect key="frame" x="38" y="206" width="328" height="90"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="328" id="MNG-B4-kVR"/>
@@ -856,7 +856,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                 <stackView hidden="YES" distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-x3-0gT">
                                     <rect key="frame" x="0.0" y="247" width="1192" height="20"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQJ-yb-PGa">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="CQJ-yb-PGa">
                                             <rect key="frame" x="-2" y="0.0" width="1063" height="20"/>
                                             <textFieldCell key="cell" id="Ff1-yi-L9o">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -865,7 +865,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="91r-ur-G2C">
+                                        <button verticalHuggingPriority="750" verticalCompressionResistancePriority="801" translatesAutoresizingMaskIntoConstraints="NO" id="91r-ur-G2C">
                                             <rect key="frame" x="1068" y="-7" width="131" height="32"/>
                                             <buttonCell key="cell" type="push" title="Open App Store" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vv9-OX-f76">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
