@@ -37,12 +37,12 @@ jobs:
           
           if [ -n "${{ inputs.releaseVersion }}" ] ; then
             readableVersion="${{ inputs.releaseVersion }}"
-            echo "readableVersion=\"${{ inputs.releaseVersion }}\"" >> $GITHUB_OUTPUT
-            echo "releaseName=\"Cleepp ${{ inputs.releaseVersion }}\"" >> $GITHUB_OUTPUT
+            echo "readableVersion=${{ inputs.releaseVersion }}" >> $GITHUB_OUTPUT
+            echo "releaseName=Cleepp ${{ inputs.releaseVersion }}" >> $GITHUB_OUTPUT
           else
             readableVersion=$versnum
             echo "readableVersion=$versnum" >> $GITHUB_OUTPUT
-            echo "releaseName=\"Cleepp $versnum\"" >> $GITHUB_OUTPUT
+            echo "releaseName=Cleepp $versnum" >> $GITHUB_OUTPUT
           fi
           
           echo "Validating event trigger (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
