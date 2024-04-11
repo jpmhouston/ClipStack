@@ -62,44 +62,43 @@ public class IntroWindowController: PagedWindowController {
   
 }
 
-
 public class IntroViewController: NSViewController, PagedWindowControllerDelegate {
-  @IBOutlet var staticLogoImage: NSImageView!
-  @IBOutlet var animatedLogoImage: NSImageView!
-  @IBOutlet var logoStopButton: NSButton!
-  @IBOutlet var logoRestartButton: NSButton!
-  @IBOutlet var setupNeededLabel: NSTextField!
-  @IBOutlet var openSecurityPanelButton: NSButton!
-  @IBOutlet var openSecurityPanelSpinner: NSProgressIndicator!
-  @IBOutlet var hasAuthorizationEmoji: NSTextField!
-  @IBOutlet var needsAuthorizationEmoji: NSTextField!
-  @IBOutlet var hasAuthorizationLabel: NSTextField!
-  @IBOutlet var needsAuthorizationLabel: NSTextField!
-  @IBOutlet var nextAuthorizationDirectionsLabel: NSTextField!
-  @IBOutlet var authorizationVerifiedEmoji: NSTextField!
-  @IBOutlet var authorizationDeniedEmoji: NSTextField!
-  @IBOutlet var demoImage: NSImageView!
-  @IBOutlet var demoCopyBubble: NSView!
-  @IBOutlet var demoPasteBubble: NSView!
-  @IBOutlet var specialCopyPasteBehaviorLabel: NSTextField!
-  @IBOutlet var filledIconLabel: NSTextField!
-  @IBOutlet var enteringQueueModeLabel: NSTextField!
-  @IBOutlet var inAppPurchageTitle: NSTextField!
-  @IBOutlet var inAppPurchageLabel: NSView!
-  @IBOutlet var appStorePromoTitle: NSTextField!
-  @IBOutlet var appStorePromoLabel: NSView!
-  @IBOutlet var openDocsLinkButton: NSButton!
-  @IBOutlet var copyDocsLinkButton: NSButton!
-  @IBOutlet var sendSupportEmailButton: NSButton!
-  @IBOutlet var copySupportEmailButton: NSButton!
-  @IBOutlet var openDonationLinkButton: NSButton!
-  @IBOutlet var copyDonationLinkButton: NSButton!
-  //@IBOutlet var sendL10nEmailButton: NSButton!
-  //@IBOutlet var copyL10nEmailButton: NSButton!
-  @IBOutlet var openGitHubLinkButton: NSButton!
-  @IBOutlet var copyGitHubLinkButton: NSButton!
-  @IBOutlet var openMaccyLinkButton: NSButton!
-  @IBOutlet var copyMaccyLinkButton: NSButton!
+  @IBOutlet var staticLogoImage: NSImageView?
+  @IBOutlet var animatedLogoImage: SDAnimatedImageView?
+  @IBOutlet var logoStopButton: NSButton?
+  @IBOutlet var logoRestartButton: NSButton?
+  @IBOutlet var setupNeededLabel: NSTextField?
+  @IBOutlet var openSecurityPanelButton: NSButton?
+  @IBOutlet var openSecurityPanelSpinner: NSProgressIndicator?
+  @IBOutlet var hasAuthorizationEmoji: NSTextField?
+  @IBOutlet var needsAuthorizationEmoji: NSTextField?
+  @IBOutlet var hasAuthorizationLabel: NSTextField?
+  @IBOutlet var needsAuthorizationLabel: NSTextField?
+  @IBOutlet var nextAuthorizationDirectionsLabel: NSTextField?
+  @IBOutlet var authorizationVerifiedEmoji: NSTextField?
+  @IBOutlet var authorizationDeniedEmoji: NSTextField?
+  @IBOutlet var demoImage: NSImageView?
+  @IBOutlet var demoCopyBubble: NSView?
+  @IBOutlet var demoPasteBubble: NSView?
+  @IBOutlet var specialCopyPasteBehaviorLabel: NSTextField?
+  @IBOutlet var filledIconLabel: NSTextField?
+  @IBOutlet var enteringQueueModeLabel: NSTextField?
+  @IBOutlet var inAppPurchageTitle: NSTextField?
+  @IBOutlet var inAppPurchageLabel: NSView?
+  @IBOutlet var appStorePromoTitle: NSTextField?
+  @IBOutlet var appStorePromoLabel: NSView?
+  @IBOutlet var openDocsLinkButton: NSButton?
+  @IBOutlet var copyDocsLinkButton: NSButton?
+  @IBOutlet var sendSupportEmailButton: NSButton?
+  @IBOutlet var copySupportEmailButton: NSButton?
+  @IBOutlet var openDonationLinkButton: NSButton?
+  @IBOutlet var copyDonationLinkButton: NSButton?
+  //@IBOutlet var sendL10nEmailButton: NSButton?
+  //@IBOutlet var copyL10nEmailButton: NSButton?
+  @IBOutlet var openGitHubLinkButton: NSButton?
+  @IBOutlet var copyGitHubLinkButton: NSButton?
+  @IBOutlet var openMaccyLinkButton: NSButton?
+  @IBOutlet var copyMaccyLinkButton: NSButton?
   
   private var labelsToStyle: [NSTextField] { [specialCopyPasteBehaviorLabel, filledIconLabel, enteringQueueModeLabel].compactMap({$0}) }
   
@@ -154,23 +153,23 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     case .welcome:
       resetAnimatedLogo()
       if Accessibility.allowed {
-        setupNeededLabel.isHidden = true
+        setupNeededLabel?.isHidden = true
       }
       
     case .checkAuth:
       let isAuthorized = Accessibility.allowed
-      hasAuthorizationEmoji.isHidden = !isAuthorized
-      needsAuthorizationEmoji.isHidden = isAuthorized
-      hasAuthorizationLabel.isHidden = !isAuthorized
-      needsAuthorizationLabel.isHidden = isAuthorized
-      nextAuthorizationDirectionsLabel.isHidden = isAuthorized
-      openSecurityPanelButton.isEnabled = !isAuthorized
+      hasAuthorizationEmoji?.isHidden = !isAuthorized
+      needsAuthorizationEmoji?.isHidden = isAuthorized
+      hasAuthorizationLabel?.isHidden = !isAuthorized
+      needsAuthorizationLabel?.isHidden = isAuthorized
+      nextAuthorizationDirectionsLabel?.isHidden = isAuthorized
+      openSecurityPanelButton?.isEnabled = !isAuthorized
       customDefaultButtonResult = !isAuthorized ? openSecurityPanelButton : nil
       skipSetAuthorizationPage = isAuthorized
       
     case .setAuth:
-      authorizationVerifiedEmoji.isHidden = true
-      authorizationDeniedEmoji.isHidden = true
+      authorizationVerifiedEmoji?.isHidden = true
+      authorizationDeniedEmoji?.isHidden = true
       
     case .demo:
       runDemo()
@@ -181,15 +180,15 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
         self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
       }
       #if FOR_APP_STORE
-      inAppPurchageTitle.isHidden = false
-      inAppPurchageLabel.isHidden = false
-      appStorePromoTitle.isHidden = true
-      appStorePromoLabel.isHidden = true
+      inAppPurchageTitle?.isHidden = false
+      inAppPurchageLabel?.isHidden = false
+      appStorePromoTitle?.isHidden = true
+      appStorePromoLabel?.isHidden = true
       #else
-      inAppPurchageTitle.isHidden = true
-      inAppPurchageLabel.isHidden = true
-      appStorePromoTitle.isHidden = false
-      appStorePromoLabel.isHidden = false
+      inAppPurchageTitle?.isHidden = true
+      inAppPurchageLabel?.isHidden = true
+      appStorePromoTitle?.isHidden = false
+      appStorePromoLabel?.isHidden = false
       #endif
       
     default:
@@ -209,7 +208,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     case .welcome:
       stopAnimatedLogo()
     case .checkAuth:
-      openSecurityPanelSpinner.stopAnimation(self)
+      openSecurityPanelSpinner?.stopAnimation(self)
     case .demo:
       cancelDemo()
     case .links:
@@ -236,17 +235,17 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   private func setupAnimatedLogo() {
-    animatedLogoImage.autoPlayAnimatedImage = false
-    animatedLogoImage.isHidden = true
-    logoStopButton.isHidden = true
+    animatedLogoImage?.autoPlayAnimatedImage = false
+    animatedLogoImage?.isHidden = true
+    logoStopButton?.isHidden = true
     
     // replace NSImage loaded from the nib with a SDAnimatedImage
-    guard let name = animatedLogoImage.image?.name(), let sdImage = SDAnimatedImage(named: name + ".gif") else {
-      logoRestartButton.isHidden = true
+    guard let name = animatedLogoImage?.image?.name(), let sdImage = SDAnimatedImage(named: name + ".gif") else {
+      logoRestartButton?.isHidden = true
       return
     }
-    animatedLogoImage.image = sdImage
-    logoRestartButton.isHidden = false
+    animatedLogoImage?.image = sdImage
+    logoRestartButton?.isHidden = false
   }
   
   private func resetAnimatedLogo() {
@@ -255,17 +254,17 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   private func stopAnimatedLogo() {
     cancelLogoTimer()
-    animatedLogoImage.player?.stopPlaying()
-    animatedLogoImage.isHidden = true
-    logoStopButton.isHidden = true
-    logoRestartButton.isHidden = false
+    animatedLogoImage?.player?.stopPlaying()
+    animatedLogoImage?.isHidden = true
+    logoStopButton?.isHidden = true
+    logoRestartButton?.isHidden = false
   }
   
   private func startAnimatedLogo(withDelay useDelay: Bool = false) {
     let initialDelay = 2.0
     
     // reset player to the start and setup to stop after a loop completes
-    guard let gifPlayer = animatedLogoImage.player else {
+    guard let gifPlayer = animatedLogoImage?.player else {
       return
     }
     gifPlayer.seekToFrame(at: 0, loopCount: 0)
@@ -274,17 +273,17 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     
     // start with gif hidden, for a few seconds if useDelay is true
-    animatedLogoImage.isHidden = true
-    logoStopButton.isHidden = false
-    logoRestartButton.isHidden = true
+    animatedLogoImage?.isHidden = true
+    logoStopButton?.isHidden = false
+    logoRestartButton?.isHidden = true
     
     if !useDelay {
-      animatedLogoImage.isHidden = false
+      animatedLogoImage?.isHidden = false
       gifPlayer.startPlaying()
     } else {
       runOnLogoDelayTimer(withDelay: initialDelay) { [weak self] in
-        self?.animatedLogoImage.isHidden = false
-        self?.animatedLogoImage.player?.startPlaying()
+        self?.animatedLogoImage?.isHidden = false
+        self?.animatedLogoImage?.player?.startPlaying()
       }
     }
   }
@@ -307,18 +306,18 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   private func showAltCopyEmailButtons(_ showCopy: Bool) {
-    openDocsLinkButton.isHidden = showCopy
-    copyDocsLinkButton.isHidden = !showCopy
-    sendSupportEmailButton.isHidden = showCopy
-    copySupportEmailButton.isHidden = !showCopy
-    //sendL10nEmailButton.isHidden = showCopy  // for now i've removed the translation buttons
-    //copyL10nEmailButton.isHidden = !showCopy  // until i form some l10n plans
-    openDonationLinkButton.isHidden = showCopy
-    copyDonationLinkButton.isHidden = !showCopy
-    openGitHubLinkButton.isHidden = showCopy
-    copyGitHubLinkButton.isHidden = !showCopy
-    openMaccyLinkButton.isHidden = showCopy
-    copyMaccyLinkButton.isHidden = !showCopy
+    openDocsLinkButton?.isHidden = showCopy
+    copyDocsLinkButton?.isHidden = !showCopy
+    sendSupportEmailButton?.isHidden = showCopy
+    copySupportEmailButton?.isHidden = !showCopy
+    //sendL10nEmailButton?.isHidden = showCopy  // for now i've removed the translation buttons
+    //copyL10nEmailButton?.isHidden = !showCopy  // until i form some l10n plans
+    openDonationLinkButton?.isHidden = showCopy
+    copyDonationLinkButton?.isHidden = !showCopy
+    openGitHubLinkButton?.isHidden = showCopy
+    copyGitHubLinkButton?.isHidden = !showCopy
+    openMaccyLinkButton?.isHidden = showCopy
+    copyMaccyLinkButton?.isHidden = !showCopy
   }
   
   private func runDemo() {
@@ -361,22 +360,22 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       switch frames[index] {
       case .img(let name, let keepBubble, let t):
         if !keepBubble {
-          demoCopyBubble.isHidden = true
-          demoPasteBubble.isHidden = true
+          demoCopyBubble?.isHidden = true
+          demoPasteBubble?.isHidden = true
         }
         if let name = name {
-          demoImage.image = NSImage(named: name)
+          demoImage?.image = NSImage(named: name)
         } else {
-          demoImage.image = nil
+          demoImage?.image = nil
         }
         interval = t
         
       case .copybubble(let show, let t):
-        demoCopyBubble.isHidden = !show
+        demoCopyBubble?.isHidden = !show
         interval = t
         
       case .pastebubble(let show, let t):
-        demoPasteBubble.isHidden = !show
+        demoPasteBubble?.isHidden = !show
         interval = t
       }
       
@@ -396,8 +395,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     
     // kick off perpetual sequence
-    demoCopyBubble.isHidden = true
-    demoPasteBubble.isHidden = true
+    demoCopyBubble?.isHidden = true
+    demoPasteBubble?.isHidden = true
     demoCanceled = false
     showFrame(0)
   }
@@ -432,8 +431,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   @IBAction func checkAccessibilityAuthorization(_ sender: AnyObject) {
     let isAuthorized = Accessibility.allowed
-    authorizationVerifiedEmoji.isHidden = !isAuthorized
-    authorizationDeniedEmoji.isHidden = isAuthorized
+    authorizationVerifiedEmoji?.isHidden = !isAuthorized
+    authorizationDeniedEmoji?.isHidden = isAuthorized
   }
   
   @IBAction func openSettingsAppSecurityPanel(_ sender: AnyObject) {
@@ -446,12 +445,12 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       return
     }
     
-    openSecurityPanelSpinner.startAnimation(sender)
+    openSecurityPanelSpinner?.startAnimation(sender)
     DispatchQueue.main.asyncAfter(deadline: .now() + openSecurityPanelSpinnerTime) { [weak self, weak windowController] in
       guard let self = self, let wc = windowController, wc.isOpen else {
         return
       }
-      self.openSecurityPanelSpinner.stopAnimation(sender)
+      self.openSecurityPanelSpinner?.stopAnimation(sender)
       
       if wc.isOpen && Pages(rawValue: wc.currentPageNumber) == .checkAuth {
         wc.advance(self)
