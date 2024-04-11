@@ -53,9 +53,9 @@ jobs:
           elif [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
             echo "- After build will draft untagged release \"$releaseName\" because triggered manually and no tag \"v$readableVersion\" found"
             echo "continue=true" >> $GITHUB_OUTPUT
-          elif ${{ startsWith(github.ref, "refs/tags/") }} ; then
+          elif ${{ startsWith(github.ref, 'refs/tags/') }} ; then
             ref="${{ github.ref }}"
-            tag="${ref#refs/tags/}"
+            tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
             echo "- After build will draft release \"$releaseName\" with tag \"$tag\""
             echo "tag=$tag" >> $GITHUB_OUTPUT
             echo "continue=true" >> $GITHUB_OUTPUT
