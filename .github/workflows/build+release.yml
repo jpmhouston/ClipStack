@@ -53,11 +53,11 @@ jobs:
             # maybe create a tag with $readableVersion, failing if it already exists.
             # for now try using an alternate Draft Release step that doesn't set a tag
             # but I fear that the tag is required value
-            echo "usetag=false"
+            echo "usetag=false" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref }}" == "refs/tags/v$versnum" ]] ; then
             echo "Continuing because triggered by tag matching the current version"
-            echo "usetag=true"
-            echo "tag=v$versnum"
+            echo "usetag=true" >> $GITHUB_OUTPUT
+            echo "tag=v$versnum" >> $GITHUB_OUTPUT
             echo "continue=true" >> $GITHUB_OUTPUT
           else
             echo "Aborting because not triggered by tag matching the current version"
