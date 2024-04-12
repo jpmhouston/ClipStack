@@ -28,8 +28,9 @@ jobs:
       - name: Validate
         id: version
         run: |
-          echo "Validating version, tag, and trigger"
-          versnum=$(xcodebuild -scheme Cleepp -configuration Release -project Maccy.xcodeproj -showBuildSettings | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p')
+          echo >/dev/null
+          echo "- Extract version from project"
+          versnum=$(xcodebuild -scheme Cleepp -configuration Release -project Maccy.xcodeproj -showBuildSettings | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
           
           if [ -z "${{ inputs.releaseVersion }}" ] ; then
             echo "- Build version is $versnum"
@@ -78,7 +79,7 @@ jobs:
           MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
-          echo "Codesigning"
+          echo >/dev/null
           test -d Build/Products/Release/Cleepp.app || exit 1
           ls -ald Build/Products/Release/*.app
           exit 0 # !!! until the above env vars are correctly defined
@@ -114,7 +115,7 @@ jobs:
           PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
-          echo "Notarizing"
+          echo >/dev/null
           test -d Build/Products/Release/Cleepp.app || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
@@ -128,7 +129,7 @@ jobs:
           # Therefore, we create a zip file containing our app bundle, so that we can send it to the
           # notarization service
           
-          echo "- Creating temp notarization archive"
+          echo "- Create temp notarization archive"
           ditto -c -k --keepParent "target/mac/Cleepp.app" "notarization.zip"
           
           # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
@@ -148,7 +149,7 @@ jobs:
         if: steps.version.outputs.continue == 'true' && success()
         id: zip
         run: |
-          echo "Building \"${{ steps.version.outputs.releaseName }}.zip\""
+          echo >/dev/null
           test -d Build/Products/Release/Cleepp.app || exit 1
           
           readmeFileName="Cleepp version ${{ steps.version.outputs.readableVersion }} read me.rtf"
@@ -157,12 +158,12 @@ jobs:
           archiveFile="Build/Products/Release/$archiveFileName"
           echo "file=${archiveFile}" >> $GITHUB_OUTPUT
           
-          echo "Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
+          echo "- Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
           mkdir "$archiveDir"
           cp "Designs/Cleepp/Cleepp download read me.rtf" "$archiveDir/$readmeFileName"
           mv Build/Products/Release/Cleepp.app "$archiveDir"
           
-          echo "Create \"${archiveFileName}\" from contents of ${archiveDir}"
+          echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
       
       - name: Draft Untagged Release
