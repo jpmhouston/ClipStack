@@ -151,7 +151,11 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     
     switch page {
     case .welcome:
-      resetAnimatedLogo()
+      if !visited.contains(page) {
+        startAnimatedLogo(withDelay: true)
+      } else {
+        resetAnimatedLogo()
+      }
       if Accessibility.allowed {
         setupNeededLabel?.isHidden = true
       }
