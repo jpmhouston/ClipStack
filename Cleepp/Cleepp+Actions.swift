@@ -11,12 +11,18 @@ import Settings
 
 extension Cleepp {
   
-  private var pasteMultipleDelaySeconds: Float { 0.333 }
-  private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(pasteMultipleDelaySeconds * 1000)) }
+  private var pasteDelaySeconds: Float { 0.66666 }
+  private var extraPasteDelay: DispatchTimeInterval { .milliseconds(Int(pasteDelaySeconds * 1000)) }
+  private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(pasteDelaySeconds * 1000)) }
   
   private var extraDelayOnQueuedPaste: Bool {
-    true // TODO: remove after testing determines the right conditions
-    //if #unavailable(macOS 14) { true } else { false } // or maybe intel vs arm
+    //true // !!! TODO: remove after testing determines the right conditions
+    //if #unavailable(macOS 14) { true } else { false } // maybe latest OS fixes need for delay??
+    #if arch(x86_64) || arch(i386)
+    true
+    #else
+    false
+    #endif
   }
   
   @IBAction
@@ -98,7 +104,6 @@ extension Cleepp {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
-    
     guard Accessibility.check() else {
       return
     }
@@ -109,7 +114,7 @@ extension Cleepp {
     clipboard.invokeApplicationPaste() {
       
       if self.extraDelayOnQueuedPaste {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + self.extraPasteDelay) {
           self.decrementQueue()
         }
       } else {
@@ -149,6 +154,9 @@ extension Cleepp {
   
   @IBAction
   func queuedPasteMultiple(_ sender: AnyObject) {
+    guard Self.isQueueModeOn && Self.queueSize > 0 else {
+      return
+    }
     guard Accessibility.check() else {
       return
     }
@@ -174,6 +182,9 @@ extension Cleepp {
   
   @IBAction
   func queuedPasteAll(_ sender: AnyObject) {
+    guard Self.isQueueModeOn && Self.queueSize > 0 else {
+      return
+    }
     guard Accessibility.check() else {
       return
     }
@@ -199,12 +210,15 @@ extension Cleepp {
     // make the frontmost application perform a paste again & again until count decrements to 0
     if count > 0 {
       clipboard.invokeApplicationPaste() {
+        
         self.decrementQueue(withIconUpdates: false)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) {
           self.queuedPasteMultipleIteration(count - 1)
         }
       }
     } else {
+      // icon updates skipped during each decrementQueue call, only 1 final update to the icon here
       updateStatusMenuIcon()
       
       Self.busy = false
