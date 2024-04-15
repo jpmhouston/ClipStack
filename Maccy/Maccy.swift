@@ -36,7 +36,8 @@ class Maccy: NSObject {
   #if FOR_APP_STORE
   private let purchases = Purchases.shared
   #endif
-  internal var intro = IntroWindowController()
+  internal var introWindowController = IntroWindowController()
+  internal var licensesWindowController = LicensesWindowController()
   
   internal var queueHeadIndex: Int? {
     if Self.queueSize < 1 {

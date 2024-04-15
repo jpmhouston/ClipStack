@@ -182,6 +182,12 @@
 		8F8C48CA2BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */; };
 		8F8C48CB2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
 		8F8C48CC2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
+		8FB88D742BCCD72C006D48E6 /* License credits.mkdn in Resources */ = {isa = PBXBuildFile; fileRef = 8FB88D712BCCC4DD006D48E6 /* License credits.mkdn */; };
+		8FB88D752BCCD72F006D48E6 /* License credits-MAS.mkdn in Resources */ = {isa = PBXBuildFile; fileRef = 8FB88D722BCCD01B006D48E6 /* License credits-MAS.mkdn */; };
+		8FB88D782BCCD7AC006D48E6 /* Licenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB88D772BCCD7AC006D48E6 /* Licenses.swift */; };
+		8FB88D792BCCD7AC006D48E6 /* Licenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB88D772BCCD7AC006D48E6 /* Licenses.swift */; };
+		8FB88D7D2BCCFED8006D48E6 /* Licenses.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB88D7C2BCCFED8006D48E6 /* Licenses.xib */; };
+		8FB88D7E2BCCFED8006D48E6 /* Licenses.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB88D7C2BCCFED8006D48E6 /* Licenses.xib */; };
 		8FBDF6AD2BB269A900219889 /* Cleepp+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */; };
 		8FBDF6AE2BB269AE00219889 /* Cleepp+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */; };
 		8FBDF6B12BB4EE3600219889 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
@@ -286,6 +292,39 @@
 		DAFEF0B8249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFEF0B7249D7DEE006029E8 /* KeyboardShortcuts.Name+Shortcuts.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		8FB88D7A2BCCE6C7006D48E6 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.mkdn";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).rtf",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).md",
+			);
+			runOncePerArchitecture = 0;
+			script = "# wanted to process only files named xyz.src.md but INPUT_FILE_BASE ends up set to xyz.src not simply xyz,\n# and thus the files written are xyz.src.md/xyz.src.rtf and not xyz.md/xyz.rtf\n# instead markdown files needing conversion to rtf must use alternate markdown extension .mkdn   \nif which -s pandoc ; then\n    echo \"Converting markdown file $INPUT_FILE_NAME to RTF, saving to $INPUT_FILE_BASE.rtf\"\n    pandoc -s -f markdown -t rtf -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\" \"${INPUT_FILE_PATH}\"\nelse\n    echo \"WARNING: pandoc not installed, unable to build ${INPUT_FILE_BASE}.rtf and so app will only display plain markdown text in the Licenses window\"\n    # need the expected rtf file so build doesn't fail, make it empty assuming app will know what to do\n    touch \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\"\nfi\necho \"Also saving markdown file $INPUT_FILE_NAME to $INPUT_FILE_BASE.md (as-is except to remove backslashes)\"\ncat \"${INPUT_FILE_PATH}\" | tr -d '\\' > \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.md\"\n";
+		};
+		8FB88D7B2BCCEAD6006D48E6 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.mkdn";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).rtf",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).md",
+			);
+			runOncePerArchitecture = 0;
+			script = "# wanted to process only files named xyz.src.md but INPUT_FILE_BASE ends up set to xyz.src not simply xyz,\n# and thus the files written are xyz.src.md/xyz.src.rtf and not xyz.md/xyz.rtf\n# instead markdown files needing conversion to rtf must use alternate markdown extension .mkdn   \nif which -s pandoc ; then\n    echo \"Converting markdown file $INPUT_FILE_NAME to RTF, saving to $INPUT_FILE_BASE.rtf\"\n    pandoc -s -f markdown -t rtf -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\" \"${INPUT_FILE_PATH}\"\nelse\n    echo \"WARNING: pandoc not installed, unable to build ${INPUT_FILE_BASE}.rtf and so app will only display plain markdown text in the Licenses window\"\n    # need the expected rtf file so build doesn't fail, make it empty assuming app will know what to do\n    touch \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\"\nfi\necho \"Also saving markdown file $INPUT_FILE_NAME to $INPUT_FILE_BASE.md (as-is except to remove backslashes)\"\ncat \"${INPUT_FILE_PATH}\" | tr -d '\\' > \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.md\"\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXContainerItemProxy section */
 		DA0EE7BB204657840025FC60 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -380,6 +419,10 @@
 		8F8C48C02BAD5ED400C3A219 /* Intro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
 		8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "introAnimatedLogo@2x.gif"; sourceTree = "<group>"; };
 		8F8C48C22BAD5ED500C3A219 /* Intro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Intro.xib; sourceTree = "<group>"; };
+		8FB88D712BCCC4DD006D48E6 /* License credits.mkdn */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = "License credits.mkdn"; sourceTree = "<group>"; };
+		8FB88D722BCCD01B006D48E6 /* License credits-MAS.mkdn */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; fileEncoding = 4; path = "License credits-MAS.mkdn"; sourceTree = "<group>"; };
+		8FB88D772BCCD7AC006D48E6 /* Licenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licenses.swift; sourceTree = "<group>"; };
+		8FB88D7C2BCCFED8006D48E6 /* Licenses.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Licenses.xib; sourceTree = "<group>"; };
 		8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cleepp+Links.swift"; sourceTree = "<group>"; };
 		8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchSource+scheduledTimer.swift"; sourceTree = "<group>"; };
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
@@ -670,8 +713,9 @@
 				8F0D3C7E2BAB992D00DDB603 /* Info-MAS.plist */,
 				8F0D3C7D2BAB992D00DDB603 /* Info.plist */,
 				8F0D3CE32BABDC0D00DDB603 /* Intro */,
+				8FB88D762BCCD792006D48E6 /* Licenses */,
 				8F0D3C862BABB11C00DDB603 /* Menu */,
-				8F0D3CC42BABB2B300DDB603 /* Preivew */,
+				8F0D3CC42BABB2B300DDB603 /* Preview */,
 				8F0D3CDB2BABCF3000DDB603 /* Settings */,
 				8F8C48462BAD33BB00C3A219 /* Application.xib */,
 				8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */,
@@ -702,12 +746,11 @@
 			path = Menu;
 			sourceTree = "<group>";
 		};
-		8F0D3CC42BABB2B300DDB603 /* Preivew */ = {
+		8F0D3CC42BABB2B300DDB603 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
 				8F0D3CC92BABB31600DDB603 /* Preview.xib */,
 			);
-			name = Preivew;
 			path = Preview;
 			sourceTree = "<group>";
 		};
@@ -738,6 +781,17 @@
 				8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */,
 			);
 			path = Intro;
+			sourceTree = "<group>";
+		};
+		8FB88D762BCCD792006D48E6 /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				8FB88D772BCCD7AC006D48E6 /* Licenses.swift */,
+				8FB88D7C2BCCFED8006D48E6 /* Licenses.xib */,
+				8FB88D712BCCC4DD006D48E6 /* License credits.mkdn */,
+				8FB88D722BCCD01B006D48E6 /* License credits-MAS.mkdn */,
+			);
+			path = Licenses;
 			sourceTree = "<group>";
 		};
 		C2D16D1C2EE365D52E1EE446 /* Frameworks */ = {
@@ -952,6 +1006,7 @@
 				8F0D3C7F2BAB9B0900DDB603 /* Patch CFBundleVersion Script */,
 			);
 			buildRules = (
+				8FB88D7B2BCCEAD6006D48E6 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -980,6 +1035,7 @@
 				8F8C48AB2BAD51B000C3A219 /* Patch CFBundleVersion Script */,
 			);
 			buildRules = (
+				8FB88D7A2BCCE6C7006D48E6 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1150,6 +1206,8 @@
 			files = (
 				8F8C48432BACD3CB00C3A219 /* GeneralSettingsViewController.xib in Resources */,
 				8F8C48442BACD3E600C3A219 /* StorageSettingsViewController.xib in Resources */,
+				8FB88D742BCCD72C006D48E6 /* License credits.mkdn in Resources */,
+				8FB88D7D2BCCFED8006D48E6 /* Licenses.xib in Resources */,
 				8F8C48422BACD3C400C3A219 /* AppearanceSettingsViewController.xib in Resources */,
 				8F8C48C32BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */,
 				8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */,
@@ -1171,8 +1229,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FB88D752BCCD72F006D48E6 /* License credits-MAS.mkdn in Resources */,
 				8FBDF6B12BB4EE3600219889 /* Localizable.strings in Resources */,
 				8F8C489E2BAD51B000C3A219 /* GeneralSettingsViewController.xib in Resources */,
+				8FB88D7E2BCCFED8006D48E6 /* Licenses.xib in Resources */,
 				8F8C489F2BAD51B000C3A219 /* StorageSettingsViewController.xib in Resources */,
 				8F8C48A02BAD51B000C3A219 /* AppearanceSettingsViewController.xib in Resources */,
 				8F8C48A12BAD51B000C3A219 /* IgnoreSettingsViewController.xib in Resources */,
@@ -1371,6 +1431,7 @@
 				8F0D3C312BAB8F5A00DDB603 /* RunLoopLocalEventMonitor.swift in Sources */,
 				8F0D3C322BAB8F5A00DDB603 /* Clipboard.swift in Sources */,
 				8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */,
+				8FB88D782BCCD7AC006D48E6 /* Licenses.swift in Sources */,
 				8F0D3C332BAB8F5A00DDB603 /* IgnorePasteboardTypesViewController.swift in Sources */,
 				8F0D3C352BAB8F5A00DDB603 /* PreviewPopoverController.swift in Sources */,
 				8F0D3C392BAB8F5A00DDB603 /* HistoryItemContent.swift in Sources */,
@@ -1443,6 +1504,7 @@
 				8F8C486F2BAD51B000C3A219 /* RunLoopLocalEventMonitor.swift in Sources */,
 				8F8C48702BAD51B000C3A219 /* Clipboard.swift in Sources */,
 				8F8C48712BAD51B000C3A219 /* GlobalHotKeys.swift in Sources */,
+				8FB88D792BCCD7AC006D48E6 /* Licenses.swift in Sources */,
 				8F8C48722BAD51B000C3A219 /* IgnorePasteboardTypesViewController.swift in Sources */,
 				8F8C48C62BAD5ED500C3A219 /* PagedWindow.swift in Sources */,
 				8F8C48732BAD51B000C3A219 /* Purchases.swift in Sources */,

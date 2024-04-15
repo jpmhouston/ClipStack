@@ -22,5 +22,6 @@ extension Cleepp {
   static var localizeVolunteerEmailURL = "mailto:" + Cleepp.localizeVolunteerEmailAddress
   static var showIntroInAppURL = "cleeppapp:intro"
   static var showIntroPermissionPageInAppURL = "cleeppapp:intro/permissions"
+  static var showLicensesInAppURL = "cleeppapp:licenses"
   
 }

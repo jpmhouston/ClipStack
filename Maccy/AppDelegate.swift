@@ -69,6 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     if url.absoluteString == Cleepp.showIntroPermissionPageInAppURL {
       maccy.showIntroAtPermissionPage(self)
     }
+    if url.absoluteString == Cleepp.showLicensesInAppURL {
+      maccy.showLicenses()
+    }
   }
   #endif
   

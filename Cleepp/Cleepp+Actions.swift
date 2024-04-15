@@ -364,14 +364,20 @@ extension Cleepp {
   @IBAction
   func showIntro(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
-    intro.openIntro(with: self)
+    introWindowController.openIntro(with: self)
     Self.returnFocusToPreviousApp = true
   }
   
   @IBAction
   func showIntroAtPermissionPage(_ sender: AnyObject) {
     Self.returnFocusToPreviousApp = false
-    intro.openIntro(atPage: .checkAuth, with: self)
+    introWindowController.openIntro(atPage: .checkAuth, with: self)
+    Self.returnFocusToPreviousApp = true
+  }
+  
+  func showLicenses() {
+    Self.returnFocusToPreviousApp = false
+    licensesWindowController.openLicenses()
     Self.returnFocusToPreviousApp = true
   }
   

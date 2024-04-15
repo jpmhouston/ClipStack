@@ -22,7 +22,7 @@ public class IntroWindowController: PagedWindowController {
   
   func openIntro(atPage page: IntroViewController.Pages? = nil, with object: Cleepp) {
     // accessing window triggers loading from nib, do this before showWindow so we can setup before showing
-    guard let _ = window, let viewController = viewController else {
+    guard let window = window, let viewController = viewController else {
       return
     }
     
@@ -47,7 +47,7 @@ public class IntroWindowController: PagedWindowController {
     NSApp.activate(ignoringOtherApps: true)
     #endif
     
-    window?.orderFrontRegardless()
+    window.orderFrontRegardless()
   }
   
   private func restoreWindowPosition() {

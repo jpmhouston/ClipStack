@@ -11,21 +11,6 @@ class About {
       attributes: [.foregroundColor: NSColor.labelColor]);
   }
   
-  private var introLink: NSAttributedString {
-    let string = NSMutableAttributedString(string: "More information: Show Intro",
-                                           attributes: [.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 18, length: 10))
-    return string
-  }
-  
-  private var forkCredits: NSMutableAttributedString {
-    let string = NSMutableAttributedString(
-      string: "Thank you to the authors of Maccy which this app is a derivative of. Check it out here for a more full-featured clipboard history manager.",
-      attributes: [.foregroundColor: NSColor.secondaryLabelColor])
-    string.addAttribute(.link, value: Cleepp.maccyURL, range: NSRange(location: 82, length: 4))
-    return string
-  }
-  
   private var links: NSAttributedString {
     let string = NSMutableAttributedString(string: "Website│GitHub│Support",
                                            attributes: [.foregroundColor: NSColor.labelColor])
@@ -33,6 +18,24 @@ class About {
     string.addAttribute(.link, value: Cleepp.githubURL, range: NSRange(location: 8, length: 6))
     string.addAttribute(.link, value: Cleepp.supportEmailURL, range: NSRange(location: 15, length: 7))
     return string
+  }
+  
+  private var introLink: NSAttributedString {
+    let string = NSMutableAttributedString(string: "More information: Show Intro",
+                                           attributes: [.foregroundColor: NSColor.labelColor])
+    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 18, length: 10))
+    return string
+  }
+  
+  private var creditsLink: NSMutableAttributedString {
+    let string = NSMutableAttributedString(string: "Credits and licenses: Show Licenses",
+                                           attributes: [.foregroundColor: NSColor.labelColor])
+    string.addAttribute(.link, value: Cleepp.showLicensesInAppURL, range: NSRange(location: 22, length: 13))
+    return string
+  }
+  
+  private var newLine: NSAttributedString {
+    return NSAttributedString(string: "\n")
   }
   
   private var shortSpacingLine: NSAttributedString {
@@ -43,15 +46,16 @@ class About {
   
   private var credits: NSAttributedString {
     let credits = NSMutableAttributedString(string: "", attributes: [.foregroundColor: NSColor.labelColor])
-    credits.append(links)
-    credits.append(NSAttributedString(string: "\n"))
-    credits.append(shortSpacingLine)
     credits.append(blurb)
-    credits.append(NSAttributedString(string: "\n"))
-    credits.append(introLink)
-    credits.append(NSAttributedString(string: "\n"))
+    credits.append(newLine)
     credits.append(shortSpacingLine)
-    credits.append(forkCredits)
+    credits.append(links)
+    credits.append(newLine)
+    credits.append(shortSpacingLine)
+    credits.append(introLink)
+    credits.append(newLine)
+    credits.append(shortSpacingLine)
+    credits.append(creditsLink)
     credits.setAlignment(.center, range: NSRange(location: 0, length: credits.length))
     return credits
   }
