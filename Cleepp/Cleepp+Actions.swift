@@ -11,9 +11,11 @@ import Settings
 
 extension Cleepp {
   
-  private var pasteDelaySeconds: Float { 0.66666 }
-  private var extraPasteDelay: DispatchTimeInterval { .milliseconds(Int(pasteDelaySeconds * 1000)) }
-  private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(pasteDelaySeconds * 1000)) }
+  private var standardPasteDelaySeconds: Float { 0.33333 }
+  private var standardPasteDelay: DispatchTimeInterval { .milliseconds(Int(standardPasteDelaySeconds * 1000)) }
+  private var extraPasteDelaySeconds: Float { 0.66666 }
+  private var extraPasteDelay: DispatchTimeInterval { .milliseconds(Int(extraPasteDelaySeconds * 1000)) }
+  private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(extraPasteDelaySeconds * 1000)) }
   
   private var extraDelayOnQueuedPaste: Bool {
     //true // !!! TODO: remove after testing determines the right conditions
@@ -110,18 +112,13 @@ extension Cleepp {
     
     Self.busy = true
     
+    let decrementQueueDelay = extraDelayOnQueuedPaste ? extraPasteDelay : standardPasteDelay
+    
     // make the frontmost application perform a paste
     clipboard.invokeApplicationPaste() {
-      
-      if self.extraDelayOnQueuedPaste {
-        DispatchQueue.main.asyncAfter(deadline: .now() + self.extraPasteDelay) {
-          self.decrementQueue()
-        }
-      } else {
+      DispatchQueue.main.asyncAfter(deadline: .now() + decrementQueueDelay) {
         self.decrementQueue()
       }
-      
-      Self.busy = false
       
       #if FOR_APP_STORE
         // TODO: enable reviews when this target is truly building for the app store
@@ -129,6 +126,8 @@ extension Cleepp {
 //        AppStoreReview.ask(after: 20)
 //      }
       #endif
+      
+      Self.busy = false
     }
   }
   
@@ -202,26 +201,29 @@ extension Cleepp {
       Self.busy = true
       
       setStatusMenuIcon(to: .cleepMenuIconListMinus)
-      queuedPasteMultipleIteration(count)
+      
+      queuedPasteMultipleIteration(count) {
+        self.updateStatusMenuIcon()
+        
+        Self.busy = false
+      }
     }
   }
   
-  private func queuedPasteMultipleIteration(_ count: Int) {
+  private func queuedPasteMultipleIteration(_ count: Int, then completion: @escaping ()->Void) {
     // make the frontmost application perform a paste again & again until count decrements to 0
     if count > 0 {
       clipboard.invokeApplicationPaste() {
-        
-        self.decrementQueue(withIconUpdates: false)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) {
-          self.queuedPasteMultipleIteration(count - 1)
+        DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) {  [weak self] in
+          guard let self = self else { return }
+          
+          self.decrementQueue(withIconUpdates: false)
+          
+          self.queuedPasteMultipleIteration(count - 1, then: completion)
         }
       }
     } else {
-      // icon updates skipped during each decrementQueue call, only 1 final update to the icon here
-      updateStatusMenuIcon()
-      
-      Self.busy = false
+      completion()
     }
   }
   
