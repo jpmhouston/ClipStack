@@ -159,7 +159,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     updateShortcuts()
     updateItemVisibility()
     updateDisabledMenuItems()
-    checkQueueItemsSeparator()
+    addQueueItemsSeparator()
   }
   
   func menuWillOpen(_ menu: NSMenu) {
@@ -177,6 +177,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     isVisible = false
     isFiltered = false
     showsExpandedMenu = false
+    removeQueueItemsSeparator()
     
     previewController.menuDidClose()
     
@@ -235,19 +236,18 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     }
   }
   
-  private func checkQueueItemsSeparator() {
+  private func addQueueItemsSeparator() {
     if !useQueueItemsSeparator {
       return
     }
     
-    let shouldExist = showsExpandedMenu && !isFiltered && Cleepp.isQueueModeOn && Cleepp.queueSize > 0 && indexedItems.count > Cleepp.queueSize
-    if let separator = queueItemsSeparator, index(of: separator) < 0 {
-      queueItemsSeparator = nil
+    if queueItemsSeparator != nil {
+      removeQueueItemsSeparator() // expected to already be removed! but ensure now that it really is
     }
-    if let separator = queueItemsSeparator, !shouldExist {
-      removeItem(separator)
-      queueItemsSeparator = nil
-    } else if shouldExist {
+
+    if showsExpandedMenu && !isFiltered && !Cleepp.busy &&
+       Cleepp.isQueueModeOn && Cleepp.queueSize > 0 && indexedItems.count > Cleepp.queueSize
+    {
       let followingItem = indexedItems[Cleepp.queueSize]
       guard let followingMenuItem = followingItem.menuItems.first, let index = safeIndex(of: followingMenuItem) else {
         return
@@ -255,6 +255,17 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       let separator = NSMenuItem.separator()
       insertItem(separator, at: index)
       queueItemsSeparator = separator
+    }
+  }
+  
+  private func removeQueueItemsSeparator() {
+    if let separator = queueItemsSeparator {
+      if index(of: separator) < 0 {
+        queueItemsSeparator = nil
+      } else {
+        removeItem(separator)
+        queueItemsSeparator = nil
+      }
     }
   }
   
@@ -373,7 +384,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     isFiltered = results.count < indexedItems.count
     
-    checkQueueItemsSeparator()
+    removeQueueItemsSeparator()
     
     highlight(historyMenuItems.first)
   }

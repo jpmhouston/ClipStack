@@ -269,6 +269,8 @@ extension Cleepp {
     updateStatusMenuIcon()
     updateMenuTitle()
     menu.updateHeadOfQueue(index: index)
+    
+    clipboard.copy(item, excludeFromHistory: true)
   }
   
   @IBAction
