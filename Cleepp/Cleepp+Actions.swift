@@ -54,12 +54,22 @@ extension Cleepp {
     }
   }
   
-  @IBAction
-  func queuedCopy(_ sender: AnyObject) {
-    queuedCopy()
+  func queuedCopy() {
+    // This is the handler for the global keyboard shortcut, it circumvents the menu
+    // and can be invoked even when all menu items are disabled by the busy flag.
+    // So check the busy flag here and do nothing if its true.
+    guard !Self.busy else {
+      return
+    }
+    doQueuedCopy()
   }
   
-  func queuedCopy() {
+  @IBAction
+  func queuedCopy(_ sender: AnyObject) {
+    doQueuedCopy()
+  }
+  
+  func doQueuedCopy() {
     guard Accessibility.check() else {
       return
     }
@@ -97,12 +107,22 @@ extension Cleepp {
     }
   }
   
-  @IBAction
-  func queuedPaste(_ sender: AnyObject) {
-    queuedPaste()
+  func queuedPaste() {
+    // This is the handler for the global keyboard shortcut, it circumvents the menu
+    // and can be invoked even when all menu items are disabled by the busy flag.
+    // So check the busy flag here and do nothing if its true.
+    guard !Self.busy else {
+      return
+    }
+    doQueuedPaste()
   }
   
-  func queuedPaste() {
+  @IBAction
+  func queuedPaste(_ sender: AnyObject) {
+    doQueuedPaste()
+  }
+  
+  func doQueuedPaste() {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
@@ -196,7 +216,7 @@ extension Cleepp {
       return
     }
     if count == 1 {
-      queuedPaste()
+      doQueuedPaste()
     } else {
       Self.busy = true
       
