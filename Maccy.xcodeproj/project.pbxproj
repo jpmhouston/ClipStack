@@ -396,6 +396,7 @@
 		8F0D3CDD2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts.Name+Shortcuts.swift"; sourceTree = "<group>"; };
 		8F0D3CDF2BABD57300DDB603 /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		8F0D3CE02BABD57300DDB603 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		8F4D26952BCFE2A1009A187B /* releasenotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = releasenotes.md; sourceTree = "<group>"; };
 		8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CleeppNames.swift"; sourceTree = "<group>"; };
 		8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKeys.swift; sourceTree = "<group>"; };
 		8F8C47E42BACB3E600C3A219 /* Equatable+IsIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Equatable+IsIn.swift"; sourceTree = "<group>"; };
@@ -924,6 +925,7 @@
 				DA360DB11E3DF137005C6F6B /* MaccyTests */,
 				DA0EE7B7204657830025FC60 /* MaccyUITests */,
 				DA00992C256411F90030E697 /* appcast.xml */,
+				8F4D26952BCFE2A1009A187B /* releasenotes.md */,
 				DA00992F256411F90030E697 /* LICENSE */,
 				DA00992D256411F90030E697 /* README.md */,
 				DAEE38441E3DBEB100DD2966 /* Products */,
@@ -1332,7 +1334,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"warning: Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F8C48AA2BAD51B000C3A219 /* Copy Launch at Login Helper */ = {
@@ -1375,7 +1377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"warning: Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DAC6CE9226E1AC2C002B70B8 /* Copy Launch at Login Helper */ = {
