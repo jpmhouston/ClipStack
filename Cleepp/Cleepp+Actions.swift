@@ -107,7 +107,7 @@ extension Cleepp {
     }
     
     // cancel timeout if its timer is active and clear the busy flag controlled by the timer
-    let withinTimeout = copyTimeouutTimer != nil
+    let withinTimeout = copyTimeoutTimer != nil
     if withinTimeout {
       cancelCopyTimeoutTimer()
       // perhaps assert Self.busy here?
@@ -499,18 +499,18 @@ extension Cleepp {
   // MARK: -
   
   private func runOnCopyTimeoutTimer(afterTimeout timeout: Double, _ action: @escaping () -> Void) {
-    if copyTimeouutTimer != nil {
+    if copyTimeoutTimer != nil {
       cancelCopyTimeoutTimer()
     }
-    copyTimeouutTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: timeout) { [weak self] in
-      self?.copyTimeouutTimer = nil // doing this before calling closure supports closure itself calling runOnCopyTimeoutTimer, fwiw
+    copyTimeoutTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: timeout) { [weak self] in
+      self?.copyTimeoutTimer = nil // doing this before calling closure supports closure itself calling runOnCopyTimeoutTimer, fwiw
       action()
     }
   }
   
   private func cancelCopyTimeoutTimer() {
-    copyTimeouutTimer?.cancel()
-    copyTimeouutTimer = nil
+    copyTimeoutTimer?.cancel()
+    copyTimeoutTimer = nil
   }
   
 }

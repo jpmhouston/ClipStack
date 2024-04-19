@@ -48,7 +48,7 @@ class Maccy: NSObject {
   }
   internal var permitEmptyQueueMode = false // affects behavior when deleting history items
   internal var iconBlinkTimer: DispatchSourceTimer?
-  internal var copyTimeouutTimer: DispatchSourceTimer?
+  internal var copyTimeoutTimer: DispatchSourceTimer?
   
   private var numberQueuedAlert: NSAlert {
     let alert = NSAlert()

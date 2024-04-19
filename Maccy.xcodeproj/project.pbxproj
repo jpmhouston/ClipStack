@@ -1128,7 +1128,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = "Bananameter Labs";
 				TargetAttributes = {
 					DA0EE7B5204657830025FC60 = {
@@ -1319,6 +1319,7 @@
 		};
 		8F0D3C7F2BAB9B0900DDB603 /* Patch CFBundleVersion Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1334,7 +1335,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"warning: Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F8C48AA2BAD51B000C3A219 /* Copy Launch at Login Helper */ = {
@@ -1377,7 +1378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"warning: Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DAC6CE9226E1AC2C002B70B8 /* Copy Launch at Login Helper */ = {

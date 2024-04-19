@@ -297,7 +297,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     }
     
     var enable = false
-    if !Cleepp.busy, let historyMenuItem = item as? HistoryMenuItem {
+    if !Cleepp.busy, item is HistoryMenuItem {
       enable = true
     }
     deleteItem?.isEnabled = enable
