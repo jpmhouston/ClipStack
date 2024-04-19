@@ -14,7 +14,8 @@ class Clipboard {
   private var timer: Timer?
 
   private let dynamicTypePrefix = "dyn."
-  private let microsoftSourcePrefix = "com.microsoft.ole.source."
+  private let microsoftSourcePrefix = "com.microsoft."
+  private let microsoftOleSourcePrefix = "com.microsoft.ole.source."
   private let supportedTypes: Set<NSPasteboard.PasteboardType> = [
     .fileURL,
     .html,
@@ -208,8 +209,8 @@ class Clipboard {
     }
 
     if let sourceAppBundle = sourceApp?.bundleIdentifier, shouldIgnore(sourceAppBundle) {
-        return
-      }
+      return
+    }
 
     // Some applications (BBEdit, Edge) add 2 items to pasteboard when copying
     // so it's better to merge all data into a single record.
@@ -226,10 +227,15 @@ class Clipboard {
         return
       }
 
+      // on indications this is an MS app, strip extra types below (notably all dyn.*)
+      let hasMSTypes = types.contains {
+        $0.rawValue.starts(with: microsoftSourcePrefix)
+      }
+
       contents += types
         .subtracting(disabledTypes)
         .subtracting([.microsoftLinkSource, .microsoftObjectLink])
-        .filter { !$0.rawValue.starts(with: dynamicTypePrefix) && !$0.rawValue.starts(with: microsoftSourcePrefix) }
+        .filter { !(hasMSTypes && ($0.rawValue.starts(with: microsoftOleSourcePrefix) || $0.rawValue.starts(with: dynamicTypePrefix))) }
         .map { HistoryItemContent(type: $0.rawValue, value: item.data(forType: $0)) }
     })
 
