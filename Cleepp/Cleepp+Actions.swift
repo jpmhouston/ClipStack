@@ -11,9 +11,10 @@ import Settings
 
 extension Cleepp {
   
-  private var standardPasteDelaySeconds: Float { 0.33333 }
+  private var copyTimeoutSeconds: Double { 1.0 }
+  private var standardPasteDelaySeconds: Double { 0.33333 }
   private var standardPasteDelay: DispatchTimeInterval { .milliseconds(Int(standardPasteDelaySeconds * 1000)) }
-  private var extraPasteDelaySeconds: Float { 0.66666 }
+  private var extraPasteDelaySeconds: Double { 0.66666 }
   private var extraPasteDelay: DispatchTimeInterval { .milliseconds(Int(extraPasteDelaySeconds * 1000)) }
   private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(extraPasteDelaySeconds * 1000)) }
   
@@ -55,12 +56,7 @@ extension Cleepp {
   }
   
   func queuedCopy() {
-    // This is the handler for the global keyboard shortcut, it circumvents the menu
-    // and can be invoked even when all menu items are disabled by the busy flag.
-    // So check the busy flag here and do nothing if its true.
-    guard !Self.busy else {
-      return
-    }
+    // handler for the global keyboard shortcut
     doQueuedCopy()
   }
   
@@ -85,35 +81,49 @@ extension Cleepp {
     
     // make the frontmost application perform a copy
     // let clipboard object detect this normally and invoke incrementQueue
-    clipboard.invokeApplicationCopy() {
-      Self.busy = false
+    clipboard.invokeApplicationCopy() { [weak self] in
+      guard let self = self else { return }
+
+      // allow copy again if no copy deletected after this duration
+      self.runOnCopyTimeoutTimer(afterTimeout: self.copyTimeoutSeconds) { [weak self] in
+        guard self != nil else { return }
+        
+        Self.busy = false
+      }
     }
   }
   
   func incrementQueue() {
+    // called from clipboard via its onNewCopy mechanism
     guard Self.isQueueModeOn else {
       return
     }
     
-    Self.queueSize += 1
+    // cancel timeout if its timer is active and clear the busy flag controlled by the timer
+    let withinTimeout = copyTimeouutTimer != nil
+    if withinTimeout {
+      cancelCopyTimeoutTimer()
+      // perhaps assert Self.busy here?
+    }
     
-    updateStatusMenuIcon(.increment)
-    updateMenuTitle()
-    menu.updateHeadOfQueue(index: queueHeadIndex)
+    Self.queueSize += 1
     
     // revert pasteboard back to first item in the queue (don't have to when queueSize is now 1)
     if let index = queueHeadIndex, index > 0 && index < history.count {
       clipboard.copy(history.all[index])
     }
+    
+    updateStatusMenuIcon(.increment)
+    updateMenuTitle()
+    menu.updateHeadOfQueue(index: queueHeadIndex)
+    
+    if withinTimeout {
+      Self.busy = false
+    }
   }
   
   func queuedPaste() {
-    // This is the handler for the global keyboard shortcut, it circumvents the menu
-    // and can be invoked even when all menu items are disabled by the busy flag.
-    // So check the busy flag here and do nothing if its true.
-    guard !Self.busy else {
-      return
-    }
+    // handler for the global keyboard shortcut
     doQueuedPaste()
   }
   
@@ -135,19 +145,24 @@ extension Cleepp {
     let decrementQueueDelay = extraDelayOnQueuedPaste ? extraPasteDelay : standardPasteDelay
     
     // make the frontmost application perform a paste
-    clipboard.invokeApplicationPaste() {
-      DispatchQueue.main.asyncAfter(deadline: .now() + decrementQueueDelay) {
+    clipboard.invokeApplicationPaste() { [weak self] in
+      guard self != nil else { return }
+      
+      // advance queue only after out delay, keep the app from doing anything else until them
+      DispatchQueue.main.asyncAfter(deadline: .now() + decrementQueueDelay) { [weak self] in
+        guard let self = self else { return }
+        
         self.decrementQueue()
+        
+        Self.busy = false
+        
+        #if FOR_APP_STORE
+          // TODO: enable reviews when this target is truly building for the app store
+//        if !Self.isQueueModeOn {
+//          AppStoreReview.ask(after: 20)
+//        }
+        #endif
       }
-      
-      #if FOR_APP_STORE
-        // TODO: enable reviews when this target is truly building for the app store
-//      if !Self.isQueueModeOn {
-//        AppStoreReview.ask(after: 20)
-//      }
-      #endif
-      
-      Self.busy = false
     }
   }
   
@@ -222,24 +237,33 @@ extension Cleepp {
       
       setStatusMenuIcon(to: .cleepMenuIconListMinus)
       
-      queuedPasteMultipleIteration(count) {
+      queuedPasteMultipleIterator(count) {
         self.updateStatusMenuIcon()
         
         Self.busy = false
+        
+        #if FOR_APP_STORE
+        // TODO: enable reviews when this target is truly building for the app store
+//        if !Self.isQueueModeOn {
+//          AppStoreReview.ask(after: 20)
+//        }
+        #endif
       }
     }
   }
   
-  private func queuedPasteMultipleIteration(_ count: Int, then completion: @escaping ()->Void) {
+  private func queuedPasteMultipleIterator(_ count: Int, then completion: @escaping ()->Void) {
     // make the frontmost application perform a paste again & again until count decrements to 0
     if count > 0 {
-      clipboard.invokeApplicationPaste() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) {  [weak self] in
+      clipboard.invokeApplicationPaste() { [weak self] in
+        guard let self = self else { return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) { [weak self] in
           guard let self = self else { return }
           
           self.decrementQueue(withIconUpdates: false)
           
-          self.queuedPasteMultipleIteration(count - 1, then: completion)
+          self.queuedPasteMultipleIterator(count - 1, then: completion)
         }
       }
     } else {
@@ -420,6 +444,23 @@ extension Cleepp {
   @IBAction
   func quit(_ sender: AnyObject) {
     NSApp.terminate(sender)
+  }
+  
+  // MARK: -
+  
+  private func runOnCopyTimeoutTimer(afterTimeout timeout: Double, _ action: @escaping () -> Void) {
+    if copyTimeouutTimer != nil {
+      cancelCopyTimeoutTimer()
+    }
+    copyTimeouutTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: timeout) { [weak self] in
+      self?.copyTimeouutTimer = nil // doing this before calling closure supports closure itself calling runOnCopyTimeoutTimer, fwiw
+      action()
+    }
+  }
+  
+  private func cancelCopyTimeoutTimer() {
+    copyTimeouutTimer?.cancel()
+    copyTimeouutTimer = nil
   }
   
 }
