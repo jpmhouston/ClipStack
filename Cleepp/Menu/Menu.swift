@@ -505,6 +505,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   }
   
   func performQueueModeToggle() {
+    guard !Maccy.busy else { return }
+    
     if Cleepp.isQueueModeOn {
       guard let queueStopItem = queueStopItem else { return }
       performActionForItem(at: index(of: queueStopItem))

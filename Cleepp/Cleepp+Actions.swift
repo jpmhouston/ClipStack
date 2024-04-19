@@ -19,13 +19,13 @@ extension Cleepp {
   private var pasteMultipleDelay: DispatchTimeInterval { .milliseconds(Int(extraPasteDelaySeconds * 1000)) }
   
   private var extraDelayOnQueuedPaste: Bool {
-    //true // !!! TODO: remove after testing determines the right conditions
-    //if #unavailable(macOS 14) { true } else { false } // maybe latest OS fixes need for delay??
     #if arch(x86_64) || arch(i386)
     true
     #else
     false
     #endif
+    // or maybe is not processor, but instead the latest OS fixes need for longer delay
+    //if #unavailable(macOS 14) { true } else { false }
   }
   
   @IBAction
@@ -66,6 +66,9 @@ extension Cleepp {
   }
   
   func doQueuedCopy() {
+    guard !Self.busy else {
+      return
+    }
     guard Accessibility.check() else {
       return
     }
@@ -133,6 +136,10 @@ extension Cleepp {
   }
   
   func doQueuedPaste() {
+    guard !Self.busy else {
+      return
+    }
+    
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
@@ -172,11 +179,11 @@ extension Cleepp {
     }
     
     Self.queueSize -= 1
-
+    
     if Self.queueSize <= 0 {
       Self.isQueueModeOn = false
     } else if let index = queueHeadIndex, index < history.count {
-      clipboard.copy(history.all[index]) // reset pasteboard to the latest item copied
+      clipboard.copy(history.all[index])
     }
     
     if updateIcon {
@@ -188,6 +195,10 @@ extension Cleepp {
   
   @IBAction
   func queuedPasteMultiple(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
@@ -216,6 +227,10 @@ extension Cleepp {
   
   @IBAction
   func queuedPasteAll(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
@@ -277,6 +292,10 @@ extension Cleepp {
   
   @IBAction
   func cancelQueueMode(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     Self.isQueueModeOn = false
     Self.queueSize = 0
     
@@ -297,6 +316,10 @@ extension Cleepp {
   
   @IBAction
   func replayFromHistory(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     guard Accessibility.check() else {
       return
@@ -314,11 +337,16 @@ extension Cleepp {
     updateMenuTitle()
     menu.updateHeadOfQueue(index: index)
     
-    clipboard.copy(item, excludeFromHistory: true)
+    // put it on the clipboard ready to be pasted
+    clipboard.copy(item)
   }
   
   @IBAction
   func copyFromHistory(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     guard let item = (sender as? HistoryMenuItem)?.item else {
       return
     }
@@ -327,7 +355,7 @@ extension Cleepp {
   }
   
   func deleteHistoryItem(_ index: Int) {
-    guard index < 1000 else {
+    guard index < history.count else {
       return
     }
     
@@ -338,6 +366,10 @@ extension Cleepp {
   
   @IBAction
   func deleteHistoryItem(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else {
       return
     }
@@ -349,6 +381,10 @@ extension Cleepp {
   
   @IBAction
   func deleteHighlightedHistoryItem(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     guard let deletedIndex = menu.deleteHighlightedItem() else {
       return
     }
@@ -371,6 +407,10 @@ extension Cleepp {
   
   @IBAction
   func clear(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     clearUnpinned() // for us this is the same as clearAll
     if !permitEmptyQueueMode {
       Self.isQueueModeOn = false
@@ -379,6 +419,10 @@ extension Cleepp {
   
   @IBAction
   func undoLastCopy(_ sender: AnyObject) {
+    guard !Self.busy else {
+      return
+    }
+    
     guard let removeItem = history.first else {
       return
     }
