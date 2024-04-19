@@ -1,7 +1,10 @@
 # 0.9.7
 
-- Prevent double paste when using Cleepp shortcut, or paste while Paste All / Paste Multiple is ocurring.
-- Sparkle updates, the next version after 0.9.7 should be offered as an automatic update.
+- Prevent double paste when using Cleepp shortcut, or paste while Paste All / Paste Multiple is occurring.
+- Disable necessary menu items when Paste & Advance, or Paste All / Paste Multiple, are occurring.
+- Improve timing when copying and pasting so they work more reliably in general.
+- Changed old fix for Microsoft applications support so it only applied to those applications and doesn't apply to ones for which it causes problems (specifically LibreOffice).
+- Attempt completion of Sparkle support, the next version after 0.9.7 should be offered as an automatic update.
 
 # 0.9.6
 
