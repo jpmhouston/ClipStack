@@ -44,7 +44,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private var queueItemsSeparator: NSMenuItem?
   
   internal var historyMenuItems: [HistoryMenuItem] {
-    items.compactMap({ ($0 as? HistoryMenuItem)?.onlyIfNotIn([topAnchorItem]) })
+    items.compactMap({ $0 as? HistoryMenuItem }).excluding([topAnchorItem])
   }
   
   private var historyMenuItemsGroupCount: Int { usePopoverAnchors ? 3 : 2 } // 1 main, 1 alternate, 1 popover anchor
@@ -435,6 +435,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   }
   
   func highlightedMenuItem() -> HistoryMenuItem? {
+    nop() // TODO: remove once no longer need a breakpoint here
+    
     guard let menuItem = highlightedItem, let historyMenuItem = menuItem as? HistoryMenuItem else {
       return nil
     }

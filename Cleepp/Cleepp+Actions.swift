@@ -9,6 +9,10 @@
 import AppKit
 import Settings
 
+// TODO: put these somewhere else
+func nop() { }
+func dontWarnUnused(_ x: Any) { }
+
 extension Cleepp {
   
   private var copyTimeoutSeconds: Double { 1.0 }
@@ -270,6 +274,8 @@ extension Cleepp {
   private func queuedPasteMultipleIterator(_ count: Int, then completion: @escaping ()->Void) {
     // make the frontmost application perform a paste again & again until count decrements to 0
     if count > 0 {
+      nop() // TODO: remove once no longer need a breakpoint here
+      
       clipboard.invokeApplicationPaste() { [weak self] in
         guard let self = self else { return }
         

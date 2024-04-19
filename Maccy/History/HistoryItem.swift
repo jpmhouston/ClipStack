@@ -245,4 +245,67 @@ class HistoryItem: NSManagedObject {
       .filter { types.contains(NSPasteboard.PasteboardType($0.type)) }
       .compactMap { $0.value }
   }
+  
+  override var debugDescription: String {
+    debugDescription()
+  }
+  
+  func debugDescription(ofLength length: Int? = nil) -> String {
+    let pairs = getContents().compactMap {
+      if let t=$0.type, let v=$0.value { (NSPasteboard.PasteboardType(t),v) } else { nil }
+    }
+    return Self.debugDescription(for: pairs, ofLength: length)
+  }
+  
+  static func debugDescription(for pairs: [(NSPasteboard.PasteboardType, Data)], ofLength length: Int? = nil) -> String {
+    return debugDescription(forKeys: pairs.map(\.0), values: pairs.map(\.1), ofLength: length)
+  }
+  
+  static func debugDescription(forKeys keys: [NSPasteboard.PasteboardType], values: [Data], ofLength length: Int? = nil) -> String {
+    let len = length ?? 16 // length <= 0 means unlimited length string, length nil means pick this default length
+    var desc: String
+    if keys.count != values.count {
+      desc = "(bad)"
+    } else if keys.isEmpty {
+      desc = len.isInside(range: 1..<7) ? "_" : "(empty)"
+    } else if keys.includes([.tiff, .png, .jpeg]) {
+      desc = len.isInside(range: 1..<5) ? "img" : "image"
+    } else if keys.contains(.fileURL) {
+      let n = keys.filter({$0 == .fileURL}).count
+      desc = len.isInside(range: 1 ..< 6) ? "f\(n)" : "\(n) files"
+    } else if let i = keys.firstIndex(of: .rtf) {
+      let s = NSAttributedString(rtf: values[i], documentAttributes: nil)?.string
+      if let s = s {
+        let t = s.trimmingCharacters(in: .whitespacesAndNewlines)
+        desc = len.isInside(range: 1 ..< 5) ? "r" + String(t.prefix(len)) :
+          len.isInside(range: 5 ..< t.count) ? "rtf " + String(t.prefix(len)) : t
+      } else {
+        desc = "rtf?"
+      }
+    } else if let i = keys.firstIndex(of: .html) {
+      let s = NSAttributedString(html: values[i], documentAttributes: nil)?.string
+      if let s = s {
+        let t = s.trimmingCharacters(in: .whitespacesAndNewlines)
+        desc = len.isInside(range: 1 ..< 6) ? "h" + String(t.prefix(len)) :
+          len.isInside(range: 6 ..< t.count) ? "html " + String(t.prefix(len)) : t
+      } else {
+        desc = "html?"
+      }
+    } else if let i = keys.firstIndex(of: .string) {
+      let s = String(data: values[i], encoding: .utf8)
+      if let s = s {
+        let t = s.trimmingCharacters(in: .whitespacesAndNewlines)
+        desc = len.isInside(range: 1 ..< t.count) ? String(t.prefix(len)) : t
+      } else {
+        desc = "str?"
+      }
+    } else {
+      desc = "?"
+    }
+    if keys.contains(.universalClipboard) {
+      desc += "*"
+    }
+    return desc
+  }
+
 }

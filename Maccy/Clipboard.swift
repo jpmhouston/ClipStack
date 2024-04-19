@@ -1,7 +1,7 @@
 import AppKit
 import Sauce
 
-class Clipboard {
+class Clipboard: CustomDebugStringConvertible {
   static let shared = Clipboard()
 
   typealias OnNewCopyHook = (HistoryItem) -> Void
@@ -302,4 +302,34 @@ class Clipboard {
 
     return false
   }
+
+  var debugDescription: String {
+    debugDescription()
+  }
+
+  func debugDescription(ofLength length: Int? = nil) -> String {
+    // a variation on the code in checkForChangesInPasteboard()
+    // future changes there should be reflected here also
+    var contents: [(NSPasteboard.PasteboardType, Data)] = []
+    pasteboard.pasteboardItems?.forEach({ item in
+      let types = Set(item.types)
+      if types.contains(.string) && isEmptyString(item) && !richText(item) {
+        return
+      }
+      if shouldIgnore(item) {
+        return
+      }
+      // on indications this is an MS app, strip extra types below (notably all dyn.*)
+      let hasMSTypes = types.contains {
+        $0.rawValue.starts(with: microsoftSourcePrefix)
+      }
+      contents += types
+        .subtracting(disabledTypes)
+        .subtracting([.microsoftLinkSource, .microsoftObjectLink])
+        .filter { !(hasMSTypes && ($0.rawValue.starts(with: microsoftOleSourcePrefix) || $0.rawValue.starts(with: dynamicTypePrefix))) }
+        .compactMap { if let d = item.data(forType: $0) { ($0, d) } else { nil } }
+    })
+    return HistoryItem.debugDescription(for: contents, ofLength: length)
+  }
+  
 }
