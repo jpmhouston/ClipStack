@@ -270,10 +270,19 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   }
   
   private func updateDisabledMenuItems() {
+    let notBusy = !Cleepp.busy
+    queueStartItem?.isEnabled = notBusy
+    queueStopItem?.isEnabled = notBusy
+    advanceItem?.isEnabled = notBusy
+    queuedCopyItem?.isEnabled = notBusy
+
     let haveQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
-    queuedPasteItem?.isEnabled = haveQueueItems
-    queuedPasteMultipleItem?.isEnabled = haveQueueItems
-    queuedPasteAllItem?.isEnabled = haveQueueItems
+    queuedPasteItem?.isEnabled = notBusy && haveQueueItems
+    queuedPasteMultipleItem?.isEnabled = notBusy && haveQueueItems
+    queuedPasteAllItem?.isEnabled = notBusy && haveQueueItems
+    
+    clearItem?.isEnabled = notBusy
+    undoCopyItem?.isEnabled = notBusy
     
     deleteItem?.isEnabled = false // until programmatically enabled later as items are highlighted
     
@@ -288,10 +297,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     }
     
     var enable = false
-    if let historyMenuItem = item as? HistoryMenuItem {
-      enable = canDeleteHistoryMenuItem(historyMenuItem)
-    } else {
-      enable = false
+    if !Cleepp.busy, let historyMenuItem = item as? HistoryMenuItem {
+      enable = true
     }
     deleteItem?.isEnabled = enable
   }
@@ -482,11 +489,6 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     delete(position: position)
     
     return position
-  }
-  
-  func canDeleteHistoryMenuItem(_ item: HistoryMenuItem) -> Bool {
-    // currently all history menu items can be deleted
-    return true
   }
   
   func resizeImageMenuItems() {
