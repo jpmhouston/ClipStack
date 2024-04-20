@@ -15,6 +15,10 @@ on:
   workflow_dispatch:
     branches: [forkmain]
 
+env:
+  projectfile: Maccy.xcodeproj
+  buildscheme: Cleepp
+
 jobs:
   build:
     name: Build Cleepp Non-AppStore Variant
@@ -24,6 +28,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Patch Xcode 15.3
+        uses: 2sem/patch-package-resolved@v1
+        # this fixes a mysterious build failure
+        #   xcodebuild: error: Could not resolve package dependencies:
+        #     Package.resolved file is corrupted or malformed; fix or delete the file
+        #     to continue: unknown 'PinsStorage' version '3'
+        # should probably remove this when upgrading the "runs-on" platform
       - name: Build
         run: |
-          xcodebuild clean build analyze -scheme Cleepp -configuration Release -project Maccy.xcodeproj -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
+          :
+          xcodebuild -version
+          
+          # requires that env.projectfile is the name of the .xcodeproj, and env.buildscheme
+          # is a valid build scheme,
+          set -o pipefail && xcodebuild clean build analyze \
+            -scheme "${{ env.buildscheme }}" -configuration Release \
+            -project "${{ env.projectfile }}" -derivedDataPath . | \
+            xcbeautify --renderer github-actions --preserve-unbeautified
