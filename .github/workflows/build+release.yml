@@ -30,8 +30,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Patch Xcode 15.3
+        uses: jpmhouston/patch-package-resolved@v1
+        # this fixes a mysterious build failure
+        #   xcodebuild: error: Could not resolve package dependencies:
+        #     Package.resolved file is corrupted or malformed; fix or delete the file
+        #     to continue: unknown 'PinsStorage' version '3'
+        # should probably remove this when upgrading the "runs-on" platform
+      
       - name: Install pandoc
-        # pandoc is used below and by one of the xcode project's build rules
+        # pandoc is used by sparkle step and by one of the xcode project's build rules
         run: |
           :
           brew update
@@ -83,7 +92,7 @@ jobs:
           echo "- Collecting release notes"
           allNotesFilename=releasenotes.md
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
-          if [[ -f "$allNotesFilename" ]] ; then
+          if [[ ! -f "$allNotesFilename" ]] ; then
             echo "::error::Release notes file is missing"
             exit 1
           fi
@@ -121,13 +130,6 @@ jobs:
           
           echo "notesMarkdown=$currentNotesFilename" >> $GITHUB_OUTPUT
       
-      - name: Patch Xcode 15.3
-        uses: jpmhouston/patch-package-resolved@v1
-        # this fixes a mysterious build failure
-        #   xcodebuild: error: Could not resolve package dependencies:
-        #     Package.resolved file is corrupted or malformed; fix or delete the file
-        #     to continue: unknown 'PinsStorage' version '3'
-        # should probably remove this when upgrading the "runs-on" platform
       - name: Build
         run: |
           :
