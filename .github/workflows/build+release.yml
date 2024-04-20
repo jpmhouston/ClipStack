@@ -17,9 +17,9 @@ on:
         default: true
 
 env:
-  name: Cleepp
-  target: Cleepp # well, really the xcode scheme
-  app: Cleepp.app
+  MYPRODNAME: Cleepp
+  MYTARGET: Cleepp # well, really the xcode scheme
+  MYAPPNAME: Cleepp.app
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
         run: |
           :
           echo "::notice::Extract version from project"
-          version=$(xcodebuild -scheme "${{ env.target }}" -configuration Release \
+          version=$(xcodebuild -scheme "${{ env.MYTARGET }}" -configuration Release \
             -project Maccy.xcodeproj -showBuildSettings \
             | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
           
@@ -51,7 +51,7 @@ jobs:
             echo "::notice::Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
             version="${{ inputs.releaseVersion }}"
           fi
-          releaseName="${{ env.name }} $version"
+          releaseName="${{ env.MYPRODNAME }} $version"
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           
@@ -123,8 +123,9 @@ jobs:
       - name: Build
         #if: success() && steps.version.outputs.continue == 'true'
         run: |
-          # requires env.target is a scheme in the project and env.app is name of the produced .app
-          set -o pipefail && xcodebuild clean build analyze -scheme "{{ env.target }} -configuration Release \
+          # requires env.MYTARGET is a scheme in the project and env.MYAPPNAME is name of the produced .app
+          set -o pipefail && xcodebuild clean build analyze \
+            -scheme "{{ env.MYTARGET }} -configuration Release \
             -project Maccy.xcodeproj -derivedDataPath . \
             | xcbeautify --renderer github-actions
       
@@ -138,7 +139,7 @@ jobs:
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
           :
-          test -d "Build/Products/Release/${{ env.app }}" || exit 1
+          test -d "Build/Products/Release/${{ env.MYAPPNAME }}" || exit 1
           ls -ald "Build/Products/Release/"*.app
           exit 0 # !!! until the above env vars are correctly defined
           
@@ -177,7 +178,7 @@ jobs:
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           :
-          test -d "Build/Products/Release/${{ env.app }}" || exit 1
+          test -d "Build/Products/Release/${{ env.MYAPPNAME }}" || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Store the notarization credentials so that we can prevent a UI password dialog
@@ -194,7 +195,7 @@ jobs:
           # notarization service
           
           echo "- Create temp notarization archive"
-          ditto -c -k --keepParent "Build/Products/Release/${{ env.app }}" "notarization.zip"
+          ditto -c -k --keepParent "Build/Products/Release/${{ env.MYAPPNAME }}" "notarization.zip"
           
           # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
           # This typically takes a few seconds inside a CI environment, but it might take more depending on the App
@@ -207,16 +208,16 @@ jobs:
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "- Attach staple"
-          xcrun stapler staple "Build/Products/Release/${{ env.app }}"
+          xcrun stapler staple "Build/Products/Release/${{ env.MYAPPNAME }}"
       
       - name: Build Zip File
         #if: success() && steps.version.outputs.continue == 'true'
         id: zip
         run: |
           :
-          test -d "Build/Products/Release/${{ env.app }}" || exit 1
+          test -d "Build/Products/Release/${{ env.MYAPPNAME }}" || exit 1
           
-          readmeFileName="/${{ env.name }} version ${{ steps.version.outputs.version }} read me.rtf"
+          readmeFileName="/${{ env.MYPRODNAME }} version ${{ steps.version.outputs.version }} read me.rtf"
           archiveFileName="${{ steps.version.outputs.releaseName }}.zip"
           archiveDir="Build/Products/Release/${{ steps.version.outputs.releaseName }}"
           archiveFile="Build/Products/Release/$archiveFileName"
@@ -225,7 +226,7 @@ jobs:
           echo "- Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
           mkdir "$archiveDir"
           cp "Designs/Cleepp/Cleepp download read me.rtf" "$archiveDir/$readmeFileName"
-          mv "Build/Products/Release/${{ env.app }}" "$archiveDir"
+          mv "Build/Products/Release/${{ env.MYAPPNAME }}" "$archiveDir"
           
           echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
