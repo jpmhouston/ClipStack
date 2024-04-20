@@ -15,6 +15,10 @@ on:
         type: boolean
         required: true
         default: true
+  env:
+    name: Cleepp
+    target: Cleepp # well, really the xcode scheme
+    app: Cleepp.app
 
 jobs:
   build:
@@ -23,58 +27,107 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pandoc
+        # pandoc is used below and by one of the xcode project's build rules
         run: |
           brew update
-          brew install pandoc
+          brew install pandoc xcbeautify
+      
       - name: Validate
         id: version
         run: |
-          echo >/dev/null
-          echo "- Extract version from project"
-          versnum=$(xcodebuild -scheme Cleepp -configuration Release -project Maccy.xcodeproj -showBuildSettings | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
+          :
+          echo "::notice::Extract version from project"
+          version=$(xcodebuild -scheme "${{ env.target }}" -configuration Release \
+            -project Maccy.xcodeproj -showBuildSettings \
+            | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
           
           if [ -z "${{ inputs.releaseVersion }}" ] ; then
-            echo "- Build version is $versnum"
-            readableVersion=$versnum
-            releaseName="Cleepp $versnum"
-            echo "readableVersion=$readableVersion" >> $GITHUB_OUTPUT
-            echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+            echo "::notice::Build version is $version"
           else
-            echo "- Build version is $versnum but overriding with ${{ inputs.releaseVersion }} for release & file names"
-            readableVersion="${{ inputs.releaseVersion }}"
-            releaseName="Cleepp ${{ inputs.releaseVersion }}"
-            echo "readableVersion=$readableVersion" >> $GITHUB_OUTPUT
-            echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+            echo "::notice::Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
+            version="${{ inputs.releaseVersion }}"
           fi
+          releaseName="${{ env.name }} $version"
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           
-          if [[ ${{ github.event_name }} == "workflow_dispatch" ]] && git show-ref --tags v$readableVersion --quiet ; then
-            tag="v$readableVersion"
-            echo "- After build will draft release \"$releaseName\" with tag \"$tag\" matching the version"
+          if [[ ${{ github.event_name }} == "workflow_dispatch" ]] && git show-ref --tags v$version --quiet ; then
+            tag="v$version"
+            echo "::notice::After build will draft release \"$releaseName\" with tag \"$tag\" matching the version"
             echo "tag=$tag" >> $GITHUB_OUTPUT
-            echo "continue=true" >> $GITHUB_OUTPUT
           elif [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
-            echo "- After build will draft untagged release \"$releaseName\" because triggered manually and no tag \"v$readableVersion\" found"
-            echo "continue=true" >> $GITHUB_OUTPUT
+            echo "::notice::After build will draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" found"
           elif [[ ${{ github.ref }} == 'refs/tags/'* ]] ; then
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
-            echo "- After build will draft release \"$releaseName\" with tag \"$tag\""
+            echo "::notice::After build will draft release \"$releaseName\" with tag \"$tag\""
             echo "tag=$tag" >> $GITHUB_OUTPUT
-            echo "continue=true" >> $GITHUB_OUTPUT
           else
-            echo "- Aborting because not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
-            echo "continue=false" >> $GITHUB_OUTPUT
+            echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
+            exit 1
           fi
+          #echo "continue=true" >> $GITHUB_OUTPUT
+      
+      - name: Release Notes
+        id: notes
+        #if: success() && steps.version.outputs.continue == 'true'
+        run: |
+          :
+          echo "::notice::Collecting release notes"
+          allNotesFilename=releasenotes.md
+          htmlTemplateFilename=htmlnotestemplate.html
+          currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
+          htmlNotesFilename="${{ steps.version.outputs.releaseName }}.html" # name must be this for generate-appcast
+          if [[ -f "$allNotesFilename" ]] ; then
+            echo "::error::Release notes file is missing"
+            exit 1
+          fi
+          
+          echo -n "" > "$currentNotesFilename"
+          thisversion=''
+          prevversion=''
+          while read line || [[ -n $line ]] ; do
+            if [[ -z "$thisversion" ]]; then
+              thisversion=$(echo $line | sed -n -e '/^# / s/^# //p')
+              if [[ -n "$thisversion" && "$thisversion" != "${{ steps.version.outputs.version }}" ]] ; then
+                echo "::warning::Version $thisversion at the top of the release notes doesn't match build version ${{ steps.version.outputs.version }}"
+                break
+              fi
+              continue
+            fi
+            prevversion=$(echo $line | sed -n -e '/^# / s/^# //p')
+            if [[ -n "$prevversion" ]] ; then
+              break
+            fi
+            echo $line >> "$currentNotesFilename"
+          done < "$allNotesFilename"
+          
+          echo "::notice::Saving release notes"
+          # sed command removes initial and trailing blank lines, don't ask me how it works
+          # from https://unix.stackexchange.com/a/552195
+          cat "$currentNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
+            | tee "$currentNotesFilename" >/dev/null
+          if [[ $(wc -l "$currentNotesFilename" | cut -w -f2) -eq 0 ]] ; then
+              echo "Release notes unavailable at this time" > "$currentNotesFilename"
+          fi
+          
+          echo "::notice::Transforming release notes to html for Sparkle"
+          echo '$body$' > "$htmltemplatefilename"
+          pandoc --standalone --template "$htmltemplatefilename" --metadata title="Release Notes" \
+            "$currentnotesfilename" > "$htmlnotesfilename"
       
       - name: Build
-        if: steps.version.outputs.continue == 'true'
+        #if: success() && steps.version.outputs.continue == 'true'
         run: |
-          xcodebuild clean build analyze -scheme Cleepp -configuration Release -project Maccy.xcodeproj -derivedDataPath . | xcpretty && exit ${PIPESTATUS[0]}
+          # requires env.target is a scheme in the project and env.app is name of the produced .app
+          set -o pipefail && xcodebuild clean build analyze -scheme "{{ env.target }} -configuration Release \
+            -project Maccy.xcodeproj -derivedDataPath . \
+            | xcbeautify --renderer github-actions
       
       - name: "Codesign app bundle"
-        if: steps.version.outputs.continue == 'true' && success()
+        #if: success() && steps.version.outputs.continue == 'true'
         # Extract the secrets we defined earlier as environment variables
         env:
           MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
@@ -82,9 +135,9 @@ jobs:
           MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
-          echo >/dev/null
-          test -d Build/Products/Release/Cleepp.app || exit 1
-          ls -ald Build/Products/Release/*.app
+          :
+          test -d "Build/Products/Release/${{ env.app }}" || exit 1
+          ls -ald "Build/Products/Release/"*.app
           exit 0 # !!! until the above env vars are correctly defined
           
           # Turn our base64-encoded certificate back to a regular .p12 file
@@ -102,38 +155,44 @@ jobs:
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
           
           echo "- Import \"certificate.p12\" into \"build.keychain\""
-          security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security import certificate.p12 -k build.keychain \
+            -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: \
+            -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
           
           # We finally codesign our app bundle, specifying the Hardened runtime option
           
           echo "- Sign"
-          /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime Build/Products/Release/Cleepp.app -v
+          /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" \
+            --options runtime "Build/Products/Release/${{ env.app }}" -v
       
       - name: "Notarize app bundle"
-        if: steps.version.outputs.continue == 'true' && success()
+        #if: success() && steps.version.outputs.continue == 'true'
         # Extract the secrets we defined earlier as environment variables
         env:
           PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
           PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
-          echo >/dev/null
-          test -d Build/Products/Release/Cleepp.app || exit 1
+          :
+          test -d "Build/Products/Release/${{ env.app }}" || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Store the notarization credentials so that we can prevent a UI password dialog
           # from blocking the CI
           
           echo "- Create keychain profile"
-          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
+          xcrun notarytool store-credentials "notarytool-profile" \
+            --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" \
+            --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" \
+            --password "$PROD_MACOS_NOTARIZATION_PWD"
           
           # We can't notarize an app bundle directly, but we need to compress it as an archive.
           # Therefore, we create a zip file containing our app bundle, so that we can send it to the
           # notarization service
           
           echo "- Create temp notarization archive"
-          ditto -c -k --keepParent "target/mac/Cleepp.app" "notarization.zip"
+          ditto -c -k --keepParent "Build/Products/Release/${{ env.app }}" "notarization.zip"
           
           # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
           # This typically takes a few seconds inside a CI environment, but it might take more depending on the App
@@ -146,16 +205,16 @@ jobs:
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "- Attach staple"
-          xcrun stapler staple "Build/Products/Release/Cleepp.app"
+          xcrun stapler staple "Build/Products/Release/${{ env.app }}"
       
       - name: Build Zip File
-        if: steps.version.outputs.continue == 'true' && success()
+        #if: success() && steps.version.outputs.continue == 'true'
         id: zip
         run: |
-          echo >/dev/null
-          test -d Build/Products/Release/Cleepp.app || exit 1
+          :
+          test -d "Build/Products/Release/${{ env.app }}" || exit 1
           
-          readmeFileName="Cleepp version ${{ steps.version.outputs.readableVersion }} read me.rtf"
+          readmeFileName="/${{ env.name }} version ${{ steps.version.outputs.version }} read me.rtf"
           archiveFileName="${{ steps.version.outputs.releaseName }}.zip"
           archiveDir="Build/Products/Release/${{ steps.version.outputs.releaseName }}"
           archiveFile="Build/Products/Release/$archiveFileName"
@@ -164,28 +223,56 @@ jobs:
           echo "- Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
           mkdir "$archiveDir"
           cp "Designs/Cleepp/Cleepp download read me.rtf" "$archiveDir/$readmeFileName"
-          mv Build/Products/Release/Cleepp.app "$archiveDir"
+          mv "Build/Products/Release/${{ env.app }}" "$archiveDir"
           
           echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
+
+      - name: Setup Sparkle
+        uses: jozefizso/setup-sparkle@v1
+        with:
+          version: 2.6.0
+      - name: Generate Sparkle appcast.xml
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          :
+          echo "::add-mask::$PRIVATE_KEY_SECRET"
+          echo "$PRIVATE_KEY_SECRET" | generate_appcast --ed-key-file - \
+            --link https://github.com/${{ github.repository }}/releases \
+            --download-url-prefix https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/ \
+            --embed-release-notes -o appcast.xml \
+            Build/Products/Release/
+      
+      - name: Commit appcast.xml
+        #if: success() && steps.version.outputs.continue == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Automated Change to appcast.xml
+          file_pattern: 'appcast.xml'
+          status_options: '--untracked-files=no'
       
       - name: Draft Untagged Release
-        if: steps.version.outputs.continue == 'true' && success() && steps.version.outputs.tag == ''
+        #if: success() && steps.version.outputs.continue == 'true' && steps.version.outputs.tag == ''
+        if: success() steps.version.outputs.tag == ''
         uses: softprops/action-gh-release@v2
         with:
           name: "${{ steps.version.outputs.releaseName }}"
           draft: true
           prerelease: ${{ inputs.isPrerelease }}
+          body_path: "${{ steps.version.outputs.releaseName }} Release Notes.md"
           files: "${{ steps.zip.outputs.file }}"
           fail_on_unmatched_files: true
       
       - name: Draft Tagged Release
-        if: steps.version.outputs.continue == 'true' && success() && steps.version.outputs.tag
+        #if: success() && steps.version.outputs.continue == 'true' && steps.version.outputs.tag
+        if: success() steps.version.outputs.tag
         uses: softprops/action-gh-release@v2
         with:
           name: "${{ steps.version.outputs.releaseName }}"
           tag_name: "${{ steps.version.outputs.tag }}"
           draft: true
           prerelease: ${{ inputs.isPrerelease }}
+          body_path: "${{ steps.version.outputs.releaseName }} Release Notes.md"
           files: "${{ steps.zip.outputs.file }}"
           fail_on_unmatched_files: true
