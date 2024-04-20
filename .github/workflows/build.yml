@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Patch Xcode 15.3
-        uses: 2sem/patch-package-resolved@v1
+        uses: jpmhouston/patch-package-resolved@v1
         # this fixes a mysterious build failure
         #   xcodebuild: error: Could not resolve package dependencies:
         #     Package.resolved file is corrupted or malformed; fix or delete the file
