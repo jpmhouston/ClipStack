@@ -15,15 +15,16 @@ on:
         type: boolean
         required: true
         default: true
-  env:
-    name: Cleepp
-    target: Cleepp # well, really the xcode scheme
-    app: Cleepp.app
 
 jobs:
   build:
     name: Build Cleepp Non-AppStore Variant and Draft Release
     runs-on: macos-14 # required to use Xcode 15, "macos-latest" is actually older and uses Xcode 14
+    
+    env:
+      name: Cleepp
+      target: Cleepp # well, really the xcode scheme
+      app: Cleepp.app
     
     steps:
       - name: Checkout
@@ -31,6 +32,7 @@ jobs:
       - name: Install pandoc
         # pandoc is used below and by one of the xcode project's build rules
         run: |
+          :
           brew update
           brew install pandoc xcbeautify
       
