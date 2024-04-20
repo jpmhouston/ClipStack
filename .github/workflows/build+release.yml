@@ -52,23 +52,25 @@ jobs:
             version="${{ inputs.releaseVersion }}"
           fi
           releaseName="${{ env.productname }} $version"
-          echo "version=$version" >> $GITHUB_OUTPUT
-          echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           
           if [[ ${{ github.event_name }} == "workflow_dispatch" ]] && git show-ref --tags v$version --quiet ; then
             tag="v$version"
             echo "::notice::After build will draft release \"$releaseName\" with tag \"$tag\" matching the version"
-            echo "tag=$tag" >> $GITHUB_OUTPUT
           elif [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
             echo "::notice::After build will draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" found"
           elif [[ ${{ github.ref }} == 'refs/tags/'* ]] ; then
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
             echo "::notice::After build will draft release \"$releaseName\" with tag \"$tag\""
-            echo "tag=$tag" >> $GITHUB_OUTPUT
           else
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
             exit 1
+          fi
+          
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+          if [[ -n "$tag" ]] ; then
+            echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
       
       - name: Release Notes
@@ -77,9 +79,7 @@ jobs:
           :
           echo "::notice::Collecting release notes"
           allNotesFilename=releasenotes.md
-          htmlTemplateFilename=htmlnotestemplate.html
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
-          htmlNotesFilename="${{ steps.version.outputs.releaseName }}.html" # name must be this for generate-appcast
           if [[ -f "$allNotesFilename" ]] ; then
             echo "::error::Release notes file is missing"
             exit 1
@@ -113,10 +113,7 @@ jobs:
               echo "Release notes unavailable at this time" > "$currentNotesFilename"
           fi
           
-          echo "::notice::Transforming release notes to html for Sparkle"
-          echo '$body$' > "$htmltemplatefilename"
-          pandoc --standalone --template "$htmltemplatefilename" --metadata title="Release Notes" \
-            "$currentnotesfilename" > "$htmlnotesfilename"
+          echo "notesMarkdown=$currentNotesFilename" >> $GITHUB_OUTPUT
       
       - name: Build
         run: |
@@ -216,7 +213,6 @@ jobs:
           archiveFileName="${{ steps.version.outputs.releaseName }}.zip"
           archiveDir="Build/Products/Release/${{ steps.version.outputs.releaseName }}"
           archiveFile="Build/Products/Release/$archiveFileName"
-          echo "file=${archiveFile}" >> $GITHUB_OUTPUT
           
           echo "- Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
           mkdir "$archiveDir"
@@ -225,6 +221,8 @@ jobs:
           
           echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
+          
+          echo "file=${archiveFile}" >> $GITHUB_OUTPUT
 
       - name: Setup Sparkle
         if: success() && steps.version.outputs.tag
@@ -237,6 +235,16 @@ jobs:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           :
+          currentNotesFilename="${{ steps.notes.outputs.notesMarkdown }}"
+          htmlNotesFilename="${{ steps.version.outputs.releaseName }}.html" # name must be this for generate-appcast
+          htmlTemplateFilename=htmlnotestemplate.html
+          
+          echo "::notice::Converting release notes to html"
+          echo '$body$' > "$htmltemplatefilename"
+          pandoc --standalone --template "$htmltemplatefilename" --metadata title="Release Notes" \
+            "$currentnotesfilename" > "$htmlnotesfilename"
+          
+          echo "::notice::Updating appcast"
           echo "::add-mask::$PRIVATE_KEY_SECRET"
           echo "$PRIVATE_KEY_SECRET" | generate_appcast --ed-key-file - \
             --link https://github.com/${{ github.repository }}/releases \
@@ -259,7 +267,7 @@ jobs:
           name: "${{ steps.version.outputs.releaseName }}"
           draft: true
           prerelease: ${{ inputs.isPrerelease }}
-          body_path: "${{ steps.version.outputs.releaseName }} Release Notes.md"
+          body_path: "${{ steps.notes.outputs.notesMarkdown }}"
           files: "${{ steps.zip.outputs.file }}"
           fail_on_unmatched_files: true
       
@@ -271,6 +279,6 @@ jobs:
           tag_name: "${{ steps.version.outputs.tag }}"
           draft: true
           prerelease: ${{ inputs.isPrerelease }}
-          body_path: "${{ steps.version.outputs.releaseName }} Release Notes.md"
+          body_path: "${{ steps.notes.outputs.notesMarkdown }}"
           files: "${{ steps.zip.outputs.file }}"
           fail_on_unmatched_files: true
