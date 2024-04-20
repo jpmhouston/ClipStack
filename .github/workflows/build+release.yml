@@ -35,7 +35,7 @@ jobs:
         run: |
           :
           brew update
-          brew install pandoc xcbeautify
+          brew install pandoc
       
       - name: Validate
         id: version
@@ -121,10 +121,20 @@ jobs:
           
           echo "notesMarkdown=$currentNotesFilename" >> $GITHUB_OUTPUT
       
+      - name: Patch Xcode 15.3
+        uses: 2sem/patch-package-resolved@v1
+        # this fixes a mysterious build failure
+        #   xcodebuild: error: Could not resolve package dependencies:
+        #     Package.resolved file is corrupted or malformed; fix or delete the file
+        #     to continue: unknown 'PinsStorage' version '3'
+        # should probably remove this when upgrading the "runs-on" platform
       - name: Build
         run: |
           :
-          # requires env.buildscheme is a scheme in the project and env.bundlename is name of the produced .app
+          xcodebuild -version
+          
+          # requires that env.projectfile is the name of the .xcodeproj, env.buildscheme is
+          # a valid build scheme, and and env.bundlename is name of the produced .app
           set -o pipefail && xcodebuild clean build analyze \
             -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -derivedDataPath . | \
