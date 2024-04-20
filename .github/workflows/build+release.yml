@@ -17,9 +17,9 @@ on:
         default: true
 
 env:
-  MYPRODNAME: Cleepp
-  MYTARGET: Cleepp # well, really the xcode scheme
-  MYAPPNAME: Cleepp.app
+  productname: Cleepp
+  buildscheme: Cleepp
+  bundlename: Cleepp.app
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
         run: |
           :
           echo "::notice::Extract version from project"
-          version=$(xcodebuild -scheme "${{ env.MYTARGET }}" -configuration Release \
+          version=$(xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
             -project Maccy.xcodeproj -showBuildSettings \
             | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
           
@@ -51,7 +51,7 @@ jobs:
             echo "::notice::Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
             version="${{ inputs.releaseVersion }}"
           fi
-          releaseName="${{ env.MYPRODNAME }} $version"
+          releaseName="${{ env.productname }} $version"
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           
@@ -70,11 +70,9 @@ jobs:
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
             exit 1
           fi
-          #echo "continue=true" >> $GITHUB_OUTPUT
       
       - name: Release Notes
         id: notes
-        #if: success() && steps.version.outputs.continue == 'true'
         run: |
           :
           echo "::notice::Collecting release notes"
@@ -121,16 +119,14 @@ jobs:
             "$currentnotesfilename" > "$htmlnotesfilename"
       
       - name: Build
-        #if: success() && steps.version.outputs.continue == 'true'
         run: |
-          # requires env.MYTARGET is a scheme in the project and env.MYAPPNAME is name of the produced .app
+          # requires env.buildscheme is a scheme in the project and env.bundlename is name of the produced .app
           set -o pipefail && xcodebuild clean build analyze \
-            -scheme "{{ env.MYTARGET }} -configuration Release \
+            -scheme "{{ env.buildscheme }} -configuration Release \
             -project Maccy.xcodeproj -derivedDataPath . \
             | xcbeautify --renderer github-actions
       
       - name: "Codesign app bundle"
-        #if: success() && steps.version.outputs.continue == 'true'
         # Extract the secrets we defined earlier as environment variables
         env:
           MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
@@ -139,7 +135,7 @@ jobs:
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
           :
-          test -d "Build/Products/Release/${{ env.MYAPPNAME }}" || exit 1
+          test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
           ls -ald "Build/Products/Release/"*.app
           exit 0 # !!! until the above env vars are correctly defined
           
@@ -170,7 +166,7 @@ jobs:
             --options runtime "Build/Products/Release/${{ env.app }}" -v
       
       - name: "Notarize app bundle"
-        #if: success() && steps.version.outputs.continue == 'true'
+        if: success() && steps.version.outputs.tag
         # Extract the secrets we defined earlier as environment variables
         env:
           PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
@@ -178,7 +174,7 @@ jobs:
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           :
-          test -d "Build/Products/Release/${{ env.MYAPPNAME }}" || exit 1
+          test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           # Store the notarization credentials so that we can prevent a UI password dialog
@@ -195,7 +191,7 @@ jobs:
           # notarization service
           
           echo "- Create temp notarization archive"
-          ditto -c -k --keepParent "Build/Products/Release/${{ env.MYAPPNAME }}" "notarization.zip"
+          ditto -c -k --keepParent "Build/Products/Release/${{ env.bundlename }}" "notarization.zip"
           
           # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
           # This typically takes a few seconds inside a CI environment, but it might take more depending on the App
@@ -208,16 +204,15 @@ jobs:
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "- Attach staple"
-          xcrun stapler staple "Build/Products/Release/${{ env.MYAPPNAME }}"
+          xcrun stapler staple "Build/Products/Release/${{ env.bundlename }}"
       
       - name: Build Zip File
-        #if: success() && steps.version.outputs.continue == 'true'
         id: zip
         run: |
           :
-          test -d "Build/Products/Release/${{ env.MYAPPNAME }}" || exit 1
+          test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
           
-          readmeFileName="/${{ env.MYPRODNAME }} version ${{ steps.version.outputs.version }} read me.rtf"
+          readmeFileName="/${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
           archiveFileName="${{ steps.version.outputs.releaseName }}.zip"
           archiveDir="Build/Products/Release/${{ steps.version.outputs.releaseName }}"
           archiveFile="Build/Products/Release/$archiveFileName"
@@ -226,16 +221,18 @@ jobs:
           echo "- Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
           mkdir "$archiveDir"
           cp "Designs/Cleepp/Cleepp download read me.rtf" "$archiveDir/$readmeFileName"
-          mv "Build/Products/Release/${{ env.MYAPPNAME }}" "$archiveDir"
+          mv "Build/Products/Release/${{ env.bundlename }}" "$archiveDir"
           
           echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
 
       - name: Setup Sparkle
+        if: success() && steps.version.outputs.tag
         uses: jozefizso/setup-sparkle@v1
         with:
           version: 2.6.0
       - name: Generate Sparkle appcast.xml
+        if: success() && steps.version.outputs.tag
         env:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
@@ -248,7 +245,7 @@ jobs:
             Build/Products/Release/
       
       - name: Commit appcast.xml
-        #if: success() && steps.version.outputs.continue == 'true'
+        if: success() && steps.version.outputs.tag
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
@@ -256,8 +253,7 @@ jobs:
           status_options: '--untracked-files=no'
       
       - name: Draft Untagged Release
-        #if: success() && steps.version.outputs.continue == 'true' && steps.version.outputs.tag == ''
-        if: success() steps.version.outputs.tag == ''
+        if: success() && steps.version.outputs.tag == ''
         uses: softprops/action-gh-release@v2
         with:
           name: "${{ steps.version.outputs.releaseName }}"
@@ -268,8 +264,7 @@ jobs:
           fail_on_unmatched_files: true
       
       - name: Draft Tagged Release
-        #if: success() && steps.version.outputs.continue == 'true' && steps.version.outputs.tag
-        if: success() steps.version.outputs.tag
+        if: success() && steps.version.outputs.tag
         uses: softprops/action-gh-release@v2
         with:
           name: "${{ steps.version.outputs.releaseName }}"
