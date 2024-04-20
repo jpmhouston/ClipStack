@@ -41,28 +41,29 @@ jobs:
         id: version
         run: |
           :
-          echo "::notice::Extract version from project"
+          echo "- Extract version from project"
           version=$(xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -showBuildSettings \
             | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
           
-          if [ -z "${{ inputs.releaseVersion }}" ] ; then
-            echo "::notice::Build version is $version"
+          if [[ -z "${{ inputs.releaseVersion }}" ]] ; then
+            echo "- Build version is $version"
           else
-            echo "::notice::Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
+            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
             version="${{ inputs.releaseVersion }}"
           fi
           releaseName="${{ env.productname }} $version"
           
+          echo "- Parsing trigger"
           if [[ ${{ github.event_name }} == "workflow_dispatch" ]] && git show-ref --tags v$version --quiet ; then
             tag="v$version"
-            echo "::notice::After build will draft release \"$releaseName\" with tag \"$tag\" matching the version"
+            echo "::notice::Will build and draft release \"$releaseName\" with matching tag \"$tag\""
           elif [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
-            echo "::notice::After build will draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" found"
+            echo "::notice::Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
           elif [[ ${{ github.ref }} == 'refs/tags/'* ]] ; then
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
-            echo "::notice::After build will draft release \"$releaseName\" with tag \"$tag\""
+            echo "::notice::Will build and draft release \"$releaseName\" because triggered by pushed tag \"$tag\""
           else
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
             exit 1
@@ -78,7 +79,7 @@ jobs:
         id: notes
         run: |
           :
-          echo "::notice::Collecting release notes"
+          echo "- Collecting release notes"
           allNotesFilename=releasenotes.md
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
           if [[ -f "$allNotesFilename" ]] ; then
@@ -105,7 +106,7 @@ jobs:
             echo $line >> "$currentNotesFilename"
           done < "$allNotesFilename"
           
-          echo "::notice::Saving release notes"
+          echo "- Saving release notes"
           # sed command removes initial and trailing blank lines, don't ask me how it works
           # from https://unix.stackexchange.com/a/552195
           cat "$currentNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
@@ -118,71 +119,92 @@ jobs:
       
       - name: Build
         run: |
+          :
           # requires env.buildscheme is a scheme in the project and env.bundlename is name of the produced .app
           set -o pipefail && xcodebuild clean build analyze \
-            -scheme "{{ env.buildscheme }}" -configuration Release \
-            -project "${{ env.projectfile }}" -derivedDataPath . \
-            | xcbeautify --renderer github-actions
+            -scheme "${{ env.buildscheme }}" -configuration Release \
+            -project "${{ env.projectfile }}" -derivedDataPath . | xcbeautify --renderer github-actions
+          echo "::notice::Build complete"
       
       - name: "Codesign app bundle"
-        # Extract the secrets we defined earlier as environment variables
-        env:
-          MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-          MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
-          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
         run: |
           :
           test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
           ls -ald "Build/Products/Release/"*.app
           exit 0 # !!! until the above env vars are correctly defined
           
+          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CERTIFICATE not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CI_KEYCHAIN_PWD not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CERTIFICATE_PWD not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CERTIFICATE_NAME not defined"
+            exit 1
+          fi
+          
           # Turn our base64-encoded certificate back to a regular .p12 file
           
           echo "- Base64-encode certificate to make \"certificate.p12\""
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          echo "${{ secrets.PROD_MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
           
           # We need to create a new keychain, otherwise using the certificate will prompt
           # with a UI dialog asking for the certificate password, which we can't
           # use in a headless CI environment
           
           echo "- Create unlocked keychain \"build.keychain\""
-          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain 
+          security create-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain 
           security default-keychain -s build.keychain
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security unlock-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
           
           echo "- Import \"certificate.p12\" into \"build.keychain\""
           security import certificate.p12 -k build.keychain \
-            -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+            -P "${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: \
-            -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+            -s -k "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
           
           # We finally codesign our app bundle, specifying the Hardened runtime option
           
           echo "- Sign"
-          /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" \
+          /usr/bin/codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
             --options runtime "Build/Products/Release/${{ env.app }}" -v
+          echo "::notice::Build signed"
       
       - name: "Notarize app bundle"
         if: success() && steps.version.outputs.tag
-        # Extract the secrets we defined earlier as environment variables
-        env:
-          PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-          PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           :
           test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
           exit 0 # !!! until the above env vars are correctly defined
+          
+          if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_NOTARIZATION_APPLE_ID not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_NOTARIZATION_TEAM_ID not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_NOTARIZATION_PWD not defined"
+            exit 1
+          fi
           
           # Store the notarization credentials so that we can prevent a UI password dialog
           # from blocking the CI
           
           echo "- Create keychain profile"
           xcrun notarytool store-credentials "notarytool-profile" \
-            --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" \
-            --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" \
-            --password "$PROD_MACOS_NOTARIZATION_PWD"
+            --apple-id "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" \
+            --team-id "${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}" \
+            --password "${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}"
           
           # We can't notarize an app bundle directly, but we need to compress it as an archive.
           # Therefore, we create a zip file containing our app bundle, so that we can send it to the
@@ -196,13 +218,14 @@ jobs:
           # characteristics. Visit the Notarization docs for more information and strategies on how to optimize it if
           # you're curious
           
-          echo "- Notarize app"
+          echo "- Notarize"
           xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
           
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "- Attach staple"
           xcrun stapler staple "Build/Products/Release/${{ env.bundlename }}"
+          echo "::notice::Build notarized"
       
       - name: Build Zip File
         id: zip
@@ -222,9 +245,10 @@ jobs:
           
           echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
+          echo "::notice::Zip created"
           
           echo "file=${archiveFile}" >> $GITHUB_OUTPUT
-
+      
       - name: Setup Sparkle
         if: success() && steps.version.outputs.tag
         uses: jozefizso/setup-sparkle@v1
@@ -232,26 +256,30 @@ jobs:
           version: 2.6.0
       - name: Generate Sparkle appcast.xml
         if: success() && steps.version.outputs.tag
-        env:
-          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           :
+          if [[ -z "${{ secrets.SPARKLE_PRIVATE_KEY }}" ]] ; then
+            echo "::error::Secret SPARKLE_PRIVATE_KEY not defined"
+            exit 1
+          fi
+          
           currentNotesFilename="${{ steps.notes.outputs.notesMarkdown }}"
           htmlNotesFilename="${{ steps.version.outputs.releaseName }}.html" # name must be this for generate-appcast
           htmlTemplateFilename=htmlnotestemplate.html
           
-          echo "::notice::Converting release notes to html"
+          echo "- Converting release notes to html"
           echo '$body$' > "$htmltemplatefilename"
           pandoc --standalone --template "$htmltemplatefilename" --metadata title="Release Notes" \
             "$currentnotesfilename" > "$htmlnotesfilename"
           
-          echo "::notice::Updating appcast"
+          echo "- Updating appcast"
           echo "::add-mask::$PRIVATE_KEY_SECRET"
-          echo "$PRIVATE_KEY_SECRET" | generate_appcast --ed-key-file - \
+          echo "{{ secrets.SPARKLE_PRIVATE_KEY }}" | generate_appcast --ed-key-file - \
             --link https://github.com/${{ github.repository }}/releases \
             --download-url-prefix https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/ \
             --embed-release-notes -o appcast.xml \
             Build/Products/Release/
+          echo "::notice::Sparkle updated"
       
       - name: Commit appcast.xml
         if: success() && steps.version.outputs.tag
@@ -283,3 +311,8 @@ jobs:
           body_path: "${{ steps.notes.outputs.notesMarkdown }}"
           files: "${{ steps.zip.outputs.file }}"
           fail_on_unmatched_files: true
+
+      - name: Fin
+        run: |
+          :
+          echo "::notice::Release \"${{ steps.version.outputs.releaseName }}\" draft created continaing \"${{ steps.zip.outputs.file }}\""
