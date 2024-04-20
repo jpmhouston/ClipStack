@@ -57,13 +57,14 @@ jobs:
           echo "- Parsing trigger"
           if [[ ${{ github.event_name }} == "workflow_dispatch" ]] && git show-ref --tags v$version --quiet ; then
             tag="v$version"
-            echo "::notice::Will build and draft release \"$releaseName\" with matching tag \"$tag\""
+            echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
           elif [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
-            echo "::notice::Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
+            echo "- Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
+            echo "::notice::Will skip notarizing and updating sparkle appcast"
           elif [[ ${{ github.ref }} == 'refs/tags/'* ]] ; then
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
-            echo "::notice::Will build and draft release \"$releaseName\" because triggered by pushed tag \"$tag\""
+            echo "- Will build and draft release \"$releaseName\" because triggered by pushed tag \"$tag\""
           else
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
             exit 1
@@ -106,13 +107,16 @@ jobs:
             echo $line >> "$currentNotesFilename"
           done < "$allNotesFilename"
           
-          echo "- Saving release notes"
           # sed command removes initial and trailing blank lines, don't ask me how it works
           # from https://unix.stackexchange.com/a/552195
           cat "$currentNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
             | tee "$currentNotesFilename" >/dev/null
-          if [[ $(wc -l "$currentNotesFilename" | cut -w -f2) -eq 0 ]] ; then
-              echo "Release notes unavailable at this time" > "$currentNotesFilename"
+          numlines=$(wc -l "$currentNotesFilename" | cut -w -f2)
+          if [[ $numlines -gt 0 ]] ; then
+            echo "- Saving $numlines lines of release notes to \"$currentNotesFilename\""
+          else
+            echo "- Saving placeholder release notes to \"$currentNotesFilename\""
+            echo "Release notes unavailable at this time" > "$currentNotesFilename"
           fi
           
           echo "notesMarkdown=$currentNotesFilename" >> $GITHUB_OUTPUT
@@ -123,8 +127,8 @@ jobs:
           # requires env.buildscheme is a scheme in the project and env.bundlename is name of the produced .app
           set -o pipefail && xcodebuild clean build analyze \
             -scheme "${{ env.buildscheme }}" -configuration Release \
-            -project "${{ env.projectfile }}" -derivedDataPath . | xcbeautify --renderer github-actions
-          echo "::notice::Build complete"
+            -project "${{ env.projectfile }}" -derivedDataPath . | \
+            xcbeautify --renderer github-actions --preserve-unbeautified
       
       - name: "Codesign app bundle"
         run: |
@@ -175,7 +179,6 @@ jobs:
           echo "- Sign"
           /usr/bin/codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
             --options runtime "Build/Products/Release/${{ env.app }}" -v
-          echo "::notice::Build signed"
       
       - name: "Notarize app bundle"
         if: success() && steps.version.outputs.tag
@@ -225,7 +228,6 @@ jobs:
           # validated by macOS even when an internet connection is not available.
           echo "- Attach staple"
           xcrun stapler staple "Build/Products/Release/${{ env.bundlename }}"
-          echo "::notice::Build notarized"
       
       - name: Build Zip File
         id: zip
@@ -245,7 +247,6 @@ jobs:
           
           echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
           ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
-          echo "::notice::Zip created"
           
           echo "file=${archiveFile}" >> $GITHUB_OUTPUT
       
@@ -279,7 +280,6 @@ jobs:
             --download-url-prefix https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/ \
             --embed-release-notes -o appcast.xml \
             Build/Products/Release/
-          echo "::notice::Sparkle updated"
       
       - name: Commit appcast.xml
         if: success() && steps.version.outputs.tag
