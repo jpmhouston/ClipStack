@@ -73,6 +73,7 @@
 		8F0D3CE12BABD57300DDB603 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CDF2BABD57300DDB603 /* About.swift */; };
 		8F0D3CE22BABD57300DDB603 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CE02BABD57300DDB603 /* Accessibility.swift */; };
 		8F0D3CE42BACA50E00DDB603 /* HistoryMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA573EAC1EDD410F00561FB2 /* HistoryMenuItem.swift */; };
+		8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 8F12B56E2BD3B827004F059B /* Sparkle */; };
 		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
 		8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */; };
 		8F8C47E62BACB3E600C3A219 /* Equatable+Included.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */; };
@@ -602,6 +603,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */,
 				8F0D3C5E2BAB8F5A00DDB603 /* Carbon.framework in Frameworks */,
 				8F0D3C5D2BAB8F5A00DDB603 /* KeyboardShortcuts in Frameworks */,
 				8FCDFC172BC7E92400A16FBE /* SDWebImage in Frameworks */,
@@ -1021,6 +1023,7 @@
 				8F0D3C182BAB8F5A00DDB603 /* LaunchAtLogin */,
 				8F0D3C1C2BAB8F5A00DDB603 /* Settings */,
 				8FCDFC162BC7E92400A16FBE /* SDWebImage */,
+				8F12B56E2BD3B827004F059B /* Sparkle */,
 			);
 			productName = Maccy;
 			productReference = 8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */;
@@ -2588,6 +2591,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F0D3C1D2BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "Settings" */;
 			productName = Settings;
+		};
+		8F12B56E2BD3B827004F059B /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F39CB022AD9A93C00B749FD /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		8F8C484E2BAD51B000C3A219 /* Sauce */ = {
 			isa = XCSwiftPackageProductDependency;
