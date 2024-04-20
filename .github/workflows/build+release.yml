@@ -17,6 +17,7 @@ on:
         default: true
 
 env:
+  projectfile: Maccy.xcodeproj
   productname: Cleepp
   buildscheme: Cleepp
   bundlename: Cleepp.app
@@ -42,7 +43,7 @@ jobs:
           :
           echo "::notice::Extract version from project"
           version=$(xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
-            -project Maccy.xcodeproj -showBuildSettings \
+            -project "${{ env.projectfile }}" -showBuildSettings \
             | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
           
           if [ -z "${{ inputs.releaseVersion }}" ] ; then
@@ -119,8 +120,8 @@ jobs:
         run: |
           # requires env.buildscheme is a scheme in the project and env.bundlename is name of the produced .app
           set -o pipefail && xcodebuild clean build analyze \
-            -scheme "{{ env.buildscheme }} -configuration Release \
-            -project Maccy.xcodeproj -derivedDataPath . \
+            -scheme "{{ env.buildscheme }}" -configuration Release \
+            -project "${{ env.projectfile }}" -derivedDataPath . \
             | xcbeautify --renderer github-actions
       
       - name: "Codesign app bundle"
