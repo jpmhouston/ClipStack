@@ -74,6 +74,9 @@
 		8F0D3CE22BABD57300DDB603 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CE02BABD57300DDB603 /* Accessibility.swift */; };
 		8F0D3CE42BACA50E00DDB603 /* HistoryMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA573EAC1EDD410F00561FB2 /* HistoryMenuItem.swift */; };
 		8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 8F12B56E2BD3B827004F059B /* Sparkle */; };
+		8F54639C2BE7B6DC008D67EF /* BasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* BasicUITests.swift */; };
+		8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
+		8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
 		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
 		8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */; };
 		8F8C47E62BACB3E600C3A219 /* Equatable+Included.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */; };
@@ -327,6 +330,13 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		8F07B7B22BE6E284006E8CBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEE383B1E3DBEB100DD2966 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F0D3C0F2BAB8F5A00DDB603;
+			remoteInfo = Cleepp;
+		};
 		DA0EE7BB204657840025FC60 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DAEE383B1E3DBEB100DD2966 /* Project object */;
@@ -369,6 +379,7 @@
 		7CEEFDEE24F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AdvancedSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDEF24F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
+		8F07B7AC2BE6E284006E8CBA /* CleeppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleeppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F0D3C7D2BAB992D00DDB603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F0D3C7E2BAB992D00DDB603 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
@@ -398,6 +409,9 @@
 		8F0D3CDF2BABD57300DDB603 /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		8F0D3CE02BABD57300DDB603 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		8F4D26952BCFE2A1009A187B /* releasenotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = releasenotes.md; sourceTree = "<group>"; };
+		8F5463982BE7B6DC008D67EF /* BasicUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicUITests.swift; sourceTree = "<group>"; };
+		8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleeppUITestBase.swift; sourceTree = "<group>"; };
+		8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueUITests.swift; sourceTree = "<group>"; };
 		8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CleeppNames.swift"; sourceTree = "<group>"; };
 		8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKeys.swift; sourceTree = "<group>"; };
 		8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Equatable+Included.swift"; sourceTree = "<group>"; };
@@ -430,6 +444,7 @@
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
 		8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWorkspace+ApplicationName.swift"; sourceTree = "<group>"; };
 		8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8FEA4DFF2BE7334200B63E39 /* Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Debug.entitlements; sourceTree = "<group>"; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285F283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
@@ -599,6 +614,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8F07B7A92BE6E284006E8CBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F0D3C5B2BAB8F5A00DDB603 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -722,6 +744,7 @@
 				8F0D3CDB2BABCF3000DDB603 /* Settings */,
 				8F8C48462BAD33BB00C3A219 /* Application.xib */,
 				8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */,
+				8FEA4DFF2BE7334200B63E39 /* Debug.entitlements */,
 				8F0D3CDF2BABD57300DDB603 /* About.swift */,
 				8F0D3CE02BABD57300DDB603 /* Accessibility.swift */,
 				8F0D3C802BABAD6500DDB603 /* Cleepp+Actions.swift */,
@@ -785,6 +808,16 @@
 			);
 			path = Intro;
 			sourceTree = "<group>";
+		};
+		8F54639B2BE7B6DC008D67EF /* CleeppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8F5463982BE7B6DC008D67EF /* BasicUITests.swift */,
+				8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */,
+				8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */,
+			);
+			path = CleeppUITests;
+			sourceTree = SOURCE_ROOT;
 		};
 		8FB88D762BCCD792006D48E6 /* Licenses */ = {
 			isa = PBXGroup;
@@ -924,6 +957,7 @@
 			children = (
 				8F0D3C7C2BAB98DA00DDB603 /* Cleepp */,
 				DAEE38451E3DBEB100DD2966 /* Maccy */,
+				8F54639B2BE7B6DC008D67EF /* CleeppUITests */,
 				DA360DB11E3DF137005C6F6B /* MaccyTests */,
 				DA0EE7B7204657830025FC60 /* MaccyUITests */,
 				DA00992C256411F90030E697 /* appcast.xml */,
@@ -945,6 +979,7 @@
 				DA0EE7B6204657830025FC60 /* MaccyUITests.xctest */,
 				8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */,
 				8F8C48AF2BAD51B000C3A219 /* Cleepp.app */,
+				8F07B7AC2BE6E284006E8CBA /* CleeppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -999,6 +1034,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8F07B7AB2BE6E284006E8CBA /* CleeppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F07B7B42BE6E284006E8CBA /* Build configuration list for PBXNativeTarget "CleeppUITests" */;
+			buildPhases = (
+				8F07B7A82BE6E284006E8CBA /* Sources */,
+				8F07B7A92BE6E284006E8CBA /* Frameworks */,
+				8F07B7AA2BE6E284006E8CBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F07B7B32BE6E284006E8CBA /* PBXTargetDependency */,
+			);
+			name = CleeppUITests;
+			productName = CleeppUITests;
+			productReference = 8F07B7AC2BE6E284006E8CBA /* CleeppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		8F0D3C0F2BAB8F5A00DDB603 /* Cleepp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F0D3C772BAB8F5A00DDB603 /* Build configuration list for PBXNativeTarget "Cleepp" */;
@@ -1130,10 +1183,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = "Bananameter Labs";
 				TargetAttributes = {
+					8F07B7AB2BE6E284006E8CBA = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 8F0D3C0F2BAB8F5A00DDB603;
+					};
 					DA0EE7B5204657830025FC60 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = MN3X4648SC;
@@ -1197,6 +1254,7 @@
 			targets = (
 				8F0D3C0F2BAB8F5A00DDB603 /* Cleepp */,
 				8F8C484D2BAD51B000C3A219 /* Cleepp (App Store) */,
+				8F07B7AB2BE6E284006E8CBA /* CleeppUITests */,
 				DAEE38421E3DBEB100DD2966 /* Maccy */,
 				DA360DAF1E3DF137005C6F6B /* MaccyTests */,
 				DA0EE7B5204657830025FC60 /* MaccyUITests */,
@@ -1205,6 +1263,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8F07B7AA2BE6E284006E8CBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F0D3C642BAB8F5A00DDB603 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1409,6 +1474,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8F07B7A82BE6E284006E8CBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */,
+				8F54639C2BE7B6DC008D67EF /* BasicUITests.swift in Sources */,
+				8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F0D3C1E2BAB8F5A00DDB603 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1649,6 +1724,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8F07B7B32BE6E284006E8CBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F0D3C0F2BAB8F5A00DDB603 /* Cleepp */;
+			targetProxy = 8F07B7B22BE6E284006E8CBA /* PBXContainerItemProxy */;
+		};
 		DA0EE7BC204657840025FC60 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DAEE38421E3DBEB100DD2966 /* Maccy */;
@@ -1881,13 +1961,65 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8F07B7B52BE6E284006E8CBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = tech.bananameter.CleeppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Cleepp;
+			};
+			name = Debug;
+		};
+		8F07B7B62BE6E284006E8CBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = tech.bananameter.CleeppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Cleepp;
+			};
+			name = Release;
+		};
 		8F0D3C782BAB8F5A00DDB603 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = CleeppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Maccy/Maccy.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Cleepp/Debug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -2316,6 +2448,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8F07B7B42BE6E284006E8CBA /* Build configuration list for PBXNativeTarget "CleeppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F07B7B52BE6E284006E8CBA /* Debug */,
+				8F07B7B62BE6E284006E8CBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8F0D3C772BAB8F5A00DDB603 /* Build configuration list for PBXNativeTarget "Cleepp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
