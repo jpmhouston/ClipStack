@@ -1,6 +1,6 @@
 //
 //  DispatchSource+scheduledTimer.swift
-//  Maccy
+//  Cleepp
 //
 //  Created by Pierre Houston on 2024-03-27.
 //  Copyright © 2024 Bananameter Labs. All rights reserved.

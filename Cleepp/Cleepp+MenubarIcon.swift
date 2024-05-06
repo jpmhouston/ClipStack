@@ -1,5 +1,5 @@
 //
-//  Maccy+MenubarIcon.swift
+//  Cleepp+MenubarIcon.swift
 //  Cleepp
 //
 //  Created by Pierre Houston on 2024-03-20.

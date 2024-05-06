@@ -74,7 +74,7 @@
 		8F0D3CE22BABD57300DDB603 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3CE02BABD57300DDB603 /* Accessibility.swift */; };
 		8F0D3CE42BACA50E00DDB603 /* HistoryMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA573EAC1EDD410F00561FB2 /* HistoryMenuItem.swift */; };
 		8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 8F12B56E2BD3B827004F059B /* Sparkle */; };
-		8F54639C2BE7B6DC008D67EF /* BasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* BasicUITests.swift */; };
+		8F54639C2BE7B6DC008D67EF /* MenuBasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */; };
 		8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
 		8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
 		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
@@ -409,9 +409,10 @@
 		8F0D3CDF2BABD57300DDB603 /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		8F0D3CE02BABD57300DDB603 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		8F4D26952BCFE2A1009A187B /* releasenotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = releasenotes.md; sourceTree = "<group>"; };
-		8F5463982BE7B6DC008D67EF /* BasicUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicUITests.swift; sourceTree = "<group>"; };
+		8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBasicUITests.swift; sourceTree = "<group>"; };
 		8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleeppUITestBase.swift; sourceTree = "<group>"; };
 		8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueUITests.swift; sourceTree = "<group>"; };
+		8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSearchUITests.swift; sourceTree = "<group>"; };
 		8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CleeppNames.swift"; sourceTree = "<group>"; };
 		8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKeys.swift; sourceTree = "<group>"; };
 		8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Equatable+Included.swift"; sourceTree = "<group>"; };
@@ -812,8 +813,9 @@
 		8F54639B2BE7B6DC008D67EF /* CleeppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				8F5463982BE7B6DC008D67EF /* BasicUITests.swift */,
 				8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */,
+				8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */,
+				8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */,
 				8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */,
 			);
 			path = CleeppUITests;
@@ -1479,7 +1481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */,
-				8F54639C2BE7B6DC008D67EF /* BasicUITests.swift in Sources */,
+				8F54639C2BE7B6DC008D67EF /* MenuBasicUITests.swift in Sources */,
 				8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

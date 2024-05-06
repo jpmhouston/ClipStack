@@ -1,3 +1,11 @@
+//
+//  CleeppUITestBase.swift
+//  Cleepp
+//
+//  Created by Pierre Houston on 2024-05-06.
+//  Copyright © 2024 Bananameter Labs. All rights reserved.
+//
+
 import Carbon
 import XCTest
 
@@ -37,10 +45,24 @@ class CleeppUITestBase: XCTestCase {
   var visibleMenuItems: [XCUIElement] { menuItems.allElementsBoundByIndex.filter({ $0.isHittable }) }
   var visibleMenuItemTitles: [String] { visibleMenuItems.map({ $0.title }) }
   
+  static let firstHistoryIndexWithoutBonus = 7
+  static let firstHistoryIndexWithBonus = 8
+  var firstHistoryIndex = firstHistoryIndexWithoutBonus
+  
+  var hasBonusFeatures = false
+  var hasAccessibilityPermissions = false
+  
   override func setUp() {
     super.setUp()
     app.launchArguments.append("ui-testing")
     app.launch()
+    
+    let introWindow = app.windows["Intro"]
+    if introWindow.exists {
+      introWindow.buttons[XCUIIdentifierCloseWindow].click()
+    } else {
+      hasAccessibilityPermissions = true
+    }
     
     copyToClipboard(copy2)
     copyToClipboard(copy1)
@@ -61,19 +83,52 @@ class CleeppUITestBase: XCTestCase {
   func popUpExpandedMenu() {
     XCUIElement.perform(withKeyModifiers: [.option]) {
       app.statusItems.firstMatch.click()
+      waitUntilPoppedUp()
     }
-    waitUntilPoppedUp()
-  }
-  
-  func popUpWithMouse() {
-    popUpExpandedMenu()
   }
   
   func waitUntilPoppedUp() {
-    if !app.menuItems.firstMatch.waitForExistence(timeout: 3) {
+    if !menuItems.firstMatch.waitForExistence(timeout: 3) {
       XCTFail("Cleepp menu did not open")
     }
   }
+  
+  var isMenuOpen: Bool {
+    menuItems.firstMatch.exists
+  }
+  
+  func closeMenu() {
+    if isMenuOpen {
+      app.statusItems.firstMatch.click()
+    }
+  }
+  
+  func checkForBonusFeatures() {
+    // should call this with the menu open before using firstHistoryIndex or hasBonusFeatures
+    let pasteAppItem = menuItems["Paste All"]
+    if pasteAppItem.exists && pasteAppItem.isHittable {
+      hasBonusFeatures = true
+      firstHistoryIndex = Self.firstHistoryIndexWithoutBonus
+    }
+  }
+  
+//  func skipIfHasBonusFeatures() {
+//    // should only call this with the menu open
+//    checkForBonusFeatures()
+//    do {
+//      try XCTSkipIf(hasBonusFeatures, "")
+//    }
+//    catch {}
+//  }
+//  
+//  func skipUnlessHasBonusFeatures() {
+//    // should only call this with the menu open
+//    checkForBonusFeatures()
+//    do {
+//      try XCTSkipUnless(hasBonusFeatures, "")
+//    }
+//    catch {}
+//  }
   
   func copyToClipboard(_ content: String) {
     pasteboard.clearContents()
@@ -112,6 +167,54 @@ class CleeppUITestBase: XCTestCase {
     usleep(50_000)
   }
   
+  var isInQueueMode: Bool {
+    app.statusItems.firstMatch.title != ""
+//    popUpUnexpandedMenu()
+//    defer { closeMenu() }
+//    let startItem = menuItems["Start Collecting"]
+//    guard startItem.exists else {
+//      XCTFail("Cleepp Start Collecting menu item doesn't even exist")
+//      return false
+//    }
+//    return !startItem.isHittable
+  }
+  
+  func enterQueueMode() {
+    guard !isInQueueMode else {
+      return
+    }
+//    popUpUnexpandedMenu()
+//    let startItem = menuItems["Start Collecting"]
+//    guard startItem.exists && startItem.isHittable else {
+//      closeMenu()
+//      XCTFail("Cleepp Start Collecting menu item not found")
+//      return
+//    }
+//    startItem.click()
+    XCUIElement.perform(withKeyModifiers: [.control]) {
+      app.statusItems.firstMatch.click()
+    }
+    assertInQueueMode()
+  }
+  
+  func exitQueueMode() {
+    guard isInQueueMode else {
+      return
+    }
+//    popUpUnexpandedMenu()
+//    let cancelItem = menuItems["Cancel Collecting / Replaying"]
+//    guard cancelItem.exists && cancelItem.isHittable else {
+//      closeMenu()
+//      XCTFail("Cleepp Cancel Collecting menu item not found")
+//      return
+//    }
+//    cancelItem.click()
+    XCUIElement.perform(withKeyModifiers: [.control]) {
+      app.statusItems.firstMatch.click()
+    }
+    assertNotInQueueMode()
+  }
+  
   func search(_ string: String) {
     // NOTE: app.typeText is broken in Sonoma and causes some
     //       Chars to be submitted with a .command mask (e.g. 'p', 'k' or 'j')
@@ -143,6 +246,18 @@ class CleeppUITestBase: XCTestCase {
     waitForExpectations(timeout: 3)
   }
   
+  func assertInQueueMode() {
+    let menu = app.statusItems.firstMatch
+    expectation(for: NSPredicate(format: "title != \"\""), evaluatedWith: menu)
+    waitForExpectations(timeout: 3)
+  }
+  
+  func assertNotInQueueMode() {
+    let menu = app.statusItems.firstMatch
+    expectation(for: NSPredicate(format: "title = \"\""), evaluatedWith: menu)
+    waitForExpectations(timeout: 3)
+  }
+  
   func assertPasteboardDataEquals(
     _ expected: Data?, forType: NSPasteboard.PasteboardType = .string
   ) {
@@ -165,7 +280,7 @@ class CleeppUITestBase: XCTestCase {
         return false
       }
       
-      return self.pasteboard.data(forType: forType)!.count == count
+      return (self.pasteboard.data(forType: forType)?.count ?? 0) == count
     }
     expectation(for: predicate, evaluatedWith: expected)
     waitForExpectations(timeout: 3)
