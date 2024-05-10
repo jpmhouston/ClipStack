@@ -21,6 +21,14 @@ public class IntroWindowController: PagedWindowController {
   }
   
   func openIntro(atPage page: IntroViewController.Pages? = nil, with object: Cleepp) {
+    // if already loaded then also check if already onscreen, if so being to the front and that's all
+    // (continuing anyway works, except for the restoreWindowPosition() call, until the window is
+    // closed there's no cached window position and its reset to the center of the screen below)
+    if isWindowLoaded, let window = window, window.isVisible {
+      window.orderFrontRegardless()
+      return
+    }
+    
     // accessing window triggers loading from nib, do this before showWindow so we can setup before showing
     guard let window = window, let viewController = viewController else {
       return

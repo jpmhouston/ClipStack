@@ -43,7 +43,7 @@ class CleeppUITestBase: XCTestCase {
   var menuItems: XCUIElementQuery { app.statusItems.firstMatch.descendants(matching: .menuItem) }
   
   var visibleMenuItems: [XCUIElement] { menuItems.allElementsBoundByIndex.filter({ $0.isHittable }) }
-  var visibleMenuItemTitles: [String] { visibleMenuItems.map({ $0.title }) }
+  var visibleMenuItemTitles: [String] { visibleMenuItems.map { $0.title } }
   
   static let firstHistoryIndexWithoutBonus = 7
   static let firstHistoryIndexWithBonus = 8
@@ -58,14 +58,26 @@ class CleeppUITestBase: XCTestCase {
     app.launch()
     
     let introWindow = app.windows["Intro"]
-    if introWindow.exists {
-      introWindow.buttons[XCUIIdentifierCloseWindow].click()
-    } else {
+    if !introWindow.exists {
+      // this logic valid only if app has launched once before, so could get a false negative
+      // before running tests that rely on this, one should manually build & run app then grant permission
       hasAccessibilityPermissions = true
+    } else {
+      introWindow.buttons[XCUIIdentifierCloseWindow].click()
     }
+    
+//    if isMenuOpen {
+//      print("menu is open for some reason after detecting intro window, clicking status item to get it to close")
+//      closeMenu()
+//    }
     
     copyToClipboard(copy2)
     copyToClipboard(copy1)
+    
+//    if isMenuOpen {
+//      print("menu is open for some reason before exiting setUp(), clicking status item to get it to close")
+//      closeMenu()
+//    }
   }
   
   override func tearDown() {
@@ -75,20 +87,26 @@ class CleeppUITestBase: XCTestCase {
   
   // MARK: -
   
-  func popUpUnexpandedMenu() {
+  func openUnexpandedMenu() {
+    if isMenuOpen {
+      app.statusItems.firstMatch.click()
+    }
     app.statusItems.firstMatch.click()
-    waitUntilPoppedUp()
+    waitUntilMenuOpened()
   }
   
-  func popUpExpandedMenu() {
+  func openExpandedMenu() {
+    if isMenuOpen {
+      app.statusItems.firstMatch.click()
+    }
     XCUIElement.perform(withKeyModifiers: [.option]) {
       app.statusItems.firstMatch.click()
-      waitUntilPoppedUp()
+      waitUntilMenuOpened()
     }
   }
   
-  func waitUntilPoppedUp() {
-    if !menuItems.firstMatch.waitForExistence(timeout: 3) {
+  func waitUntilMenuOpened() {
+    if !menuItems.firstMatch.waitForExistence(timeout: 10) {
       XCTFail("Cleepp menu did not open")
     }
   }
@@ -111,24 +129,6 @@ class CleeppUITestBase: XCTestCase {
       firstHistoryIndex = Self.firstHistoryIndexWithoutBonus
     }
   }
-  
-//  func skipIfHasBonusFeatures() {
-//    // should only call this with the menu open
-//    checkForBonusFeatures()
-//    do {
-//      try XCTSkipIf(hasBonusFeatures, "")
-//    }
-//    catch {}
-//  }
-//  
-//  func skipUnlessHasBonusFeatures() {
-//    // should only call this with the menu open
-//    checkForBonusFeatures()
-//    do {
-//      try XCTSkipUnless(hasBonusFeatures, "")
-//    }
-//    catch {}
-//  }
   
   func copyToClipboard(_ content: String) {
     pasteboard.clearContents()
@@ -168,29 +168,14 @@ class CleeppUITestBase: XCTestCase {
   }
   
   var isInQueueMode: Bool {
+    // app.statusItems.firstMatch.title.trimmingCharacters(in: .whitespaces)
     app.statusItems.firstMatch.title != ""
-//    popUpUnexpandedMenu()
-//    defer { closeMenu() }
-//    let startItem = menuItems["Start Collecting"]
-//    guard startItem.exists else {
-//      XCTFail("Cleepp Start Collecting menu item doesn't even exist")
-//      return false
-//    }
-//    return !startItem.isHittable
   }
   
   func enterQueueMode() {
     guard !isInQueueMode else {
       return
     }
-//    popUpUnexpandedMenu()
-//    let startItem = menuItems["Start Collecting"]
-//    guard startItem.exists && startItem.isHittable else {
-//      closeMenu()
-//      XCTFail("Cleepp Start Collecting menu item not found")
-//      return
-//    }
-//    startItem.click()
     XCUIElement.perform(withKeyModifiers: [.control]) {
       app.statusItems.firstMatch.click()
     }
@@ -201,14 +186,6 @@ class CleeppUITestBase: XCTestCase {
     guard isInQueueMode else {
       return
     }
-//    popUpUnexpandedMenu()
-//    let cancelItem = menuItems["Cancel Collecting / Replaying"]
-//    guard cancelItem.exists && cancelItem.isHittable else {
-//      closeMenu()
-//      XCTFail("Cleepp Cancel Collecting menu item not found")
-//      return
-//    }
-//    cancelItem.click()
     XCUIElement.perform(withKeyModifiers: [.control]) {
       app.statusItems.firstMatch.click()
     }
@@ -230,84 +207,165 @@ class CleeppUITestBase: XCTestCase {
     usleep(500_000)  // wait for search throttle
   }
   
-  func assertExists(_ element: XCUIElement) {
+  func waitUntilNotBusy() {
+    let predicate = NSPredicate { _, _ in
+      self.openUnexpandedMenu()
+      let items = self.app.statusItems.firstMatch.descendants(matching: .menuItem)
+      let ready = items["Copy & Collect"].isHittable
+      self.closeMenu()
+      return ready
+    }
+    expectation(for: predicate, evaluatedWith: nil)
+    waitForExpectations(timeout: 10)
+  }
+  
+  func clickWhenExists(_ element: XCUIElement) {
     expectation(for: NSPredicate(format: "exists = 1"), evaluatedWith: element)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
+    if element.exists {
+      element.click()
+    }
+  }
+  
+  func assertExists(_ element: XCUIElement) {
+    // debugging expansion for when element is a menu item
+//    let predicate = NSPredicate { object, _ in
+//      guard let element = object as? XCUIElement else {
+//        return false
+//      }
+//      let exists = element.exists
+//      if !exists && !self.isMenuOpen { print("element doesn't exist, perhaps becuase menu not open?") }
+//      else if !exists { print("element doesn't exist, menu items: \(self.menuItems.allElementsBoundByIndex.map { $0.title })") }
+//      return exists
+//    }
+//    expectation(for: predicate, evaluatedWith: element)
+    expectation(for: NSPredicate(format: "exists = 1"), evaluatedWith: element)
+    waitForExpectations(timeout: 10)
   }
   
   func assertNotExists(_ element: XCUIElement) {
     expectation(for: NSPredicate(format: "exists = 0"), evaluatedWith: element)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
   }
   
   func assertNotVisible(_ element: XCUIElement) {
     expectation(
       for: NSPredicate(format: "(exists = 0) || (isHittable = 0)"), evaluatedWith: element)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
   }
   
   func assertInQueueMode() {
+    if isInQueueMode {
+      return
+    }
     let menu = app.statusItems.firstMatch
-    expectation(for: NSPredicate(format: "title != \"\""), evaluatedWith: menu)
-    waitForExpectations(timeout: 3)
+    expectation(for: NSPredicate(format: "title != ''"), evaluatedWith: menu)
+    waitForExpectations(timeout: 10)
   }
   
   func assertNotInQueueMode() {
+    if !isInQueueMode {
+      return
+    }
     let menu = app.statusItems.firstMatch
-    expectation(for: NSPredicate(format: "title = \"\""), evaluatedWith: menu)
-    waitForExpectations(timeout: 3)
+    expectation(for: NSPredicate(format: "title = ''"), evaluatedWith: menu)
+    waitForExpectations(timeout: 10)
   }
   
   func assertPasteboardDataEquals(
     _ expected: Data?, forType: NSPasteboard.PasteboardType = .string
   ) {
-    let predicate = NSPredicate { (object, _) -> Bool in
+    let predicate = NSPredicate { object, _ in
       guard let copy = object as? Data else {
         return false
       }
-      
       return self.pasteboard.data(forType: forType) == copy
     }
     expectation(for: predicate, evaluatedWith: expected)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
   }
   
   func assertPasteboardDataCountEquals(
     _ expected: Int, forType: NSPasteboard.PasteboardType = .string
   ) {
-    let predicate = NSPredicate { (object, _) -> Bool in
+    let predicate = NSPredicate { object, _ in
       guard let count = object as? Int else {
         return false
       }
-      
       return (self.pasteboard.data(forType: forType)?.count ?? 0) == count
     }
     expectation(for: predicate, evaluatedWith: expected)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
   }
   
   func assertPasteboardStringEquals(
     _ expected: String?, forType: NSPasteboard.PasteboardType = .string
   ) {
-    let predicate = NSPredicate { (object, _) -> Bool in
+    let predicate = NSPredicate { object, _ in
       guard let copy = object as? String else {
         return false
       }
-      
       return self.pasteboard.string(forType: forType) == copy
     }
     expectation(for: predicate, evaluatedWith: expected)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
   }
   
   func assertSelected(_ element: XCUIElement) {
     expectation(for: NSPredicate(format: "isSelected = 1"), evaluatedWith: element)
-    waitForExpectations(timeout: 3)
+    waitForExpectations(timeout: 10)
   }
   
   func assertSearchFieldValue(_ string: String) {
     XCTAssertEqual(app.searchFields.firstMatch.value as? String, string)
   }
+  
+  /*
+  func openTestWindow() {
+    let testWindow = app.windows["Cleepp Test Window"]
+    if testWindow.exists {
+      return
+    }
+    openUnexpandedMenu()
+    let openWindowItem = menuItems["Show Test Window"]
+    assertExists(openWindowItem)
+    openWindowItem.click()
+    if !openWindowItem.waitForExistence(timeout: 1) {
+      XCTFail("Cleepp test window did not open")
+    }
+  }
+  
+  func closeTestWindow() {
+    let testWindow = app.windows["Cleepp Test Window"]
+    if !testWindow.exists {
+      return
+    }
+    openUnexpandedMenu()
+    let closeWindowItem = menuItems["Hide Test Window"]
+    assertExists(closeWindowItem)
+    closeWindowItem.click()
+  }
+  
+  func typeNSelect(_ str: String) {
+    guard str.count > 0 else {
+      return
+    }
+    let testWindow = app.windows["Cleepp Test Window"]
+    let text = testWindow.textViews.firstMatch
+    if !text.exists {
+      XCTFail("Cleepp test window is not already open")
+    }
+    
+    // "failed to synthesize event: Neither element nor any descendant has keyboard focus"
+    //text.click()
+    //text.typeText(str)
+    
+    app.typeText(str)
+    for _ in 0 ..< str.count {
+      app.typeKey(.leftArrow, modifierFlags: [.shift])
+    }
+  }
+  */
   
 }
 

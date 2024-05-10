@@ -12,19 +12,26 @@ import XCTest
 class QueueUITests: CleeppUITestBase {
   
   func test00EnterExitQueueMode() throws {
-    try XCTSkipUnless(hasAccessibilityPermissions)
-    
-    popUpUnexpandedMenu()
-    let startItem = menuItems["Start Collecting"]
-    guard startItem.exists else {
-      closeMenu()
-      XCTFail("Cleepp Start Collecting menu item doesn't exist")
-      return
-    }
-    startItem.click()
+    // with key shortcuts
+    assertNotInQueueMode()
+    app.typeKey("c", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
     assertInQueueMode()
-    exitQueueMode()
     
+    app.typeKey("v", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
+    assertNotInQueueMode()
+    
+    // with start/cancel menu items
+    openUnexpandedMenu()
+    clickWhenExists(menuItems["Start Collecting"])
+    assertInQueueMode()
+    
+    openUnexpandedMenu()
+    clickWhenExists(menuItems["Cancel Collecting / Replaying"])
+    assertNotInQueueMode()
+    
+    // with control-click on status item
     XCUIElement.perform(withKeyModifiers: [.control]) {
       app.statusItems.firstMatch.click()
     }
@@ -34,26 +41,86 @@ class QueueUITests: CleeppUITestBase {
       app.statusItems.firstMatch.click()
     }
     assertNotInQueueMode()
-    
-    // TODO: turning on with ^cmdC
   }
   
-  func test10QueueCopiesCollected() throws {
-    try XCTSkipUnless(hasAccessibilityPermissions)
+  func test01MenuCopyPaste() throws {
+    openUnexpandedMenu()
+    clickWhenExists(menuItems["Copy & Collect"])
+    waitUntilNotBusy()
+    openUnexpandedMenu()
+    clickWhenExists(menuItems["Copy & Collect"])
+    waitUntilNotBusy()
     
+    openUnexpandedMenu()
+    clickWhenExists(menuItems["Paste & Advance"])
+    waitUntilNotBusy()
+    openUnexpandedMenu()
+    clickWhenExists(menuItems["Paste & Advance"])
+    waitUntilNotBusy()
+    
+    assertNotInQueueMode()
+  }
+  
+  func test02QueueCopyVerify() throws {
     enterQueueMode()
+    
     let copy3 = UUID().uuidString
     let copy4 = UUID().uuidString
     copyToClipboard(copy3)
     copyToClipboard(copy4)
+    waitUntilNotBusy()
     
-    popUpUnexpandedMenu()
+    openUnexpandedMenu()
     assertExists(menuItems[copy3])
     assertExists(menuItems[copy4])
     closeMenu()
-    exitQueueMode()
+    
+    app.typeKey("v", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
+    app.typeKey("v", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
+    
+    assertNotInQueueMode()
   }
   
-  // TODO: add floating text window to app for copying and pasting during tests
+  func test03QueueCopyPasteInterleaved() throws {
+    enterQueueMode()
+    
+    let copy3 = UUID().uuidString
+    let copy4 = UUID().uuidString
+    copyToClipboard(copy3)
+    copyToClipboard(copy4)
+    waitUntilNotBusy()
+    
+    app.typeKey("v", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
+    
+    let copy5 = UUID().uuidString
+    copyToClipboard(copy5)
+    waitUntilNotBusy()
+    
+    app.typeKey("v", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
+    app.typeKey("v", modifierFlags: [.control, .command])
+    waitUntilNotBusy()
+    
+    assertNotInQueueMode()
+  }
+  
+  func test04QueueCopyPasteCancel() throws {
+    enterQueueMode()
+    
+    let copy3 = UUID().uuidString
+    let copy4 = UUID().uuidString
+    let copy5 = UUID().uuidString
+    copyToClipboard(copy3)
+    copyToClipboard(copy4)
+    copyToClipboard(copy5)
+    waitUntilNotBusy()
+    
+    exitQueueMode()
+    
+    assertNotInQueueMode()
+  }
   
 }

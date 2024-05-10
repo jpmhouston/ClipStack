@@ -124,10 +124,24 @@ class Clipboard: CustomDebugStringConvertible {
 
   #if CLEEPP
   func invokeApplicationCopy(then action: (() -> Void)? = nil) {
+    #if DEBUG
+    if AppDelegate.shouldFakeAppInteraction {
+      copy(AppDelegate.fakedAppCopy, excludeFromHistory: false)
+      action?()
+      return
+    }
+    #endif
     postKeypress(KeyChord.copyKeyModifiers, KeyChord.copyKey, then: action)
   }
   
   func invokeApplicationPaste(then action: (() -> Void)? = nil) {
+    #if DEBUG
+    if AppDelegate.shouldFakeAppInteraction {
+      AppDelegate.fakedAppPaste = debugDescription(ofLength: 0)
+      action?()
+      return
+    }
+    #endif
     postKeypress(KeyChord.pasteKeyModifiers, KeyChord.pasteKey, then: action)
   }
   #else

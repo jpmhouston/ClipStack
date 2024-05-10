@@ -234,6 +234,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       indexedItems.append(indexedItem)
       menuItems.forEach(appendMenuItem)
     }
+    
+    addDebugItems()
   }
   
   private func addQueueItemsSeparator() {
@@ -244,9 +246,9 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     if queueItemsSeparator != nil {
       removeQueueItemsSeparator() // expected to already be removed! but ensure now that it really is
     }
-
+    
     if showsExpandedMenu && !isFiltered && !Cleepp.busy &&
-       Cleepp.isQueueModeOn && Cleepp.queueSize > 0 && indexedItems.count > Cleepp.queueSize
+        Cleepp.isQueueModeOn && Cleepp.queueSize > 0 && indexedItems.count > Cleepp.queueSize
     {
       let followingItem = indexedItems[Cleepp.queueSize]
       guard let followingMenuItem = followingItem.menuItems.first, let index = safeIndex(of: followingMenuItem) else {
@@ -275,7 +277,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     queueStopItem?.isEnabled = notBusy
     advanceItem?.isEnabled = notBusy
     queuedCopyItem?.isEnabled = notBusy
-
+    
     let haveQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
     queuedPasteItem?.isEnabled = notBusy && haveQueueItems
     queuedPasteMultipleItem?.isEnabled = notBusy && haveQueueItems
@@ -325,7 +327,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     
     let firstHistoryMenuItemIndex = index(of: zerothHistoryHeaderItem) + 1
     let menuItemInsertionIndex = firstHistoryMenuItemIndex + self.historyMenuItemsGroupCount * insertionIndex
-
+    
     ensureInEventTrackingModeIfVisible {
       var index = menuItemInsertionIndex
       for menuItem in menuItems {
@@ -409,25 +411,25 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
           let item = indexedItems[position].menuItems.first else {
       return nil
     }
-
+    
     performActionForItem(at: index(of: item))
     return indexedItems[position].value
   }
-
+  
   func historyItem(at position: Int) -> HistoryItem? {
     guard indexedItems.indices.contains(position) else {
       return nil
     }
-
+    
     return indexedItems[position].item
   }
-
+  
   func selectPrevious() {
     if !highlightNext(items.reversed()) {
       highlight(highlightableItems(items).last) // start from the end after reaching the first item
     }
   }
-
+  
   func selectNext() {
     if !highlightNext(items) {
       highlight(highlightableItems(items).first) // start from the beginning after reaching the last item
@@ -600,7 +602,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private func clear(_ itemsToClear: [IndexedItem]) {
     for indexedItem in itemsToClear {
       indexedItem.menuItems.forEach(safeRemoveItem)
-
+      
       if let removeIndex = indexedItems.firstIndex(of: indexedItem) {
         indexedItems.remove(at: removeIndex)
       }
@@ -798,7 +800,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     guard !items.contains(item), index <= items.count else {
       return
     }
-
+    
     sanityCheckIndexIsHistoryItemIndex(index, forInserting: true)
     
     insertItem(item, at: index)
@@ -872,7 +874,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
           break
         }
       }
-
+      
       let bottomPoint = previewView.convert(
         NSPoint(x: previewView.bounds.minX, y: previewView.bounds.maxY),
         to: windowContentView
@@ -881,7 +883,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
         NSPoint(x: previewView.bounds.minX, y: precedingView.bounds.minY),
         to: windowContentView
       )
-
+      
       let heightOfVisibleMenuItem = abs(topPoint.y - bottomPoint.y)
       return NSRect(
         origin: bottomPoint,
@@ -889,7 +891,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       )
     }
   }
-
+  
   private func ensureInEventTrackingModeIfVisible(
     dispatchLater: Bool = false,
     block: @escaping () -> Void
@@ -904,8 +906,26 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       block()
     }
   }
+  
 }
 // swiftlint:enable type_body_length
+
+// MARK: -
+
+extension CleeppMenu {
+  func addDebugItems() {
+    #if DEBUG
+    if AppDelegate.allowTestWindow {
+      let endIndex = items.count
+      let showWindowItem = NSMenuItem(title: "Show Test Window", action: #selector(AppDelegate.showTestWindow(_:)), keyEquivalent: "")
+      let hideWindowItem = NSMenuItem(title: "Hide Test Window", action: #selector(AppDelegate.hideTestWindow(_:)), keyEquivalent: "")
+      insertItem(NSMenuItem.separator(), at: endIndex)
+      insertItem(showWindowItem, at: endIndex + 1)
+      insertItem(hideWindowItem, at: endIndex + 2)
+    }
+    #endif
+  }
+}
 
 // an isVisible property made logic more clear than with the isHidden property,
 // eliminating many double negatives

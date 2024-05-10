@@ -12,19 +12,19 @@ import XCTest
 class MenuBasicUITests: CleeppUITestBase {
   
   func test00MenuContainsAddedItems() {
-    popUpExpandedMenu()
+    openExpandedMenu()
     assertExists(menuItems[copy1])
     assertExists(menuItems[copy2])
     closeMenu()
     
     let copy3 = UUID().uuidString
     copyToClipboard(copy3)
-    popUpExpandedMenu()
+    openExpandedMenu()
     assertExists(menuItems[copy3])
     closeMenu()
     
     // currently the app doesn't update the menu while its open
-    //    popUpExpandedMenu()
+    //    openExpandedMenu()
     //    let copy3 = UUID().uuidString
     //    copyToClipboard(copy3)
     //    assertExists(menuItems[copy3])
@@ -34,11 +34,11 @@ class MenuBasicUITests: CleeppUITestBase {
   // MARK: -
   
   func test10CopyWithClickOrEnter() {
-    popUpExpandedMenu()
+    openExpandedMenu()
     menuItems[copy1].firstMatch.click()
     assertPasteboardStringEquals(copy1)
     
-    popUpExpandedMenu()
+    openExpandedMenu()
     hover(menuItems[copy2].firstMatch)
     app.typeKey(.enter, modifierFlags: [])
     assertPasteboardStringEquals(copy2)
@@ -48,7 +48,7 @@ class MenuBasicUITests: CleeppUITestBase {
     // images
     copyToClipboard(image: image2)
     copyToClipboard(image: image1)
-    popUpExpandedMenu()
+    openExpandedMenu()
     checkForBonusFeatures()
     visibleMenuItems[firstHistoryIndex + 1].click()
     assertPasteboardDataCountEquals(image2.tiffRepresentation!.count, forType: .tiff)
@@ -56,7 +56,7 @@ class MenuBasicUITests: CleeppUITestBase {
     // file urls
     copyToClipboard(url: file2)
     copyToClipboard(url: file1)
-    popUpExpandedMenu()
+    openExpandedMenu()
     checkForBonusFeatures()
     XCTAssertEqual(visibleMenuItemTitles[firstHistoryIndex...firstHistoryIndex + 1],
                    [file1.absoluteString, file2.absoluteString])
@@ -67,7 +67,7 @@ class MenuBasicUITests: CleeppUITestBase {
     // html
     copyToClipboard(data: html2, .html)
     copyToClipboard(data: html1, .html)
-    popUpExpandedMenu()
+    openExpandedMenu()
     checkForBonusFeatures()
     XCTAssertEqual(visibleMenuItemTitles[firstHistoryIndex...firstHistoryIndex + 1],
                    ["foo", "bar"])
@@ -78,7 +78,7 @@ class MenuBasicUITests: CleeppUITestBase {
     // rtf - does not work because NSPasteboardItem somehow becomes "empty" ???
     //   copyToClipboard(rtf2, .rtf)
     //   copyToClipboard(rtf1, .rtf)
-    //   popUpExpandedMenu()
+    //   openExpandedMenu()
     //   checkForBonusFeatures()
     //   XCTAssertEqual(visibleMenuItemTitles()[firstHistoryIndex...firstHistoryIndex + 1],
     //                  ["foo", "bar"])
@@ -90,17 +90,17 @@ class MenuBasicUITests: CleeppUITestBase {
   // MARK: -
   
   func test20Delete() {
-    popUpExpandedMenu()
+    openExpandedMenu()
     hover(menuItems[copy1].firstMatch)
     app.typeKey(.delete, modifierFlags: [.command])
     
-    popUpExpandedMenu()
+    openExpandedMenu()
     assertNotExists(menuItems[copy1])
     closeMenu()
   }
   
   func test21Clear() {
-    popUpExpandedMenu()
+    openExpandedMenu()
     menuItems["Clear History…"].click()
     
     // confirmation alert
@@ -109,7 +109,7 @@ class MenuBasicUITests: CleeppUITestBase {
     waitForExpectations(timeout: 3)
     button.click()
     
-    popUpExpandedMenu()
+    openExpandedMenu()
     assertNotExists(menuItems[copy1])
     assertNotExists(menuItems[copy2])
     closeMenu()
@@ -127,7 +127,7 @@ class MenuBasicUITests: CleeppUITestBase {
     copyToClipboard(copy3)
     copyToClipboard(copy4)
     
-    popUpExpandedMenu()
+    openExpandedMenu()
     assertNotExists(menuItems[copy3])
     assertNotExists(menuItems[copy4])
     closeMenu()
@@ -147,7 +147,7 @@ class MenuBasicUITests: CleeppUITestBase {
     copyToClipboard(copy3)
     copyToClipboard(copy4)
     
-    popUpExpandedMenu()
+    openExpandedMenu()
     assertNotExists(menuItems[copy3])
     assertExists(menuItems[copy4])
     closeMenu()

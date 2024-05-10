@@ -1,5 +1,5 @@
 //
-//  Maccy+Actions.swift
+//  Cleepp+Actions.swift
 //  Cleepp
 //
 //  Created by Pierre Houston on 2024-03-20.
@@ -32,10 +32,22 @@ extension Cleepp {
     //if #unavailable(macOS 14) { true } else { false }
   }
   
+  private func accessibilityCheck() -> Bool {
+    #if DEBUG
+    if AppDelegate.shouldFakeAppInteraction {
+      return true // clipboard short-circuits the frontmost app TODO: eventually use a mock clipboard obj
+    }
+    #endif
+    return Accessibility.check()
+  }
+  
   @IBAction
   func startQueueMode(_ sender: AnyObject) {
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
-    guard Accessibility.check() else {
+    guard !Self.busy else {
+      return
+    }
+    guard accessibilityCheck() else {
       return
     }
     guard !Self.isQueueModeOn else {
@@ -66,6 +78,7 @@ extension Cleepp {
   
   @IBAction
   func queuedCopy(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     doQueuedCopy()
   }
   
@@ -73,7 +86,7 @@ extension Cleepp {
     guard !Self.busy else {
       return
     }
-    guard Accessibility.check() else {
+    guard accessibilityCheck() else {
       return
     }
     
@@ -90,7 +103,7 @@ extension Cleepp {
     // let clipboard object detect this normally and invoke incrementQueue
     clipboard.invokeApplicationCopy() { [weak self] in
       guard let self = self else { return }
-
+      
       // allow copy again if no copy deletected after this duration
       self.runOnCopyTimeoutTimer(afterTimeout: self.copyTimeoutSeconds) { [weak self] in
         guard self != nil else { return }
@@ -136,6 +149,7 @@ extension Cleepp {
   
   @IBAction
   func queuedPaste(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     doQueuedPaste()
   }
   
@@ -147,7 +161,7 @@ extension Cleepp {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
-    guard Accessibility.check() else {
+    guard accessibilityCheck() else {
       return
     }
     
@@ -199,6 +213,7 @@ extension Cleepp {
   
   @IBAction
   func queuedPasteMultiple(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     guard !Self.busy else {
       return
     }
@@ -206,7 +221,7 @@ extension Cleepp {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
-    guard Accessibility.check() else {
+    guard accessibilityCheck() else {
       return
     }
     
@@ -231,6 +246,7 @@ extension Cleepp {
   
   @IBAction
   func queuedPasteAll(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     guard !Self.busy else {
       return
     }
@@ -238,7 +254,7 @@ extension Cleepp {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
-    guard Accessibility.check() else {
+    guard accessibilityCheck() else {
       return
     }
     
@@ -322,12 +338,11 @@ extension Cleepp {
   
   @IBAction
   func replayFromHistory(_ sender: AnyObject) {
+    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
     guard !Self.busy else {
       return
     }
-    
-    menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
-    guard Accessibility.check() else {
+    guard accessibilityCheck() else {
       return
     }
     

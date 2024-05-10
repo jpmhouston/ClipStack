@@ -14,8 +14,12 @@ class HistoryMenuItem: NSMenuItem {
   }
   private let indicatorBadge = NSLocalizedString("first_replay_item_badge", comment: "") + " \u{2BAD}"
   private var useBadges: Bool {
-    // hardcode false to exercise not using badged even on macOS 14
-    if #unavailable(macOS 14) { false } else { true }
+    // return false and comment the rest out to exercise not using badges when on macOS >=14
+    if #unavailable(macOS 14) {
+      false
+    } else {
+      !AppDelegate.performingUITest // use badges unless running a UI test
+    }
   }
   #endif
 

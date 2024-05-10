@@ -77,6 +77,8 @@
 		8F54639C2BE7B6DC008D67EF /* MenuBasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */; };
 		8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
 		8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
+		8F710D5E2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */; };
+		8F710D5F2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */; };
 		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
 		8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */; };
 		8F8C47E62BACB3E600C3A219 /* Equatable+Included.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */; };
@@ -413,6 +415,7 @@
 		8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleeppUITestBase.swift; sourceTree = "<group>"; };
 		8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueUITests.swift; sourceTree = "<group>"; };
 		8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSearchUITests.swift; sourceTree = "<group>"; };
+		8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UITestability.swift"; sourceTree = "<group>"; };
 		8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CleeppNames.swift"; sourceTree = "<group>"; };
 		8F8C47E22BACB18100C3A219 /* GlobalHotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKeys.swift; sourceTree = "<group>"; };
 		8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Equatable+Included.swift"; sourceTree = "<group>"; };
@@ -748,6 +751,7 @@
 				8FEA4DFF2BE7334200B63E39 /* Debug.entitlements */,
 				8F0D3CDF2BABD57300DDB603 /* About.swift */,
 				8F0D3CE02BABD57300DDB603 /* Accessibility.swift */,
+				8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */,
 				8F0D3C802BABAD6500DDB603 /* Cleepp+Actions.swift */,
 				8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */,
 				8F0D3C822BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift */,
@@ -1503,6 +1507,7 @@
 				8F8C47F72BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */,
 				8F0D3C832BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift in Sources */,
 				8F8C47F52BACD0D300C3A219 /* GeneralSettingsViewController.swift in Sources */,
+				8F710D5E2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */,
 				8F0D3C282BAB8F5A00DDB603 /* GetIntentHandler.swift in Sources */,
 				8F0D3C292BAB8F5A00DDB603 /* History.swift in Sources */,
 				8F0D3C2A2BAB8F5A00DDB603 /* NSPasteboard.PasteboardType+Types.swift in Sources */,
@@ -1594,6 +1599,7 @@
 				8F8C48742BAD51B000C3A219 /* PreviewPopoverController.swift in Sources */,
 				8F8C48752BAD51B000C3A219 /* HistoryItemContent.swift in Sources */,
 				8F8C48762BAD51B000C3A219 /* Sorter.swift in Sources */,
+				8F710D5F2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */,
 				8F8C48772BAD51B000C3A219 /* RangedIntegerTextField.swift in Sources */,
 				8F8C48782BAD51B000C3A219 /* Cleepp+Actions.swift in Sources */,
 				8F8C48792BAD51B000C3A219 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
