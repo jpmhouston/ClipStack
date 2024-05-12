@@ -219,11 +219,21 @@ class CleeppUITestBase: XCTestCase {
     waitForExpectations(timeout: 10)
   }
   
+  // not sure if these 2 are needed, click(..) and hover(..) might work find
+  
   func clickWhenExists(_ element: XCUIElement) {
     expectation(for: NSPredicate(format: "exists = 1"), evaluatedWith: element)
     waitForExpectations(timeout: 10)
     if element.exists {
       element.click()
+    }
+  }
+  
+  func hoverWhenExists(_ element: XCUIElement) {
+    expectation(for: NSPredicate(format: "exists = 1"), evaluatedWith: element)
+    waitForExpectations(timeout: 10)
+    if element.exists {
+      element.hover()
     }
   }
   
@@ -255,20 +265,27 @@ class CleeppUITestBase: XCTestCase {
   }
   
   func assertInQueueMode() {
-    if isInQueueMode {
-      return
-    }
-    let menu = app.statusItems.firstMatch
-    expectation(for: NSPredicate(format: "title != ''"), evaluatedWith: menu)
-    waitForExpectations(timeout: 10)
+    XCTAssertTrue(isInQueueMode, "Expected menu title to contain a queue count, was empty")
   }
   
   func assertNotInQueueMode() {
-    if !isInQueueMode {
-      return
-    }
+    XCTAssertFalse(isInQueueMode, "Expected menu title to be empty string, was '\(app.statusItems.firstMatch.title)'")
+  }
+  
+  func assertQueueSize(is expectSize: Int) {
+    assertInQueueMode()
     let menu = app.statusItems.firstMatch
-    expectation(for: NSPredicate(format: "title = ''"), evaluatedWith: menu)
+    let predicate = NSPredicate { object, _ in
+      guard let menu = object as? XCUIElement else {
+        XCTFail("Predicate object not a XCUIElement")
+        return false
+      }
+      guard let size = Int(menu.title.trimmingCharacters(in: .whitespaces)) else {
+        return false
+      }
+      return size == expectSize
+    }
+    expectation(for: predicate, evaluatedWith: menu)
     waitForExpectations(timeout: 10)
   }
   

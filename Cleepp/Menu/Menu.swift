@@ -77,7 +77,6 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private var showsExpandedMenu = false
   private var showsFullExpansion = false
   private var isFiltered = false
-  private var ignoreNextHighlight = false
   
   private var historyHeaderView: MenuHeaderView? { historyHeaderItem?.view as? MenuHeaderView ?? historyHeaderViewCache }
   private var historyHeaderViewCache: MenuHeaderView?
@@ -190,24 +189,26 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
     previewController.cancelPopover()
     
-    if !Maccy.busy {
-      if item == nil {
-        ignoreNextHighlight = true // after being called with nil item ignore the next call
-        return
-      } else if ignoreNextHighlight {
-        ignoreNextHighlight = false // after getting that following call, back to normal
-        return
-      } else {
-        setDeleteEnabled(forHighlightedItem: item)
-        lastHighlightedItem = item as? HistoryMenuItem
+    if let historyItem = item as? HistoryMenuItem {
+      deleteItem?.isEnabled = !Cleepp.busy
+      lastHighlightedItem = historyItem
+      
+      previewController.showPopover(for: historyItem, allItems: indexedItems)
+      
+    } else if item == nil || item == deleteItem {
+      // called with nil when cursor is over a disabled item, a separator, or is
+      // away from any menu items
+      // when cmd-delete hit, this is first called with nil and then with the
+      // delete menu item itself, for both of these we must not (immediately) disable
+      // the delete menu or unset lastHighlightedItem or else deleting won't work
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        self?.deleteItem?.isEnabled = false
+        self?.lastHighlightedItem = nil
       }
+    } else {
+      deleteItem?.isEnabled = false
+      lastHighlightedItem = nil
     }
-    
-    guard let item = item as? HistoryMenuItem else {
-      return
-    }
-    
-    previewController.showPopover(for: item, allItems: indexedItems)
   }
   
   // MARK: -
@@ -291,18 +292,6 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     // clear delete actions when search box showing so its key events can drive item deletions instead
     let searchHeaderVisible = !(historyHeaderItem?.isHidden ?? true) // ie. if not hidden
     deleteItem?.action = searchHeaderVisible ? nil : deleteAction
-  }
-  
-  private func setDeleteEnabled(forHighlightedItem item: NSMenuItem?) {
-    guard let item = item else {
-      return
-    }
-    
-    var enable = false
-    if !Cleepp.busy, item is HistoryMenuItem {
-      enable = true
-    }
-    deleteItem?.isEnabled = enable
   }
   
   func add(_ item: HistoryItem) {
@@ -509,7 +498,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   }
   
   func performQueueModeToggle() {
-    guard !Maccy.busy else { return }
+    guard !Cleepp.busy else { return }
     
     if Cleepp.isQueueModeOn {
       guard let queueStopItem = queueStopItem else { return }

@@ -43,7 +43,23 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test01MenuCopyPaste() throws {
+  func test01CancelQueueMode() throws {
+    enterQueueMode()
+    
+    let copy3 = UUID().uuidString
+    let copy4 = UUID().uuidString
+    let copy5 = UUID().uuidString
+    copyToClipboard(copy3)
+    copyToClipboard(copy4)
+    copyToClipboard(copy5)
+    waitUntilNotBusy()
+    
+    exitQueueMode()
+    
+    assertNotInQueueMode()
+  }
+  
+  func test10MenuCopyPaste() throws {
     openUnexpandedMenu()
     clickWhenExists(menuItems["Copy & Collect"])
     waitUntilNotBusy()
@@ -61,7 +77,7 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test02QueueCopyVerify() throws {
+  func test11CopyVerify() throws {
     enterQueueMode()
     
     let copy3 = UUID().uuidString
@@ -83,7 +99,7 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test03QueueCopyPasteInterleaved() throws {
+  func test12CopyPasteInterleaved() throws {
     enterQueueMode()
     
     let copy3 = UUID().uuidString
@@ -107,20 +123,50 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test04QueueCopyPasteCancel() throws {
+  func test20DeleteFirstToLast() {
     enterQueueMode()
     
     let copy3 = UUID().uuidString
     let copy4 = UUID().uuidString
-    let copy5 = UUID().uuidString
     copyToClipboard(copy3)
     copyToClipboard(copy4)
-    copyToClipboard(copy5)
     waitUntilNotBusy()
     
-    exitQueueMode()
+    openUnexpandedMenu()
+    hover(menuItems[copy3].firstMatch)
+    app.typeKey(.delete, modifierFlags: [.command])
     
-    assertNotInQueueMode()
+    assertQueueSize(is: 1)
+
+    openUnexpandedMenu()
+    hover(menuItems[copy4].firstMatch)
+    app.typeKey(.delete, modifierFlags: [.command])
+    
+    assertQueueSize(is: 0)
+    exitQueueMode()
+  }
+  
+  func test21DeleteLastToFirst() {
+    enterQueueMode()
+    
+    let copy3 = UUID().uuidString
+    let copy4 = UUID().uuidString
+    copyToClipboard(copy3)
+    copyToClipboard(copy4)
+    waitUntilNotBusy()
+    
+    openUnexpandedMenu()
+    hover(menuItems[copy4].firstMatch)
+    app.typeKey(.delete, modifierFlags: [.command])
+    
+    assertQueueSize(is: 1)
+    
+    openUnexpandedMenu()
+    hover(menuItems[copy3].firstMatch)
+    app.typeKey(.delete, modifierFlags: [.command])
+    
+    assertQueueSize(is: 0)
+    exitQueueMode()
   }
   
 }
