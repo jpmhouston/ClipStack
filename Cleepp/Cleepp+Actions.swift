@@ -128,8 +128,11 @@ extension Cleepp {
     
     Self.queueSize += 1
     
-    // revert pasteboard back to first item in the queue (don't have to when queueSize is now 1)
-    if let index = queueHeadIndex, index > 0 && index < history.count {
+    // in "pro" queue mode, always keep clipboard set to the next iten to paste
+    // (don't have to when queueSize is now 1)
+    if UserDefaults.standard.proQueueMode && Self.queueSize > 1,
+       let index = queueHeadIndex, index > 0 && index < history.count
+    {
       clipboard.copy(history.all[index])
     }
     
@@ -158,7 +161,7 @@ extension Cleepp {
       return
     }
     
-    guard Self.isQueueModeOn && Self.queueSize > 0 else {
+    guard Self.isQueueModeOn && Self.queueSize > 0, let index = queueHeadIndex, index < history.count else {
       return
     }
     guard accessibilityCheck() else {
@@ -167,31 +170,41 @@ extension Cleepp {
     
     Self.busy = true
     
+    // set clipboard to the next queued item to be pasted (in "pro" queue mode it already is)
+    if !UserDefaults.standard.proQueueMode {
+      clipboard.copy(history.all[index])
+    }
+    
     let decrementQueueDelay = extraDelayOnQueuedPaste ? extraPasteDelay : standardPasteDelay
     
-    // make the frontmost application perform a paste
-    clipboard.invokeApplicationPaste() { [weak self] in
-      guard self != nil else { return }
+    // make the frontmost application perform a paste, then advance the queue after our
+    // heuristic delay, keep the app from doing anything else until them
+    invokeApplicationPaste(plusDelay: decrementQueueDelay) { [weak self] in
+      guard let self = self else { return }
       
-      // advance queue only after out delay, keep the app from doing anything else until them
-      DispatchQueue.main.asyncAfter(deadline: .now() + decrementQueueDelay) { [weak self] in
-        guard let self = self else { return }
-        
-        self.decrementQueue()
-        
-        Self.busy = false
-        
-        #if FOR_APP_STORE
-          // TODO: enable reviews when this target is truly building for the app store
-//        if !Self.isQueueModeOn {
-//          AppStoreReview.ask(after: 20)
-//        }
-        #endif
+      self.decrementQueue()
+      
+      Self.busy = false
+      
+      #if FOR_APP_STORE
+        // TODO: enable reviews when this target is truly building for the app store
+//      if !Self.isQueueModeOn {
+//        AppStoreReview.ask(after: 20)
+//      }
+      #endif
+    }
+  }
+  
+  func invokeApplicationPaste(plusDelay delay: DispatchTimeInterval, then completion: @escaping () -> Void) {
+    clipboard.invokeApplicationPaste() {
+      // paste is always followed by a delay to give the frontmost app time to start performing the paste
+      DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+        completion()
       }
     }
   }
   
-  func decrementQueue(withIconUpdates updateIcon: Bool = true) {
+  func decrementQueue() {
     guard Self.isQueueModeOn && Self.queueSize > 0 else {
       return
     }
@@ -200,13 +213,15 @@ extension Cleepp {
     
     if Self.queueSize <= 0 {
       Self.isQueueModeOn = false
+    } else if !UserDefaults.standard.proQueueMode {
+      // in easy queue more restore the clipboard to the last item copied
+      clipboard.copy(history.all.first)
     } else if let index = queueHeadIndex, index < history.count {
+      // in "pro" queue mode, always keep clipboard set to the next iten to paste
       clipboard.copy(history.all[index])
     }
     
-    if updateIcon {
-      updateStatusMenuIcon(.decrement)
-    }
+    updateStatusMenuIcon(.decrement)
     updateMenuTitle()
     menu.updateHeadOfQueue(index: queueHeadIndex)
   }
@@ -270,10 +285,20 @@ extension Cleepp {
     } else {
       Self.busy = true
       
+      // menu icon will show this for the duration
       setStatusMenuIcon(to: .cleepMenuIconListMinus)
       
       queuedPasteMultipleIterator(count) {
+        // finally fix icon and clipboard state, not done inbetween each paste
         self.updateStatusMenuIcon()
+        
+        if !Self.isQueueModeOn {
+          // no need to change, should already be the last thing copied (same as either beanch below)
+        } else if !UserDefaults.standard.proQueueMode {
+          self.clipboard.copy(self.history.all.first)
+        } else if let index = self.queueHeadIndex, index < self.history.count {
+          self.clipboard.copy(self.history.all[index])
+        }
         
         Self.busy = false
         
@@ -288,28 +313,39 @@ extension Cleepp {
   }
   
   private func queuedPasteMultipleIterator(_ count: Int, then completion: @escaping ()->Void) {
-    // make the frontmost application perform a paste again & again until count decrements to 0
-    if count > 0 {
-      nop() // TODO: remove once no longer need a breakpoint here
-      
-      clipboard.invokeApplicationPaste() { [weak self] in
-        guard let self = self else { return }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + self.pasteMultipleDelay) { [weak self] in
-          guard let self = self else { return }
-          
-          self.decrementQueue(withIconUpdates: false)
-          
-          self.queuedPasteMultipleIterator(count - 1, then: completion)
-        }
-      }
-    } else {
+    guard count > 0, let index = queueHeadIndex, index < history.count else {
+      // don't expect to ever be called with count = 0, exit condition is below, before recursive call
       completion()
+      return
     }
-  }
-  
-  func copy(string: String, excludedFromHistory: Bool) {
-    clipboard.copy(string, excludeFromHistory: excludedFromHistory)
+    
+    // set clipboard to the next queued item to be pasted (though its redundant
+    // on the first iteration when in "pro" queue mode)
+    clipboard.copy(history.all[index])
+    
+    nop() // TODO: remove once no longer need a breakpoint here
+    
+    // make the frontmost application perform a paste, then advance the queue after our long delay
+    // and either exit or recurse
+    invokeApplicationPaste(plusDelay: self.pasteMultipleDelay) { [weak self] in
+      guard let self = self else { return }
+      
+      // do work of decrementQueue(), with icon and clipboard churn omitted
+      Self.queueSize -= 1
+      if Self.queueSize <= 0 {
+        Self.isQueueModeOn = false
+      }
+      
+      updateMenuTitle()
+      menu.updateHeadOfQueue(index: queueHeadIndex)
+      
+      // exit if either queue empty of count exhausted, otherwise recurse
+      if !Self.isQueueModeOn || count <= 1 {
+        completion()
+      } else {
+        self.queuedPasteMultipleIterator(count - 1, then: completion)
+      }
+    }
   }
   
   @IBAction
@@ -456,9 +492,9 @@ extension Cleepp {
     }
     
     // Normally set pasteboard to the previous history item, now first in the history after doing the
-    // delete above. However if have items queued we instead don't want to change the pasteboard at all,
-    // it needs to stay set to the front item in the queue.
-    if !Self.isQueueModeOn || Self.queueSize == 0 {
+    // delete above. However if have items queued and in "pro" qyeye mode, we instead don't want to
+    // change the pasteboard at all, it needs to stay set to the front item in the queue.
+    if !(UserDefaults.standard.proQueueMode && Self.isQueueModeOn && Self.queueSize > 0) {
       if let replaceItem = history.first {
         clipboard.copy(replaceItem)
       } else {

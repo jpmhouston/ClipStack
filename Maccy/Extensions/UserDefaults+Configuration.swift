@@ -38,6 +38,7 @@ extension UserDefaults {
     static let highlightMatch = "highlightMatch"
     #if CLEEPP
     static let completedIntro = "completedIntro"
+    static let proQueueMode = "proQueueMode"
     #endif
 
     static var showInStatusBar: String {
@@ -264,6 +265,11 @@ extension UserDefaults {
   public var completedIntro: Bool {
     get { bool(forKey: Keys.completedIntro) }
     set { set(newValue, forKey: Keys.completedIntro) }
+  }
+  
+  public var proQueueMode: Bool {
+    get { bool(forKey: Keys.proQueueMode) }
+    set { set(newValue, forKey: Keys.proQueueMode) }
   }
   #endif
 }

@@ -479,7 +479,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyDocumentationWebpage(_ sender: AnyObject) {
-    cleepp.copy(string: Cleepp.homepageURL, excludedFromHistory: false)
+    Clipboard.shared.copy(Cleepp.homepageURL, excludeFromHistory: false)
   }
   
   @IBAction func openGitHubWebpage(_ sender: AnyObject) {
@@ -487,7 +487,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyGitHubWebpage(_ sender: AnyObject) {
-    cleepp.copy(string: Cleepp.githubURL, excludedFromHistory: false)
+    Clipboard.shared.copy(Cleepp.githubURL, excludeFromHistory: false)
   }
   
   @IBAction func openDonationWebpage(_ sender: AnyObject) {
@@ -495,7 +495,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyDonationWebpage(_ sender: AnyObject) {
-    cleepp.copy(string: Cleepp.donationURL, excludedFromHistory: false)
+    Clipboard.shared.copy(Cleepp.donationURL, excludeFromHistory: false)
   }
 
   @IBAction func openMaccyWebpage(_ sender: AnyObject) {
@@ -503,7 +503,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyMaccyWebpage(_ sender: AnyObject) {
-    cleepp.copy(string: Cleepp.maccyURL, excludedFromHistory: false)
+    Clipboard.shared.copy(Cleepp.maccyURL, excludeFromHistory: false)
   }
   
   @IBAction func sendSupportEmail(_ sender: AnyObject) {
@@ -511,7 +511,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copySupportEmail(_ sender: AnyObject) {
-    cleepp.copy(string: Cleepp.supportEmailAddress, excludedFromHistory: false)
+    Clipboard.shared.copy(Cleepp.supportEmailAddress, excludeFromHistory: false)
   }
   
   @IBAction func sendLocalizeVolunteerEmail(_ sender: AnyObject) {
@@ -519,7 +519,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   @IBAction func copyLocalizeVolunteerEmail(_ sender: AnyObject) {
-    cleepp.copy(string: Cleepp.localizeVolunteerEmailAddress, excludedFromHistory: false)
+    Clipboard.shared.copy(Cleepp.localizeVolunteerEmailAddress, excludeFromHistory: false)
   }
   
   // MARK: -
