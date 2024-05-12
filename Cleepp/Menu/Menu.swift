@@ -220,7 +220,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       insertTopAnchorItem()
     }
     
-    let historyItems = history.all
+    let historyItems = history.all.prefix(maxMenuItems)
     
     for item in historyItems {
       let menuItems = buildMenuItemAlternates(item)
