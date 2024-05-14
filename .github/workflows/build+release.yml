@@ -7,7 +7,7 @@ on:
       - forkmain
     inputs:
       releaseVersion:
-        description: "Version to title release with (like: 1.0rc3)"
+        description: "Version to title release with (like: 1.0rc3), blank for project's version"
         type: string
         required: false
       isPrerelease:
@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # required for 'git show-ref --tags' to work
       
       - name: Patch Xcode 15.3
         uses: jpmhouston/patch-package-resolved@v1
@@ -54,8 +56,11 @@ jobs:
           version=$(xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -showBuildSettings \
             | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
-          
-          if [[ -z "${{ inputs.releaseVersion }}" ]] ; then
+
+          if [[ -z $version ]] ; then
+            echo "::error::Unable to determine a version number for the current state of the xcode project"
+            exit 1
+          elif [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
             echo "- Build version is $version"
           else
             echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
@@ -64,13 +69,15 @@ jobs:
           releaseName="${{ env.productname }} $version"
           
           echo "- Parsing trigger"
-          if [[ ${{ github.event_name }} == "workflow_dispatch" ]] && git show-ref --tags v$version --quiet ; then
-            tag="v$version"
-            echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
-          elif [[ ${{ github.event_name }} == "workflow_dispatch" ]] ; then
-            echo "- Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
-            echo "::notice::Will skip notarizing and updating sparkle appcast"
-          elif [[ ${{ github.ref }} == 'refs/tags/'* ]] ; then
+          if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
+            if git show-ref --tags --verify refs/tags/v$version --quiet ; then
+              tag="v$version"
+              echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
+            else
+              echo "- Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
+              echo "::notice::Will skip notarizing and updating sparkle appcast"
+            fi
+          elif [[ "${{ github.ref }}" == refs/tags/* ]] ; then
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
             echo "- Will build and draft release \"$releaseName\" because triggered by pushed tag \"$tag\""
@@ -81,7 +88,7 @@ jobs:
           
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
-          if [[ -n "$tag" ]] ; then
+          if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
       
@@ -92,7 +99,7 @@ jobs:
           echo "- Collecting release notes"
           allNotesFilename=releasenotes.md
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
-          if [[ ! -f "$allNotesFilename" ]] ; then
+          if [[ ! -f $allNotesFilename ]] ; then
             echo "::error::Release notes file is missing"
             exit 1
           fi
@@ -101,16 +108,16 @@ jobs:
           thisversion=''
           prevversion=''
           while read line || [[ -n $line ]] ; do
-            if [[ -z "$thisversion" ]]; then
+            if [[ -z $thisversion ]]; then
               thisversion=$(echo $line | sed -n -e '/^# / s/^# //p')
-              if [[ -n "$thisversion" && "$thisversion" != "${{ steps.version.outputs.version }}" ]] ; then
+              if [[ -n $thisversion && $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
                 echo "::warning::Version $thisversion at the top of the release notes doesn't match build version ${{ steps.version.outputs.version }}"
                 break
               fi
               continue
             fi
             prevversion=$(echo $line | sed -n -e '/^# / s/^# //p')
-            if [[ -n "$prevversion" ]] ; then
+            if [[ -n $prevversion ]] ; then
               break
             fi
             echo $line >> "$currentNotesFilename"
@@ -327,7 +334,7 @@ jobs:
           body_path: "${{ steps.notes.outputs.notesMarkdown }}"
           files: "${{ steps.zip.outputs.file }}"
           fail_on_unmatched_files: true
-
+      
       - name: Fin
         run: |
           :
