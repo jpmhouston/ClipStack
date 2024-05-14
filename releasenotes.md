@@ -1,3 +1,10 @@
+# 0.9.8
+
+- Change what is left on the clipboard when collecting clipboard items in queue mode, keep last copied item on clipboard and when Paste & Advance switch to desired item before invoking application's paste.
+- Fixed bug where Delete History Item wasn't enabled sometimes, particularly when there's only one history item in the menu.
+- Fixed bug affecting performace where all history items were added to the menu on first launch, instead of the count in the settings, most of which then have to be removed when the menu is first opened.
+- Implemented some Cleepp specific UI Tests, adapting some Mappy tests and then adding ones for using queue copy and paste.
+
 # 0.9.7
 
 - Prevent double paste when using Cleepp shortcut, or paste while Paste All / Paste Multiple is occurring.
