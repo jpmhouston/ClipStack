@@ -189,7 +189,7 @@ jobs:
           # We finally codesign our app bundle, specifying the Hardened runtime option
           
           echo "- Sign"
-          /usr/bin/codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+          xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
             --options runtime "Build/Products/Release/${{ env.app }}" -v
       
       - name: "Notarize app bundle"
@@ -275,15 +275,19 @@ jobs:
             echo "::error::Secret SPARKLE_PRIVATE_KEY not defined"
             exit 1
           fi
+          if ! command -v pandoc >/dev/null 2>&1 || ! command -v generate_appcast >/dev/null 2>&1 ; then
+            echo "::error::Required executables not all found: pandoc, generate_appcast"
+            exit 1
+          fi
           
           currentNotesFilename="${{ steps.notes.outputs.notesMarkdown }}"
           htmlNotesFilename="${{ steps.version.outputs.releaseName }}.html" # name must be this for generate-appcast
           htmlTemplateFilename=htmlnotestemplate.html
           
           echo "- Converting release notes to html"
-          echo '$body$' > "$htmltemplatefilename"
-          pandoc --standalone --template "$htmltemplatefilename" --metadata title="Release Notes" \
-            "$currentnotesfilename" > "$htmlnotesfilename"
+          echo '$body$' > "$htmlTemplateFilename"
+          pandoc --standalone --template "$htmlTemplateFilename" --metadata title="Release Notes" \
+            "$currentNotesFilename" > "$htmlNotesFilename"
           
           echo "- Updating appcast"
           echo "::add-mask::$PRIVATE_KEY_SECRET"
