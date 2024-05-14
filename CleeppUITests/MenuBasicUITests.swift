@@ -57,7 +57,6 @@ class MenuBasicUITests: CleeppUITestBase {
     copyToClipboard(url: file2)
     copyToClipboard(url: file1)
     openExpandedMenu()
-    checkForBonusFeatures()
     XCTAssertEqual(visibleMenuItemTitles[firstHistoryIndex...firstHistoryIndex + 1],
                    [file1.absoluteString, file2.absoluteString])
     
@@ -68,7 +67,6 @@ class MenuBasicUITests: CleeppUITestBase {
     copyToClipboard(data: html2, .html)
     copyToClipboard(data: html1, .html)
     openExpandedMenu()
-    checkForBonusFeatures()
     XCTAssertEqual(visibleMenuItemTitles[firstHistoryIndex...firstHistoryIndex + 1],
                    ["foo", "bar"])
     
@@ -79,7 +77,6 @@ class MenuBasicUITests: CleeppUITestBase {
     //   copyToClipboard(rtf2, .rtf)
     //   copyToClipboard(rtf1, .rtf)
     //   openExpandedMenu()
-    //   checkForBonusFeatures()
     //   XCTAssertEqual(visibleMenuItemTitles()[firstHistoryIndex...firstHistoryIndex + 1],
     //                  ["foo", "bar"])
     //

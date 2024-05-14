@@ -29,6 +29,7 @@ class QueueUITests: CleeppUITestBase {
     
     openUnexpandedMenu()
     clickWhenExists(menuItems["Cancel Collecting / Replaying"])
+    waitUntilNotBusy()
     assertNotInQueueMode()
     
     // with control-click on status item
@@ -52,28 +53,20 @@ class QueueUITests: CleeppUITestBase {
     copyToClipboard(copy3)
     copyToClipboard(copy4)
     copyToClipboard(copy5)
+    
     waitUntilNotBusy()
-    
     exitQueueMode()
-    
     assertNotInQueueMode()
   }
   
   func test10MenuCopyPaste() throws {
-    openUnexpandedMenu()
-    clickWhenExists(menuItems["Copy & Collect"])
-    waitUntilNotBusy()
-    openUnexpandedMenu()
-    clickWhenExists(menuItems["Copy & Collect"])
-    waitUntilNotBusy()
+    selectMenuItemWhenNotBusy(menuItems["Copy & Collect"])
+    selectMenuItemWhenNotBusy(menuItems["Copy & Collect"])
     
-    openUnexpandedMenu()
-    clickWhenExists(menuItems["Paste & Advance"])
-    waitUntilNotBusy()
-    openUnexpandedMenu()
-    clickWhenExists(menuItems["Paste & Advance"])
-    waitUntilNotBusy()
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
     
+    waitUntilNotBusy()
     assertNotInQueueMode()
   }
   
@@ -84,18 +77,17 @@ class QueueUITests: CleeppUITestBase {
     let copy4 = UUID().uuidString
     copyToClipboard(copy3)
     copyToClipboard(copy4)
-    waitUntilNotBusy()
     
+    waitUntilNotBusy()
     openUnexpandedMenu()
     assertExists(menuItems[copy3])
     assertExists(menuItems[copy4])
     closeMenu()
     
-    app.typeKey("v", modifierFlags: [.control, .command])
-    waitUntilNotBusy()
-    app.typeKey("v", modifierFlags: [.control, .command])
-    waitUntilNotBusy()
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
     
+    waitUntilNotBusy()
     assertNotInQueueMode()
   }
   
@@ -106,20 +98,17 @@ class QueueUITests: CleeppUITestBase {
     let copy4 = UUID().uuidString
     copyToClipboard(copy3)
     copyToClipboard(copy4)
-    waitUntilNotBusy()
     
-    app.typeKey("v", modifierFlags: [.control, .command])
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
     waitUntilNotBusy()
     
     let copy5 = UUID().uuidString
     copyToClipboard(copy5)
-    waitUntilNotBusy()
     
-    app.typeKey("v", modifierFlags: [.control, .command])
-    waitUntilNotBusy()
-    app.typeKey("v", modifierFlags: [.control, .command])
-    waitUntilNotBusy()
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
+    selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
     
+    waitUntilNotBusy()
     assertNotInQueueMode()
   }
   
@@ -130,18 +119,21 @@ class QueueUITests: CleeppUITestBase {
     let copy4 = UUID().uuidString
     copyToClipboard(copy3)
     copyToClipboard(copy4)
+    
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3].firstMatch, key: .delete, modifierFlags: [.command])
+//    openUnexpandedMenu()
+//    hover(menuItems[copy3].firstMatch)
+//    app.typeKey(.delete, modifierFlags: [.command])
+    
     waitUntilNotBusy()
-    
-    openUnexpandedMenu()
-    hover(menuItems[copy3].firstMatch)
-    app.typeKey(.delete, modifierFlags: [.command])
-    
     assertQueueSize(is: 1)
-
-    openUnexpandedMenu()
-    hover(menuItems[copy4].firstMatch)
-    app.typeKey(.delete, modifierFlags: [.command])
     
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4].firstMatch, key: .delete, modifierFlags: [.command])
+//    openUnexpandedMenu()
+//    hover(menuItems[copy4].firstMatch)
+//    app.typeKey(.delete, modifierFlags: [.command])
+    
+    waitUntilNotBusy()
     assertQueueSize(is: 0)
     exitQueueMode()
   }
@@ -153,18 +145,21 @@ class QueueUITests: CleeppUITestBase {
     let copy4 = UUID().uuidString
     copyToClipboard(copy3)
     copyToClipboard(copy4)
+    
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4].firstMatch, key: .delete, modifierFlags: [.command])
+//    openUnexpandedMenu()
+//    hover(menuItems[copy4].firstMatch)
+//    app.typeKey(.delete, modifierFlags: [.command])
+    
     waitUntilNotBusy()
-    
-    openUnexpandedMenu()
-    hover(menuItems[copy4].firstMatch)
-    app.typeKey(.delete, modifierFlags: [.command])
-    
     assertQueueSize(is: 1)
     
-    openUnexpandedMenu()
-    hover(menuItems[copy3].firstMatch)
-    app.typeKey(.delete, modifierFlags: [.command])
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3].firstMatch, key: .delete, modifierFlags: [.command])
+//    openUnexpandedMenu()
+//    hover(menuItems[copy3].firstMatch)
+//    app.typeKey(.delete, modifierFlags: [.command])
     
+    waitUntilNotBusy()
     assertQueueSize(is: 0)
     exitQueueMode()
   }

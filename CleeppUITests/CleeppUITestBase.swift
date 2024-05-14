@@ -207,13 +207,62 @@ class CleeppUITestBase: XCTestCase {
     usleep(500_000)  // wait for search throttle
   }
   
-  func waitUntilNotBusy() {
+  func waitUntilNotBusy(inExpandedMenu: Bool = false) {
     let predicate = NSPredicate { _, _ in
-      self.openUnexpandedMenu()
+      if inExpandedMenu {
+        self.openExpandedMenu()
+      } else {
+        self.openUnexpandedMenu()
+      }
       let items = self.app.statusItems.firstMatch.descendants(matching: .menuItem)
       let ready = items["Copy & Collect"].isHittable
       self.closeMenu()
       return ready
+    }
+    expectation(for: predicate, evaluatedWith: nil)
+    waitForExpectations(timeout: 10)
+  }
+  
+  func selectMenuItemWhenNotBusy(_ menuElement: XCUIElement, inExpandedMenu: Bool = false) {
+    let predicate = NSPredicate { _, _ in
+      // procedural actions inappropriate in a predicate? seems to work tho
+      if inExpandedMenu {
+        self.openExpandedMenu()
+      } else {
+        self.openUnexpandedMenu()
+      }
+      let items = self.app.statusItems.firstMatch.descendants(matching: .menuItem)
+      let ready = items["Copy & Collect"].isHittable && menuElement.isHittable
+      if !ready {
+        self.closeMenu()
+        return false
+      } else {
+        menuElement.click()
+        return true
+      }
+    }
+    expectation(for: predicate, evaluatedWith: nil)
+    waitForExpectations(timeout: 10)
+  }
+  
+  func hoverOnMenuItemAndTypeWhenNotBusy(_ menuElement: XCUIElement, inExpandedMenu: Bool = false, key: XCUIKeyboardKey, modifierFlags: XCUIElement.KeyModifierFlags) {
+    let predicate = NSPredicate { _, _ in
+      // procedural actions inappropriate in a predicate? seems to work tho
+      if inExpandedMenu {
+        self.openExpandedMenu()
+      } else {
+        self.openUnexpandedMenu()
+      }
+      let items = self.app.statusItems.firstMatch.descendants(matching: .menuItem)
+      let ready = items["Copy & Collect"].isHittable && menuElement.exists
+      if !ready {
+        self.closeMenu()
+        return false
+      } else {
+        menuElement.hover()
+        self.app.typeKey(key, modifierFlags: modifierFlags)
+        return true
+      }
     }
     expectation(for: predicate, evaluatedWith: nil)
     waitForExpectations(timeout: 10)
