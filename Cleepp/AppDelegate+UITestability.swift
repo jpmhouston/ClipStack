@@ -8,8 +8,6 @@
 
 import AppKit
 
-#if DEBUG
-
 extension AppDelegate {
   
   // until i re-architect use allow a mock clipboard object, the real clipboard obj should have
@@ -25,6 +23,12 @@ extension AppDelegate {
   //    action()
   //    return
   //  }
+  
+#if !DEBUG
+  static var performingUITest: Bool { false }
+  static var shouldFakeAppInteraction: Bool { false }
+  
+#else
   
   static var performingUITest: Bool {
     CommandLine.arguments.contains("ui-testing")
@@ -162,6 +166,6 @@ extension AppDelegate {
     window.close()
   }
   
-}
-
 #endif // DEBUG
+  
+}
