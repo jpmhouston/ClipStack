@@ -15,12 +15,18 @@ on:
         type: boolean
         required: true
         default: true
+      updateAppcast:
+        description: "Update Sparkle Appcast"
+        type: boolean
+        required: true
+        default: true
 
 env:
   projectfile: Maccy.xcodeproj
   productname: Cleepp
   buildscheme: Cleepp
   bundlename: Cleepp.app
+  builddir: Build/Products/Release
 
 jobs:
   build:
@@ -41,12 +47,13 @@ jobs:
         #     to continue: unknown 'PinsStorage' version '3'
         # should probably remove this when upgrading the "runs-on" platform
       
-      - name: Install pandoc
+      - name: Install tools
         # pandoc is used by sparkle step and by one of the xcode project's build rules
+        # create-dmg is to define dmg entirely from script below instead of using a tempplate
         run: |
           :
           brew update
-          brew install pandoc
+          brew install pandoc create-dmg
       
       - name: Validate
         id: version
@@ -92,69 +99,50 @@ jobs:
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
       
-      - name: Release Notes
-        id: notes
+      - name: Build
+        id: build
         run: |
           :
-          echo "- Collecting release notes"
-          allNotesFilename=releasenotes.md
-          currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
-          if [[ ! -f $allNotesFilename ]] ; then
-            echo "::error::Release notes file is missing"
+          if ! command -v xcodebuild >/dev/null 2>&1 || ! command -v xcbeautify >/dev/null 2>&1 \
+            || [[ ! -x /usr/libexec/PlistBuddy ]]
+          then
+            echo "::error::Required executables not found: xcodebuild, xcbeautify, PlistBuddy"
             exit 1
           fi
           
-          echo -n "" > "$currentNotesFilename"
-          thisversion=''
-          prevversion=''
-          while read line || [[ -n $line ]] ; do
-            if [[ -z $thisversion ]]; then
-              thisversion=$(echo $line | sed -n -e '/^# / s/^# //p')
-              if [[ -n $thisversion && $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
-                echo "::warning::Version $thisversion at the top of the release notes doesn't match build version ${{ steps.version.outputs.version }}"
-                break
-              fi
-              continue
-            fi
-            prevversion=$(echo $line | sed -n -e '/^# / s/^# //p')
-            if [[ -n $prevversion ]] ; then
-              break
-            fi
-            echo $line >> "$currentNotesFilename"
-          done < "$allNotesFilename"
-          
-          # sed command removes initial and trailing blank lines, don't ask me how it works
-          # from https://unix.stackexchange.com/a/552195
-          cat "$currentNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
-            | tee "$currentNotesFilename" >/dev/null
-          numlines=$(wc -l "$currentNotesFilename" | cut -w -f2)
-          if [[ $numlines -gt 0 ]] ; then
-            echo "- Saving $numlines lines of release notes to \"$currentNotesFilename\""
-          else
-            echo "- Saving placeholder release notes to \"$currentNotesFilename\""
-            echo "Release notes unavailable at this time" > "$currentNotesFilename"
-          fi
-          
-          echo "notesMarkdown=$currentNotesFilename" >> $GITHUB_OUTPUT
-      
-      - name: Build
-        run: |
-          :
-          xcodebuild -version
-          
+          echo "- Build with xcodebuild from $(xcodebuild -version)"
           # requires that env.projectfile is the name of the .xcodeproj, env.buildscheme is
           # a valid build scheme, and and env.bundlename is name of the produced .app
           set -o pipefail && xcodebuild clean build analyze \
             -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -derivedDataPath . | \
             xcbeautify --renderer github-actions --preserve-unbeautified
+          
+          echo "- Extract bundle version from app"
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' \
+            "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist"
+          bundleVersion=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' \
+            "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist" 2> /dev/null)
+          if [[ -z bundleversion.txt && "${{ inputs.updateAppcast }}" == "true" ]] ; then
+            echo "::error::Unable to find app's bundle version"
+            exit 1
+          elif [[ -z bundleversion.txt ]] ; then
+            echo "::warning::Unable to find app's bundle version, workflows updating Sparkle appcast require this, but this one can continue"
+          fi
+          
+          echo "version=$bundleVersion" >> $GITHUB_OUTPUT
       
       - name: "Codesign app bundle"
         run: |
           :
-          test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
-          ls -ald "Build/Products/Release/"*.app
+          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
+          ls -ald "${{ env.builddir }}/"*.app
           exit 0 # !!! until the above env vars are correctly defined
+          
+          if ! command -v xcrun >/dev/null 2>&1 || ! command -v security >/dev/null 2>&1 ; then
+            echo "::error::Required executables not found: xcrun, security"
+            exit 1
+          fi
           
           if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE }}" ]] ; then
             echo "::error::Secret PROD_MACOS_CERTIFICATE not defined"
@@ -197,13 +185,13 @@ jobs:
           
           echo "- Sign"
           xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
-            --options runtime "Build/Products/Release/${{ env.app }}" -v
+            --options runtime "${{ env.builddir }}/${{ env.app }}" -v
       
       - name: "Notarize app bundle"
         if: success() && steps.version.outputs.tag
         run: |
           :
-          test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
+          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
           exit 0 # !!! until the above env vars are correctly defined
           
           if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" ]] ; then
@@ -233,7 +221,7 @@ jobs:
           # notarization service
           
           echo "- Create temp notarization archive"
-          ditto -c -k --keepParent "Build/Products/Release/${{ env.bundlename }}" "notarization.zip"
+          ditto -c -k --keepParent "${{ env.builddir }}/${{ env.bundlename }}" "notarization.zip"
           
           # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
           # This typically takes a few seconds inside a CI environment, but it might take more depending on the App
@@ -246,66 +234,166 @@ jobs:
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "- Attach staple"
-          xcrun stapler staple "Build/Products/Release/${{ env.bundlename }}"
+          xcrun stapler staple "${{ env.builddir }}/${{ env.bundlename }}"
       
       - name: Build Zip File
         id: zip
         run: |
           :
-          test -d "Build/Products/Release/${{ env.bundlename }}" || exit 1
+          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
           
-          readmeFileName="/${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
+          archiveDir="${{ env.builddir }}/Sparkle"
           archiveFileName="${{ steps.version.outputs.releaseName }}.zip"
-          archiveDir="Build/Products/Release/${{ steps.version.outputs.releaseName }}"
-          archiveFile="Build/Products/Release/$archiveFileName"
           
-          echo "- Assemble built app and readme file \"$readmeFileName\" in ${archiveDir}"
+          echo "- Compress built app to \"$(basename $archiveDir)/$archiveFileName\""
           mkdir "$archiveDir"
-          cp "Designs/Cleepp/Cleepp download read me.rtf" "$archiveDir/$readmeFileName"
-          mv "Build/Products/Release/${{ env.bundlename }}" "$archiveDir"
+          ditto -c -k --sequesterRsrc --keepParent "${{ env.builddir }}/${{ env.bundlename }}" \
+            "$archiveDir/$archiveFileName"
           
-          echo "- Create \"${archiveFileName}\" from contents of ${archiveDir}"
-          ditto -c -k --sequesterRsrc --keepParent "$archiveDir" "${archiveFile}"
+          echo "file=$archiveDir/$archiveFileName" >> $GITHUB_OUTPUT
+          echo "directory=$archiveDir" >> $GITHUB_OUTPUT
+      
+      - name: Disk Image
+        id: dmg
+        run: |
+          :
+          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
           
-          echo "file=${archiveFile}" >> $GITHUB_OUTPUT
+          if ! command -v create-dmg >/dev/null 2>&1 ; then
+            echo "::warning::Required helper script not found: create-dmg. Skipping dmg creation"
+            # not sure if need to do `echo "file=whatever" >> $GITHUB_OUTPUT`
+            # to make release step work, or if empty/missing steps.dmg.output.file is ok
+            exit 0
+          fi
+          
+          imageDir="${{ env.builddir }}/Image"
+          imageFileName="${{ steps.version.outputs.releaseName }}.dmg"
+          readmeFilename="${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
+          
+          echo "- Copy built app to \"$(basename $imageDir)/${{ env.bundlename }}\""
+          mkdir "$imageDir"
+          ditto "${{ env.builddir }}/${{ env.bundlename }}" "$imageDir/${{ env.bundlename }}"
+          
+          echo "- Copy readme file from source repo to \"$(basename $imageDir)/$readmeFilename\""
+          cp "Designs/Cleepp/Cleepp download read me.rtf" "$imageDir/$readmeFilename"
+          
+          echo "- Build disk image \"${{ env.builddir }}/$imageFileName\""
+          create-dmg --hdiutil-quiet \
+            --volname "${{ steps.version.outputs.releaseName }}" \
+            --window-size 540 160 --icon-size 64 \
+            --icon "$readmeFilename" 40 60 \
+            --icon "${{ env.bundlename }}" 200 60 \
+            --app-drop-link 360 60 \
+            "${{ env.builddir }}/$imageFileName" "$imageDir"
+          
+          # IMPORTANT: when notarize enabled above, enable this too
+          #echo "- Attach staple"
+          #xcrun stapler staple "${{ env.builddir }}/$imageFileName"
+          
+          echo "file=${{ env.builddir }}/$imageFileName" >> $GITHUB_OUTPUT
+      
+      - name: Release Notes
+        id: notes
+        run: |
+          :
+          echo "- Collect release notes"
+          allNotesFilename=releasenotes.md
+          currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
+          if [[ ! -f $allNotesFilename ]] ; then
+            echo "::warning::Release notes file is missing"
+            numlines=0
+          else
+            echo -n "" > "${{ env.builddir }}/$currentNotesFilename"
+            thisversion=''
+            prevversion=''
+            while read line || [[ -n $line ]] ; do
+              if [[ -z $thisversion ]]; then
+                thisversion=$(echo $line | sed -n -e '/^# / s/^# //p')
+                if [[ -n $thisversion && $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
+                  echo "::warning::Version $thisversion at the top of the release notes doesn't match build version ${{ steps.version.outputs.version }}"
+                  break
+                fi
+                continue
+              fi
+              prevversion=$(echo $line | sed -n -e '/^# / s/^# //p')
+              if [[ -n $prevversion ]] ; then
+                break
+              fi
+              echo $line >> "${{ env.builddir }}/$currentNotesFilename"
+            done < "$allNotesFilename"
+            
+            # sed command removes initial and trailing blank lines, don't ask me how it works
+            # from https://unix.stackexchange.com/a/552195
+            cat "${{ env.builddir }}/$currentNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
+              | tee "${{ env.builddir }}/$currentNotesFilename" >/dev/null
+            numlines=$(wc -l "${{ env.builddir }}/$currentNotesFilename" | cut -w -f2)
+          fi
+          
+          if [[ $numlines -gt 0 ]] ; then
+            echo "- Save $numlines lines of release notes to \"$currentNotesFilename\""
+          else
+            echo "- Save placeholder release notes to \"$currentNotesFilename\""
+            echo "Release notes unavailable at this time" > "${{ env.builddir }}/$currentNotesFilename"
+          fi
+          
+          echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
       
       - name: Setup Sparkle
-        if: success() && steps.version.outputs.tag
+        if: success() && inputs.updateAppcast && steps.version.outputs.tag
         uses: jozefizso/setup-sparkle@v1
         with:
           version: 2.6.0
       - name: Generate Sparkle appcast.xml
-        if: success() && steps.version.outputs.tag
+        id: sparkle
+        if: success() && inputs.updateAppcast && steps.version.outputs.tag
         run: |
           :
+          echo "::add-mask::${{ secrets.SPARKLE_PRIVATE_KEY }}"
           if [[ -z "${{ secrets.SPARKLE_PRIVATE_KEY }}" ]] ; then
-            echo "::error::Secret SPARKLE_PRIVATE_KEY not defined"
-            exit 1
+            echo "::warning::Secret SPARKLE_PRIVATE_KEY not defined. Skipping Sparkle step"
+            exit 0
           fi
           if ! command -v pandoc >/dev/null 2>&1 || ! command -v generate_appcast >/dev/null 2>&1 ; then
-            echo "::error::Required executables not all found: pandoc, generate_appcast"
-            exit 1
+            echo "::warning::Required executables not found: pandoc, generate_appcast. Skipping Sparkle step"
+            exit 0
           fi
           
-          currentNotesFilename="${{ steps.notes.outputs.notesMarkdown }}"
-          htmlNotesFilename="${{ steps.version.outputs.releaseName }}.html" # name must be this for generate-appcast
+          htmlNotesFilename="$(basename -s .zip "${{ steps.zip.outputs.file }}")".html
           htmlTemplateFilename=htmlnotestemplate.html
+          releasesURL="https://github.com/${{ github.repository }}/releases"
+          downloadURLPrefix="https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/"
           
           echo "- Converting release notes to html"
           echo '$body$' > "$htmlTemplateFilename"
-          pandoc --standalone --template "$htmlTemplateFilename" --metadata title="Release Notes" \
-            "$currentNotesFilename" > "$htmlNotesFilename"
+          if ! pandoc --standalone --template "$htmlTemplateFilename" --metadata title="Release Notes" \
+            "${{ steps.notes.outputs.file }}" \
+            > "${{ steps.zip.outputs.directory }}/$htmlNotesFilename"
+          then
+            echo "::warning::pandoc failed, no new appcast.xml file generated"
+            exit 0
+          fi
           
           echo "- Updating appcast"
-          echo "::add-mask::$PRIVATE_KEY_SECRET"
-          echo "{{ secrets.SPARKLE_PRIVATE_KEY }}" | generate_appcast --ed-key-file - \
-            --link https://github.com/${{ github.repository }}/releases \
-            --download-url-prefix https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/ \
-            --embed-release-notes -o appcast.xml \
-            Build/Products/Release/
+          if ! echo "${{ secrets.SPARKLE_PRIVATE_KEY }}" | generate_appcast --ed-key-file - \
+            --link "$releasesURL" --download-url-prefix "$downloadURLPrefix" \
+            --embed-release-notes --versions "${{ steps.build.outputs.version }}" \
+            -o ./appcast.xml "${{ steps.zip.outputs.directory }}"
+          then
+            echo "::warning::generate_appcast failed, no new appcast.xml file generated"
+            echo
+            echo "ls -alF \"${{ steps.zip.outputs.directory }}\""
+            ls -alF "${{ steps.zip.outputs.directory }}"
+            echo
+            echo "cat \"${{ steps.zip.outputs.directory }}/$htmlNotesFilename\""
+            cat "${{ steps.zip.outputs.directory }}/$htmlNotesFilename"
+            echo
+            exit 0
+          fi
+          
+          echo "appcastGenerated=true" >> $GITHUB_OUTPUT 
       
       - name: Commit appcast.xml
-        if: success() && steps.version.outputs.tag
+        if: success() && inputs.updateAppcast && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
@@ -316,24 +404,28 @@ jobs:
         if: success() && steps.version.outputs.tag == ''
         uses: softprops/action-gh-release@v2
         with:
-          name: "${{ steps.version.outputs.releaseName }}"
+          name: ${{ steps.version.outputs.releaseName }}
           draft: true
           prerelease: ${{ inputs.isPrerelease }}
-          body_path: "${{ steps.notes.outputs.notesMarkdown }}"
-          files: "${{ steps.zip.outputs.file }}"
-          fail_on_unmatched_files: true
+          body_path: ${{ steps.notes.outputs.file }}
+          files: |
+            ${{ steps.zip.outputs.file }}
+            ${{ steps.dmg.outputs.file }}
+          fail_on_unmatched_files: false
       
       - name: Draft Tagged Release
         if: success() && steps.version.outputs.tag
         uses: softprops/action-gh-release@v2
         with:
-          name: "${{ steps.version.outputs.releaseName }}"
-          tag_name: "${{ steps.version.outputs.tag }}"
+          name: ${{ steps.version.outputs.releaseName }}
+          tag_name: ${{ steps.version.outputs.tag }}
           draft: true
           prerelease: ${{ inputs.isPrerelease }}
-          body_path: "${{ steps.notes.outputs.notesMarkdown }}"
-          files: "${{ steps.zip.outputs.file }}"
-          fail_on_unmatched_files: true
+          body_path: ${{ steps.notes.outputs.file }}
+          files: |
+            ${{ steps.zip.outputs.file }}
+            ${{ steps.dmg.outputs.file }}
+          fail_on_unmatched_files: false
       
       - name: Fin
         run: |
