@@ -1,34 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <channel>
-    <title>Cleepp</title>
-    <link>https://raw.githubusercontent.com/jpmhouston/Cleepp/forkmain/appcast.xml</link>
-    <description>Most recent changes with links to updates.</description>
-    <language>en</language>
-    <item>
-      <title>0.9.6</title>
-      <description>
-        <![CDATA[
-          <ul>
-            <li>Fixed regression, replay from history wasn't putting head-of-queue item onto the clipboard.</li>
-            <li>Fixed queue item menu separator was sometimes getting left behind.</li>
-            <li>Made ARM also use a (shorter) delay between paste and advance in hopes of avoiding timing issue seen on Intel systems.</li>
-            <li>Fixed misplaced delay when using Paste All / Paste Multiple, was letting queue advance to happen immediately after invoking paste after all.</li>
-            <li>Created credits and licenses window containing app license, plus mentioning each swift package used and including their licenses.</li>
-            <li>Simplified about box, added link that opens credits and licenses window.</li>
-          </ul>
-        ]]>
-      </description>
-      <pubDate>2024-04-16</pubDate>
-      <releaseNotesLink>https://github.com/jpmhouston/Cleepp/releases/tag/v0.9.6</releaseNotesLink>
-      <sparkle:minimumSystemVersion>10.14</sparkle:minimumSystemVersion>
-      <enclosure
-        url="https://github.com/jpmhouston/Cleepp/releases/download/v0.9.6/Cleepp.0.9.6.zip"
-        sparkle:version="28"
-        sparkle:shortVersionString="0.9.6"
-        length="0"
-        type="application/octet-stream"
-      />
-    </item>
-  </channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+    <channel>
+        <title>Cleepp</title>
+        <link>https://raw.githubusercontent.com/jpmhouston/Cleepp/forkmain/appcast.xml</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>0.9.8</title>
+            <pubDate>Sat, 18 May 2024 04:07:03 +0000</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>855</sparkle:version>
+            <sparkle:shortVersionString>0.9.8</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.14.6</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>Change what is left on the clipboard when collecting clipboard items
+in queue mode, keep last copied item on clipboard and when Paste &amp;
+Advance switch to desired item before invoking application’s paste.</li>
+<li>Fixed bug where Delete History Item wasn’t enabled sometimes,
+particularly when there’s only one history item in the menu.</li>
+<li>Fixed bug affecting performace where all history items were added to
+the menu on first launch, instead of the count in the settings, most of
+which then have to be removed when the menu is first opened.</li>
+<li>Implemented some Cleepp specific UI Tests, adapting some Mappy tests
+and then adding ones for using queue copy and paste.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v0.9.8/Cleepp%200.9.8.zip" length="10059464" type="application/octet-stream" sparkle:edSignature="Mx8iY/LobrUMxBZTPzGp2b/gk/0vuSNRCiOwtlDcFYe7pKafPg/1nNpxRkTv/NiR/TysDcl1obYunlOK8p2GCw=="/>
+        </item>
+    </channel>
 </rss>
