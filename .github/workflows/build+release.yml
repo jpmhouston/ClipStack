@@ -74,6 +74,7 @@ jobs:
             version="${{ inputs.releaseVersion }}"
           fi
           releaseName="${{ env.productname }} $version"
+          releaseNameNoSpaces="${{ env.productname }}.$version"
           
           echo "- Parsing trigger"
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
@@ -95,6 +96,7 @@ jobs:
           
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+          echo "releaseArchivename=$releaseNameNoSpaces" >> $GITHUB_OUTPUT
           if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
@@ -243,7 +245,7 @@ jobs:
           test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
           
           archiveDir="${{ env.builddir }}/Sparkle"
-          archiveFileName="${{ steps.version.outputs.releaseName }}.zip"
+          archiveFileName="${{ steps.version.outputs.releaseArchivename }}.zip"
           
           echo "- Compress built app to \"$(basename $archiveDir)/$archiveFileName\""
           mkdir "$archiveDir"
@@ -267,7 +269,7 @@ jobs:
           fi
           
           imageDir="${{ env.builddir }}/Image"
-          imageFileName="${{ steps.version.outputs.releaseName }}.dmg"
+          imageFileName="${{ steps.version.outputs.releaseArchivename }}.dmg"
           readmeFilename="${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
           
           echo "- Copy built app to \"$(basename $imageDir)/${{ env.bundlename }}\""

@@ -25,7 +25,7 @@ which then have to be removed when the menu is first opened.</li>
 and then adding ones for using queue copy and paste.</li>
 </ul>
 ]]></description>
-            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v0.9.8/Cleepp%200.9.8.zip" length="10059464" type="application/octet-stream" sparkle:edSignature="Mx8iY/LobrUMxBZTPzGp2b/gk/0vuSNRCiOwtlDcFYe7pKafPg/1nNpxRkTv/NiR/TysDcl1obYunlOK8p2GCw=="/>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v0.9.8/Cleepp.0.9.8.zip" length="10059464" type="application/octet-stream" sparkle:edSignature="Mx8iY/LobrUMxBZTPzGp2b/gk/0vuSNRCiOwtlDcFYe7pKafPg/1nNpxRkTv/NiR/TysDcl1obYunlOK8p2GCw=="/>
         </item>
     </channel>
 </rss>
