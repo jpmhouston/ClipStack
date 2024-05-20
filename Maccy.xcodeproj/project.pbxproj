@@ -312,7 +312,7 @@
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).md",
 			);
 			runOncePerArchitecture = 0;
-			script = "# wanted to process only files named xyz.src.md but INPUT_FILE_BASE ends up set to xyz.src not simply xyz,\n# and thus the files written are xyz.src.md/xyz.src.rtf and not xyz.md/xyz.rtf\n# instead markdown files needing conversion to rtf must use alternate markdown extension .mkdn   \nif which -s pandoc ; then\n    echo \"Converting markdown file $INPUT_FILE_NAME to RTF, saving to $INPUT_FILE_BASE.rtf\"\n    pandoc -s -f markdown -t rtf -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\" \"${INPUT_FILE_PATH}\"\nelse\n    echo \"WARNING: pandoc not installed, unable to build ${INPUT_FILE_BASE}.rtf and so app will only display plain markdown text in the Licenses window\"\n    # need the expected rtf file so build doesn't fail, make it empty assuming app will know what to do\n    touch \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\"\nfi\necho \"Also saving markdown file $INPUT_FILE_NAME to $INPUT_FILE_BASE.md (as-is except to remove backslashes)\"\ncat \"${INPUT_FILE_PATH}\" | tr -d '\\' > \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.md\"\n";
+			script = "# wanted to process only files named xyz.src.md but INPUT_FILE_BASE ends up set to xyz.src not simply xyz,\n# and thus the files written are xyz.src.md/xyz.src.rtf and not xyz.md/xyz.rtf\n# instead markdown files needing conversion to rtf must use alternate markdown extension .mkdn\nif which -s pandoc ; then\n    echo \"Converting markdown file $INPUT_FILE_NAME to RTF, saving to $INPUT_FILE_BASE.rtf\"\n    pandoc -s -f markdown -t rtf -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\" \"${INPUT_FILE_PATH}\"\nelse\n    echo \"WARNING: pandoc not installed, unable to build ${INPUT_FILE_BASE}.rtf and so app will only display plain markdown text in the Licenses window\"\n    # need the expected rtf file so build doesn't fail, make it empty assuming app will know what to do\n    touch \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\"\nfi\necho \"Also saving markdown file $INPUT_FILE_NAME to $INPUT_FILE_BASE.md (as-is except to remove backslashes)\"\ncat \"${INPUT_FILE_PATH}\" | tr -d '\\' > \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.md\"\n";
 		};
 		8FB88D7B2BCCEAD6006D48E6 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
@@ -327,7 +327,7 @@
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).md",
 			);
 			runOncePerArchitecture = 0;
-			script = "# wanted to process only files named xyz.src.md but INPUT_FILE_BASE ends up set to xyz.src not simply xyz,\n# and thus the files written are xyz.src.md/xyz.src.rtf and not xyz.md/xyz.rtf\n# instead markdown files needing conversion to rtf must use alternate markdown extension .mkdn   \nif which -s pandoc ; then\n    echo \"Converting markdown file $INPUT_FILE_NAME to RTF, saving to $INPUT_FILE_BASE.rtf\"\n    pandoc -s -f markdown -t rtf -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\" \"${INPUT_FILE_PATH}\"\nelse\n    echo \"WARNING: pandoc not installed, unable to build ${INPUT_FILE_BASE}.rtf and so app will only display plain markdown text in the Licenses window\"\n    # need the expected rtf file so build doesn't fail, make it empty assuming app will know what to do\n    touch \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\"\nfi\necho \"Also saving markdown file $INPUT_FILE_NAME to $INPUT_FILE_BASE.md (as-is except to remove backslashes)\"\ncat \"${INPUT_FILE_PATH}\" | tr -d '\\' > \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.md\"\n";
+			script = "# wanted to process only files named xyz.src.md but INPUT_FILE_BASE ends up set to xyz.src not simply xyz,\n# and thus the files written are xyz.src.md/xyz.src.rtf and not xyz.md/xyz.rtf\n# instead markdown files needing conversion to rtf must use alternate markdown extension .mkdn\nif which -s pandoc ; then\n    echo \"Converting markdown file $INPUT_FILE_NAME to RTF, saving to $INPUT_FILE_BASE.rtf\"\n    pandoc -s -f markdown -t rtf -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\" \"${INPUT_FILE_PATH}\"\nelse\n    echo \"WARNING: pandoc not installed, unable to build ${INPUT_FILE_BASE}.rtf and so app will only display plain markdown text in the Licenses window\"\n    # need the expected rtf file so build doesn't fail, make it empty assuming app will know what to do\n    touch \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.rtf\"\nfi\necho \"Also saving markdown file $INPUT_FILE_NAME to $INPUT_FILE_BASE.md (as-is except to remove backslashes)\"\ncat \"${INPUT_FILE_PATH}\" | tr -d '\\' > \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.md\"\n";
 		};
 /* End PBXBuildRule section */
 
@@ -1409,7 +1409,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --count HEAD)\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F8C48AA2BAD51B000C3A219 /* Copy Launch at Login Helper */ = {
@@ -1452,7 +1452,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --all | wc -l | tr -d ' ')\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
+			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --count HEAD)\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DAC6CE9226E1AC2C002B70B8 /* Copy Launch at Login Helper */ = {
