@@ -57,13 +57,11 @@
 		<string>GetIntent</string>
 		<string>SelectIntent</string>
 	</array>
-	<key>SUEnableDownloaderService</key>
-	<true/>
 	<key>SUEnableInstallerLauncherService</key>
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://raw.githubusercontent.com/jpmhouston/Cleepp/forkmain/appcast.xml</string>
-  <key>SUPublicEDKey</key>
-  <string>v+syb2eSsDiT0B52v/p9VEn2K3AYaKE1qDHeyvTE07Y=</string>
+	<key>SUPublicEDKey</key>
+	<string>v+syb2eSsDiT0B52v/p9VEn2K3AYaKE1qDHeyvTE07Y=</string>
 </dict>
 </plist>
