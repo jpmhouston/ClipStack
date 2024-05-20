@@ -17,7 +17,13 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   private let pasteHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .queuedPaste)
 
   #if ALLOW_SPARKLE_UPDATES
-  private let sparkleUpdateController = SPUStandardUpdaterController(updaterDelegate:nil, userDriverDelegate:nil)
+  private var sparkleUpdateController: SPUStandardUpdaterController? {
+    if !ProcessInfo.processInfo.arguments.contains("ui-testing") {
+      SPUStandardUpdaterController(updaterDelegate:nil, userDriverDelegate:nil)
+    } else {
+      nil
+    }
+  }
   #endif
   
   @IBOutlet weak var copyHotkeyContainerView: NSView!
@@ -29,7 +35,7 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var searchModeButton: NSPopUpButton!
   @IBOutlet weak var checkForUpdatesOptionRow: NSGridRow!
   @IBOutlet weak var checkForUpdatesButtonRow: NSGridRow!
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     copyHotkeyContainerView.addSubview(copyHotkeyRecorder)
@@ -50,19 +56,20 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
 
   @IBAction func sparkleAutomaticUpdatesChanged(_ sender: NSButton) {
     #if ALLOW_SPARKLE_UPDATES
-    sparkleUpdateController.updater.automaticallyChecksForUpdates = (sender.state == .on)
+    sparkleUpdateController?.updater.automaticallyChecksForUpdates = (sender.state == .on)
     #endif
   }
   
   private func populateSparkleAutomaticUpdates() {
     #if ALLOW_SPARKLE_UPDATES
-    automaticUpdatesButton.state = sparkleUpdateController.updater.automaticallyChecksForUpdates ? .on : .off
+    let automatic = sparkleUpdateController?.updater.automaticallyChecksForUpdates ?? false
+    automaticUpdatesButton.state = automatic ? .on : .off
     #endif
   }
   
   @IBAction func sparkleUpdateCheck(_ sender: NSButton) {
     #if ALLOW_SPARKLE_UPDATES
-    sparkleUpdateController.checkForUpdates(sender)
+    sparkleUpdateController?.checkForUpdates(sender)
     #endif
   }
   
