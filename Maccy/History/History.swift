@@ -2,6 +2,7 @@ import AppKit
 
 class History {
   #if CLEEPP
+  var maxItemsOverride = 0
   private var sortBy = "lastCopiedAt"
   #else
   private var sortBy: String { UserDefaults.standard.sortBy }
@@ -13,7 +14,7 @@ class History {
     var items = sorter.sort(HistoryItem.all)
     
     // trim results and the database based on size setting, but also if queueing then include all those
-    let maxItems = max(UserDefaults.standard.size, UserDefaults.standard.maxMenuItems, CleeppMenu.minNumMenuItems, Cleepp.queueSize)
+    let maxItems = max(UserDefaults.standard.size, UserDefaults.standard.maxMenuItems, CleeppMenu.minNumMenuItems, maxItemsOverride)
     while items.count > maxItems {
       remove(items.removeLast())
     }

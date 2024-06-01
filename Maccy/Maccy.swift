@@ -9,17 +9,6 @@ typealias Cleepp = Maccy
 // swiftlint:disable type_body_length
 class Maccy: NSObject {
   static var returnFocusToPreviousApp = true
-  static var isQueueModeOn = false
-  static var queueSize = 0
-  static var busy = false
-  
-  static var allowExpandedHistory = true
-  static var allowFullyExpandedHistory = false
-  static var allowHistorySearch = false
-  static var allowReplayFromHistory = false
-  static var allowPasteMultiple = false
-  static var allowUndoCopy = false
-  static var allowDictinctStorageSize: Bool { Self.allowFullyExpandedHistory || Self.allowHistorySearch }
 
   @objc let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
   var selectedItem: HistoryItem? { (menu.highlightedItem as? HistoryMenuItem)?.item }
@@ -33,35 +22,52 @@ class Maccy: NSObject {
   private var menuController: MenuController!
 
 #if CLEEPP
+  static var busy = false
+  
+  static var allowExpandedHistory = true
+  static var allowFullyExpandedHistory = false
+  static var allowHistorySearch = false
+  static var allowReplayFromHistory = false
+  static var allowPasteMultiple = false
+  static var allowUndoCopy = false
+  static var allowDictinctStorageSize: Bool { Self.allowFullyExpandedHistory || Self.allowHistorySearch }
+  
   #if FOR_APP_STORE
-  private let purchases = Purchases.shared
+  private let purchases = Purchases.shared // TODO: create a normal instance here, not a singleton
   #endif
   internal var introWindowController = IntroWindowController()
   internal var licensesWindowController = LicensesWindowController()
   
-  internal var queueHeadIndex: Int? {
-    if Self.queueSize < 1 {
-      nil
-    } else {
-      Self.queueSize - 1
-    }
-  }
-  internal var permitEmptyQueueMode = false // affects behavior when deleting history items
+  internal var queue: ClipboardQueue! // can this be injected wherever its needed, or must is be static & public?
+  
+  // TODO: create these in the +Actions extension using associated objects?
   internal var iconBlinkTimer: DispatchSourceTimer?
   internal var copyTimeoutTimer: DispatchSourceTimer?
+  
+//  // TODO: remove when replaced by queue properties
+//  static var isQueueModeOn = false
+//  static var queueSize = 0
+//  internal var queueHeadIndex: Int? {
+//    if Self.queueSize < 1 {
+//      nil
+//    } else {
+//      Self.queueSize - 1
+//    }
+//  }
+//  internal var permitEmptyQueueMode = false // affects behavior when deleting history items
   
   private var numberQueuedAlert: NSAlert {
     let alert = NSAlert()
     alert.messageText = NSLocalizedString("number_alert_message", comment: "")
     alert.informativeText = NSLocalizedString("number_alert_comment", comment: "")
-      .replacingOccurrences(of: "{number}", with: String(Self.queueSize))
+      .replacingOccurrences(of: "{number}", with: String(queue.size))
     alert.addButton(withTitle: NSLocalizedString("number_alert_confirm", comment: ""))
     alert.addButton(withTitle: NSLocalizedString("number_alert_cancel", comment: ""))
-    let field = RangedIntegerTextField(acceptingRange: 1...Self.queueSize, permittingEmpty: true,
+    let field = RangedIntegerTextField(acceptingRange: 1...queue.size, permittingEmpty: true,
                                        frame: NSRect(x: 0, y: 0, width: 200, height: 24)) { valid in
       alert.buttons[0].isEnabled = valid
     }
-    field.placeholderString = String(Self.queueSize)
+    field.placeholderString = String(queue.size)
     alert.accessoryView = field
     alert.window.initialFirstResponder = field
     return alert
@@ -85,7 +91,7 @@ class Maccy: NSObject {
     panes: [
       GeneralSettingsViewController(),
       AppearanceSettingsViewController(),
-      PurchaseSettingsViewController(),
+      PurchaseSettingsViewController(), // TODO: pass in purchases instance
       StorageSettingsViewController(),
       IgnoreSettingsViewController(),
       AdvancedSettingsViewController()
@@ -158,7 +164,8 @@ class Maccy: NSObject {
     #if CLEEPP
     initializeFeatureFlags()
     
-    menu = CleeppMenu.load(withHistory: history, owner: self) // its not clear why history isn't a shared instance also
+    queue = ClipboardQueue(clipboard: clipboard, history: history)
+    menu = CleeppMenu.load(withHistory: history, queue: queue, owner: self)
     
     #else
     disableUnusedGlobalHotkeys()
@@ -243,11 +250,11 @@ class Maccy: NSObject {
     updateStatusMenuIcon(UserDefaults.standard.menuIcon)
     #endif
 
+    #if CLEEPP
+    clipboard.onNewCopy(clipboardChanged)
+    #else
     clipboard.onNewCopy(history.add)
     clipboard.onNewCopy(menu.add)
-    #if CLEEPP
-    clipboard.onNewCopy({ _ in self.incrementQueue() })
-    #else
     clipboard.onNewCopy(updateMenuTitle)
     #endif
     clipboard.start()
@@ -371,10 +378,10 @@ class Maccy: NSObject {
       self.menu.clearAll()
       self.clipboard.clear()
       #if CLEEPP
-      Self.queueSize = 0
-      self.updateStatusMenuIcon()
-      #endif
+      self.resetQueue()
+      #else
       self.updateMenuTitle()
+      #endif
     }
   }
 
@@ -406,7 +413,7 @@ class Maccy: NSObject {
     DispatchQueue.main.async {
       if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
         alert.window.orderOut(nil) // i think withClearAlert above should call this too
-        let number = Int(field.stringValue) ?? Self.queueSize
+        let number = Int(field.stringValue) ?? self.queue.size
         closure(number)
       }
       Self.returnFocusToPreviousApp = true
@@ -419,8 +426,8 @@ class Maccy: NSObject {
 
     #if CLEEPP
     menu.buildItems()
-    if Self.isQueueModeOn {
-      menu.updateHeadOfQueue(index: queueHeadIndex)
+    if queue.isOn {
+      menu.updateHeadOfQueue(index: queue.headIndex)
     }
     #else
     menu.removeAllItems()
@@ -432,8 +439,8 @@ class Maccy: NSObject {
 
   internal func updateMenuTitle(_ item: HistoryItem? = nil) {
     #if CLEEPP
-    if Self.isQueueModeOn {
-      statusItem.button?.title = String(Self.queueSize) + "  "
+    if queue.isOn {
+      statusItem.button?.title = String(queue.size) + "  "
     } else {
       statusItem.button?.title = ""
     }

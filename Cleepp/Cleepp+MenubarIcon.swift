@@ -40,22 +40,22 @@ extension Cleepp {
   func updateStatusMenuIcon(_ direction: QueueChangeDirection = .none) {
     let icon: NSImage.Name
     var transition = SymbolTransition.replace
-    if !Self.isQueueModeOn {
+    if !queue.isOn {
       icon = .cleepMenuIcon
       if direction == .decrement {
         transition = .blink(transitionIcon: .cleepMenuIconListMinus)
       }
     } else {
-      if Self.queueSize == 0 {
+      if queue.size == 0 {
         icon = .cleepMenuIconFill
       } else {
         icon = .cleepMenuIconList
       }
       if direction == .decrement {
         transition = .blink(transitionIcon: .cleepMenuIconListMinus)
-      } else if direction == .increment && Self.queueSize == 1 {
+      } else if direction == .increment && queue.size == 1 {
         transition = .blink(transitionIcon: .cleepMenuIconFillPlus)
-      } else if direction == .increment && Self.queueSize > 1 {
+      } else if direction == .increment && queue.size > 1 {
         transition = .blink(transitionIcon: .cleepMenuIconListPlus)
       }
     }

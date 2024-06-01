@@ -22,7 +22,9 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   static let minNumMenuItems = 5 // things get weird if the effective menu size is 0
   
   private var isVisible = false
+  
   private var history: History!
+  private var queue: ClipboardQueue!
   private let previewController = PreviewPopoverController()
   
   class IndexedItem: NSObject {
@@ -42,6 +44,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   private var indexedItems: [IndexedItem] = []
   private var headOfQueueIndexedItem: IndexedItem?
   private var queueItemsSeparator: NSMenuItem?
+  private var disableDeleteTimer: DispatchSourceTimer?
   
   internal var historyMenuItems: [HistoryMenuItem] {
     items.compactMap({ $0 as? HistoryMenuItem }).excluding([topAnchorItem])
@@ -109,7 +112,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   
   // MARK: -
   
-  static func load(withHistory history: History, owner: Any) -> Self {
+  static func load(withHistory history: History, queue: ClipboardQueue, owner: Any) -> Self {
     // somewhat unconventional, perhaps in part because most of this code belongs in a controller class?
     // we already have a MenuController however its used for some other things
     // although since there's no such thing as a NSMenuController would have to do custom loading from nib anyway :shrug:
@@ -123,6 +126,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     }
     
     menu.history = history
+    menu.queue = queue
     return menu
   }
   
@@ -189,6 +193,10 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
     previewController.cancelPopover()
     
+    // forget the outstanding deferred disable of the delete item
+    disableDeleteTimer?.cancel()
+    disableDeleteTimer = nil
+    
     if let historyItem = item as? HistoryMenuItem {
       deleteItem?.isEnabled = !Cleepp.busy
       lastHighlightedItem = historyItem
@@ -201,9 +209,11 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       // when cmd-delete hit, this is first called with nil and then with the
       // delete menu item itself, for both of these we must not (immediately) disable
       // the delete menu or unset lastHighlightedItem or else deleting won't work
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+      nop()
+      disableDeleteTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: 0.5) { [weak self] in
         self?.deleteItem?.isEnabled = false
         self?.lastHighlightedItem = nil
+        self?.disableDeleteTimer = nil
       }
     } else {
       deleteItem?.isEnabled = false
@@ -248,10 +258,10 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
       removeQueueItemsSeparator() // expected to already be removed! but ensure now that it really is
     }
     
-    if showsExpandedMenu && !isFiltered && !Cleepp.busy &&
-        Cleepp.isQueueModeOn && Cleepp.queueSize > 0 && indexedItems.count > Cleepp.queueSize
+    if showsExpandedMenu && !isFiltered && !Cleepp.busy && !queue.empty &&
+        indexedItems.count > queue.size
     {
-      let followingItem = indexedItems[Cleepp.queueSize]
+      let followingItem = indexedItems[queue.size]
       guard let followingMenuItem = followingItem.menuItems.first, let index = safeIndex(of: followingMenuItem) else {
         return
       }
@@ -279,10 +289,9 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     advanceItem?.isEnabled = notBusy
     queuedCopyItem?.isEnabled = notBusy
     
-    let haveQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
-    queuedPasteItem?.isEnabled = notBusy && haveQueueItems
-    queuedPasteMultipleItem?.isEnabled = notBusy && haveQueueItems
-    queuedPasteAllItem?.isEnabled = notBusy && haveQueueItems
+    queuedPasteItem?.isEnabled = notBusy && !queue.empty
+    queuedPasteMultipleItem?.isEnabled = notBusy && !queue.empty
+    queuedPasteAllItem?.isEnabled = notBusy && !queue.empty
     
     clearItem?.isEnabled = notBusy
     undoCopyItem?.isEnabled = notBusy
@@ -500,7 +509,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
   func performQueueModeToggle() {
     guard !Cleepp.busy else { return }
     
-    if Cleepp.isQueueModeOn {
+    if queue.isOn {
       guard let queueStopItem = queueStopItem else { return }
       performActionForItem(at: index(of: queueStopItem))
     } else {
@@ -537,7 +546,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     queuedCopyItem?.setShortcut(for: .queuedCopy)
     queuedPasteItem?.setShortcut(for: .queuedPaste)
     // might have a start stop hotkey at some point, something like:
-    //if !Cleepp.queueModeOn {
+    //if !queue.isOn {
     //  queueStartItem?.setShortcut(for: .queueStartStop)
     //  queueStopItem?.setShortcut(for: nil)
     //} else {
@@ -611,7 +620,7 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     let availableHistoryCount = indexedItems.count
     let presentItemsCount = historyMenuItems.count / historyMenuItemsGroupCount
     
-    let maxItems = Cleepp.isQueueModeOn ? max(maxMenuItems, Cleepp.queueSize) : maxMenuItems
+    let maxItems = queue.isOn ? max(maxMenuItems, queue.size) : maxMenuItems
     
     let maxAvailableItems = maxItems <= 0 || maxItems > availableHistoryCount ? availableHistoryCount : maxItems
     if presentItemsCount < maxAvailableItems {
@@ -718,16 +727,15 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     guard let historyHeaderItem = historyHeaderItem, let trailingSeparatorItem = trailingSeparatorItem else {
       return
     }
-    let gotQueueItems = Cleepp.isQueueModeOn && Cleepp.queueSize > 0
-    let gotHistoryItems = gotQueueItems || (showsExpandedMenu && indexedItems.count > 0)
+    let gotHistoryItems = !queue.empty || (showsExpandedMenu && indexedItems.count > 0)
     let showSearchHeader = showsExpandedMenu && Cleepp.allowHistorySearch && !UserDefaults.standard.hideSearch
     
     // Switch visibility of start vs stop menu item
-    queueStartItem?.isVisible = !Cleepp.isQueueModeOn
-    queueStopItem?.isVisible = Cleepp.isQueueModeOn
+    queueStartItem?.isVisible = !queue.isOn
+    queueStopItem?.isVisible = queue.isOn
     
     // Allow/prohibit alternate to queueStopItem
-    advanceItem?.isVisibleAlternate = gotQueueItems
+    advanceItem?.isVisibleAlternate = !queue.empty
     
     // Bonus features to hide when not purchased
     queuedPasteAllItem?.isVisible = Cleepp.allowPasteMultiple
@@ -735,8 +743,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     undoCopyItem?.isVisible = Cleepp.allowUndoCopy
     
     // Delete item visibility
-    deleteItem?.isVisible = gotQueueItems || showsExpandedMenu
-    clearItem?.isVisible = gotQueueItems || showsExpandedMenu
+    deleteItem?.isVisible = !queue.empty || showsExpandedMenu
+    clearItem?.isVisible = !queue.empty || showsExpandedMenu
     
     // Visiblity of the history header and trailing separator
     // (the expanded menu means the search header and all of the history items)
@@ -760,8 +768,8 @@ class CleeppMenu: NSMenu, NSMenuDelegate {
     var remainingHistoryMenuItemIndex = firstHistoryMenuItemIndex
     
     // First queue items to always show when not filtering by a search term
-    if gotQueueItems && !isFiltered {
-      let endQueuedItemIndex = remainingHistoryMenuItemIndex + historyMenuItemsGroupCount * Cleepp.queueSize
+    if !queue.empty && !isFiltered {
+      let endQueuedItemIndex = remainingHistoryMenuItemIndex + historyMenuItemsGroupCount * queue.size
       
       for index in firstHistoryMenuItemIndex ..< endQueuedItemIndex {
         makeVisible(true, historyMenuItemAt: index)

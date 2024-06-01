@@ -88,6 +88,7 @@ class QueueUITests: CleeppUITestBase {
     selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
     
     waitUntilNotBusy()
+    exitQueueMode()
     assertNotInQueueMode()
   }
   
@@ -109,6 +110,7 @@ class QueueUITests: CleeppUITestBase {
     selectMenuItemWhenNotBusy(menuItems["Paste & Advance"])
     
     waitUntilNotBusy()
+    exitQueueMode()
     assertNotInQueueMode()
   }
   
@@ -121,17 +123,11 @@ class QueueUITests: CleeppUITestBase {
     copyToClipboard(copy4)
     
     hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3].firstMatch, key: .delete, modifierFlags: [.command])
-//    openUnexpandedMenu()
-//    hover(menuItems[copy3].firstMatch)
-//    app.typeKey(.delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 1)
     
     hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4].firstMatch, key: .delete, modifierFlags: [.command])
-//    openUnexpandedMenu()
-//    hover(menuItems[copy4].firstMatch)
-//    app.typeKey(.delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 0)
@@ -147,17 +143,11 @@ class QueueUITests: CleeppUITestBase {
     copyToClipboard(copy4)
     
     hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4].firstMatch, key: .delete, modifierFlags: [.command])
-//    openUnexpandedMenu()
-//    hover(menuItems[copy4].firstMatch)
-//    app.typeKey(.delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 1)
     
     hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3].firstMatch, key: .delete, modifierFlags: [.command])
-//    openUnexpandedMenu()
-//    hover(menuItems[copy3].firstMatch)
-//    app.typeKey(.delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 0)

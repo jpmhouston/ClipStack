@@ -1,6 +1,6 @@
 //
 //  AppDelegate+UITestability.swift
-//  Maccy
+//  Cleepp
 //
 //  Created by Pierre Houston on 2024-05-09.
 //  Copyright © 2024 Bananameter Labs. All rights reserved.

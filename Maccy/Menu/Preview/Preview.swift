@@ -66,7 +66,7 @@ class Preview: NSViewController {
     firstCopyTimeValueLabel.stringValue = formatDate(item.firstCopiedAt)
 
     #if CLEEPP
-    startLabel.isHidden = Cleepp.isQueueModeOn || !Cleepp.allowReplayFromHistory
+    startLabel.isHidden = !Cleepp.allowReplayFromHistory
     #else
     lastCopyTimeValueLabel.stringValue = formatDate(item.lastCopiedAt)
     numberOfCopiesValueLabel.stringValue = String(item.numberOfCopies)
