@@ -28,7 +28,7 @@
             <rect key="frame" x="0.0" y="0.0" width="562" height="556"/>
             <subviews>
                 <gridView xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="8" columnSpacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="5KL-yT-3Zi">
-                    <rect key="frame" x="28" y="28" width="506" height="500"/>
+                    <rect key="frame" x="28" y="20" width="506" height="516"/>
                     <rows>
                         <gridRow id="SYP-SL-aAk"/>
                         <gridRow id="ES8-fv-krj"/>
@@ -38,7 +38,6 @@
                         <gridRow yPlacement="center" topPadding="4" bottomPadding="4" id="OdT-ff-FSd"/>
                         <gridRow id="nuK-ef-5Um"/>
                         <gridRow id="hnq-hF-JcQ"/>
-                        <gridRow id="YQx-6B-dbU"/>
                     </rows>
                     <columns>
                         <gridColumn xPlacement="trailing" id="KLa-7P-lgK"/>
@@ -47,7 +46,7 @@
                     <gridCells>
                         <gridCell row="SYP-SL-aAk" column="KLa-7P-lgK" id="oQq-xv-omv">
                             <textField key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lEK-4J-i8J">
-                                <rect key="frame" x="-2" y="482" width="191" height="16"/>
+                                <rect key="frame" x="-2" y="498" width="191" height="16"/>
                                 <textFieldCell key="cell" alignment="right" title="Number of history menu items:" id="MKb-cW-gpg">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +56,7 @@
                         </gridCell>
                         <gridCell row="SYP-SL-aAk" column="7OC-Fv-eMr" id="kuT-3B-2sI">
                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a8Y-aG-9on">
-                                <rect key="frame" x="200" y="479" width="288" height="21"/>
+                                <rect key="frame" x="200" y="495" width="288" height="21"/>
                                 <string key="toolTip">Number of visible items.
 Hidden items are still kept in history and can be found using search.
 Set to 0 to make all items visible.
@@ -107,7 +106,7 @@ Default: 20.</string>
                         <gridCell row="ES8-fv-krj" column="KLa-7P-lgK" id="iJ9-3i-XqT"/>
                         <gridCell row="ES8-fv-krj" column="7OC-Fv-eMr" id="seq-WR-E8A">
                             <stackView key="contentView" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IkI-KQ-foQ">
-                                <rect key="frame" x="200" y="429" width="306" height="42"/>
+                                <rect key="frame" x="200" y="445" width="306" height="42"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="lhl-S6-RoL">
                                         <rect key="frame" x="-2" y="0.0" width="310" height="42"/>
@@ -139,7 +138,7 @@ Default: 20.</string>
                         </gridCell>
                         <gridCell row="S9I-rv-Kfl" column="KLa-7P-lgK" id="vKh-KX-7Ph">
                             <textField key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3D7-Xe-sZo">
-                                <rect key="frame" x="102" y="403" width="87" height="16"/>
+                                <rect key="frame" x="102" y="419" width="87" height="16"/>
                                 <textFieldCell key="cell" alignment="right" title="Image height:" id="gjR-wz-7GQ">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -149,7 +148,7 @@ Default: 20.</string>
                         </gridCell>
                         <gridCell row="S9I-rv-Kfl" column="7OC-Fv-eMr" id="Ry9-S9-CyT">
                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tsp-4i-Mym">
-                                <rect key="frame" x="200" y="400" width="288" height="21"/>
+                                <rect key="frame" x="200" y="416" width="288" height="21"/>
                                 <string key="toolTip">Maximum image preview height.
 Default: 40.
 Hint: Set to 16 to look like text items.</string>
@@ -197,7 +196,7 @@ Hint: Set to 16 to look like text items.</string>
                         </gridCell>
                         <gridCell row="5AN-Hb-8z8" column="KLa-7P-lgK" id="CGn-tZ-Kyv">
                             <textField key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zpA-rz-vpL">
-                                <rect key="frame" x="113" y="374" width="76" height="16"/>
+                                <rect key="frame" x="113" y="390" width="76" height="16"/>
                                 <textFieldCell key="cell" alignment="right" title="Title length:" id="TgE-eS-5nT">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -207,7 +206,7 @@ Hint: Set to 16 to look like text items.</string>
                         </gridCell>
                         <gridCell row="5AN-Hb-8z8" column="7OC-Fv-eMr" id="wS5-KF-93i">
                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XGd-Fg-wS9">
-                                <rect key="frame" x="200" y="371" width="288" height="21"/>
+                                <rect key="frame" x="200" y="387" width="288" height="21"/>
                                 <string key="toolTip">Maximum number of characters in the item title.
 Default: 50.</string>
                                 <subviews>
@@ -254,7 +253,7 @@ Default: 50.</string>
                         </gridCell>
                         <gridCell row="NiR-EB-Xrn" column="KLa-7P-lgK" id="zZ5-X2-rET">
                             <textField key="contentView" horizontalHuggingPriority="1000" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AH3-Nd-NhZ">
-                                <rect key="frame" x="97" y="345" width="92" height="16"/>
+                                <rect key="frame" x="97" y="361" width="92" height="16"/>
                                 <textFieldCell key="cell" alignment="right" title="Preview delay:" id="lnS-Rg-4sa">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -264,7 +263,7 @@ Default: 50.</string>
                         </gridCell>
                         <gridCell row="NiR-EB-Xrn" column="7OC-Fv-eMr" id="Dy9-7o-54w">
                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7SP-tN-nLD">
-                                <rect key="frame" x="200" y="342" width="288" height="21"/>
+                                <rect key="frame" x="200" y="358" width="288" height="21"/>
                                 <string key="toolTip">Delay in milliseconds until a preview popup is shown.
 Default: 1500.</string>
                                 <subviews>
@@ -311,14 +310,14 @@ Default: 1500.</string>
                         </gridCell>
                         <gridCell row="OdT-ff-FSd" column="KLa-7P-lgK" headOfMergedCell="OeY-HC-jSl" xPlacement="fill" id="OeY-HC-jSl">
                             <box key="contentView" verticalHuggingPriority="750" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-B5-SQV">
-                                <rect key="frame" x="0.0" y="193" width="506" height="5"/>
+                                <rect key="frame" x="0.0" y="343" width="506" height="5"/>
                             </box>
                         </gridCell>
                         <gridCell row="OdT-ff-FSd" column="7OC-Fv-eMr" headOfMergedCell="OeY-HC-jSl" id="fe5-7h-IxP"/>
                         <gridCell row="nuK-ef-5Um" column="KLa-7P-lgK" id="DS6-t0-CtZ"/>
                         <gridCell row="nuK-ef-5Um" column="7OC-Fv-eMr" id="Kye-ZS-ed3">
                             <button key="contentView" toolTip="Show newlines, tabs, leading and trailing spaces via special symbols." verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tC6-tV-7tl">
-                                <rect key="frame" x="198" y="31" width="160" height="18"/>
+                                <rect key="frame" x="198" y="316" width="160" height="18"/>
                                 <buttonCell key="cell" type="check" title="Show special symbols" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="t7k-cr-U2Q">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -331,7 +330,7 @@ Default: 1500.</string>
                         <gridCell row="hnq-hF-JcQ" column="KLa-7P-lgK" id="5lh-Cz-wCy"/>
                         <gridCell row="hnq-hF-JcQ" column="7OC-Fv-eMr" id="dkg-xh-BJU">
                             <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YIB-bg-Q16">
-                                <rect key="frame" x="198" y="7" width="134" height="18"/>
+                                <rect key="frame" x="198" y="292" width="134" height="18"/>
                                 <buttonCell key="cell" type="check" title="Show search field" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mWx-zi-OAv">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -341,13 +340,11 @@ Default: 1500.</string>
                                 </connections>
                             </button>
                         </gridCell>
-                        <gridCell row="YQx-6B-dbU" column="KLa-7P-lgK" id="wEZ-hY-E5O"/>
-                        <gridCell row="YQx-6B-dbU" column="7OC-Fv-eMr" id="ZTM-aF-PUl"/>
                     </gridCells>
                 </gridView>
             </subviews>
             <constraints>
-                <constraint firstItem="5KL-yT-3Zi" firstAttribute="height" secondItem="O1T-Uq-VLh" secondAttribute="height" multiplier="0.9" id="3Y1-bc-oxv"/>
+                <constraint firstItem="5KL-yT-3Zi" firstAttribute="height" secondItem="O1T-Uq-VLh" secondAttribute="height" constant="-40" id="3Y1-bc-oxv"/>
                 <constraint firstAttribute="width" constant="562" id="EiG-aB-15b"/>
                 <constraint firstItem="5KL-yT-3Zi" firstAttribute="centerY" secondItem="O1T-Uq-VLh" secondAttribute="centerY" id="LE2-yM-OnK"/>
                 <constraint firstItem="5KL-yT-3Zi" firstAttribute="width" secondItem="O1T-Uq-VLh" secondAttribute="width" multiplier="0.9" id="PeN-ly-Ypy"/>

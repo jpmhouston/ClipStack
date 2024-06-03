@@ -25,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="250"/>
             <subviews>
                 <gridView xPlacement="leading" yPlacement="top" rowAlignment="lastBaseline" rowSpacing="8" columnSpacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="GOB-4Q-pQY">
-                    <rect key="frame" x="24" y="13" width="432" height="224"/>
+                    <rect key="frame" x="24" y="20" width="432" height="210"/>
                     <rows>
                         <gridRow id="1lR-od-X06"/>
                         <gridRow id="Ssu-ST-LDz"/>
@@ -35,7 +35,6 @@
                         <gridRow rowAlignment="lastBaseline" id="rSH-D5-fQU"/>
                         <gridRow id="gQG-qR-qof"/>
                         <gridRow id="Ahg-HZ-SOL"/>
-                        <gridRow id="Tu6-SU-k0p"/>
                     </rows>
                     <columns>
                         <gridColumn xPlacement="trailing" id="vOJ-9h-G8Y"/>
@@ -45,7 +44,7 @@
                         <gridCell row="1lR-od-X06" column="vOJ-9h-G8Y" id="Wx5-lS-Xrs"/>
                         <gridCell row="1lR-od-X06" column="pQU-Pz-q1v" id="IOf-sB-Gav">
                             <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mOE-Th-WLC">
-                                <rect key="frame" x="130" y="207" width="119" height="18"/>
+                                <rect key="frame" x="130" y="193" width="119" height="18"/>
                                 <buttonCell key="cell" type="check" title="Launch at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Cfl-qm-UkM">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -58,7 +57,7 @@
                         <gridCell row="Ssu-ST-LDz" column="vOJ-9h-G8Y" id="gUk-1z-sYH"/>
                         <gridCell row="Ssu-ST-LDz" column="pQU-Pz-q1v" id="qhX-wf-DeN">
                             <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-Pf-Ef9">
-                                <rect key="frame" x="130" y="183" width="222" height="18"/>
+                                <rect key="frame" x="130" y="169" width="222" height="18"/>
                                 <buttonCell key="cell" type="check" title="Check for updates automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="avb-QJ-T0h">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -71,7 +70,7 @@
                         <gridCell row="bpM-Oe-CBP" column="vOJ-9h-G8Y" id="F1h-En-eCd"/>
                         <gridCell row="bpM-Oe-CBP" column="pQU-Pz-q1v" id="4MC-s5-NJN">
                             <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ik8-mb-VoG">
-                                <rect key="frame" x="132" y="157" width="77" height="19"/>
+                                <rect key="frame" x="132" y="143" width="77" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Check now" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="8Rb-OS-d59">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
@@ -83,13 +82,13 @@
                         </gridCell>
                         <gridCell row="mzz-6k-Dz9" column="vOJ-9h-G8Y" headOfMergedCell="hec-ch-tJx" yPlacement="center" id="hec-ch-tJx">
                             <box key="contentView" verticalHuggingPriority="700" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Mfq-pZ-sSn">
-                                <rect key="frame" x="332" y="147" width="100" height="5"/>
+                                <rect key="frame" x="332" y="117" width="100" height="5"/>
                             </box>
                         </gridCell>
                         <gridCell row="mzz-6k-Dz9" column="pQU-Pz-q1v" headOfMergedCell="hec-ch-tJx" id="hE2-yX-ng0"/>
                         <gridCell row="1lh-Qw-cAx" column="vOJ-9h-G8Y" id="2m8-9a-mJO">
                             <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C8J-Mx-Lzz">
-                                <rect key="frame" x="30" y="86" width="91" height="23"/>
+                                <rect key="frame" x="30" y="78" width="91" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="10R-0q-RDn"/>
                                 </constraints>
@@ -102,7 +101,7 @@
                         </gridCell>
                         <gridCell row="1lh-Qw-cAx" column="pQU-Pz-q1v" id="t3H-4Z-90w">
                             <customView key="contentView" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gv6-rV-zkI">
-                                <rect key="frame" x="132" y="89" width="100" height="30"/>
+                                <rect key="frame" x="132" y="81" width="100" height="30"/>
                                 <string key="toolTip">Global shortcut key to copy into the queue.
 Default: ^⌘C.</string>
                                 <constraints>
@@ -112,7 +111,7 @@ Default: ^⌘C.</string>
                         </gridCell>
                         <gridCell row="rSH-D5-fQU" column="vOJ-9h-G8Y" id="MkQ-Ti-RAy">
                             <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UNS-12-xWP">
-                                <rect key="frame" x="28" y="45" width="93" height="23"/>
+                                <rect key="frame" x="28" y="37" width="93" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="ARz-S4-0pY"/>
                                 </constraints>
@@ -125,7 +124,7 @@ Default: ^⌘C.</string>
                         </gridCell>
                         <gridCell row="rSH-D5-fQU" column="pQU-Pz-q1v" id="yVM-gZ-e0i">
                             <customView key="contentView" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pPs-rF-k8m">
-                                <rect key="frame" x="132" y="48" width="100" height="30"/>
+                                <rect key="frame" x="132" y="40" width="100" height="30"/>
                                 <string key="toolTip">Global shortcut key to paste next item from the queue.
 Default: ^⌘P.</string>
                                 <constraints>
@@ -135,13 +134,13 @@ Default: ^⌘P.</string>
                         </gridCell>
                         <gridCell row="gQG-qR-qof" column="vOJ-9h-G8Y" headOfMergedCell="8Tc-ki-XIw" xPlacement="fill" id="8Tc-ki-XIw">
                             <box key="contentView" verticalHuggingPriority="700" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fMY-lL-A9Q">
-                                <rect key="frame" x="0.0" y="34" width="432" height="5"/>
+                                <rect key="frame" x="0.0" y="26" width="432" height="5"/>
                             </box>
                         </gridCell>
                         <gridCell row="gQG-qR-qof" column="pQU-Pz-q1v" headOfMergedCell="8Tc-ki-XIw" id="a3u-rN-xNI"/>
                         <gridCell row="Ahg-HZ-SOL" column="vOJ-9h-G8Y" id="LiU-w2-SdI">
                             <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q7N-u9-cfJ">
-                                <rect key="frame" x="71" y="11" width="50" height="16"/>
+                                <rect key="frame" x="71" y="3" width="50" height="16"/>
                                 <textFieldCell key="cell" alignment="right" title="Search:" id="eLD-CL-D8J">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -151,7 +150,7 @@ Default: ^⌘P.</string>
                         </gridCell>
                         <gridCell row="Ahg-HZ-SOL" column="pQU-Pz-q1v" id="u4O-7G-Ykh">
                             <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W4h-tN-MTS">
-                                <rect key="frame" x="129" y="4" width="161" height="25"/>
+                                <rect key="frame" x="129" y="-4" width="161" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Exact" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="OJz-OA-cKK" id="w1r-h5-MLH">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -169,14 +168,12 @@ Default: ^⌘P.</string>
                                 </connections>
                             </popUpButton>
                         </gridCell>
-                        <gridCell row="Tu6-SU-k0p" column="vOJ-9h-G8Y" id="fjR-VZ-GG4"/>
-                        <gridCell row="Tu6-SU-k0p" column="pQU-Pz-q1v" id="EcY-4A-GHy"/>
                     </gridCells>
                 </gridView>
             </subviews>
             <constraints>
                 <constraint firstAttribute="width" constant="480" id="Fv3-1h-hNx"/>
-                <constraint firstItem="GOB-4Q-pQY" firstAttribute="height" secondItem="Hz6-mo-xeY" secondAttribute="height" multiplier="0.9" id="H9g-BS-pRz"/>
+                <constraint firstItem="GOB-4Q-pQY" firstAttribute="height" secondItem="Hz6-mo-xeY" secondAttribute="height" constant="-40" id="H9g-BS-pRz"/>
                 <constraint firstItem="GOB-4Q-pQY" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="VIM-wA-DYQ"/>
                 <constraint firstItem="GOB-4Q-pQY" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="lO1-LZ-qbm"/>
                 <constraint firstItem="GOB-4Q-pQY" firstAttribute="width" secondItem="Hz6-mo-xeY" secondAttribute="width" multiplier="0.9" id="zZd-wh-7Ux"/>
