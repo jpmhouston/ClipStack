@@ -108,7 +108,7 @@ extension Cleepp {
     restoreClipboardMonitoring()
     
     if !queue.isOn {
-      queue.on(allowingDecrmentToZero: false)
+      queue.on(allowStayingOnAfterDecrementToZero: false)
     }
     
     Self.busy = true
@@ -381,7 +381,7 @@ extension Cleepp {
       return
     }
     
-    queue.on(allowingDecrmentToZero: false)
+    queue.on(allowStayingOnAfterDecrementToZero: false)
     do {
       try queue.setHead(toIndex: index)
     } catch {

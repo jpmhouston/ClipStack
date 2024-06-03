@@ -25,7 +25,7 @@ class ClipboardQueue {
   }
   
   var isOn = false
-  var turnOffWhenEmptied = false
+  var stayOnWhenEmptied = false
   var size = 0 {
     didSet {
       history.maxItemsOverride = size
@@ -71,9 +71,9 @@ class ClipboardQueue {
   
   // MARK: -
   
-  func on(allowingDecrmentToZero allowEmpty: Bool = true) {
+  func on(allowStayingOnAfterDecrementToZero allowEmpty: Bool = true) {
     isOn = true
-    turnOffWhenEmptied = !allowEmpty
+    stayOnWhenEmptied = allowEmpty
     size = 0
   }
   
@@ -91,7 +91,7 @@ class ClipboardQueue {
   
   func add(_ item: HistoryItem) throws {
     if !isOn {
-      on(allowingDecrmentToZero: false)
+      on(allowStayingOnAfterDecrementToZero: false)
     }
     
     // currently item not treated differently by history when queue on vs off
@@ -143,7 +143,7 @@ class ClipboardQueue {
     size -= 1
     
     if empty {
-      isOn = !turnOffWhenEmptied
+      isOn = stayOnWhenEmptied
       // leave clipboard alone, want it to be left at the latest item that's been copied, but even
       // in pasteboardHasNext mode, when queue size was 1 the next to paste was the latest copied
       
@@ -193,7 +193,7 @@ class ClipboardQueue {
     size -= 1
     
     if empty {
-      isOn = !turnOffWhenEmptied
+      isOn = stayOnWhenEmptied
       // leave clipboard alone, want it to be left at the latest item copied which should
       // be the one from the previous iteration
     } else {

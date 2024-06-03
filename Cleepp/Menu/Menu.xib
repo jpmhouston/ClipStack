@@ -95,7 +95,7 @@
                         <action selector="queuedPasteAll:" target="-2" id="fHI-ld-axH"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Paste Mutliple…" hidden="YES" alternate="YES" id="4b4-xr-zN6">
+                <menuItem title="Paste Multiple…" hidden="YES" alternate="YES" id="4b4-xr-zN6">
                     <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                     <connections>
                         <action selector="queuedPasteMultiple:" target="-2" id="iSw-Vb-ZeW"/>

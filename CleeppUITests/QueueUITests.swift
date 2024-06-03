@@ -9,9 +9,9 @@
 import Carbon
 import XCTest
 
-class QueueUITests: CleeppUITestBase {
+final class QueueUITests: CleeppUITestBase {
   
-  func test00EnterExitQueueMode() throws {
+  func test00EnterExitQueueMode() {
     // with key shortcuts
     assertNotInQueueMode()
     app.typeKey("c", modifierFlags: [.control, .command])
@@ -44,7 +44,7 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test01CancelQueueMode() throws {
+  func test01CancelQueueMode() {
     enterQueueMode()
     
     let copy3 = UUID().uuidString
@@ -59,7 +59,7 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test10MenuCopyPaste() throws {
+  func test10MenuCopyPaste() {
     selectMenuItemWhenNotBusy(menuItems["Copy & Collect"])
     selectMenuItemWhenNotBusy(menuItems["Copy & Collect"])
     
@@ -70,7 +70,7 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test11CopyVerify() throws {
+  func test11CopyVerify() {
     enterQueueMode()
     
     let copy3 = UUID().uuidString
@@ -92,7 +92,7 @@ class QueueUITests: CleeppUITestBase {
     assertNotInQueueMode()
   }
   
-  func test12CopyPasteInterleaved() throws {
+  func test12CopyPasteInterleaved() {
     enterQueueMode()
     
     let copy3 = UUID().uuidString
@@ -122,12 +122,12 @@ class QueueUITests: CleeppUITestBase {
     copyToClipboard(copy3)
     copyToClipboard(copy4)
     
-    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3].firstMatch, key: .delete, modifierFlags: [.command])
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3], key: .delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 1)
     
-    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4].firstMatch, key: .delete, modifierFlags: [.command])
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4], key: .delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 0)
@@ -142,12 +142,12 @@ class QueueUITests: CleeppUITestBase {
     copyToClipboard(copy3)
     copyToClipboard(copy4)
     
-    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4].firstMatch, key: .delete, modifierFlags: [.command])
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy4], key: .delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 1)
     
-    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3].firstMatch, key: .delete, modifierFlags: [.command])
+    hoverOnMenuItemAndTypeWhenNotBusy(menuItems[copy3], key: .delete, modifierFlags: [.command])
     
     waitUntilNotBusy()
     assertQueueSize(is: 0)

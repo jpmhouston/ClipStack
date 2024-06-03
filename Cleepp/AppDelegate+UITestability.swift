@@ -49,31 +49,34 @@ extension AppDelegate {
     }
   }
   
+  static var fakedAppCopy: String {
+    let i = (NSApp.delegate as? Self)?.fakeCopyCount ?? 0
+    (NSApp.delegate as? Self)?.fakeCopyCount = i + 1
+    return fakeCopyText[i % fakeCopyText.count]
+  }
+  
   static var fakePasteAssocObjKey: Int8 = 0
-  var lastFakedPasteDescription: String? {
+  var fakedPasteDescriptions: [String] {
     get {
-      objc_getAssociatedObject(self, &Self.fakePasteAssocObjKey) as? String
+      objc_getAssociatedObject(self, &Self.fakePasteAssocObjKey) as? [String] ?? []
     }
     set {
       objc_setAssociatedObject(self, &Self.fakePasteAssocObjKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
   }
   
-  static var fakedAppCopy: String {
-    let i = (NSApp.delegate as? AppDelegate)?.fakeCopyCount ?? 0
-    (NSApp.delegate as? AppDelegate)?.fakeCopyCount = i + 1
-    return fakeCopyText[i % fakeCopyText.count]
-  }
-  
   static var fakedAppPaste: String {
     get {
-      (NSApp.delegate as? AppDelegate)?.lastFakedPasteDescription ?? ""
+      (NSApp.delegate as? Self)?.fakedPasteDescriptions.first ?? ""
     }
     set {
-      (NSApp.delegate as? AppDelegate)?.lastFakedPasteDescription = newValue
+      (NSApp.delegate as? Self)?.fakedPasteDescriptions.append(newValue)
     }
   }
   
+  static func putPasteHistoryOnClipboard() {
+    Clipboard.shared.copy((NSApp.delegate as? Self)?.fakedPasteDescriptions.joined() ?? "")
+  }
   
   // MARK: -
   
@@ -104,14 +107,14 @@ extension AppDelegate {
   }
   
   static var isTestWindowOpen: Bool {
-    if let testWindow = (NSApp.delegate as? AppDelegate)?.testWindow, testWindow.isVisible {
+    if let testWindow = (NSApp.delegate as? Self)?.testWindow, testWindow.isVisible {
       return true
     }
     return false
   }
   
   static var testTextView: NSTextView? {
-    if let testWindow = (NSApp.delegate as? AppDelegate)?.testWindow, testWindow.isVisible {
+    if let testWindow = (NSApp.delegate as? Self)?.testWindow, testWindow.isVisible {
       return testWindow.firstResponder as? NSTextView
     }
     return nil

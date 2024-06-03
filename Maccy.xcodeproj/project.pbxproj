@@ -202,6 +202,8 @@
 		8FBDF6B22BB4EE3600219889 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		8FBDF6B42BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
 		8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
+		8FC2626F2C0C72C400828D58 /* MenuBonusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC2626E2C0C72C400828D58 /* MenuBonusUITests.swift */; };
+		8FC262712C0C7A9300828D58 /* QueueBonusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC262702C0C7A9300828D58 /* QueueBonusUITests.swift */; };
 		8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */; };
 		8FCDFC0F2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
 		8FCDFC102BBB999400A16FBE /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */; };
@@ -210,6 +212,10 @@
 		8FCDFC142BC0CA2000A16FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */; };
 		8FCDFC172BC7E92400A16FBE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCDFC162BC7E92400A16FBE /* SDWebImage */; };
 		8FCDFC192BC7E96C00A16FBE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCDFC182BC7E96C00A16FBE /* SDWebImage */; };
+		8FF399562C0C2A4C000C9FAE /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
+		8FF399572C0C2A4C000C9FAE /* MenuSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */; };
+		8FF399582C0C2A4C000C9FAE /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
+		8FF399592C0C2A4C000C9FAE /* MenuBasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */; };
 		DA009931256411F90030E697 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		DA009932256411F90030E697 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA00992D256411F90030E697 /* README.md */; };
 		DA009934256411F90030E697 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
@@ -341,6 +347,13 @@
 			remoteGlobalIDString = 8F0D3C0F2BAB8F5A00DDB603;
 			remoteInfo = Cleepp;
 		};
+		8FF399512C0C2A3E000C9FAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEE383B1E3DBEB100DD2966 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F8C484D2BAD51B000C3A219;
+			remoteInfo = "Cleepp (App Store)";
+		};
 		DA0EE7BB204657840025FC60 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DAEE383B1E3DBEB100DD2966 /* Project object */;
@@ -449,10 +462,13 @@
 		8FB88D7C2BCCFED8006D48E6 /* Licenses.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Licenses.xib; sourceTree = "<group>"; };
 		8FBDF6AC2BB269A900219889 /* Cleepp+Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cleepp+Links.swift"; sourceTree = "<group>"; };
 		8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchSource+scheduledTimer.swift"; sourceTree = "<group>"; };
+		8FC2626E2C0C72C400828D58 /* MenuBonusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBonusUITests.swift; sourceTree = "<group>"; };
+		8FC262702C0C7A9300828D58 /* QueueBonusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueBonusUITests.swift; sourceTree = "<group>"; };
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
 		8FCDFC0B2BBB999400A16FBE /* NSWorkspace+ApplicationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWorkspace+ApplicationName.swift"; sourceTree = "<group>"; };
 		8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8FEA4DFF2BE7334200B63E39 /* Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Debug.entitlements; sourceTree = "<group>"; };
+		8FF3994B2C0C2A3E000C9FAE /* CleeppMASUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleeppMASUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285E283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AppearanceSettingsViewController.strings; sourceTree = "<group>"; };
 		ABC7285F283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GeneralSettingsViewController.strings; sourceTree = "<group>"; };
@@ -662,6 +678,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8FF399482C0C2A3E000C9FAE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA0EE7B3204657830025FC60 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -825,8 +848,10 @@
 			children = (
 				8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */,
 				8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */,
+				8FC2626E2C0C72C400828D58 /* MenuBonusUITests.swift */,
 				8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */,
 				8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */,
+				8FC262702C0C7A9300828D58 /* QueueBonusUITests.swift */,
 			);
 			path = CleeppUITests;
 			sourceTree = SOURCE_ROOT;
@@ -992,6 +1017,7 @@
 				8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */,
 				8F8C48AF2BAD51B000C3A219 /* Cleepp.app */,
 				8F07B7AC2BE6E284006E8CBA /* CleeppUITests.xctest */,
+				8FF3994B2C0C2A3E000C9FAE /* CleeppMASUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1125,6 +1151,24 @@
 			productReference = 8F8C48AF2BAD51B000C3A219 /* Cleepp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8FF3994A2C0C2A3E000C9FAE /* CleeppMASUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8FF399532C0C2A3E000C9FAE /* Build configuration list for PBXNativeTarget "CleeppMASUITests" */;
+			buildPhases = (
+				8FF399472C0C2A3E000C9FAE /* Sources */,
+				8FF399482C0C2A3E000C9FAE /* Frameworks */,
+				8FF399492C0C2A3E000C9FAE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8FF399522C0C2A3E000C9FAE /* PBXTargetDependency */,
+			);
+			name = CleeppMASUITests;
+			productName = CleeppMASUITests;
+			productReference = 8FF3994B2C0C2A3E000C9FAE /* CleeppMASUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		DA0EE7B5204657830025FC60 /* MaccyUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA0EE7BF204657840025FC60 /* Build configuration list for PBXNativeTarget "MaccyUITests" */;
@@ -1203,6 +1247,10 @@
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = 8F0D3C0F2BAB8F5A00DDB603;
 					};
+					8FF3994A2C0C2A3E000C9FAE = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 8F8C484D2BAD51B000C3A219;
+					};
 					DA0EE7B5204657830025FC60 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = MN3X4648SC;
@@ -1267,6 +1315,7 @@
 				8F0D3C0F2BAB8F5A00DDB603 /* Cleepp */,
 				8F8C484D2BAD51B000C3A219 /* Cleepp (App Store) */,
 				8F07B7AB2BE6E284006E8CBA /* CleeppUITests */,
+				8FF3994A2C0C2A3E000C9FAE /* CleeppMASUITests */,
 				DAEE38421E3DBEB100DD2966 /* Maccy */,
 				DA360DAF1E3DF137005C6F6B /* MaccyTests */,
 				DA0EE7B5204657830025FC60 /* MaccyUITests */,
@@ -1330,6 +1379,13 @@
 				8F8C48A82BAD51B000C3A219 /* appcast.xml in Resources */,
 				8FCDFC142BC0CA2000A16FBE /* Assets.xcassets in Resources */,
 				8F8C48A92BAD51B000C3A219 /* LICENSE in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8FF399492C0C2A3E000C9FAE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1643,6 +1699,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8FF399472C0C2A3E000C9FAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FF399562C0C2A4C000C9FAE /* CleeppUITestBase.swift in Sources */,
+				8FF399572C0C2A4C000C9FAE /* MenuSearchUITests.swift in Sources */,
+				8FC2626F2C0C72C400828D58 /* MenuBonusUITests.swift in Sources */,
+				8FF399582C0C2A4C000C9FAE /* QueueUITests.swift in Sources */,
+				8FF399592C0C2A4C000C9FAE /* MenuBasicUITests.swift in Sources */,
+				8FC262712C0C7A9300828D58 /* QueueBonusUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA0EE7B2204657830025FC60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1744,6 +1813,11 @@
 			isa = PBXTargetDependency;
 			target = 8F0D3C0F2BAB8F5A00DDB603 /* Cleepp */;
 			targetProxy = 8F07B7B22BE6E284006E8CBA /* PBXContainerItemProxy */;
+		};
+		8FF399522C0C2A3E000C9FAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F8C484D2BAD51B000C3A219 /* Cleepp (App Store) */;
+			targetProxy = 8FF399512C0C2A3E000C9FAE /* PBXContainerItemProxy */;
 		};
 		DA0EE7BC204657840025FC60 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2171,6 +2245,56 @@
 			};
 			name = Release;
 		};
+		8FF399542C0C2A3E000C9FAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = tech.bananameter.CleeppMASUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Cleepp (App Store)";
+			};
+			name = Debug;
+		};
+		8FF399552C0C2A3E000C9FAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = tech.bananameter.CleeppMASUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Cleepp (App Store)";
+			};
+			name = Release;
+		};
 		DA0EE7BD204657840025FC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2487,6 +2611,15 @@
 			buildConfigurations = (
 				8F8C48AD2BAD51B000C3A219 /* Debug */,
 				8F8C48AE2BAD51B000C3A219 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8FF399532C0C2A3E000C9FAE /* Build configuration list for PBXNativeTarget "CleeppMASUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8FF399542C0C2A3E000C9FAE /* Debug */,
+				8FF399552C0C2A3E000C9FAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

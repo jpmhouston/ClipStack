@@ -20,7 +20,6 @@ class CleeppUITestBase: XCTestCase {
   let copy1 = UUID().uuidString
   let copy2 = UUID().uuidString
   
-  // https://hetima.github.io/fucking_nsimage_syntax
   let image1 = NSImage(named: "NSAddTemplate")!
   let image2 = NSImage(named: "NSBluetoothTemplate")!
   
@@ -45,9 +44,9 @@ class CleeppUITestBase: XCTestCase {
   var visibleMenuItems: [XCUIElement] { menuItems.allElementsBoundByIndex.filter({ $0.isHittable }) }
   var visibleMenuItemTitles: [String] { visibleMenuItems.map { $0.title } }
   
-  static let firstHistoryIndexWithoutBonus = 7
-  static let firstHistoryIndexWithBonus = 8
-  var firstHistoryIndex = firstHistoryIndexWithoutBonus
+  let firstHistoryIndexWithoutBonus = 7
+  let firstHistoryIndexWithBonus = 9
+  var firstHistoryIndex: Int { hasBonusFeatures ? firstHistoryIndexWithBonus : firstHistoryIndexWithoutBonus }
   
   var hasBonusFeatures = false
   var hasAccessibilityPermissions = false
@@ -88,17 +87,13 @@ class CleeppUITestBase: XCTestCase {
   // MARK: -
   
   func openUnexpandedMenu() {
-    if isMenuOpen {
-      app.statusItems.firstMatch.click()
-    }
+    //closeMenu()
     app.statusItems.firstMatch.click()
     waitUntilMenuOpened()
   }
   
   func openExpandedMenu() {
-    if isMenuOpen {
-      app.statusItems.firstMatch.click()
-    }
+    //closeMenu()
     XCUIElement.perform(withKeyModifiers: [.option]) {
       app.statusItems.firstMatch.click()
       waitUntilMenuOpened()
@@ -111,14 +106,17 @@ class CleeppUITestBase: XCTestCase {
     }
   }
   
-  var isMenuOpen: Bool {
-    menuItems.firstMatch.exists
-  }
+  // false positives? TODO: figure this out maybe
+  //var isMenuOpen: Bool {
+  //  menuItems.firstMatch.exists
+  //}
   
   func closeMenu() {
-    if isMenuOpen {
-      app.statusItems.firstMatch.click()
-    }
+    //if isMenuOpen {
+    //  app.statusItems.firstMatch.click()
+    //}
+    // while we have false positives deteecting menu open, instead just rely on test to not mess up
+    app.statusItems.firstMatch.click()
   }
   
   func checkForBonusFeatures() {
@@ -126,7 +124,6 @@ class CleeppUITestBase: XCTestCase {
     let pasteAppItem = menuItems["Paste All"]
     if pasteAppItem.exists && pasteAppItem.isHittable {
       hasBonusFeatures = true
-      firstHistoryIndex = Self.firstHistoryIndexWithoutBonus
     }
   }
   
@@ -157,7 +154,7 @@ class CleeppUITestBase: XCTestCase {
     waitTillClipboardCheck()
   }
   
-  // Default interval for Cleepp to check clipboard is 1 second
+  // Default interval for Cleepp to check clipboard is 1.5 seconds
   func waitTillClipboardCheck() {
     usleep(1_500_000)
   }
@@ -192,6 +189,12 @@ class CleeppUITestBase: XCTestCase {
     assertNotInQueueMode()
   }
   
+  func putCatenatedPasteHistoryOnClipboard() {
+    XCUIElement.perform(withKeyModifiers: [.capsLock]) {
+      app.statusItems.firstMatch.click()
+    }
+  }
+  
   func search(_ string: String) {
     // NOTE: app.typeText is broken in Sonoma and causes some
     //       Chars to be submitted with a .command mask (e.g. 'p', 'k' or 'j')
@@ -223,46 +226,63 @@ class CleeppUITestBase: XCTestCase {
     waitForExpectations(timeout: 10)
   }
   
-  func selectMenuItemWhenNotBusy(_ menuElement: XCUIElement, inExpandedMenu: Bool = false) {
+  func selectMenuItemWhenNotBusy(_ menuElement: XCUIElement, inExpandedMenu: Bool = false,
+                                 withMenuAlternateModifierFlags altItemModifiers: XCUIElement.KeyModifierFlags = []) {
     let predicate = NSPredicate { _, _ in
-      // procedural actions inappropriate in a predicate? seems to work tho
+      // procedural actions inappropriate in a predicate? seems to work
+      // probably more complicated than it needs to be though
       if inExpandedMenu {
         self.openExpandedMenu()
       } else {
         self.openUnexpandedMenu()
       }
       let items = self.app.statusItems.firstMatch.descendants(matching: .menuItem)
-      let ready = items["Copy & Collect"].isHittable && menuElement.isHittable
+      let ready = items["Copy & Collect"].isHittable
       if !ready {
-        self.closeMenu()
-        return false
+        // not ready yet, fail predicate
+      } else if altItemModifiers.isEmpty {
+        if menuElement.isHittable {
+          menuElement.click()
+          return true
+        }
       } else {
-        menuElement.click()
-        return true
+        var clicked = false
+        XCUIElement.perform(withKeyModifiers: altItemModifiers) {
+          if menuElement.isHittable {
+            menuElement.click()
+            clicked = true
+          }
+        }
+        if clicked {
+          return true
+        }
       }
+      self.closeMenu()
+      return false
     }
     expectation(for: predicate, evaluatedWith: nil)
     waitForExpectations(timeout: 10)
   }
   
-  func hoverOnMenuItemAndTypeWhenNotBusy(_ menuElement: XCUIElement, inExpandedMenu: Bool = false, key: XCUIKeyboardKey, modifierFlags: XCUIElement.KeyModifierFlags) {
+  func hoverOnMenuItemAndTypeWhenNotBusy(_ menuElement: XCUIElement, inExpandedMenu: Bool = false,
+                                         key: XCUIKeyboardKey, modifierFlags: XCUIElement.KeyModifierFlags) {
     let predicate = NSPredicate { _, _ in
       // procedural actions inappropriate in a predicate? seems to work tho
+      // probably more complicated than it needs to be though
       if inExpandedMenu {
         self.openExpandedMenu()
       } else {
         self.openUnexpandedMenu()
       }
       let items = self.app.statusItems.firstMatch.descendants(matching: .menuItem)
-      let ready = items["Copy & Collect"].isHittable && menuElement.exists
-      if !ready {
-        self.closeMenu()
-        return false
-      } else {
+      let ready = items["Copy & Collect"].isHittable
+      if ready && menuElement.isHittable {
         menuElement.hover()
         self.app.typeKey(key, modifierFlags: modifierFlags)
         return true
       }
+      self.closeMenu()
+      return false
     }
     expectation(for: predicate, evaluatedWith: nil)
     waitForExpectations(timeout: 10)
@@ -315,10 +335,18 @@ class CleeppUITestBase: XCTestCase {
   
   func assertInQueueMode() {
     XCTAssertTrue(isInQueueMode, "Expected menu title to contain a queue count, was empty")
+    // maybe better with a timeout, but it don't seem to work
+//    let menu = app.statusItems.firstMatch
+//    expectation(for: NSPredicate(format: "title != ''"), evaluatedWith: menu)
+//    waitForExpectations(timeout: 1)
   }
   
   func assertNotInQueueMode() {
     XCTAssertFalse(isInQueueMode, "Expected menu title to be empty string, was '\(app.statusItems.firstMatch.title)'")
+    // maybe better with a timeout, but it don't seem to work
+//    let menu = app.statusItems.firstMatch
+//    expectation(for: NSPredicate(format: "title == ''"), evaluatedWith: menu)
+//    waitForExpectations(timeout: 1)
   }
   
   func assertQueueSize(is expectSize: Int) {

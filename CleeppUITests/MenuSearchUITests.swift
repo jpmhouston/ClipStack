@@ -15,6 +15,9 @@ final class MenuSearchUITests: CleeppUITestBase {
     checkForBonusFeatures()
     try XCTSkipUnless(hasBonusFeatures)
     
+    // didn't think this would be needed, when not uitesting user can just type and it goes into the search field
+    app.searchFields.firstMatch.click()
+    
     search(copy2)
     assertSearchFieldValue(copy2)
     assertExists(menuItems[copy2])
@@ -31,6 +34,7 @@ final class MenuSearchUITests: CleeppUITestBase {
     checkForBonusFeatures()
     try XCTSkipUnless(hasBonusFeatures)
     
+    app.searchFields.firstMatch.click()
     search(file2.lastPathComponent)
     assertExists(menuItems[file2.absoluteString])
     //assertSelected(menuItems[file2.absoluteString].firstMatch)
@@ -66,6 +70,7 @@ final class MenuSearchUITests: CleeppUITestBase {
     checkForBonusFeatures()
     try XCTSkipUnless(hasBonusFeatures)
     
+    app.searchFields.firstMatch.click()
     search("foo bar")
     app.typeKey(.escape, modifierFlags: [])
     assertSearchFieldValue("")
@@ -77,6 +82,7 @@ final class MenuSearchUITests: CleeppUITestBase {
     checkForBonusFeatures()
     try XCTSkipUnless(hasBonusFeatures)
     
+    app.searchFields.firstMatch.click()
     search(copy2)
     menuItems["Clear History…"].click()
     
@@ -97,22 +103,24 @@ final class MenuSearchUITests: CleeppUITestBase {
     checkForBonusFeatures()
     try XCTSkipUnless(hasBonusFeatures)
     
+    app.searchFields.firstMatch.click()
     search("foo bar")
     app.typeKey("w", modifierFlags: [.control])
     assertSearchFieldValue("foo ")
     closeMenu()
   }
   
-  func test21TypeToSearchWithFieldUnfocused() throws {
-    openExpandedMenu()
-    checkForBonusFeatures()
-    try XCTSkipUnless(hasBonusFeatures)
-    
-    app.typeKey("a", modifierFlags: [])
-    waitForSearch()
-    assertSearchFieldValue("a")
-    closeMenu()
-  }
+  // thought this would be needed, when not uitesting user can just type and it goes into the search field
+//  func test21TypeToSearchWithFieldUnfocused() throws {
+//    openExpandedMenu()
+//    checkForBonusFeatures()
+//    try XCTSkipUnless(hasBonusFeatures)
+//    
+//    app.typeKey("a", modifierFlags: [])
+//    waitForSearch()
+//    assertSearchFieldValue("a")
+//    closeMenu()
+//  }
   
 //  func test30DeleteEntryDuringSearch() throws {
 //    openExpandedMenu()

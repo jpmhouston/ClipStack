@@ -47,6 +47,13 @@ class MenuController {
       let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
 
       #if CLEEPP
+      #if DEBUG
+      if AppDelegate.shouldFakeAppInteraction && modifierFlags.contains(.capsLock) {
+        AppDelegate.putPasteHistoryOnClipboard()
+        return
+      }
+      #endif // DEBUG
+      
       if !Cleepp.busy {
         if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
           UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
