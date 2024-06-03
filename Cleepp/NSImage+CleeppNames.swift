@@ -16,5 +16,5 @@ extension NSImage.Name {
   static let cleepMenuIconListPlus = NSImage.Name("cleepp.list.clipboard.fill.badge.plus")
   static let cleepMenuIconListMinus = NSImage.Name("cleepp.list.clipboard.fill.badge.minus")
   
-  static let currency = loadName("currency")
+  static let gift = loadName("gift")
 }

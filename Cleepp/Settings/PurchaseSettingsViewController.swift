@@ -13,7 +13,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   public let paneIdentifier = Settings.PaneIdentifier.purchase
   public let paneTitle = NSLocalizedString("preferences_purchase", comment: "")
-  public let toolbarItemIcon = NSImage(named: .currency)!
+  public let toolbarItemIcon = NSImage(named: .gift)!
   
   override var nibName: NSNib.Name? { "PurchaseSettingsViewController" }
   

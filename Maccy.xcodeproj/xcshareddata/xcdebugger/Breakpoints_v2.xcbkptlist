@@ -27,6 +27,36 @@
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>
+            <Locations>
+               <Location
+                  uuid = "97203B48-820C-4CAB-8757-1437E38D681B - 7564b150c7ad2f2d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Cleepp.History.add(Cleepp.HistoryItem) -&gt; ()"
+                  moduleName = "Cleepp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pierre/Code/BML/Clipboard/Cleepp/Maccy/History/History.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54">
+               </Location>
+               <Location
+                  uuid = "97203B48-820C-4CAB-8757-1437E38D681B - 7564b150c7ad2f2d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Cleepp.History.add(Cleepp.HistoryItem) -&gt; ()"
+                  moduleName = "Cleepp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pierre/Code/BML/Clipboard/Cleepp/Maccy/History/History.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
