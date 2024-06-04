@@ -22,6 +22,8 @@ on:
         default: true
 
 env:
+  isPrereleaseDefault: true
+  updateAppcastDefault: true
   projectfile: Maccy.xcodeproj
   productname: Cleepp
   buildscheme: Cleepp
@@ -63,11 +65,13 @@ jobs:
           version=$(xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -showBuildSettings \
             | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
-
           if [[ -z $version ]] ; then
             echo "::error::Unable to determine a version number for the current state of the xcode project"
             exit 1
-          elif [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
+          fi
+          
+          echo "- Checking script inputs"
+          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
             echo "- Build version is $version"
           else
             echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
@@ -75,6 +79,21 @@ jobs:
           fi
           releaseName="${{ env.productname }} $version"
           releaseNameNoSpaces="${{ env.productname }}.$version"
+          
+          if [[ -z "${{ inputs.isPrerelease }}" ]] ; then
+            echo "- Using default value for isPrerelease: ${{ env.isPrereleaseDefault }}"
+            isPrerelease=${{ env.isPrereleaseDefault }}
+          else
+            echo "- Using supplied value for isPrerelease: ${{ inputs.isPrerelease }}"
+            isPrerelease=${{ inputs.isPrerelease }}
+          fi
+          if [[ -z "${{ inputs.updateAppcast }}" ]] ; then
+            echo "- Using default value for updateAppcast: ${{ env.updateAppcastDefault }}"
+            updateAppcast=${{ env.updateAppcastDefault }}
+          else
+            echo "- Using supplied value for updateAppcast: ${{ inputs.updateAppcast }}"
+            updateAppcast=${{ inputs.updateAppcast }}
+          fi
           
           echo "- Parsing trigger"
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
@@ -97,6 +116,8 @@ jobs:
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           echo "releaseArchivename=$releaseNameNoSpaces" >> $GITHUB_OUTPUT
+          echo "isPrerelease=$isPrerelease" >> $GITHUB_OUTPUT
+          echo "updateAppcast=$updateAppcast" >> $GITHUB_OUTPUT
           if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
@@ -125,10 +146,10 @@ jobs:
             "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist"
           bundleVersion=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' \
             "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist" 2> /dev/null)
-          if [[ -z bundleversion.txt && "${{ inputs.updateAppcast }}" == "true" ]] ; then
+          if [[ -z $bundleVersion && "${{ steps.version.outputs.updateAppcast }}" == "true" ]] ; then
             echo "::error::Unable to find app's bundle version"
             exit 1
-          elif [[ -z bundleversion.txt ]] ; then
+          elif [[ -z $bundleVersion ]] ; then
             echo "::warning::Unable to find app's bundle version, workflows updating Sparkle appcast require this, but this one can continue"
           fi
           
@@ -341,13 +362,13 @@ jobs:
           echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
       
       - name: Setup Sparkle
-        if: success() && inputs.updateAppcast && steps.version.outputs.tag
+        if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag
         uses: jozefizso/setup-sparkle@v1
         with:
           version: 2.6.0
       - name: Generate Sparkle appcast.xml
         id: sparkle
-        if: success() && inputs.updateAppcast && steps.version.outputs.tag
+        if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag
         run: |
           :
           echo "::add-mask::${{ secrets.SPARKLE_PRIVATE_KEY }}"
@@ -395,7 +416,7 @@ jobs:
           echo "appcastGenerated=true" >> $GITHUB_OUTPUT 
       
       - name: Commit appcast.xml
-        if: success() && inputs.updateAppcast && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
+        if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
@@ -408,7 +429,7 @@ jobs:
         with:
           name: ${{ steps.version.outputs.releaseName }}
           draft: true
-          prerelease: ${{ inputs.isPrerelease }}
+          prerelease: ${{ steps.version.outputs.isPrerelease }}
           body_path: ${{ steps.notes.outputs.file }}
           files: |
             ${{ steps.zip.outputs.file }}
@@ -422,7 +443,7 @@ jobs:
           name: ${{ steps.version.outputs.releaseName }}
           tag_name: ${{ steps.version.outputs.tag }}
           draft: true
-          prerelease: ${{ inputs.isPrerelease }}
+          prerelease: ${{ steps.version.outputs.isPrerelease }}
           body_path: ${{ steps.notes.outputs.file }}
           files: |
             ${{ steps.zip.outputs.file }}
