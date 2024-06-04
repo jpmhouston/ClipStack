@@ -1,6 +1,16 @@
+# 0.9.9
+
+- Renamed "Purchase" settings panel to "Support Us" and changed icon from a coin to a gift, fixed a typo in the panel.
+- Fixed height of several settings panels, removing white space at the bottom.
+- Internal refactoring and UI test.
+- Fixed use of Sparkle API, updated its plist entries and added an entitlement it needed.
+- Fixed build number generated during build, removed Sparkle appcast file entries for those versions with a too-large build number (so must manually upgrade from 0.9.7/8 to a new version after all).
+- Improve Sparkle setup in GitHub workflow, automating appcast file generation which required making the .zip archive contain only the .app.
+- Made GitHub workflow build .dmg containing app and readme (now the disk image is the recommended file to download), other GitHub workflow fixes.
+
 # 0.9.8
 
-- Change what is left on the clipboard when collecting clipboard items in queue mode, keep last copied item on clipboard and when Paste & Advance switch to desired item before invoking application's paste.
+- Changed what is left on the clipboard when collecting clipboard items in queue mode, keep last copied item on clipboard and when Paste & Advance switch to desired item before invoking application's paste.
 - Fixed bug where Delete History Item wasn't enabled sometimes, particularly when there's only one history item in the menu.
 - Fixed bug affecting performace where all history items were added to the menu on first launch, instead of the count in the settings, most of which then have to be removed when the menu is first opened.
 - Implemented some Cleepp specific UI Tests, adapting some Mappy tests and then adding ones for using queue copy and paste.
