@@ -5,5 +5,33 @@
         <link>https://raw.githubusercontent.com/jpmhouston/Cleepp/forkmain/appcast.xml</link>
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
+        <item>
+            <title>0.9.9</title>
+            <pubDate>Tue, 04 Jun 2024 23:57:02 +0000</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>782</sparkle:version>
+            <sparkle:shortVersionString>0.9.9</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.14.6</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>Renamed “Purchase” settings panel to “Support Us” and changed icon
+from a coin to a gift, fixed a typo in the panel.</li>
+<li>Fixed height of several settings panels, removing white space at the
+bottom.</li>
+<li>Internal refactoring and UI test.</li>
+<li>Fixed use of Sparkle API, updated its plist entries and added an
+entitlement it needed.</li>
+<li>Fixed build number generated during build, removed Sparkle appcast
+file entries for those versions with a too-large build number (so must
+manually upgrade from 0.9.7/8 to a new version after all).</li>
+<li>Improve Sparkle setup in GitHub workflow, automating appcast file
+generation which required making the .zip archive contain only the
+.app.</li>
+<li>Made GitHub workflow build .dmg containing app and readme (now the
+disk image is the recommended file to download), other GitHub workflow
+fixes.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v0.9.9/Cleepp.0.9.9.zip" length="10090282" type="application/octet-stream" sparkle:edSignature="sVKK0KjTdx6XYb58IZEBCQBI0Z5SynML7U0TZbr3WNurMoCvW6EhGI50dgC5mZ2oqVtBxvOzyc0I/qaLejCeCw=="/>
+        </item>
     </channel>
 </rss>
