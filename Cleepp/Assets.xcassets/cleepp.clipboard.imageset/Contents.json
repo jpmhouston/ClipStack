@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "clipboard-black.png",
+      "filename" : "clipboard-asterisk-black.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "clipboard-white.png",
+      "filename" : "clipboard-asterisk-white.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
-      "filename" : "clipboard-black@2x.png",
+      "filename" : "clipboard-asterisk-black@2x.png",
       "idiom" : "mac",
       "scale" : "2x"
     },
@@ -28,7 +28,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "clipboard-white@2x.png",
+      "filename" : "clipboard-asterisk-white@2x.png",
       "idiom" : "mac",
       "scale" : "2x"
     }

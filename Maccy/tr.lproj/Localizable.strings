@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• Ögeyi kopyalamak için %@ basılı tutarak seçin.";
 "paste_modifiers_config" = "• Ögeyi kopyalayıp yapıştırmak için %@ basılı tutarak seçin.";
 "format_modifiers_config" = "• Kopyalamak, biçimlendirmeyi temizlemek ve yapıştırmak için %@ basılı tutarak seçin.";
-"accessibility_alert_message" = "“Cleepp”, erişilebilirlik özelliklerini kullanarak bu bilgisayarı denetlemek istiyor.";
-"accessibility_alert_comment" = "Bu uygulamaya, {settings} {pane} bölümünden izin verin.\n\n“+“ düğmesine tıklayın, Cleepp'yi seçin ve yanındaki onay kutusunu işaretleyin.";
+"accessibility_alert_message" = "“Batch Clipboard”, erişilebilirlik özelliklerini kullanarak bu bilgisayarı denetlemek istiyor.";
+"accessibility_alert_comment" = "Bu uygulamaya, {settings} {pane} bölümünden izin verin.\n\n“+“ düğmesine tıklayın, Batch Clipboard'yi seçin ve yanındaki onay kutusunu işaretleyin.";
 "accessibility_alert_deny" = "Reddet";
 "accessibility_alert_open" = "Sistem Ayarları'nı Aç";
 "clear_alert_message" = "Geçmişi temizlemek istediğinize emin misiniz?";
@@ -36,7 +36,7 @@
 "preferences_purchase" = "Support Us";
 "accessibility_alert_show_intro" = "Reopen Intro Window";
 "first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"menu_accessibility_description" = "Batch Clipboard Menu";
 "number_alert_message" = "Paste how many items?";
 "number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
 "number_alert_confirm" = "Paste";

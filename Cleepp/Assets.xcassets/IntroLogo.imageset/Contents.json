@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Cleepp logo bordered.png",
+      "filename" : "Batch Clipboard logo bordered.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
-      "filename" : "Cleepp logo bordered@2x.png",
+      "filename" : "Batch Clipboard logo bordered@2x.png",
       "idiom" : "mac",
       "scale" : "2x"
     }

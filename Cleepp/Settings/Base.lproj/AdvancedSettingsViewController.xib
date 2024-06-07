@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AdvancedSettingsViewController" customModule="Cleepp" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="AdvancedSettingsViewController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="avoidTakingFocusButton" destination="4MH-H4-Ce2" id="iHM-Ux-GrT"/>
                 <outlet property="clearOnQuitButton" destination="O2y-qd-u6c" id="awd-Ep-Rex"/>
@@ -65,9 +65,9 @@ You are likely to use it programmatically and disable application while copying 
                                 <rect key="frame" x="-2" y="157" width="402" height="33"/>
                                 <textFieldCell key="cell" selectable="YES" id="LFh-6b-GFi">
                                     <font key="font" size="10" name="Menlo-Regular"/>
-                                    <string key="title">defaults write lol.bananameter.cleepp ignoreEvents true
+                                    <string key="title">defaults write lol.bananameter.batchclip ignoreEvents true
 # copy data
-defaults write lol.bananameter.cleepp ignoreEvents false</string>
+defaults write lol.bananameter.batchclip ignoreEvents false</string>
                                     <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -90,7 +90,7 @@ To ignore only the next copy, click with ^⌥⇧.</string>
                                 <rect key="frame" x="-2" y="91" width="402" height="22"/>
                                 <textFieldCell key="cell" selectable="YES" id="yeX-On-Ble">
                                     <font key="font" size="10" name="Menlo-Regular"/>
-                                    <string key="title">defaults write lol.bananameter.cleepp ignoreOnlyNextEvent true
+                                    <string key="title">defaults write lol.bananameter.batchclip ignoreOnlyNextEvent true
 # copy data</string>
                                     <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -105,7 +105,7 @@ To ignore only the next copy, click with ^⌥⇧.</string>
                         <gridCell row="tDm-DG-HuU" column="8aH-p4-Hiw" id="d4M-7j-KcB">
                             <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4MH-H4-Ce2">
                                 <rect key="frame" x="-2" y="49" width="400" height="18"/>
-                                <string key="toolTip">Cleepp takes an active application focus when the popup is shown and gives focus back when it's closed. The focus is needed for advanced macOS input handling such as Chinese helper or accent menu. Enabling this option would prevent Cleepp from taking focus. There are certain situations when this can be useful: for example, pasting to a text editor that auto-formats code when it loses focus.</string>
+                                <string key="toolTip">Batch Clipboard takes an active application focus when the popup is shown and gives focus back when it's closed. The focus is needed for advanced macOS input handling such as Chinese helper or accent menu. Enabling this option would prevent Batch Clipboard from taking focus. There are certain situations when this can be useful: for example, pasting to a text editor that auto-formats code when it loses focus.</string>
                                 <buttonCell key="cell" type="check" title="Avoid taking application focus" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jjU-HE-iIA">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>

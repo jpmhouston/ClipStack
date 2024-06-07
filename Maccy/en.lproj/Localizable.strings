@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• Select with %@ pressed to copy item.";
 "paste_modifiers_config" = "• Select with %@ pressed to copy and paste item.";
 "format_modifiers_config" = "• Select with %@ pressed to copy, clear formatting and paste item.";
-"accessibility_alert_message" = "“Cleepp” would like to control this computer using accessibility features.";
-"accessibility_alert_comment" = "Grant access to this application in {pane}, located in {settings}.\n\nClick + button, select “Cleepp” and toggle on the checkbox next to it.";
+"accessibility_alert_message" = "“Batch Clipboard” would like to control this computer using accessibility features.";
+"accessibility_alert_comment" = "Grant access to this application in {pane}, located in {settings}.\n\nClick + button, select “Batch Clipboard” and toggle on the checkbox next to it.";
 "accessibility_alert_deny" = "Deny";
 "accessibility_alert_open" = "Open System Preferences";
 "clear_alert_message" = "Are you sure you want to clear the history?";
@@ -35,9 +35,9 @@
 
 "preferences_purchase" = "Support Us";
 "accessibility_alert_show_intro" = "Reopen Intro Window";
+"first_replay_item_badge" = "replay from here";
+"menu_accessibility_description" = "Batch Clipboard Menu";
 "number_alert_message" = "Paste how many items?";
 "number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
 "number_alert_cancel" = "Cancel";
 "number_alert_confirm" = "Paste";
-"first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";

@@ -56,7 +56,7 @@ class Purchases: NSObject {
   // can we avoid hardcoding the product id's we expect, be driven entirely by the
   // product details received? should the one(s) that link to purchasing the bonus features
   // be tagged with some substring in the id? for now, any item gives the user the bonus
-  //private static let bonusProductIdentifier = "lol.bananameter.cleepp.extras"
+  //private static let bonusProductIdentifier = "lol.bananameter.batchclip.extras"
   
   var hasBoughtExtras: Bool { boughtItems.contains(.bonus) }
   var boughtItems: Set<Item> = []

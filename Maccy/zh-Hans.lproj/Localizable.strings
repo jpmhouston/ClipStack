@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• 按住 %@ 选择项目以复制。";
 "paste_modifiers_config" = "• 按住 %@ 选择项目以复制并粘贴。";
 "format_modifiers_config" = "• 按住 %@ 选择项目以复制并匹配格式粘贴。";
-"accessibility_alert_message" = "“Cleepp“想要使用“辅助功能”控制此计算机。";
-"accessibility_alert_comment" = "在{settings}中的{pane}设置中授予此应用程序权限。\n\n单击 ”+” 按钮，选择 ”Cleepp” 并打开旁边的复选框。";
+"accessibility_alert_message" = "“Batch Clipboard“想要使用“辅助功能”控制此计算机。";
+"accessibility_alert_comment" = "在{settings}中的{pane}设置中授予此应用程序权限。\n\n单击 ”+” 按钮，选择 ”Batch Clipboard” 并打开旁边的复选框。";
 "accessibility_alert_deny" = "拒绝";
 "accessibility_alert_open" = "打开系统偏好设置";
 "clear_alert_message" = "确定要清除历史记录吗？";
@@ -36,7 +36,7 @@
 "preferences_purchase" = "Support Us";
 "accessibility_alert_show_intro" = "Reopen Intro Window";
 "first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"menu_accessibility_description" = "Batch Clipboard Menu";
 "number_alert_message" = "Paste how many items?";
 "number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
 "number_alert_confirm" = "Paste";

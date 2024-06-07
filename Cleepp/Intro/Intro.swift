@@ -10,7 +10,7 @@ import AppKit
 import SDWebImage
 
 extension NSWindow.FrameAutosaveName {
-  static let cleeppIntro: NSWindow.FrameAutosaveName = "lol.bananameter.cleepp.intro.FrameAutosaveName"
+  static let cleeppIntro: NSWindow.FrameAutosaveName = "lol.bananameter.batchclip.intro.FrameAutosaveName"
 }
 
 public class IntroWindowController: PagedWindowController {
@@ -247,6 +247,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   }
   
   private func setupAnimatedLogo() {
+    #if INTRO_ANIMATED_LOGO // app currently has no animated logo
     animatedLogoImage?.autoPlayAnimatedImage = false
     animatedLogoImage?.isHidden = true
     logoStopButton?.isHidden = true
@@ -258,21 +259,31 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     }
     animatedLogoImage?.image = sdImage
     logoRestartButton?.isHidden = false
+    #else
+    animatedLogoImage?.isHidden = true
+    logoStopButton?.isHidden = true
+    logoRestartButton?.isHidden = true
+    #endif
   }
   
   private func resetAnimatedLogo() {
+    #if INTRO_ANIMATED_LOGO
     stopAnimatedLogo() // show static logo initially
+    #endif
   }
   
   private func stopAnimatedLogo() {
+    #if INTRO_ANIMATED_LOGO
     cancelLogoTimer()
     animatedLogoImage?.player?.stopPlaying()
     animatedLogoImage?.isHidden = true
     logoStopButton?.isHidden = true
     logoRestartButton?.isHidden = false
+    #endif
   }
   
   private func startAnimatedLogo(withDelay useDelay: Bool = false) {
+    #if INTRO_ANIMATED_LOGO
     let initialDelay = 2.0
     
     // reset player to the start and setup to stop after a loop completes
@@ -298,6 +309,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
         self?.animatedLogoImage?.player?.startPlaying()
       }
     }
+    #endif
   }
   
   private func setupOptionKeyObserver(_ observe: @escaping (NSEvent) -> Void) {

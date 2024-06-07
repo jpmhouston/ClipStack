@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• Za kopiranje elementa odaberi zajedno s pritisnutom tipkom %@.";
 "paste_modifiers_config" = "• Za kopiranje i umetanje elementa odaberi zajedno s pritisnutom tipkom %@.";
 "format_modifiers_config" = "• Za kopiranje, uklanjanje formata i umetanje elementa odaberi zajedno s pritisnutom tipkom %@.";
-"accessibility_alert_message" = "„Cleepp” želi upravljati ovim računalom koristeći funkcije pristupačnosti.";
-"accessibility_alert_comment" = "Dozvoli pristup ovoj aplikaciji u postavkama {pane} unutar {settings}.\n\nKliknite gumb „+”, odaberite „Cleepp” i uključite potvrdni okvir pokraj njega.";
+"accessibility_alert_message" = "„Batch Clipboard” želi upravljati ovim računalom koristeći funkcije pristupačnosti.";
+"accessibility_alert_comment" = "Dozvoli pristup ovoj aplikaciji u postavkama {pane} unutar {settings}.\n\nKliknite gumb „+”, odaberite „Batch Clipboard” i uključite potvrdni okvir pokraj njega.";
 "accessibility_alert_deny" = "Zabrani";
 "accessibility_alert_open" = "Otvori postavke sustava";
 "clear_alert_message" = "Stvarno želiš izbrisati povijest?";
@@ -36,7 +36,7 @@
 "preferences_purchase" = "Support Us";
 "accessibility_alert_show_intro" = "Reopen Intro Window";
 "first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"menu_accessibility_description" = "Batch Clipboard Menu";
 "number_alert_message" = "Paste how many items?";
 "number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
 "number_alert_confirm" = "Paste";

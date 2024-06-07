@@ -1,8 +1,8 @@
 /* Class = "NSTextFieldCell"; title = "Temporarily ignore all new copies.\nYou are likely to use it programmatically and disable application while copying sensitive data."; ObjectID = "Ejh-zi-AFs"; */
 "Ejh-zi-AFs.title" = "Временно игнорировать все новые копировния.\nВы можете использовать эту настройку программно и отключить приложение на время копирования конфиденциальных данных.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.cleepp ignoreEvents true\n# copy data\ndefaults write lol.bananameter.cleepp ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
-"LFh-6b-GFi.title" = "defaults write lol.bananameter.cleepp ignoreEvents true\n# копировать данные\ndefaults write lol.bananameter.cleepp ignoreEvents false";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.batchclipp ignoreEvents true\n# copy data\ndefaults write lol.bananameter.batchclipp ignoreEvents false"; ObjectID = "LFh-6b-GFi"; */
+"LFh-6b-GFi.title" = "defaults write lol.bananameter.batchclipp ignoreEvents true\n# копировать данные\ndefaults write lol.bananameter.batchclipp ignoreEvents false";
 
 /* Class = "NSTextFieldCell"; title = "You can also click the menu icon with ^ pressed.\nTo ignore only the next copy, click with ^⌥."; ObjectID = "lwS-2p-WwS"; */
 "lwS-2p-WwS.title" = "Вы также можете кликнуть значок меню с нажатой клавишей ^.\nЧтобы игнорировать только следующую копию, кликните с ^⌥.";
@@ -19,8 +19,8 @@
 /* Class = "NSButtonCell"; title = "Clear the system clipboard too"; ObjectID = "WSh-1o-SG8"; */
 "WSh-1o-SG8.title" = "Также очищать системный буфер обмена";
 
-/* Class = "NSButton"; ibShadowedToolTip = "Cleepp takes an active application focus when the popup is shown and gives focus back when it's closed. The focus is needed for advanced macOS input handling such as Chinese helper or accent menu. Enabling this option would prevent Cleepp from taking focus. There are certain situations when this can be useful: for example, pasting to a text editor that auto-formats code when it loses focus."; ObjectID = "4MH-H4-Ce2"; */
-"4MH-H4-Ce2.ibShadowedToolTip" = "Cleepp забирает фокус активного приложения когда всплывающее окно появляется и возвращает фокус когда оно закрывается. Фокус необходим для работы функций ввода текста macOS, таких как автодополнение китайского текста или выбор буквы ё. Cleepp не будет забирать фокус при включении этой опции. Это может быть полезно в определенных ситуациях: например при вставке в текстовый редактор, автоматически форматирующих код при потере фокуса.";
+/* Class = "NSButton"; ibShadowedToolTip = "Batch Clipboard takes an active application focus when the popup is shown and gives focus back when it's closed. The focus is needed for advanced macOS input handling such as Chinese helper or accent menu. Enabling this option would prevent Batch Clipboard from taking focus. There are certain situations when this can be useful: for example, pasting to a text editor that auto-formats code when it loses focus."; ObjectID = "4MH-H4-Ce2"; */
+"4MH-H4-Ce2.ibShadowedToolTip" = "Batch Clipboard забирает фокус активного приложения когда всплывающее окно появляется и возвращает фокус когда оно закрывается. Фокус необходим для работы функций ввода текста macOS, таких как автодополнение китайского текста или выбор буквы ё. Batch Clipboard не будет забирать фокус при включении этой опции. Это может быть полезно в определенных ситуациях: например при вставке в текстовый редактор, автоматически форматирующих код при потере фокуса.";
 
 /* Class = "NSButton"; ibShadowedToolTip = "Automatically remove all unpinned items before quitting the application."; ObjectID = "O2y-qd-u6c"; */
 "O2y-qd-u6c.ibShadowedToolTip" = "Автоматически удалять все неприкрепленные записи перед закрытием приложения.";
@@ -28,5 +28,5 @@
 /* Class = "NSButton"; ibShadowedToolTip = "When enabled, clearing the history would also clear the current system clipboard."; ObjectID = "lGE-3K-m2Y"; */
 "lGE-3K-m2Y.ibShadowedToolTip" = "Если этот параметр включен, очистка истории также очистит текущий системный буфер обмена.";
 
-/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.cleepp ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
-"yeX-On-Ble.title" = "defaults write lol.bananameter.cleepp ignoreOnlyNextEvent true\n# копировать данные";
+/* Class = "NSTextFieldCell"; title = "defaults write lol.bananameter.batchclipp ignoreOnlyNextEvent true\n# copy data"; ObjectID = "yeX-On-Ble"; */
+"yeX-On-Ble.title" = "defaults write lol.bananameter.batchclipp ignoreOnlyNextEvent true\n# копировать данные";

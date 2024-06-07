@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="IntroWindowController" customModule="Cleepp" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="IntroWindowController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="Nx8-Ge-Pwg" id="eTb-pY-pBh"/>
                 <outlet property="doneButton" destination="gFf-JM-Tzj" id="2C3-sW-3Ts"/>
@@ -23,7 +23,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="634" height="404"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="646" height="406"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -34,7 +34,7 @@
                             <rect key="frame" x="4" y="5" width="604" height="324"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="UJc-WP-5nb" customClass="UnresponsiveScrollView" customModule="Cleepp" customModuleProvider="target">
+                                <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="UJc-WP-5nb" customClass="UnresponsiveScrollView" customModule="Batch_Clipboard" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="604" height="324"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <clipView key="contentView" id="khg-XL-g6n">
@@ -138,15 +138,16 @@ DQ
                                 <constraint firstAttribute="width" constant="328" id="MNG-B4-kVR"/>
                                 <constraint firstAttribute="height" constant="90" id="rns-H0-5in"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="introAnimatedLogo" id="yi0-pt-hiF"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yi0-pt-hiF"/>
                         </imageView>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VNn-Zg-RaA">
-                            <rect key="frame" x="36" y="104" width="508" height="76"/>
+                            <rect key="frame" x="36" y="104" width="538" height="76"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g8m-UI-Ipo">
-                                    <rect key="frame" x="-2" y="36" width="512" height="40"/>
-                                    <textFieldCell key="cell" title="Cleepp is a simple clipboard utility that lets you copy multiple items in one place, then paste them into another in sequence." id="u3E-8K-Lim">
+                                    <rect key="frame" x="-2" y="36" width="542" height="40"/>
+                                    <textFieldCell key="cell" id="u3E-8K-Lim">
                                         <font key="font" metaFont="system" size="17"/>
+                                        <string key="title">Batch Clipboard is a simple clipboard utility give you the ability to copy multiple items in one place, then paste them somewhere else in order.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -170,8 +171,8 @@ DQ
                             </customSpacing>
                         </stackView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-o6-hWz">
-                            <rect key="frame" x="34" y="20" width="287" height="45"/>
-                            <textFieldCell key="cell" title="to open this window again use the About Cleepp menu item, then using the Show Intro button within" id="nAg-nr-2O5">
+                            <rect key="frame" x="34" y="20" width="287" height="30"/>
+                            <textFieldCell key="cell" title="to open this window again use the About menu item, then using the Show Intro button within" id="nAg-nr-2O5">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -211,7 +212,7 @@ DQ
                     </subviews>
                     <constraints>
                         <constraint firstItem="cZS-Ny-vCa" firstAttribute="bottom" secondItem="18M-Uy-H9x" secondAttribute="bottom" id="14r-Wi-8Gg"/>
-                        <constraint firstAttribute="trailing" secondItem="VNn-Zg-RaA" secondAttribute="trailing" constant="60" id="1vg-AR-IgX"/>
+                        <constraint firstAttribute="trailing" secondItem="VNn-Zg-RaA" secondAttribute="trailing" constant="30" id="1vg-AR-IgX"/>
                         <constraint firstItem="VNn-Zg-RaA" firstAttribute="leading" secondItem="4HE-o8-4GT" secondAttribute="leading" constant="36" id="7Af-PK-NDJ"/>
                         <constraint firstItem="VNn-Zg-RaA" firstAttribute="top" secondItem="18M-Uy-H9x" secondAttribute="bottom" constant="24" id="DHr-z8-N6t"/>
                         <constraint firstAttribute="trailing" secondItem="Vey-Vh-Zet" secondAttribute="trailing" constant="20" symbolic="YES" id="FwU-FM-dLX"/>
@@ -255,7 +256,7 @@ DQ
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-cs-oZY">
                                     <rect key="frame" x="-2" y="144" width="304" height="57"/>
-                                    <textFieldCell key="cell" title="Cleepp needs your authorization to be able to instruct the frontmost application to perform a Copy or Paste." id="VI8-q1-aOr">
+                                    <textFieldCell key="cell" title="Batch Clipboard needs your authorization to be able to instruct the frontmost application to perform a Copy or Paste." id="VI8-q1-aOr">
                                         <font key="font" metaFont="system" size="16"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -360,9 +361,9 @@ DQ
                                         <font key="font" metaFont="system" size="14"/>
                                         <string key="title">The Accessibility subpanel of your Privacy &amp; Security settings should have opened. Unlock using the lock icon at the bottom if you have that.
 
-If Cleepp is in the list, use the – button to remove it.
+If Batch Clipboard is in the list, use the – button to remove it.
 
-Then use the + button and select Cleepp from your Applications folder.</string>
+Then use the + button and select Batch Clipboard from your Applications folder.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -592,7 +593,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="nXv-aL-ixw">
                                             <rect key="frame" x="-2" y="8" width="519" height="17"/>
-                                            <textFieldCell key="cell" title="Cleepp lives in the menu bar and the icon normall looks outlined like this: " id="QSh-Vk-jUJ">
+                                            <textFieldCell key="cell" title="Batch Clipboard lives in the menu bar and the icon looks outlined like this: " id="QSh-Vk-jUJ">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -619,7 +620,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <rect key="frame" x="-2" y="109" width="554" height="51"/>
                                     <textFieldCell key="cell" id="Yqj-hi-edI">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <string key="title">When using ^⌘C (collecting) and ^⌘V (replaying) the clipboard is in Cleepp's special _collecting/replaying mode_ where items you copy get stored, then when you paste them one-at-a-time they replay the same order.</string>
+                                        <string key="title">When using ^⌘C (collecting) and ^⌘V (replaying) the clipboard is in Batch Clipboard's special _batch mode_ where items you copy get stored, then when you paste them one-at-a-time they replay the same order.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -629,7 +630,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="kPk-oe-jvZ">
                                             <rect key="frame" x="-2" y="0.0" width="450" height="34"/>
-                                            <textFieldCell key="cell" title="When in _collecting/replaying mode_, the menu bar icon appears filled in and with a counter beside it:" id="1VJ-eQ-OVc">
+                                            <textFieldCell key="cell" title="When in _batch mode_, the menu bar icon appears filled in and with a counter beside it:" id="1VJ-eQ-OVc">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -724,7 +725,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <rect key="frame" x="-2" y="78" width="554" height="51"/>
                                     <textFieldCell key="cell" id="GUY-i5-7Qv">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <string key="title">The clipboard items that have been collected (and not yet pasted) are shown in the Cleepp menu, most recent at the top. You can delete an item you copied accidentally with ⌘-Delete.</string>
+                                        <string key="title">The clipboard items that have been collected (and not yet pasted) are shown in the Batch Clipboard menu, most recent at the top. You can delete an item you copied accidentally with ⌘-Delete.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -994,7 +995,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JiV-Jm-peE">
                                             <rect key="frame" x="-2" y="0.0" width="548" height="20"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Cleepp is open source!" id="dfQ-sj-HNd">
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Batch Clipboard is open source!" id="dfQ-sj-HNd">
                                                 <font key="font" metaFont="system" size="17"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1056,7 +1057,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
                                     <subviews>
                                         <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="efI-DS-y9J">
                                             <rect key="frame" x="-2" y="0.0" width="408" height="34"/>
-                                            <textFieldCell key="cell" title="Cleepp is a derivative of Maccy. Check out the original for a free, more full-featured clipboard manager." id="wHd-ST-cAs">
+                                            <textFieldCell key="cell" title="Batch Clipboard is a derivative of Maccy. Check out the original for a free, more full-featured clipboard manager." id="wHd-ST-cAs">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1159,7 +1160,7 @@ Then use the + button and select Cleepp from your Applications folder.</string>
             </constraints>
             <point key="canvasLocation" x="1333" y="686"/>
         </customView>
-        <viewController id="o5X-kK-gzk" customClass="IntroViewController" customModule="Cleepp" customModuleProvider="target">
+        <viewController id="o5X-kK-gzk" customClass="IntroViewController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="animatedLogoImage" destination="dAC-wT-V2b" id="UYc-BF-gYg"/>
                 <outlet property="appStorePromoLabel" destination="dOo-x3-0gT" id="lyz-aE-wSq"/>
@@ -1202,7 +1203,6 @@ Then use the + button and select Cleepp from your Applications folder.</string>
     <resources>
         <image name="IntroLogo" width="332" height="94"/>
         <image name="arrow.counterclockwise" catalog="system" width="11" height="13"/>
-        <image name="introAnimatedLogo" width="328" height="90"/>
         <image name="introDemo1" width="300" height="284"/>
         <image name="introFilledNumberedMenuIcon" width="100" height="35"/>
         <image name="introOutlineMenuIcon" width="31" height="35"/>

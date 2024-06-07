@@ -1,10 +1,10 @@
-# Cleepp is Open Source
+# Batch Clipboard is Open Source
 
-#### This software's source code and free downloads of its (non-App Store) releases are at https://github.com/jpmhouston/Cleepp and more information can also be found at its homepage http://cleepp.bananameter.lol
+#### This software's source code and free downloads of its (non-App Store) releases are at https://github.com/jpmhouston/Cleepp and more information can also be found at its homepage http://batchclipboard.bananameter.lol
 
 #### Its open source software license is provided together with its source code, plus follows immediately below
 
-#### Cleepp is a derivative work of the project Maccy https://maccy.app to which “Original work” below refers
+#### Batch Clipboard is a derivative work of the project Maccy https://maccy.app to which “Original work” below refers
 
 The MIT License (MIT)
 

@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="LicensesWindowController" customModule="Cleepp" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="LicensesWindowController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="textView" destination="8SH-Vw-ZBK" id="Eln-oN-Ta8"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="6Gl-rW-VhW"/>
@@ -16,7 +16,7 @@
         <window title="Credits and Licenses" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="196" y="480" width="540" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="540" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>

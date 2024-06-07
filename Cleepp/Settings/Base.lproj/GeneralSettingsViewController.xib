@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="GeneralSettingsViewController" customModule="Cleepp" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="GeneralSettingsViewController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="automaticUpdatesButton" destination="Mxc-Pf-Ef9" id="443-Kc-WHD"/>
                 <outlet property="checkForUpdatesButtonRow" destination="bpM-Oe-CBP" id="VBQ-Mw-0J1"/>
@@ -70,7 +70,7 @@
                         <gridCell row="bpM-Oe-CBP" column="vOJ-9h-G8Y" id="F1h-En-eCd"/>
                         <gridCell row="bpM-Oe-CBP" column="pQU-Pz-q1v" id="4MC-s5-NJN">
                             <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ik8-mb-VoG">
-                                <rect key="frame" x="132" y="143" width="77" height="19"/>
+                                <rect key="frame" x="132" y="127" width="77" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Check now" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="8Rb-OS-d59">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>

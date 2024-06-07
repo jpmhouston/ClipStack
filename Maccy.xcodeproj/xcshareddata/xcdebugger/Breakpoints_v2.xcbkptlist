@@ -29,12 +29,12 @@
             </Actions>
             <Locations>
                <Location
-                  uuid = "97203B48-820C-4CAB-8757-1437E38D681B - 7564b150c7ad2f2d"
+                  uuid = "97203B48-820C-4CAB-8757-1437E38D681B - 5174a37b5d7e8f91"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Cleepp.History.add(Cleepp.HistoryItem) -&gt; ()"
-                  moduleName = "Cleepp"
+                  symbolName = "Batch_Clipboard.History.add(Batch_Clipboard.HistoryItem) -&gt; ()"
+                  moduleName = "Batch Clipboard"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pierre/Code/BML/Clipboard/Cleepp/Maccy/History/History.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -43,12 +43,12 @@
                   endingLineNumber = "54">
                </Location>
                <Location
-                  uuid = "97203B48-820C-4CAB-8757-1437E38D681B - 7564b150c7ad2f2d"
+                  uuid = "97203B48-820C-4CAB-8757-1437E38D681B - 5174a37b5d7e8f91"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Cleepp.History.add(Cleepp.HistoryItem) -&gt; ()"
-                  moduleName = "Cleepp"
+                  symbolName = "Batch_Clipboard.History.add(Batch_Clipboard.HistoryItem) -&gt; ()"
+                  moduleName = "Batch Clipboard"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pierre/Code/BML/Clipboard/Cleepp/Maccy/History/History.swift"
                   startingColumnNumber = "9223372036854775807"

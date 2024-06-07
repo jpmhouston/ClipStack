@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• Выберите, зажав %@, чтобы скопировать запись.";
 "paste_modifiers_config" = "• Выберите, зажав %@, чтобы скопировать и вставить запись.";
 "format_modifiers_config" = "• Выберите, зажав %@, чтобы скопировать, очистить форматирование и вставить запись.";
-"accessibility_alert_message" = "Приложение «Cleepp» запрашивает разрешение на управление компьютером с помощью функций универсального доступа.";
-"accessibility_alert_comment" = "Предоставьте права доступа этой программе в настройках {pane} в {settings}.\n\nНажмите кнопку «+», выберите «Cleepp» и установите флажок рядом с ним.";
+"accessibility_alert_message" = "Приложение «Batch Clipboard» запрашивает разрешение на управление компьютером с помощью функций универсального доступа.";
+"accessibility_alert_comment" = "Предоставьте права доступа этой программе в настройках {pane} в {settings}.\n\nНажмите кнопку «+», выберите «Batch Clipboard» и установите флажок рядом с ним.";
 "accessibility_alert_deny" = "Запретить";
 "accessibility_alert_open" = "Открыть «Системные настройки»";
 "clear_alert_message" = "Вы дейстительно хотите очистить историю?";
@@ -36,7 +36,7 @@
 "preferences_purchase" = "Support Us";
 "accessibility_alert_show_intro" = "Reopen Intro Window";
 "first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"menu_accessibility_description" = "Batch Clipboard Menu";
 "number_alert_message" = "Paste how many items?";
 "number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
 "number_alert_confirm" = "Paste";

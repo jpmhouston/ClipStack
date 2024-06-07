@@ -17,8 +17,8 @@
 "copy_modifiers_config" = "• %を押しながら選択すると項目をコピーします。";
 "paste_modifiers_config" = "• %@を押しながら選択すると項目をコピーして貼り付けます。";
 "format_modifiers_config" = "• %@を押しながら選択すると項目をコピーし、 書式なしで貼り付けます。";
-"accessibility_alert_message" = "“Cleepp”は、アクセシビリティ機能を使用してこのコンピュータを制御することを求めています。";
-"accessibility_alert_comment" = "{settings}{pane}環境設定で、このアプリケーションへのアクセスを許可してください。\n\n“+“ボタンをクリックし、“Cleepp“を選択して、その横のチェックボックスをオンにします。";
+"accessibility_alert_message" = "“Batch Clipboard”は、アクセシビリティ機能を使用してこのコンピュータを制御することを求めています。";
+"accessibility_alert_comment" = "{settings}{pane}環境設定で、このアプリケーションへのアクセスを許可してください。\n\n“+“ボタンをクリックし、“Batch Clipboard“を選択して、その横のチェックボックスをオンにします。";
 "accessibility_alert_deny" = "拒否";
 "accessibility_alert_open" = "“システム環境設定”を開く";
 "clear_alert_message" = "履歴をクリアしますか？";
@@ -36,7 +36,7 @@
 "preferences_purchase" = "Support Us";
 "accessibility_alert_show_intro" = "Reopen Intro Window";
 "first_replay_item_badge" = "replay from here";
-"menu_accessibility_description" = "Cleepp Menu";
+"menu_accessibility_description" = "Batch Clipboard Menu";
 "number_alert_message" = "Paste how many items?";
 "number_alert_comment" = "You have {number} clipboard items ready to replay, paste how many of them at once now?";
 "number_alert_confirm" = "Paste";

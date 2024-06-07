@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8F8C484D2BAD51B000C3A219"
-               BuildableName = "Cleepp.app"
+               BuildableName = "Batch Clipboard.app"
                BlueprintName = "Cleepp (App Store)"
                ReferencedContainer = "container:Maccy.xcodeproj">
             </BuildableReference>
@@ -58,7 +58,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F8C484D2BAD51B000C3A219"
-            BuildableName = "Cleepp.app"
+            BuildableName = "Batch Clipboard.app"
             BlueprintName = "Cleepp (App Store)"
             ReferencedContainer = "container:Maccy.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F8C484D2BAD51B000C3A219"
-            BuildableName = "Cleepp.app"
+            BuildableName = "Batch Clipboard.app"
             BlueprintName = "Cleepp (App Store)"
             ReferencedContainer = "container:Maccy.xcodeproj">
          </BuildableReference>

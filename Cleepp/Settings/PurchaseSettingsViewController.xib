@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PurchaseSettingsViewController" customModule="Cleepp" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="PurchaseSettingsViewController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="documentationLabel" destination="OQ9-jF-Md4" id="utT-oT-472"/>
                 <outlet property="featureLabel1" destination="ohj-O7-Fpt" id="jIT-oN-OwT"/>
@@ -182,7 +182,7 @@
                                                     <real value="3.4028234663852886e+38"/>
                                                 </customSpacing>
                                             </stackView>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OQ9-jF-Md4" customClass="HyperlinkTextField" customModule="Cleepp" customModuleProvider="target">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OQ9-jF-Md4" customClass="HyperlinkTextField" customModule="Batch_Clipboard" customModuleProvider="target">
                                                 <rect key="frame" x="-2" y="0.0" width="457" height="17"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Read more about these extra features at the [documentation website]." id="6HR-qW-J9u">
                                                     <font key="font" metaFont="system" size="14"/>

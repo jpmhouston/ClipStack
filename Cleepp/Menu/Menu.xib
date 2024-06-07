@@ -5,10 +5,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="Cleepp" customModule="Cleepp" customModuleProvider="target"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="Cleepp" customModule="Batch_Clipboard" customModuleProvider="target"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY" customClass="MenuHeaderView" customModule="Cleepp" customModuleProvider="target">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY" customClass="MenuHeaderView" customModule="Batch_Clipboard" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="296" height="28"/>
             <subviews>
                 <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-Nx-C7z">
@@ -44,9 +44,9 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <point key="canvasLocation" x="-106" y="373"/>
         </customView>
-        <menu title="Cleepp" id="dqg-kI-Klz" customClass="CleeppMenu" customModule="Cleepp" customModuleProvider="target">
+        <menu title="Batch Clipboard" id="dqg-kI-Klz" customClass="CleeppMenu" customModule="Batch_Clipboard" customModuleProvider="target">
             <items>
-                <menuItem title="About Cleepp…" tag="108" id="m9D-8J-nyc">
+                <menuItem title="About Batch Clipboard…" tag="108" id="m9D-8J-nyc">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showAbout:" target="-2" id="A4A-Di-5u1"/>
@@ -108,19 +108,19 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="JrS-zo-Haf"/>
-                <menuItem title="Placeholder Copy History Item" id="1hg-yO-AD0" customClass="HistoryMenuItem" customModule="Cleepp" customModuleProvider="target">
+                <menuItem title="Placeholder Copy History Item" id="1hg-yO-AD0" customClass="HistoryMenuItem" customModule="Batch_Clipboard" customModuleProvider="target">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="copyFromHistory:" target="-2" id="dkX-Up-627"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Placeholder Replay History Item" alternate="YES" id="u5y-6g-IID" customClass="HistoryMenuItem" customModule="Cleepp" customModuleProvider="target">
+                <menuItem title="Placeholder Replay History Item" alternate="YES" id="u5y-6g-IID" customClass="HistoryMenuItem" customModule="Batch_Clipboard" customModuleProvider="target">
                     <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                     <connections>
                         <action selector="replayFromHistory:" target="-2" id="BLU-IN-o9D"/>
                     </connections>
                 </menuItem>
-                <menuItem enabled="NO" id="pms-CA-OfJ" userLabel="Placeholder Anchor Item" customClass="HistoryMenuItem" customModule="Cleepp" customModuleProvider="target">
+                <menuItem enabled="NO" id="pms-CA-OfJ" userLabel="Placeholder Anchor Item" customClass="HistoryMenuItem" customModule="Batch_Clipboard" customModuleProvider="target">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="replayFromHistory:" target="-2" id="srV-C0-AYl"/>
@@ -162,7 +162,7 @@ CA
                         <action selector="showSettings:" target="-2" id="T0z-qq-fZJ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit Cleepp" tag="109" keyEquivalent="q" id="yjd-dE-jma">
+                <menuItem title="Quit Batch Clipboard" tag="109" keyEquivalent="q" id="yjd-dE-jma">
                     <connections>
                         <action selector="quit:" target="-2" id="DKY-Ef-7Mu"/>
                     </connections>

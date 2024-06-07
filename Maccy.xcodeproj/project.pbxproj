@@ -181,14 +181,10 @@
 		8F8C48BA2BAD549300C3A219 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C47EE2BACD0D200C3A219 /* PurchaseSettingsViewController.xib */; };
 		8F8C48BC2BAD570F00C3A219 /* Preview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3CC92BABB31600DDB603 /* Preview.xib */; };
 		8F8C48BD2BAD570F00C3A219 /* Preview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3CC92BABB31600DDB603 /* Preview.xib */; };
-		8F8C48C32BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */; };
-		8F8C48C42BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */; };
 		8F8C48C52BAD5ED500C3A219 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */; };
 		8F8C48C62BAD5ED500C3A219 /* PagedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */; };
 		8F8C48C72BAD5ED500C3A219 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48C02BAD5ED400C3A219 /* Intro.swift */; };
 		8F8C48C82BAD5ED500C3A219 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C48C02BAD5ED400C3A219 /* Intro.swift */; };
-		8F8C48C92BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */; };
-		8F8C48CA2BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C12BAD5ED500C3A219 /* introAnimatedLogo@2x.gif */; };
 		8F8C48CB2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
 		8F8C48CC2BAD5ED500C3A219 /* Intro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48C22BAD5ED500C3A219 /* Intro.xib */; };
 		8FB23AD52BFBDF9200137393 /* ClipboardQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB23AD42BFBDF9200137393 /* ClipboardQueue.swift */; };
@@ -404,7 +400,7 @@
 		7CEEFDEF24F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppearanceSettingsViewController.strings"; sourceTree = "<group>"; };
 		7CEEFDF024F41F8500ECAD2A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralSettingsViewController.strings"; sourceTree = "<group>"; };
 		8F07B7AC2BE6E284006E8CBA /* CleeppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleeppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0D3C7A2BAB8F5A00DDB603 /* Batch Clipboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Batch Clipboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F0D3C7D2BAB992D00DDB603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F0D3C7E2BAB992D00DDB603 /* Info-MAS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MAS.plist"; sourceTree = "<group>"; };
 		8F0D3C802BABAD6500DDB603 /* Cleepp+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cleepp+Actions.swift"; sourceTree = "<group>"; };
@@ -440,7 +436,7 @@
 		8F8C48302BACD1B100C3A219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/StorageSettingsViewController.xib; sourceTree = "<group>"; };
 		8F8C48462BAD33BB00C3A219 /* Application.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 		8F8C484B2BAD4E6300C3A219 /* Purchases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
-		8F8C48AF2BAD51B000C3A219 /* Cleepp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleepp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F8C48AF2BAD51B000C3A219 /* Batch Clipboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Batch Clipboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8C48BE2BAD5ED400C3A219 /* introAnimatedLogo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = introAnimatedLogo.gif; sourceTree = "<group>"; };
 		8F8C48BF2BAD5ED400C3A219 /* PagedWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedWindow.swift; sourceTree = "<group>"; };
 		8F8C48C02BAD5ED400C3A219 /* Intro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
@@ -1024,8 +1020,8 @@
 				DAEE38431E3DBEB100DD2966 /* Maccy.app */,
 				DA360DB01E3DF137005C6F6B /* MaccyTests.xctest */,
 				DA0EE7B6204657830025FC60 /* MaccyUITests.xctest */,
-				8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */,
-				8F8C48AF2BAD51B000C3A219 /* Cleepp.app */,
+				8F0D3C7A2BAB8F5A00DDB603 /* Batch Clipboard.app */,
+				8F8C48AF2BAD51B000C3A219 /* Batch Clipboard.app */,
 				8F07B7AC2BE6E284006E8CBA /* CleeppUITests.xctest */,
 				8FF3994B2C0C2A3E000C9FAE /* CleeppMASUITests.xctest */,
 			);
@@ -1127,7 +1123,7 @@
 				8F12B56E2BD3B827004F059B /* Sparkle */,
 			);
 			productName = Maccy;
-			productReference = 8F0D3C7A2BAB8F5A00DDB603 /* Cleepp.app */;
+			productReference = 8F0D3C7A2BAB8F5A00DDB603 /* Batch Clipboard.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8F8C484D2BAD51B000C3A219 /* Cleepp (App Store) */ = {
@@ -1158,7 +1154,7 @@
 				8FCDFC182BC7E96C00A16FBE /* SDWebImage */,
 			);
 			productName = Maccy;
-			productReference = 8F8C48AF2BAD51B000C3A219 /* Cleepp.app */;
+			productReference = 8F8C48AF2BAD51B000C3A219 /* Batch Clipboard.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8FF3994A2C0C2A3E000C9FAE /* CleeppMASUITests */ = {
@@ -1352,7 +1348,6 @@
 				8FB88D742BCCD72C006D48E6 /* License credits.mkdn in Resources */,
 				8FB88D7D2BCCFED8006D48E6 /* Licenses.xib in Resources */,
 				8F8C48422BACD3C400C3A219 /* AppearanceSettingsViewController.xib in Resources */,
-				8F8C48C32BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */,
 				8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */,
 				8F8C48412BACD3B700C3A219 /* AdvancedSettingsViewController.xib in Resources */,
 				8FCDFC132BC0CA2000A16FBE /* Assets.xcassets in Resources */,
@@ -1360,7 +1355,6 @@
 				8F8C48482BAD344700C3A219 /* Application.xib in Resources */,
 				8F8C48BC2BAD570F00C3A219 /* Preview.xib in Resources */,
 				8F0D3C902BABB17200DDB603 /* Menu.xib in Resources */,
-				8F8C48C92BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */,
 				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
 				8FBDF6B22BB4EE3600219889 /* Localizable.strings in Resources */,
 				8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */,
@@ -1380,8 +1374,6 @@
 				8F8C48A02BAD51B000C3A219 /* AppearanceSettingsViewController.xib in Resources */,
 				8F8C48A12BAD51B000C3A219 /* IgnoreSettingsViewController.xib in Resources */,
 				8F8C48A22BAD51B000C3A219 /* AdvancedSettingsViewController.xib in Resources */,
-				8F8C48C42BAD5ED500C3A219 /* introAnimatedLogo.gif in Resources */,
-				8F8C48CA2BAD5ED500C3A219 /* introAnimatedLogo@2x.gif in Resources */,
 				8F8C48A32BAD51B000C3A219 /* Application.xib in Resources */,
 				8F8C48CC2BAD5ED500C3A219 /* Intro.xib in Resources */,
 				8F8C48BD2BAD570F00C3A219 /* Preview.xib in Resources */,
@@ -2144,8 +2136,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.9.9;
-				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
+				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP ALLOW_SPARKLE_UPDATES DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2180,8 +2172,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.9.9;
-				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
+				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP ALLOW_SPARKLE_UPDATES";
 				SWIFT_VERSION = 5.0;
@@ -2215,8 +2207,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.9.9;
-				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
-				PRODUCT_NAME = Cleepp;
+				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
+				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP FOR_APP_STORE BONUS_FEATUES_ON DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2251,8 +2243,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.9.9;
-				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.cleepp;
-				PRODUCT_NAME = Cleepp;
+				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
+				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "CLEEPP FOR_APP_STORE BONUS_FEATUES_ON";
 				SWIFT_VERSION = 5.0;

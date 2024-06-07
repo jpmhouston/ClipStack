@@ -7,7 +7,7 @@ class About {
   
   private var blurb: NSAttributedString {
     return NSAttributedString(
-      string: "Cleepp adds a new mode to the clipboard\nthat lets you copy multiple times from one\nplace then paste them all in order elsewhere.",
+      string: "Batch Clipboard adds a new clipboard mode\nthat lets you copy multiple times from one\nplace then paste them somewhere else in order.",
       attributes: [.foregroundColor: NSColor.labelColor]);
   }
   

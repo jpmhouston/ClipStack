@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Icon-example-outlined.png",
+      "filename" : "Icon-example-asterisk.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
-      "filename" : "Icon-example-outlined@2x.png",
+      "filename" : "Icon-example-asterisk@2x.png",
       "idiom" : "mac",
       "scale" : "2x"
     }

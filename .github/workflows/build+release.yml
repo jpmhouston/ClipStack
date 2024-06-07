@@ -25,9 +25,9 @@ env:
   isPrereleaseDefault: true
   updateAppcastDefault: true
   projectfile: Maccy.xcodeproj
-  productname: Cleepp
   buildscheme: Cleepp
-  bundlename: Cleepp.app
+  productname: "Batch Clipboard"
+  bundlename: "Batch Clipboard.app"
   builddir: Build/Products/Release
 
 jobs:
@@ -413,15 +413,15 @@ jobs:
             exit 0
           fi
           
-          echo "appcastGenerated=true" >> $GITHUB_OUTPUT 
+          echo "appcastGenerated=true" >> $GITHUB_OUTPUT
       
       - name: Commit appcast.xml
         if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
-          file_pattern: 'appcast.xml'
-          status_options: '--untracked-files=no'
+          file_pattern: "appcast.xml"
+          status_options: "--untracked-files=no"
       
       - name: Draft Untagged Release
         if: success() && steps.version.outputs.tag == ''
