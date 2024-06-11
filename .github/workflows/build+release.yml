@@ -127,9 +127,9 @@ jobs:
         run: |
           :
           if ! command -v xcodebuild >/dev/null 2>&1 || ! command -v xcbeautify >/dev/null 2>&1 \
-            || [[ ! -x /usr/libexec/PlistBuddy ]]
+            || ! command -v plutil >/dev/null 2>&1 
           then
-            echo "::error::Required executables not found: xcodebuild, xcbeautify, PlistBuddy"
+            echo "::error::Required executables not found: xcodebuild, xcbeautify, plutil"
             exit 1
           fi
           
@@ -142,9 +142,9 @@ jobs:
             xcbeautify --renderer github-actions --preserve-unbeautified
           
           echo "- Extract bundle version from app"
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' \
+          plutil -extract CFBundleVersion raw \
             "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist"
-          bundleVersion=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' \
+          bundleVersion=$(plutil -extract CFBundleVersion raw \
             "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist" 2> /dev/null)
           if [[ -z $bundleVersion && "${{ steps.version.outputs.updateAppcast }}" == "true" ]] ; then
             echo "::error::Unable to find app's bundle version"
