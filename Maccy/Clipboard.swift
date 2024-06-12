@@ -14,8 +14,8 @@ class Clipboard: CustomDebugStringConvertible {
   private var timer: Timer?
 
   private let dynamicTypePrefix = "dyn."
-  private let microsoftSourcePrefix = "com.microsoft."
-  private let microsoftOleSourcePrefix = "com.microsoft.ole.source."
+  private let microsoftAnythingPrefix = "com.microsoft."
+  private let microsoftSourcePrefix = "com.microsoft.ole.source."
   private let supportedTypes: Set<NSPasteboard.PasteboardType> = [
     .fileURL,
     .html,
@@ -232,7 +232,7 @@ class Clipboard: CustomDebugStringConvertible {
     // - https://github.com/p0deje/Maccy/issues/472
     var contents: [HistoryItemContent] = []
     pasteboard.pasteboardItems?.forEach({ item in
-      let types = Set(item.types)
+      var types = Set(item.types)
       if types.contains(.string) && isEmptyString(item) && !richText(item) {
         return
       }
@@ -241,16 +241,26 @@ class Clipboard: CustomDebugStringConvertible {
         return
       }
 
-      // on indications this is an MS app, strip extra types below (notably all dyn.*)
-      let hasMSTypes = types.contains {
-        $0.rawValue.starts(with: microsoftSourcePrefix)
+      types = types
+        .subtracting(disabledTypes)
+        .filter { !$0.rawValue.starts(with: microsoftSourcePrefix) }
+
+      // Maccy removes .dyn types always to fix a MS Word issue or something, but
+      // keeping them fixes LibreOffice, so only remove when evidence of any MS app
+      if types.contains({ $0.rawValue.starts(with: microsoftAnythingPrefix) }) {
+        types = types.filter { !$0.rawValue.starts(with: dynamicTypePrefix) }
       }
 
-      contents += types
-        .subtracting(disabledTypes)
-        .subtracting([.microsoftLinkSource, .microsoftObjectLink])
-        .filter { !(hasMSTypes && ($0.rawValue.starts(with: microsoftOleSourcePrefix) || $0.rawValue.starts(with: dynamicTypePrefix))) }
-        .map { HistoryItemContent(type: $0.rawValue, value: item.data(forType: $0)) }
+      // Avoid reading Microsoft Word links from bookmarks and cross-references.
+      // https://github.com/p0deje/Maccy/issues/613
+      // https://github.com/p0deje/Maccy/issues/770
+      if types.isSuperset(of: [.microsoftLinkSource, .microsoftObjectLink]) {
+        types = types.subtracting([.microsoftLinkSource, .microsoftObjectLink, .pdf])
+      }
+
+      types.forEach { type in
+        contents.append(HistoryItemContent(type: type.rawValue, value: item.data(forType: type)))
+      }
     })
 
     guard !contents.isEmpty else {
