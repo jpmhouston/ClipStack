@@ -247,7 +247,7 @@ class Clipboard: CustomDebugStringConvertible {
 
       // Maccy removes .dyn types always to fix a MS Word issue or something, but
       // keeping them fixes LibreOffice, so only remove when evidence of any MS app
-      if types.contains({ $0.rawValue.starts(with: microsoftAnythingPrefix) }) {
+      if types.contains(where: { $0.rawValue.starts(with: microsoftAnythingPrefix) }) {
         types = types.filter { !$0.rawValue.starts(with: dynamicTypePrefix) }
       }
 
@@ -336,22 +336,23 @@ class Clipboard: CustomDebugStringConvertible {
     // future changes there should be reflected here also
     var contents: [(NSPasteboard.PasteboardType, Data)] = []
     pasteboard.pasteboardItems?.forEach({ item in
-      let types = Set(item.types)
+      var types = Set(item.types)
       if types.contains(.string) && isEmptyString(item) && !richText(item) {
         return
       }
       if shouldIgnore(item) {
         return
       }
-      // on indications this is an MS app, strip extra types below (notably all dyn.*)
-      let hasMSTypes = types.contains {
-        $0.rawValue.starts(with: microsoftSourcePrefix)
-      }
-      contents += types
+      types = types
         .subtracting(disabledTypes)
-        .subtracting([.microsoftLinkSource, .microsoftObjectLink])
-        .filter { !(hasMSTypes && ($0.rawValue.starts(with: microsoftOleSourcePrefix) || $0.rawValue.starts(with: dynamicTypePrefix))) }
-        .compactMap { if let d = item.data(forType: $0) { ($0, d) } else { nil } }
+        .filter { !$0.rawValue.starts(with: microsoftSourcePrefix) }
+      if types.contains(where: { $0.rawValue.starts(with: microsoftAnythingPrefix) }) {
+        types = types.filter { !$0.rawValue.starts(with: dynamicTypePrefix) }
+      }
+      if types.isSuperset(of: [.microsoftLinkSource, .microsoftObjectLink]) {
+        types = types.subtracting([.microsoftLinkSource, .microsoftObjectLink, .pdf])
+      }
+      contents += types.compactMap { if let d = item.data(forType: $0) { ($0, d) } else { nil } }
     })
     return HistoryItem.debugDescription(for: contents, ofLength: length)
   }
