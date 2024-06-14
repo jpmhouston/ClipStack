@@ -1,6 +1,9 @@
 import Cocoa
 import KeyboardShortcuts
 import Settings
+#if CLEEPP && ALLOW_SPARKLE_UPDATES
+import Sparkle
+#endif
 
 #if CLEEPP
 typealias Cleepp = Maccy
@@ -33,7 +36,10 @@ class Maccy: NSObject {
   static var allowDictinctStorageSize: Bool { Self.allowFullyExpandedHistory || Self.allowHistorySearch }
   
   #if FOR_APP_STORE
-  private let purchases = Purchases.shared // TODO: create a normal instance here, not a singleton
+  private let purchases = Purchases()
+  #endif
+  #if ALLOW_SPARKLE_UPDATES
+  private let updaterController = SPUStandardUpdaterController(updaterDelegate: nil, userDriverDelegate: nil)
   #endif
   internal var introWindowController = IntroWindowController()
   internal var licensesWindowController = LicensesWindowController()
@@ -91,7 +97,7 @@ class Maccy: NSObject {
     panes: [
       GeneralSettingsViewController(),
       AppearanceSettingsViewController(),
-      PurchaseSettingsViewController(), // TODO: pass in purchases instance
+      PurchaseSettingsViewController(purchases: purchases),
       StorageSettingsViewController(),
       IgnoreSettingsViewController(),
       AdvancedSettingsViewController()
@@ -100,7 +106,7 @@ class Maccy: NSObject {
   #else
   internal lazy var settingsWindowController = SettingsWindowController(
     panes: [
-      GeneralSettingsViewController(),
+      GeneralSettingsViewController(updater: updaterController.updater),
       AppearanceSettingsViewController(),
       StorageSettingsViewController(),
       IgnoreSettingsViewController(),

@@ -21,11 +21,12 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     case idle, fetchingProducts, showingProducts, purchasing, restoring
   }
   
-  private let purchases = Purchases.shared
+  private let purchaseManager: Purchases
+  
   private var cancelToken: Purchases.ObservationToken?
   private var timeoutTimer: DispatchSourceTimer?
   private var state: State = .idle
-  private var showBonusFeaturesPurchased: Bool { purchases.hasBoughtExtras }
+  private var showBonusFeaturesPurchased: Bool { purchaseManager.hasBoughtExtras }
   
   private var labelsToStyle: [NSTextField] { [featureLabel1, featureLabel2, featureLabel3, featureLabel4, documentationLabel] }
   private var errorMessageColor: NSColor?
@@ -44,6 +45,19 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   // MARK: -
   
+  init(purchases: Purchases) {
+    purchaseManager = purchases
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  private init() {
+    fatalError("init(purchases:) must be used instead of init()")
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     styleLabels()
@@ -61,7 +75,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     clearMessage()
     state = .idle
     
-    cancelToken = purchases.addObserver(self, callback: { [weak self] s, update in
+    cancelToken = purchaseManager.addObserver(self, callback: { [weak self] s, update in
       guard let self = self, self == s else {
         return
       }
@@ -74,7 +88,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     cancelTimeoutTimer()
     
     if let token = cancelToken {
-      purchases.removeObserver(token)
+      purchaseManager.removeObserver(token)
       cancelToken = nil
     }
   }
@@ -141,7 +155,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     
     // fetch products, when its done purchasesUpdated shows alert/sheet with product(s) & price(s)
     do {
-      try purchases.startFetchingProductDetails()
+      try purchaseManager.startFetchingProductDetails()
     //} catch .xxxx {
     //  displayError("something")
     //  return
@@ -156,7 +170,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   func performPurchase(_ productID: String) {
     do {
-      try purchases.startPurchase(productID)
+      try purchaseManager.startPurchase(productID)
     //} catch .xxxx {
     //  displayError("something")
     //  return
@@ -172,7 +186,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   @IBAction
   func restorePurchases(_ sender: AnyObject) {
     do {
-      try purchases.startRestore()
+      try purchaseManager.startRestore()
     //} catch .xxxx {
     //  displayError("something")
     //  return

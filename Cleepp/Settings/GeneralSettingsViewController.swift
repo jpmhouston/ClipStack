@@ -17,13 +17,7 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   private let pasteHotkeyRecorder = KeyboardShortcuts.RecorderCocoa(for: .queuedPaste)
 
   #if ALLOW_SPARKLE_UPDATES
-  private var sparkleUpdateController: SPUStandardUpdaterController? {
-    if !ProcessInfo.processInfo.arguments.contains("ui-testing") {
-      SPUStandardUpdaterController(updaterDelegate:nil, userDriverDelegate:nil)
-    } else {
-      nil
-    }
-  }
+  private var sparkleUpdater: SPUUpdater
   #endif
   
   @IBOutlet weak var copyHotkeyContainerView: NSView!
@@ -35,6 +29,21 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var searchModeButton: NSPopUpButton!
   @IBOutlet weak var checkForUpdatesOptionRow: NSGridRow!
   @IBOutlet weak var checkForUpdatesButtonRow: NSGridRow!
+  
+  #if ALLOW_SPARKLE_UPDATES
+  init(updater: SPUUpdater) {
+    sparkleUpdater = updater
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  private init() {
+    fatalError("init(updater:) must be used instead of init()")
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  #endif
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -56,20 +65,20 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
 
   @IBAction func sparkleAutomaticUpdatesChanged(_ sender: NSButton) {
     #if ALLOW_SPARKLE_UPDATES
-    sparkleUpdateController?.updater.automaticallyChecksForUpdates = (sender.state == .on)
+    sparkleUpdater.automaticallyChecksForUpdates = (sender.state == .on)
     #endif
   }
   
   private func populateSparkleAutomaticUpdates() {
     #if ALLOW_SPARKLE_UPDATES
-    let automatic = sparkleUpdateController?.updater.automaticallyChecksForUpdates ?? false
+    let automatic = sparkleUpdater.automaticallyChecksForUpdates
     automaticUpdatesButton.state = automatic ? .on : .off
     #endif
   }
   
   @IBAction func sparkleUpdateCheck(_ sender: NSButton) {
     #if ALLOW_SPARKLE_UPDATES
-    sparkleUpdateController?.checkForUpdates(sender)
+    sparkleUpdater.checkForUpdates()
     #endif
   }
   

@@ -51,7 +51,6 @@ class Purchases: NSObject {
   typealias ReceiptResult = Result<Set<Item>, PurchaseError>
   typealias ImmediateResult = Result<Void, PurchaseError>
   
-  static let shared = Purchases()
   private var observations: [UUID: (ObservationUpdate) -> Void] = [:]
   
   // can we avoid hardcoding the product id's we expect, be driven entirely by the
