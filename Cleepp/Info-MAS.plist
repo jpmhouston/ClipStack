@@ -37,6 +37,10 @@
 		<string>SelectIntent</string>
 		<string>GetIntent</string>
 		<string>DeleteIntent</string>
+		<string>StartIntent</string>
+		<string>CancelIntent</string>
+		<string>BatchCopyIntent</string>
+		<string>BatchPasteIntent</string>
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.productivity</string>
@@ -52,10 +56,14 @@
 	<string>NSApplication</string>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>BatchCopyIntent</string>
+		<string>BatchPasteIntent</string>
+		<string>CancelIntent</string>
 		<string>ClearIntent</string>
 		<string>DeleteIntent</string>
 		<string>GetIntent</string>
 		<string>SelectIntent</string>
+		<string>StartIntent</string>
 	</array>
 </dict>
 </plist>

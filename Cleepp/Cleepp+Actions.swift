@@ -9,6 +9,8 @@
 import AppKit
 import Settings
 
+// TODO: make methods return error instead of bool
+
 // TODO: put these somewhere else
 func nop() { }
 func dontWarnUnused(_ x: Any) { }
@@ -32,13 +34,13 @@ extension Cleepp {
     //if #unavailable(macOS 14) { true } else { false }
   }
   
-  private func accessibilityCheck() -> Bool {
+  private func accessibilityCheck(interactive: Bool = true) -> Bool {
     #if DEBUG
     if AppDelegate.shouldFakeAppInteraction {
       return true // clipboard short-circuits the frontmost app TODO: eventually use a mock clipboard obj
     }
     #endif
-    return Accessibility.check()
+    return interactive ? Accessibility.check() : Accessibility.allowed
   }
   
   private func restoreClipboardMonitoring() {
@@ -51,14 +53,19 @@ extension Cleepp {
   @IBAction
   func startQueueMode(_ sender: AnyObject) {
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
+    startQueueMode(interactive: true)
+  }
+  
+  @discardableResult
+  func startQueueMode(interactive: Bool = false) -> Bool {
     guard !Self.busy else {
-      return
+      return false
     }
     guard accessibilityCheck() else {
-      return
+      return false
     }
     guard !queue.isOn else {
-      return
+      return false
     }
     
     restoreClipboardMonitoring()
@@ -66,18 +73,27 @@ extension Cleepp {
     queue.on()
     updateStatusMenuIcon()
     updateMenuTitle()
+    
+    return true
   }
   
   @IBAction
   func cancelQueueMode(_ sender: AnyObject) {
+    cancelQueueMode()
+  }
+  
+  @discardableResult
+  func cancelQueueMode() -> Bool {
     guard !Self.busy else {
-      return
+      return false
     }
     
     queue.off()
     updateStatusMenuIcon()
     updateMenuTitle()
     menu.updateHeadOfQueue(index: nil)
+    
+    return true
   }
   
   func resetQueue() {
@@ -86,23 +102,26 @@ extension Cleepp {
     updateMenuTitle()
   }
   
-  func queuedCopy() {
-    // handler for the global keyboard shortcut
-    doQueuedCopy()
-  }
-  
   @IBAction
   func queuedCopy(_ sender: AnyObject) {
+    // handler for the menu item
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
-    doQueuedCopy()
+    queuedCopy(interactive: true)
   }
   
-  func doQueuedCopy() {
+  func queuedCopy() {
+    // handler for the global keyboard shortcut
+    queuedCopy(interactive: true)
+  }
+  
+  @discardableResult
+  func queuedCopy(interactive: Bool) -> Bool {
+    // handler for the global keyboard shortcut and menu item via funcs above, and the intent
     guard !Self.busy else {
-      return
+      return false
     }
-    guard accessibilityCheck() else {
-      return
+    guard accessibilityCheck(interactive: interactive) else {
+      return false
     }
     
     restoreClipboardMonitoring()
@@ -125,6 +144,8 @@ extension Cleepp {
         Self.busy = false
       }
     }
+    
+    return true
   }
   
   func clipboardChanged(_ item: HistoryItem) {
@@ -156,27 +177,30 @@ extension Cleepp {
     }
   }
   
-  func queuedPaste() {
-    // handler for the global keyboard shortcut
-    doQueuedPaste()
-  }
-  
   @IBAction
   func queuedPaste(_ sender: AnyObject) {
+    // handler for the global keyboard shortcut
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
-    doQueuedPaste()
+    queuedPaste(interactive: true)
   }
   
-  func doQueuedPaste() {
+  func queuedPaste() {
+    // handler for the global keyboard shortcut
+    queuedPaste(interactive: true)
+  }
+  
+  @discardableResult
+  func queuedPaste(interactive: Bool) -> Bool {
+    // handler for the global keyboard shortcut and menu item via funcs above, and the intent
     guard !Self.busy else {
-      return
+      return false
     }
     
     guard !queue.empty else {
-      return
+      return false
     }
-    guard accessibilityCheck() else {
-      return
+    guard accessibilityCheck(interactive: interactive) else {
+      return false
     }
     
     Self.busy = true
@@ -185,7 +209,7 @@ extension Cleepp {
       try queue.putNextOnClipboard()
     } catch {
       Self.busy = false
-      return
+      return false
     }
     
     let decrementQueueDelay = extraDelayOnQueuedPaste ? extraPasteDelay : standardPasteDelay
@@ -212,6 +236,8 @@ extension Cleepp {
 //      }
       #endif
     }
+    
+    return true
   }
   
   func invokeApplicationPaste(plusDelay delay: DispatchTimeInterval, then completion: @escaping () -> Void) {
@@ -252,7 +278,7 @@ extension Cleepp {
       // NSApp.hide ourselves here.
       NSApp.hide(self)
       
-      self.queuedPasteMultiple(number)
+      self.queuedPasteMultiple(number, interactive: true)
     }
   }
   
@@ -270,20 +296,23 @@ extension Cleepp {
       return
     }
     
-    queuedPasteMultiple(queue.size)
+    queuedPasteMultiple(queue.size, interactive: true)
   }
   
-  private func queuedPasteMultiple(_ count: Int) {
+  // TODO: add support for paste multiple from an intent
+  
+  @discardableResult
+  private func queuedPasteMultiple(_ count: Int, interactive: Bool = true) -> Bool {
     guard count >= 1 && count <= queue.size else {
-      return
+      return false
     }
     if count == 1 {
-      doQueuedPaste()
+      return queuedPaste(interactive: interactive)
     } else {
       do {
         try queue.putNextOnClipboard()
       } catch {
-        return
+        return false
       }
       
       Self.busy = true
@@ -305,11 +334,13 @@ extension Cleepp {
         
         #if FOR_APP_STORE
         // TODO: enable reviews when this target is truly building for the app store
-//        if !queue.isOn {
+//        if !queue.isOn && interactive {
 //          AppStoreReview.ask(after: 20)
 //        }
         #endif
       }
+      
+      return true
     }
   }
   
@@ -369,16 +400,23 @@ extension Cleepp {
   @IBAction
   func replayFromHistory(_ sender: AnyObject) {
     menu.cancelTrackingWithoutAnimation() // do this before any alerts appear
-    guard !Self.busy else {
-      return
-    }
-    guard accessibilityCheck() else {
-      return
-    }
-    
     guard let item = (sender as? HistoryMenuItem)?.item,
           let index = history.all.firstIndex(of: item) else {
       return
+    }
+    replayFromHistory(atIndex: index, interactive: true)
+  }
+  
+  @discardableResult
+  func replayFromHistory(atIndex index: Int, interactive: Bool = false) -> Bool {
+    guard Cleepp.allowReplayFromHistory else {
+      return false
+    }
+    guard !Self.busy else {
+      return false
+    }
+    guard accessibilityCheck() else {
+      return false
     }
     
     queue.on(allowStayingOnAfterDecrementToZero: false)
@@ -386,12 +424,14 @@ extension Cleepp {
       try queue.setHead(toIndex: index)
     } catch {
       queue.off()
-      return
+      return false
     }
     
     updateStatusMenuIcon()
     updateMenuTitle()
     menu.updateHeadOfQueue(index: index)
+    
+    return true
   }
   
   @IBAction
@@ -407,29 +447,29 @@ extension Cleepp {
     clipboard.copy(item)
   }
   
-  func deleteHistoryItem(_ index: Int) {
-    guard index < history.count else {
-      return
-    }
-    
-    menu.delete(position: index)
-    
-    fixQueueAfterDeletingItem(atIndex: index)
-  }
-  
   @IBAction
   func deleteHistoryItem(_ sender: AnyObject) {
-    guard !Self.busy else {
-      return
-    }
-    
     guard let item = (sender as? HistoryMenuItem)?.item, let index = history.all.firstIndex(of: item) else {
       return
     }
     
+    deleteHistoryItem(index)
+  }
+  
+  @discardableResult
+  func deleteHistoryItem(_ index: Int) -> Bool {
+    guard !Self.busy else {
+      return false
+    }
+    guard index < history.count else {
+      return false
+    }
+    
     menu.delete(position: index)
     
     fixQueueAfterDeletingItem(atIndex: index)
+    
+    return true
   }
   
   @IBAction

@@ -669,9 +669,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "startQueueMode(_:)"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "startQueueMode(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -694,41 +694,15 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "queuedCopy()"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.Log">
                   <ActionContent
-                     message = "-&#10;queued copy shortcut"
-                     conveyanceType = "0">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7158503C-6C64-477B-BDF1-CE29CF558D88"
-            shouldBeEnabled = "Yes"
-            condition = "&#10;"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Cleepp/Cleepp+Actions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "queuedCopy(_:)"
-            landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Log">
-                  <ActionContent
-                     message = "-&#10;queued copy menu item"
+                     message = "-&#10;queued copy shortcut/menu/intent"
                      conveyanceType = "0">
                   </ActionContent>
                </BreakpointActionProxy>
@@ -745,9 +719,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "doQueuedCopy()"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -770,9 +744,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "doQueuedCopy()"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -795,9 +769,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "doQueuedCopy()"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -820,8 +794,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "clipboardChanged(_:)"
             landmarkType = "7">
             <Actions>
@@ -845,40 +819,15 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "queuedPaste()"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.Log">
                   <ActionContent
-                     message = "-&#10;queued paste shortcut"
-                     conveyanceType = "0">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4E573F7B-0B88-43C8-B60B-D82DB21D584A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Cleepp/Cleepp+Actions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "queuedPaste(_:)"
-            landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Log">
-                  <ActionContent
-                     message = "-&#10;queued paste menu item"
+                     message = "-&#10;queued paste shortcut/menu/intent"
                      conveyanceType = "0">
                   </ActionContent>
                </BreakpointActionProxy>
@@ -895,9 +844,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "doQueuedPaste()"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -920,9 +869,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "doQueuedPaste()"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -945,9 +894,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
-            landmarkName = "doQueuedPaste()"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -970,9 +919,9 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
-            landmarkName = "queuedPasteMultiple(_:)"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
+            landmarkName = "queuedPasteMultiple(_:interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -995,8 +944,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "queuedPasteMultipleIterator(_:then:)"
             landmarkType = "7">
             <Actions>
@@ -1020,8 +969,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "advanceReplay(_:)"
             landmarkType = "7">
             <Actions>
@@ -1045,15 +994,15 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "384"
-            endingLineNumber = "384"
-            landmarkName = "replayFromHistory(_:)"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
+            landmarkName = "replayFromHistory(atIndex:interactive:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.Log">
                   <ActionContent
-                     message = "-&#10;setting queue to start at @item@"
+                     message = "-&#10;setting queue to start at @index@"
                      conveyanceType = "0">
                   </ActionContent>
                </BreakpointActionProxy>
@@ -1070,8 +1019,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "copyFromHistory(_:)"
             landmarkType = "7">
             <Actions>
@@ -1095,33 +1044,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
-            landmarkName = "deleteHistoryItem(_:)"
-            landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Log">
-                  <ActionContent
-                     message = "-&#10;deleting history item @index@ (something is really calling this?)"
-                     conveyanceType = "0">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EA604505-4CB1-4E0A-8701-7611D6053E0F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Cleepp/Cleepp+Actions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "deleteHistoryItem(_:)"
             landmarkType = "7">
             <Actions>
@@ -1145,8 +1069,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "441"
-            endingLineNumber = "441"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
             landmarkName = "deleteHighlightedHistoryItem(_:)"
             landmarkType = "7">
             <Actions>
@@ -1170,8 +1094,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "457"
-            endingLineNumber = "457"
+            startingLineNumber = "497"
+            endingLineNumber = "497"
             landmarkName = "fixQueueAfterDeletingItem(atIndex:)"
             landmarkType = "7">
             <Actions>
@@ -1195,8 +1119,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
             landmarkName = "clear(_:)"
             landmarkType = "7">
             <Actions>
@@ -1220,8 +1144,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "482"
-            endingLineNumber = "482"
+            startingLineNumber = "522"
+            endingLineNumber = "522"
             landmarkName = "undoLastCopy(_:)"
             landmarkType = "7">
             <Actions>

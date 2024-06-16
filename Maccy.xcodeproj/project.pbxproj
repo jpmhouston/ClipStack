@@ -17,9 +17,7 @@
 		4762D6972467226100B3A2BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4762D6992467226100B3A2BA /* Localizable.strings */; };
 		5AA9C8402AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9C83F2AD80E1B003340F9 /* IgnorePasteboardTypesViewController.swift */; };
 		5ACA94F52AD4D1E200ECAB6A /* IgnoreRegexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACA94F42AD4D1E200ECAB6A /* IgnoreRegexViewController.swift */; };
-		8F0D3C1F2BAB8F5A00DDB603 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8F0D3C202BAB8F5A00DDB603 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB082952A2B7B850053E463 /* AppStoreReview.swift */; };
-		8F0D3C232BAB8F5A00DDB603 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91728BD6E21007E2F25 /* Intents.intentdefinition */; };
 		8F0D3C242BAB8F5A00DDB603 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3205B82AE3EDCA002EA545 /* MenuController.swift */; };
 		8F0D3C252BAB8F5A00DDB603 /* DeleteIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB9442C2B0583D700451E7C /* DeleteIntentHandler.swift */; };
 		8F0D3C272BAB8F5A00DDB603 /* KeyChord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD665652898A1C000975096 /* KeyChord.swift */; };
@@ -77,6 +75,10 @@
 		8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 8F12B56E2BD3B827004F059B /* Sparkle */; };
 		8F2F3B302C192FF6001CE740 /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABDD5112BB47F1E0054963B /* NSWorkspace+ApplicationName.swift */; };
 		8F2F3B312C192FF7001CE740 /* NSWorkspace+ApplicationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABDD5112BB47F1E0054963B /* NSWorkspace+ApplicationName.swift */; };
+		8F31CABD2C1CEDBD006CC06D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8F31CABB2C1CEDAB006CC06D /* Intents.intentdefinition */; };
+		8F31CABE2C1CEDDD006CC06D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8F31CABB2C1CEDAB006CC06D /* Intents.intentdefinition */; };
+		8F31CAC12C1D00E9006CC06D /* StartIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31CAC02C1CF458006CC06D /* StartIntentHandler.swift */; };
+		8F31CAC22C1D00EA006CC06D /* StartIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31CAC02C1CF458006CC06D /* StartIntentHandler.swift */; };
 		8F54639C2BE7B6DC008D67EF /* MenuBasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */; };
 		8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
 		8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
@@ -100,12 +102,10 @@
 		8F8C48442BACD3E600C3A219 /* StorageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */; };
 		8F8C48452BACD41200C3A219 /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA181172247B409A00066D55 /* AdvancedSettingsViewController.swift */; };
 		8F8C48482BAD344700C3A219 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48462BAD33BB00C3A219 /* Application.xib */; };
-		8F8C485B2BAD51B000C3A219 /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91B28BD76B8007E2F25 /* SelectIntentHandler.swift */; };
 		8F8C485C2BAD51B000C3A219 /* AppearanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47F02BACD0D200C3A219 /* AppearanceSettingsViewController.swift */; };
 		8F8C485D2BAD51B000C3A219 /* Equatable+Included.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E42BACB3E600C3A219 /* Equatable+Included.swift */; };
 		8F8C485E2BAD51B000C3A219 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB082952A2B7B850053E463 /* AppStoreReview.swift */; };
 		8F8C485F2BAD51B000C3A219 /* HistoryMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA573EAC1EDD410F00561FB2 /* HistoryMenuItem.swift */; };
-		8F8C48602BAD51B000C3A219 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DA68F91728BD6E21007E2F25 /* Intents.intentdefinition */; };
 		8F8C48612BAD51B000C3A219 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3205B82AE3EDCA002EA545 /* MenuController.swift */; };
 		8F8C48622BAD51B000C3A219 /* DeleteIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB9442C2B0583D700451E7C /* DeleteIntentHandler.swift */; };
 		8F8C48632BAD51B000C3A219 /* KeyChord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD665652898A1C000975096 /* KeyChord.swift */; };
@@ -208,6 +208,14 @@
 		8FCDFC142BC0CA2000A16FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */; };
 		8FCDFC172BC7E92400A16FBE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCDFC162BC7E92400A16FBE /* SDWebImage */; };
 		8FCDFC192BC7E96C00A16FBE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCDFC182BC7E96C00A16FBE /* SDWebImage */; };
+		8FE701672C1DCFBD004FEEBB /* CancelIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE701662C1DCFBD004FEEBB /* CancelIntentHandler.swift */; };
+		8FE701682C1DCFBD004FEEBB /* CancelIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE701662C1DCFBD004FEEBB /* CancelIntentHandler.swift */; };
+		8FE7016A2C1DD028004FEEBB /* BatchCopyIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE701692C1DD028004FEEBB /* BatchCopyIntentHandler.swift */; };
+		8FE7016B2C1DD028004FEEBB /* BatchCopyIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE701692C1DD028004FEEBB /* BatchCopyIntentHandler.swift */; };
+		8FE7016D2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7016C2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift */; };
+		8FE7016E2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7016C2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift */; };
+		8FE701722C1E9EDF004FEEBB /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE701712C1E9EDF004FEEBB /* SelectIntentHandler.swift */; };
+		8FE701732C1E9EDF004FEEBB /* SelectIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE701712C1E9EDF004FEEBB /* SelectIntentHandler.swift */; };
 		8FF399562C0C2A4C000C9FAE /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
 		8FF399572C0C2A4C000C9FAE /* MenuSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */; };
 		8FF399582C0C2A4C000C9FAE /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
@@ -412,6 +420,8 @@
 		8F0D3CDD2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts.Name+Shortcuts.swift"; sourceTree = "<group>"; };
 		8F0D3CDF2BABD57300DDB603 /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		8F0D3CE02BABD57300DDB603 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		8F31CABB2C1CEDAB006CC06D /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		8F31CAC02C1CF458006CC06D /* StartIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartIntentHandler.swift; sourceTree = "<group>"; };
 		8F4D26952BCFE2A1009A187B /* releasenotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = releasenotes.md; sourceTree = "<group>"; };
 		8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBasicUITests.swift; sourceTree = "<group>"; };
 		8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleeppUITestBase.swift; sourceTree = "<group>"; };
@@ -453,6 +463,10 @@
 		8FC262702C0C7A9300828D58 /* QueueBonusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueBonusUITests.swift; sourceTree = "<group>"; };
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
 		8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8FE701662C1DCFBD004FEEBB /* CancelIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelIntentHandler.swift; sourceTree = "<group>"; };
+		8FE701692C1DD028004FEEBB /* BatchCopyIntentHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchCopyIntentHandler.swift; sourceTree = "<group>"; };
+		8FE7016C2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchPasteIntentHandler.swift; sourceTree = "<group>"; };
+		8FE701712C1E9EDF004FEEBB /* SelectIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIntentHandler.swift; sourceTree = "<group>"; };
 		8FEA4DFF2BE7334200B63E39 /* Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Debug.entitlements; sourceTree = "<group>"; };
 		8FF3994B2C0C2A3E000C9FAE /* CleeppMASUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleeppMASUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC7285D283A9052001EE086 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/AdvancedSettingsViewController.strings; sourceTree = "<group>"; };
@@ -766,6 +780,7 @@
 			children = (
 				8F0D3C7E2BAB992D00DDB603 /* Info-MAS.plist */,
 				8F0D3C7D2BAB992D00DDB603 /* Info.plist */,
+				8F31CABF2C1CF44D006CC06D /* Intents */,
 				8F0D3CE32BABDC0D00DDB603 /* Intro */,
 				8FB88D762BCCD792006D48E6 /* Licenses */,
 				8F0D3C862BABB11C00DDB603 /* Menu */,
@@ -773,6 +788,7 @@
 				8F0D3CDB2BABCF3000DDB603 /* Settings */,
 				8F8C48462BAD33BB00C3A219 /* Application.xib */,
 				8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */,
+				8F31CABB2C1CEDAB006CC06D /* Intents.intentdefinition */,
 				8F710D602BFA151B004FB15A /* Cleepp.entitlements */,
 				8FEA4DFF2BE7334200B63E39 /* Debug.entitlements */,
 				8F0D3CDF2BABD57300DDB603 /* About.swift */,
@@ -841,11 +857,16 @@
 			path = Intro;
 			sourceTree = "<group>";
 		};
-		8F2F3B2F2C192C38001CE740 /* Recovered References */ = {
+		8F31CABF2C1CF44D006CC06D /* Intents */ = {
 			isa = PBXGroup;
 			children = (
+				8FE701712C1E9EDF004FEEBB /* SelectIntentHandler.swift */,
+				8F31CAC02C1CF458006CC06D /* StartIntentHandler.swift */,
+				8FE701662C1DCFBD004FEEBB /* CancelIntentHandler.swift */,
+				8FE701692C1DD028004FEEBB /* BatchCopyIntentHandler.swift */,
+				8FE7016C2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift */,
 			);
-			name = "Recovered References";
+			path = Intents;
 			sourceTree = "<group>";
 		};
 		8F54639B2BE7B6DC008D67EF /* CleeppUITests */ = {
@@ -1008,7 +1029,6 @@
 				DA00992D256411F90030E697 /* README.md */,
 				DAEE38441E3DBEB100DD2966 /* Products */,
 				C2D16D1C2EE365D52E1EE446 /* Frameworks */,
-				8F2F3B2F2C192C38001CE740 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1560,12 +1580,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F0D3C1F2BAB8F5A00DDB603 /* SelectIntentHandler.swift in Sources */,
 				8F8C47F62BACD0D300C3A219 /* AppearanceSettingsViewController.swift in Sources */,
 				8F8C47E62BACB3E600C3A219 /* Equatable+Included.swift in Sources */,
 				8F0D3C202BAB8F5A00DDB603 /* AppStoreReview.swift in Sources */,
 				8F0D3CE42BACA50E00DDB603 /* HistoryMenuItem.swift in Sources */,
-				8F0D3C232BAB8F5A00DDB603 /* Intents.intentdefinition in Sources */,
 				8F0D3C242BAB8F5A00DDB603 /* MenuController.swift in Sources */,
 				8F0D3C252BAB8F5A00DDB603 /* DeleteIntentHandler.swift in Sources */,
 				8F8C48C52BAD5ED500C3A219 /* PagedWindow.swift in Sources */,
@@ -1587,6 +1605,7 @@
 				8F0D3C322BAB8F5A00DDB603 /* Clipboard.swift in Sources */,
 				8F8C47E32BACB18100C3A219 /* GlobalHotKeys.swift in Sources */,
 				8FB88D782BCCD7AC006D48E6 /* Licenses.swift in Sources */,
+				8FE701672C1DCFBD004FEEBB /* CancelIntentHandler.swift in Sources */,
 				8F0D3C332BAB8F5A00DDB603 /* IgnorePasteboardTypesViewController.swift in Sources */,
 				8F0D3C352BAB8F5A00DDB603 /* PreviewPopoverController.swift in Sources */,
 				8F0D3C392BAB8F5A00DDB603 /* HistoryItemContent.swift in Sources */,
@@ -1594,8 +1613,10 @@
 				8FB23AD52BFBDF9200137393 /* ClipboardQueue.swift in Sources */,
 				8F0D3C852BABB0B000DDB603 /* RangedIntegerTextField.swift in Sources */,
 				8F0D3C812BABAD6500DDB603 /* Cleepp+Actions.swift in Sources */,
+				8FE701722C1E9EDF004FEEBB /* SelectIntentHandler.swift in Sources */,
 				8F0D3CDE2BABD4DD00DDB603 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
 				8F0D3C3B2BAB8F5A00DDB603 /* KeyboardLayout.swift in Sources */,
+				8FE7016D2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift in Sources */,
 				8F0D3C3C2BAB8F5A00DDB603 /* NSRunningApplication+WindowFrame.swift in Sources */,
 				8F0D3C3D2BAB8F5A00DDB603 /* NSScreen+ForPopup.swift in Sources */,
 				8F0D3C402BAB8F5A00DDB603 /* Throttler.swift in Sources */,
@@ -1620,11 +1641,14 @@
 				8F0D3C552BAB8F5A00DDB603 /* ColorImage.swift in Sources */,
 				8F0D3C8E2BABB17200DDB603 /* Menu.swift in Sources */,
 				8F8C47F82BACD0D300C3A219 /* StorageSettingsViewController.swift in Sources */,
+				8FE7016A2C1DD028004FEEBB /* BatchCopyIntentHandler.swift in Sources */,
 				8F0D3C562BAB8F5A00DDB603 /* IgnoreRegexViewController.swift in Sources */,
 				8F0D3C582BAB8F5A00DDB603 /* NSImage+Names.swift in Sources */,
 				8F0D3C592BAB8F5A00DDB603 /* NSSound+Named.swift in Sources */,
 				8FBDF6AD2BB269A900219889 /* Cleepp+Links.swift in Sources */,
+				8F31CABD2C1CEDBD006CC06D /* Intents.intentdefinition in Sources */,
 				8F0D3C5A2BAB8F5A00DDB603 /* Storage.xcdatamodeld in Sources */,
+				8F31CAC12C1D00E9006CC06D /* StartIntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1632,13 +1656,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F8C485B2BAD51B000C3A219 /* SelectIntentHandler.swift in Sources */,
 				8F8C485C2BAD51B000C3A219 /* AppearanceSettingsViewController.swift in Sources */,
+				8F31CABE2C1CEDDD006CC06D /* Intents.intentdefinition in Sources */,
 				8F8C485D2BAD51B000C3A219 /* Equatable+Included.swift in Sources */,
 				8F8C48C82BAD5ED500C3A219 /* Intro.swift in Sources */,
 				8F8C485E2BAD51B000C3A219 /* AppStoreReview.swift in Sources */,
 				8F8C485F2BAD51B000C3A219 /* HistoryMenuItem.swift in Sources */,
-				8F8C48602BAD51B000C3A219 /* Intents.intentdefinition in Sources */,
 				8F8C48612BAD51B000C3A219 /* MenuController.swift in Sources */,
 				8F8C48622BAD51B000C3A219 /* DeleteIntentHandler.swift in Sources */,
 				8F8C48632BAD51B000C3A219 /* KeyChord.swift in Sources */,
@@ -1670,12 +1693,15 @@
 				8F710D5F2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */,
 				8F8C48772BAD51B000C3A219 /* RangedIntegerTextField.swift in Sources */,
 				8F8C48782BAD51B000C3A219 /* Cleepp+Actions.swift in Sources */,
+				8FE7016B2C1DD028004FEEBB /* BatchCopyIntentHandler.swift in Sources */,
+				8FE7016E2C1DD06E004FEEBB /* BatchPasteIntentHandler.swift in Sources */,
 				8F8C48792BAD51B000C3A219 /* KeyboardShortcuts.Name+Shortcuts.swift in Sources */,
 				8F8C487A2BAD51B000C3A219 /* KeyboardLayout.swift in Sources */,
 				8F8C487B2BAD51B000C3A219 /* NSRunningApplication+WindowFrame.swift in Sources */,
 				8F8C487C2BAD51B000C3A219 /* NSScreen+ForPopup.swift in Sources */,
 				8F8C487D2BAD51B000C3A219 /* Throttler.swift in Sources */,
 				8F8C487E2BAD51B000C3A219 /* MenuHeaderView.swift in Sources */,
+				8F31CAC22C1D00EA006CC06D /* StartIntentHandler.swift in Sources */,
 				8F8C487F2BAD51B000C3A219 /* IgnoreSettingsViewController.swift in Sources */,
 				8F8C48802BAD51B000C3A219 /* IgnoreApplicationsViewController.swift in Sources */,
 				8F8C48812BAD51B000C3A219 /* Accessibility.swift in Sources */,
@@ -1683,12 +1709,14 @@
 				8F8C48832BAD51B000C3A219 /* Maccy.swift in Sources */,
 				8F8C48842BAD51B000C3A219 /* NSApplication+Windows.swift in Sources */,
 				8F8C48852BAD51B000C3A219 /* HistoryItem.swift in Sources */,
+				8FE701682C1DCFBD004FEEBB /* CancelIntentHandler.swift in Sources */,
 				8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */,
 				8F8C48862BAD51B000C3A219 /* NSAttributedString+Style.swift in Sources */,
 				8F8C48872BAD51B000C3A219 /* PopupLocation.swift in Sources */,
 				8F8C48882BAD51B000C3A219 /* MenuLoader.swift in Sources */,
 				8F8C48892BAD51B000C3A219 /* ClearIntentHandler.swift in Sources */,
 				8F8C488A2BAD51B000C3A219 /* String+Shortened.swift in Sources */,
+				8FE701732C1E9EDF004FEEBB /* SelectIntentHandler.swift in Sources */,
 				8F8C488B2BAD51B000C3A219 /* About.swift in Sources */,
 				8F8C488C2BAD51B000C3A219 /* Search.swift in Sources */,
 				8F8C488D2BAD51B000C3A219 /* AppDelegate.swift in Sources */,

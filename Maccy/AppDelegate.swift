@@ -87,6 +87,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     } else if intent is DeleteIntent {
       return DeleteIntentHandler(maccy)
     }
+    #if CLEEPP
+    if intent is StartIntent  {
+      return StartIntentHandler(maccy)
+    } else if intent is CancelIntent {
+      return CancelIntentHandler(maccy)
+    } else if intent is BatchCopyIntent {
+      return BatchCopyIntentHandler(maccy)
+    } else if intent is BatchPasteIntent {
+      return BatchPasteIntentHandler(maccy)
+    }
+    #endif
 
     return nil
   }
