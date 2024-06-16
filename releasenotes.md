@@ -1,3 +1,11 @@
+# 1.0b1
+
+- Renamed Cleepp to Batch Clipboard, revising app and menubar icon to clipboard with asterisk.
+- Merge changes from Maccy, fixing many localizations that aren't used right now, better MS Word compatibility.
+- Fixes to and expansion of app intents (needs testing).
+- Fixes to Sparkle updates that weren't running fully at launch but instead when Settings were opened, alerts that were non-responsive.
+- Reset Sparkle appcast file again making a hard break between pre-1.0 and 1.0, as update that changes app name and bundle id seems problematic. 
+
 # 0.9.9
 
 - Renamed "Purchase" settings panel to "Support Us" and changed icon from a coin to a gift, fixed a typo in the panel.
