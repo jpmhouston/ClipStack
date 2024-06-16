@@ -62,7 +62,6 @@
 		8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA20EBB7268E54E80032D360 /* IgnoreSettingsViewController.xib */; };
 		8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB8CE4124E368F200A2500E /* container-migration.plist */; };
 		8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
-		8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		8F0D3C812BABAD6500DDB603 /* Cleepp+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C802BABAD6500DDB603 /* Cleepp+Actions.swift */; };
 		8F0D3C832BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C822BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift */; };
 		8F0D3C852BABB0B000DDB603 /* RangedIntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C842BABB0B000DDB603 /* RangedIntegerTextField.swift */; };
@@ -173,7 +172,6 @@
 		8F8C48A32BAD51B000C3A219 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48462BAD33BB00C3A219 /* Application.xib */; };
 		8F8C48A42BAD51B000C3A219 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C8B2BABB17200DDB603 /* Menu.xib */; };
 		8F8C48A72BAD51B000C3A219 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB8CE4124E368F200A2500E /* container-migration.plist */; };
-		8F8C48A82BAD51B000C3A219 /* appcast.xml in Resources */ = {isa = PBXBuildFile; fileRef = DA00992C256411F90030E697 /* appcast.xml */; };
 		8F8C48A92BAD51B000C3A219 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
 		8F8C48B32BAD536900C3A219 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48B22BAD536900C3A219 /* SwiftyStoreKit */; };
 		8F8C48B62BAD538600C3A219 /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48B52BAD538600C3A219 /* TPInAppReceipt */; };
@@ -1377,7 +1375,6 @@
 				8F0D3C902BABB17200DDB603 /* Menu.xib in Resources */,
 				8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */,
 				8FBDF6B22BB4EE3600219889 /* Localizable.strings in Resources */,
-				8F0D3C6E2BAB8F5A00DDB603 /* appcast.xml in Resources */,
 				8F0D3C6C2BAB8F5A00DDB603 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1400,7 +1397,6 @@
 				8F8C48BA2BAD549300C3A219 /* PurchaseSettingsViewController.xib in Resources */,
 				8F8C48A42BAD51B000C3A219 /* Menu.xib in Resources */,
 				8F8C48A72BAD51B000C3A219 /* container-migration.plist in Resources */,
-				8F8C48A82BAD51B000C3A219 /* appcast.xml in Resources */,
 				8FCDFC142BC0CA2000A16FBE /* Assets.xcassets in Resources */,
 				8F8C48A92BAD51B000C3A219 /* LICENSE in Resources */,
 			);
