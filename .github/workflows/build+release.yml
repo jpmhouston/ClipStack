@@ -397,10 +397,10 @@ jobs:
           fi
           
           echo "- Updating appcast"
+          cp ./appcast.xml "${{ steps.zip.outputs.directory }}/appcast.xml" # dir needs current xml file
           if ! echo "${{ secrets.SPARKLE_PRIVATE_KEY }}" | generate_appcast --ed-key-file - \
             --link "$releasesURL" --download-url-prefix "$downloadURLPrefix" \
-            --embed-release-notes --versions "${{ steps.build.outputs.version }}" \
-            -o ./appcast.xml "${{ steps.zip.outputs.directory }}"
+            --embed-release-notes -o ./appcast.xml "${{ steps.zip.outputs.directory }}"
           then
             echo "::warning::generate_appcast failed, no new appcast.xml file generated"
             echo

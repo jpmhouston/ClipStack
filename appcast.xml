@@ -1,1 +1,31 @@
-
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Batch Clipboard</title>
+        <link>https://raw.githubusercontent.com/jpmhouston/Cleepp/forkmain/appcast.xml</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>1.0b1</title>
+            <pubDate>Sun, 16 Jun 2024 04:20:09 -0700</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>814</sparkle:version>
+            <sparkle:shortVersionString>1.0b1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.14.6</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>Renamed Cleepp to Batch Clipboard, revising app and menubar icon to
+clipboard with asterisk.</li>
+<li>Merge changes from Maccy, fixing many localizations that aren’t used
+right now, better MS Word compatibility.</li>
+<li>Fixes to and expansion of app intents (needs testing).</li>
+<li>Fixes to Sparkle updates that weren’t running fully at launch but
+instead when Settings were opened, alerts that were non-responsive.</li>
+<li>Reset Sparkle appcast file again making a hard break between pre-1.0
+and 1.0, as update that changes app name and bundle id seems
+problematic.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/Batch%20Clipboard.1.0b1.zip" length="9697753" type="application/octet-stream" sparkle:edSignature="XMm3IoGKOLdHnme8OGV8Y100KadwWMJq1gHrou7r/U8/grq5tIlLxSEovFvfDekeCHhT4Vwi9LYMFFOLR8bbBQ=="/>
+        </item>
+    </channel>
+</rss>
