@@ -706,7 +706,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ofc-pm-ZHJ">
                                     <rect key="frame" x="-2" y="204" width="554" height="34"/>
-                                    <textFieldCell key="cell" title="You can enter _collecting/replaying mode_ from the Start Collecting menu item, or by just control-clicking on the menu icon." id="Jnh-iX-NZD">
+                                    <textFieldCell key="cell" title="You can enter _batch mode_ from the Start Collecting menu item, or by just control-clicking on the menu icon." id="Jnh-iX-NZD">
                                         <font key="font" metaFont="system" size="14"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
