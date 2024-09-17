@@ -420,7 +420,7 @@
 		8F0D3CE02BABD57300DDB603 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		8F31CABB2C1CEDAB006CC06D /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		8F31CAC02C1CF458006CC06D /* StartIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartIntentHandler.swift; sourceTree = "<group>"; };
-		8F4D26952BCFE2A1009A187B /* releasenotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = releasenotes.md; sourceTree = "<group>"; };
+		8F4D26952BCFE2A1009A187B /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBasicUITests.swift; sourceTree = "<group>"; };
 		8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleeppUITestBase.swift; sourceTree = "<group>"; };
 		8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueUITests.swift; sourceTree = "<group>"; };
@@ -1022,7 +1022,7 @@
 				DA360DB11E3DF137005C6F6B /* MaccyTests */,
 				DA0EE7B7204657830025FC60 /* MaccyUITests */,
 				DA00992C256411F90030E697 /* appcast.xml */,
-				8F4D26952BCFE2A1009A187B /* releasenotes.md */,
+				8F4D26952BCFE2A1009A187B /* CHANGELOG.md */,
 				DA00992F256411F90030E697 /* LICENSE */,
 				DA00992D256411F90030E697 /* README.md */,
 				DAEE38441E3DBEB100DD2966 /* Products */,

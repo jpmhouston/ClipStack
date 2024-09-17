@@ -320,9 +320,9 @@ jobs:
         run: |
           :
           echo "- Collect release notes"
-          allNotesFilename=releasenotes.md
+          changeLogFilename=CHANGELOG.md
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
-          if [[ ! -f $allNotesFilename ]] ; then
+          if [[ ! -f $changeLogFilename ]] ; then
             echo "::warning::Release notes file is missing"
             numlines=0
           else
@@ -331,19 +331,19 @@ jobs:
             prevversion=''
             while read line || [[ -n $line ]] ; do
               if [[ -z $thisversion ]]; then
-                thisversion=$(echo $line | sed -n -e '/^# / s/^# //p')
+                thisversion=$(echo $line | sed -n -E 's/^#+ version ([0-9.dabrc]+) .*$/\1/p')
                 if [[ -n $thisversion && $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
                   echo "::warning::Version $thisversion at the top of the release notes doesn't match build version ${{ steps.version.outputs.version }}"
                   break
                 fi
                 continue
               fi
-              prevversion=$(echo $line | sed -n -e '/^# / s/^# //p')
+              prevversion=$(echo $line | sed -n -E 's/^#+ version ([0-9.dabrc]+) .*$/\1/p')
               if [[ -n $prevversion ]] ; then
                 break
               fi
               echo $line >> "${{ env.builddir }}/$currentNotesFilename"
-            done < "$allNotesFilename"
+            done < "$changeLogFilename"
             
             # sed command removes initial and trailing blank lines, don't ask me how it works
             # from https://unix.stackexchange.com/a/552195
