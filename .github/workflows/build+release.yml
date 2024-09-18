@@ -70,7 +70,7 @@ jobs:
             exit 1
           fi
           
-          echo "- Checking script inputs"
+          echo "- Check script inputs"
           if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
             echo "- Build version is $version"
           else
@@ -81,21 +81,21 @@ jobs:
           releaseNameNoSpaces="${{ env.productname }}.$version"
           
           if [[ -z "${{ inputs.isPrerelease }}" ]] ; then
-            echo "- Using default value for isPrerelease: ${{ env.isPrereleaseDefault }}"
+            echo "- Use default value for isPrerelease: ${{ env.isPrereleaseDefault }}"
             isPrerelease=${{ env.isPrereleaseDefault }}
           else
-            echo "- Using supplied value for isPrerelease: ${{ inputs.isPrerelease }}"
+            echo "- Use supplied value for isPrerelease: ${{ inputs.isPrerelease }}"
             isPrerelease=${{ inputs.isPrerelease }}
           fi
           if [[ -z "${{ inputs.updateAppcast }}" ]] ; then
-            echo "- Using default value for updateAppcast: ${{ env.updateAppcastDefault }}"
+            echo "- Use default value for updateAppcast: ${{ env.updateAppcastDefault }}"
             updateAppcast=${{ env.updateAppcastDefault }}
           else
-            echo "- Using supplied value for updateAppcast: ${{ inputs.updateAppcast }}"
+            echo "- Use supplied value for updateAppcast: ${{ inputs.updateAppcast }}"
             updateAppcast=${{ inputs.updateAppcast }}
           fi
           
-          echo "- Parsing trigger"
+          echo "- Parse trigger"
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
             if git show-ref --tags --verify refs/tags/v$version --quiet ; then
               tag="v$version"
@@ -206,7 +206,7 @@ jobs:
           
           echo "- Sign"
           xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
-            --options runtime "${{ env.builddir }}/${{ env.app }}" -v
+            --options runtime "${{ env.builddir }}/${{ env.bundlename }}" -v
       
       - name: "Notarize app bundle"
         if: success() && steps.version.outputs.tag
@@ -383,7 +383,7 @@ jobs:
           releasesURL="https://github.com/${{ github.repository }}/releases"
           downloadURLPrefix="https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/"
           
-          echo "- Converting release notes to html"
+          echo "- Convert release notes to html"
           echo '$body$' > "$htmlTemplateFilename"
           if ! pandoc --standalone --template "$htmlTemplateFilename" --metadata title="Release Notes" \
             "${{ steps.notes.outputs.file }}" \
@@ -393,7 +393,7 @@ jobs:
             exit 0
           fi
           
-          echo "- Updating appcast"
+          echo "- Update appcast"
           cp ./appcast.xml "${{ steps.zip.outputs.directory }}/appcast.xml" # dir needs current xml file
           if ! echo "${{ secrets.SPARKLE_PRIVATE_KEY }}" | generate_appcast --ed-key-file - \
             --link "$releasesURL" --download-url-prefix "$downloadURLPrefix" \
