@@ -136,7 +136,9 @@ jobs:
           echo "- Build with xcodebuild from $(xcodebuild -version)"
           # requires that env.projectfile is the name of the .xcodeproj, env.buildscheme is
           # a valid build scheme, and and env.bundlename is name of the produced .app
-          set -o pipefail && xcodebuild clean build analyze \
+          # note: not sure why ONLY_ACTIVE_ARCH=NO is required for xcodebuild, it should
+          # already be NO for Release configuration
+          set -o pipefail && xcodebuild ONLY_ACTIVE_ARCH=NO clean build analyze \
             -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -derivedDataPath . | \
             xcbeautify --renderer github-actions --preserve-unbeautified
