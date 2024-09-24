@@ -44,6 +44,7 @@ public class LicensesWindowController: NSWindowController {
     NSApp.activate(ignoringOtherApps: true)
     #endif
     
+    window.collectionBehavior.formUnion(.moveToActiveSpace)
     window.orderFrontRegardless()
   }
   

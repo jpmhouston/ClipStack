@@ -55,6 +55,7 @@ public class IntroWindowController: PagedWindowController {
     NSApp.activate(ignoringOtherApps: true)
     #endif
     
+    window.collectionBehavior.formUnion(.moveToActiveSpace)
     window.orderFrontRegardless()
   }
   
