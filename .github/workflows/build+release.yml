@@ -251,7 +251,15 @@ jobs:
           # you're curious
           
           echo "- Notarize"
-          xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
+          xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait \
+            | tee notarytool-out.txt
+          if grep -q notarytool-out.txt Invalid ; then
+            if sed -nr 's/^[[:space:]]*id: (.*)$/\1/p;q' notarytool-out.txt > notarytool-id.txt ; then
+              echo "- Extract notarytool failure log"
+              xcrun notarytool log $(<notarytool-id.txt) --keychain-profile "notarytool-profile"
+            fi
+            exit 1
+          fi
           
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
