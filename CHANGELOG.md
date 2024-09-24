@@ -1,6 +1,17 @@
 Batch Clipboard Changelog
 
-## version 1.0b1 (2014-06-16)
+## version 1.0b2 (2024-09-23)
+
+- Made github CI script now do signing and notarization (non-appstore build)
+- Fixed github CI script to really truly create universal app now (non-appstore build)
+- Made Intro and Licenses windows open in the current Mission Control space
+- Changed "Get" intent to accept an item number parameter and not a selection as in Maccy
+- Renamed release notes file to CHANGELOG.md and minor reformat, corresponding changes to github CI script
+- Minor edit to intro window text mentioning what's now called "batch mode"
+- Minor edits to .dmg's readme file and to wiki 
+- More fixes to Sparkle appcast, fingers crossed this works well now
+
+## version 1.0b1 (2024-06-16)
 
 - Renamed Cleepp to Batch Clipboard, revising app and menubar icon to clipboard with asterisk.
 - Merge changes from Maccy, fixing many localizations that aren't used right now, better MS Word compatibility.
@@ -8,7 +19,7 @@ Batch Clipboard Changelog
 - Fixes to Sparkle updates that weren't running fully at launch but instead when Settings were opened, alerts that were non-responsive.
 - Reset Sparkle appcast file again making a hard break between pre-1.0 and 1.0, as update that changes app name and bundle id seems problematic. 
 
-## version 0.9.9 (2014-06-04)
+## version 0.9.9 (2024-06-04)
 
 - Renamed "Purchase" settings panel to "Support Us" and changed icon from a coin to a gift, fixed a typo in the panel.
 - Fixed height of several settings panels, removing white space at the bottom.
@@ -18,14 +29,14 @@ Batch Clipboard Changelog
 - Improve Sparkle setup in GitHub workflow, automating appcast file generation which required making the .zip archive contain only the .app.
 - Made GitHub workflow build .dmg containing app and readme (now the disk image is the recommended file to download), other GitHub workflow fixes.
 
-## version 0.9.8 (2014-05-18)
+## version 0.9.8 (2024-05-18)
 
 - Changed what is left on the clipboard when collecting clipboard items in queue mode, keep last copied item on clipboard and when Paste & Advance switch to desired item before invoking application's paste.
 - Fixed bug where Delete History Item wasn't enabled sometimes, particularly when there's only one history item in the menu.
 - Fixed bug affecting performace where all history items were added to the menu on first launch, instead of the count in the settings, most of which then have to be removed when the menu is first opened.
 - Implemented some Cleepp specific UI Tests, adapting some Mappy tests and then adding ones for using queue copy and paste.
 
-## version 0.9.7 (2014-05-14)
+## version 0.9.7 (2024-05-14)
 
 - Prevent double paste when using Cleepp shortcut, or paste while Paste All / Paste Multiple is occurring.
 - Disable necessary menu items when Paste & Advance, or Paste All / Paste Multiple, are occurring.
@@ -33,7 +44,7 @@ Batch Clipboard Changelog
 - Changed old fix for Microsoft applications support so it only applied to those applications and doesn't apply to ones for which it causes problems (specifically LibreOffice).
 - Attempt completion of Sparkle support, the next version after 0.9.7 should be offered as an automatic update.
 
-## version 0.9.6 (2014-04-16)
+## version 0.9.6 (2024-04-16)
 
 - Fixed regression, replay from history wasn't putting head-of-queue item onto the clipboard.
 - Fixed queue item menu separator was sometimes getting left behind.
@@ -42,12 +53,12 @@ Batch Clipboard Changelog
 - Created credits and licenses window containing app license, plus mentioning each swift package used and including their licenses.
 - Simplified about box, added link that opens credits and licenses window.
 
-## version 0.9.5 (2014-04-13)
+## version 0.9.5 (2024-04-13)
 
 - Increased the delay between issuing paste to the frontmost application and advancing the clipboard to the next item, present on Macs with Intel CPUs and for all systems in-between each paste when using Paste All.
 - Used 3rd party library to draw animated GIF in the first page of the Intro window, hopefully that will work on all systems.
 
-## version 0.9.4 (2014-04-07)
+## version 0.9.4 (2024-04-07)
 
 - New app icon, seen in the Finder and the about box (though your Mac may cache the old one until your next restart), and in the logo in the Intro window's first page, the GitHub README, and start of the documentation pages in the GitHub wiki. Unfortunately it's kind of a blurry mess in the small rendering in the Get Info window 😕 and I might end up changing it again.
 - Made last page of the Intro window for non-App Store builds advertise the in-app purchase of the App Store build and provide button to go the app's page (although goes to a placeholder page in the GitHub wiki for now).
@@ -59,7 +70,7 @@ Known issues: on either macOS versions older than 14.(tbd) Sonoma, or with less 
 
 The app still needs to be opened the first time by right clicking the app icon and choosing Open from the contextual menu. Thank you for you patience for this last build before I deliver signed betas (or maybe one more subsequent build without).
 
-## version 0.9.3 (2014-04-03)
+## version 0.9.3 (2024-04-03)
 
 - Attempted work-around for timing issues with first paste noticed on macOS 12 MacBook Air.
 - Fixed menu behavior on pre-macOS14, workaround longstanding bugs, fix my logic errors.
@@ -76,7 +87,7 @@ The app still needs to be opened the first time by right clicking the app icon a
 - Inherit improvements to the Ignore settings panel.
 - Minor code cleanup and merge upstream changes all having no effect.
 
-## version 0.9.2 (2014-03-28)
+## version 0.9.2 (2024-03-28)
 
 - Restore English strings file accidentally removed while I was stripping the localizations.
 - In the Intro window page 2, override the default button to be the one opening the System Settings app.
@@ -87,7 +98,7 @@ The app still needs to be opened the first time by right clicking the app icon a
 
 Important: Found these builds I've been making myself have all been ARM-only, though the last two simplified variants done by GitHub actions perhaps were universal. Was finally able to test on an Intel MacBook Air and there's a timing issues with the first paste from the queue. These should be fixed in 0.9.3.
 
-## version 0.9.1 (2014-03-25)
+## version 0.9.1 (2024-03-25)
 
 - Hide search field options from the settings for github build or when bonus features not purchased.
 - Minor improvements to the Intro window, giving pages a little more horizontal space, polished some wording, removed localization email button for now.
@@ -95,14 +106,14 @@ Important: Found these builds I've been making myself have all been ARM-only, th
 - Setup github continuous integration on commits to main branch, and build release when a version is tagged. Script ready to sign and notarize though not doing so yet.
 - Note: Withdrawing download b/c a mistake removed made while removing localizations ended up removing some English language text as well.
 
-## version 0.9 (2014-03-23)
+## version 0.9 (2024-03-23)
 
 - Migrated all code that modifies Maccy to turn it into Cleepp out of the experimental branch, and in the process improve the organization of the modifications. This should allow the Maccy unit test to continue to run (though untested so far) and better support future merges of upstream changes (if so desired).
 - If user had started ignoring clipboard events, reset to resume monitoring the clipboard when the user starts collecting a set of item (with the shortcut, the Copy & Collect menu item, the Start Collecting menu item, or control-clicking the menu icon).
 - Minor tweak to the intro: if permission has already been granted in the system settings, omit a sentence on the first page that implies that setup is still needed.
 - Minor improvement when checking for purchases on launch, omitting the process (and its related code) altogether in the direct download version.
 
-## version 0.8.5 (2014-03-19)
+## version 0.8.5 (2024-03-19)
 
 - Moved bonus features to app store build, for now hardcoded to be as if features have been purchased. The separate simplified build is what will eventually be available on GitHub.
 - Animated logo in the intro window and the project readme (build in Drama, from PixelCut the makers of PaintCode). Something like this animation was envisioned when the name "Cleepp" was chosen.
@@ -110,7 +121,7 @@ Important: Found these builds I've been making myself have all been ARM-only, th
 - Fixed case where menu items could get stuck in all-disabled state (after using a feature leads to the accessibility-permissions-not-granted alert opening).
 - More edits and additions to the project readme file.
 
-## version 0.8.4 (2014-03-17)
+## version 0.8.4 (2024-03-17)
 
 - Added Paste All / Paste Multiple menu item, mention of it in the purchases settings panel.
 - Fixed command-delete to delete history menu item, regression introduced at some point where it no longer work whenever the history filter menu item was hidden. Feature is no longer isn't implemented by the input handling in that item's text field, but by a new menu item "Delete History Item" linked to "Clear". It's enabled only when highlighting a history menu item and so can only be activated with its keyboard shortcut.
@@ -119,7 +130,7 @@ Important: Found these builds I've been making myself have all been ARM-only, th
 - Removed the redundant copy count line from history menu item preview pop-up window.
 - Under the hood preparations for in-app purchases, eg. bringing in libraries for validating purchase receipts.
 
-## version 0.8.3 (2014-03-12)
+## version 0.8.3 (2024-03-12)
 
 - New purchases settings panel, not functional yet but demonstrates its 2 states, progress spinner and error text field.
 - Some sizing and minor language changes in some of the other panels.
@@ -131,7 +142,7 @@ Important: Found these builds I've been making myself have all been ARM-only, th
 - Fixed preview blurb which labels actions backwards.
 - Minor changes to the intro.
 
-## version 0.8.2 (2014-03-08)
+## version 0.8.2 (2024-03-08)
 
 - An intro window opens up the first time running the app to help walkthrough granting the permission needed in the System Settings app, plus giving essential information for basic usage.
 - It can be opened again later via a link in the text of the about box.
@@ -139,14 +150,14 @@ Important: Found these builds I've been making myself have all been ARM-only, th
 - Menubar icons are images again so they work in older OS versions.
 - Has a new app icon that's distinct from Maccy's, though perhaps it will get replaced again before 1.0.
 
-## version 0.8.1 (2014-03-01)
+## version 0.8.1 (2024-03-01)
 
 - Menu bar icon based on SF Symbols clipboard when running on macOS 13.0 Ventura and later, changes appearance when collecting & replaying clips
 - Reversed the actions needing the option key when clicking on history items
 - Prepare for replay from history, history filtering, and undo copy features to be bonus features
 - Updates to repo's readme
 
-## version 0.8 (2014-02-23)
+## version 0.8 (2024-02-23)
 
 Cleepp is fork of Maccy that adds a new mode to the clipboard letting you copy multiple times from one place then paste them all in order someplace else. Many features of Maccy have been stripped away for the sake of simplicity.
 
