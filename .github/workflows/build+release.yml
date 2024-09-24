@@ -252,11 +252,11 @@ jobs:
           
           echo "- Notarize"
           xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait \
-            | tee notarytool-out.txt
-          if grep -q notarytool-out.txt Invalid ; then
-            if sed -nr 's/^[[:space:]]*id: (.*)$/\1/p;q' notarytool-out.txt > notarytool-id.txt ; then
+            2>&1 | tee notarytool-out.txt
+          if [ ${PIPESTATUS[0]} -ne 0 ] || grep -q Invalid notarytool-out.txt ; then
+            if sed -nr '/^[[:space:]]*id: (.*)$/{s//\1/p;q;}' notarytool-out.txt > notarytool-id.txt ; then
               echo "- Extract notarytool failure log"
-              xcrun notarytool log $(<notarytool-id.txt) --keychain-profile "notarytool-profile"
+              xcrun notarytool log "$(<notarytool-id.txt)" --keychain-profile "notarytool-profile"
             fi
             exit 1
           fi
