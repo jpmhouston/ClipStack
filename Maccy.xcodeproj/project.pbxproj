@@ -21,7 +21,6 @@
 		8F0D3C242BAB8F5A00DDB603 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3205B82AE3EDCA002EA545 /* MenuController.swift */; };
 		8F0D3C252BAB8F5A00DDB603 /* DeleteIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB9442C2B0583D700451E7C /* DeleteIntentHandler.swift */; };
 		8F0D3C272BAB8F5A00DDB603 /* KeyChord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD665652898A1C000975096 /* KeyChord.swift */; };
-		8F0D3C282BAB8F5A00DDB603 /* GetIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83EC252974EEA400A95531 /* GetIntentHandler.swift */; };
 		8F0D3C292BAB8F5A00DDB603 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE38531E3DD6F100DD2966 /* History.swift */; };
 		8F0D3C2A2BAB8F5A00DDB603 /* NSPasteboard.PasteboardType+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC929D6297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift */; };
 		8F0D3C2E2BAB8F5A00DDB603 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB65DFE2440AE29000AECA8 /* CoreDataManager.swift */; };
@@ -111,7 +110,6 @@
 		8F8C48642BAD51B000C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47F12BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift */; };
 		8F8C48652BAD51B000C3A219 /* Cleepp+MenubarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D3C822BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift */; };
 		8F8C48662BAD51B000C3A219 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47EF2BACD0D200C3A219 /* GeneralSettingsViewController.swift */; };
-		8F8C48672BAD51B000C3A219 /* GetIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83EC252974EEA400A95531 /* GetIntentHandler.swift */; };
 		8F8C48682BAD51B000C3A219 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE38531E3DD6F100DD2966 /* History.swift */; };
 		8F8C48692BAD51B000C3A219 /* NSPasteboard.PasteboardType+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC929D6297A0E8B00814F19 /* NSPasteboard.PasteboardType+Types.swift */; };
 		8F8C486A2BAD51B000C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
@@ -201,6 +199,8 @@
 		8FBDF6B52BB52C4000219889 /* DispatchSource+scheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */; };
 		8FC2626F2C0C72C400828D58 /* MenuBonusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC2626E2C0C72C400828D58 /* MenuBonusUITests.swift */; };
 		8FC262712C0C7A9300828D58 /* QueueBonusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC262702C0C7A9300828D58 /* QueueBonusUITests.swift */; };
+		8FC44FAA2C2921C10022CA6F /* GetIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC44FA92C2921C00022CA6F /* GetIntentHandler.swift */; };
+		8FC44FAB2C2921C10022CA6F /* GetIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC44FA92C2921C00022CA6F /* GetIntentHandler.swift */; };
 		8FCDFC092BB5670F00A16FBE /* HyperlinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */; };
 		8FCDFC132BC0CA2000A16FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */; };
 		8FCDFC142BC0CA2000A16FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */; };
@@ -459,6 +459,7 @@
 		8FBDF6B32BB52C4000219889 /* DispatchSource+scheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchSource+scheduledTimer.swift"; sourceTree = "<group>"; };
 		8FC2626E2C0C72C400828D58 /* MenuBonusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBonusUITests.swift; sourceTree = "<group>"; };
 		8FC262702C0C7A9300828D58 /* QueueBonusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueBonusUITests.swift; sourceTree = "<group>"; };
+		8FC44FA92C2921C00022CA6F /* GetIntentHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetIntentHandler.swift; sourceTree = "<group>"; };
 		8FCDFC082BB5670F00A16FBE /* HyperlinkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkTextField.swift; sourceTree = "<group>"; };
 		8FCDFC122BC0CA2000A16FBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8FE701662C1DCFBD004FEEBB /* CancelIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelIntentHandler.swift; sourceTree = "<group>"; };
@@ -858,6 +859,7 @@
 		8F31CABF2C1CF44D006CC06D /* Intents */ = {
 			isa = PBXGroup;
 			children = (
+				8FC44FA92C2921C00022CA6F /* GetIntentHandler.swift */,
 				8FE701712C1E9EDF004FEEBB /* SelectIntentHandler.swift */,
 				8F31CAC02C1CF458006CC06D /* StartIntentHandler.swift */,
 				8FE701662C1DCFBD004FEEBB /* CancelIntentHandler.swift */,
@@ -1588,7 +1590,6 @@
 				8F0D3C832BABAD7F00DDB603 /* Cleepp+MenubarIcon.swift in Sources */,
 				8F8C47F52BACD0D300C3A219 /* GeneralSettingsViewController.swift in Sources */,
 				8F710D5E2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */,
-				8F0D3C282BAB8F5A00DDB603 /* GetIntentHandler.swift in Sources */,
 				8F0D3C292BAB8F5A00DDB603 /* History.swift in Sources */,
 				8F0D3C2A2BAB8F5A00DDB603 /* NSPasteboard.PasteboardType+Types.swift in Sources */,
 				8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */,
@@ -1621,6 +1622,7 @@
 				8F0D3C492BAB8F5A00DDB603 /* IgnoreApplicationsViewController.swift in Sources */,
 				8F0D3CE22BABD57300DDB603 /* Accessibility.swift in Sources */,
 				8F0D3C4A2BAB8F5A00DDB603 /* NSRect+Centered.swift in Sources */,
+				8FC44FAA2C2921C10022CA6F /* GetIntentHandler.swift in Sources */,
 				8F0D3C4C2BAB8F5A00DDB603 /* Maccy.swift in Sources */,
 				8F0D3C4D2BAB8F5A00DDB603 /* NSApplication+Windows.swift in Sources */,
 				8F0D3C4E2BAB8F5A00DDB603 /* HistoryItem.swift in Sources */,
@@ -1665,7 +1667,6 @@
 				8F8C48642BAD51B000C3A219 /* Settings.PaneIdentifier+Panes.swift in Sources */,
 				8F8C48652BAD51B000C3A219 /* Cleepp+MenubarIcon.swift in Sources */,
 				8F8C48662BAD51B000C3A219 /* GeneralSettingsViewController.swift in Sources */,
-				8F8C48672BAD51B000C3A219 /* GetIntentHandler.swift in Sources */,
 				8F8C48B92BAD547E00C3A219 /* PurchaseSettingsViewController.swift in Sources */,
 				8F8C48682BAD51B000C3A219 /* History.swift in Sources */,
 				8F8C48692BAD51B000C3A219 /* NSPasteboard.PasteboardType+Types.swift in Sources */,
@@ -1678,6 +1679,7 @@
 				8F2F3B302C192FF6001CE740 /* NSWorkspace+ApplicationName.swift in Sources */,
 				8F8C48702BAD51B000C3A219 /* Clipboard.swift in Sources */,
 				8F8C48712BAD51B000C3A219 /* GlobalHotKeys.swift in Sources */,
+				8FC44FAB2C2921C10022CA6F /* GetIntentHandler.swift in Sources */,
 				8FB88D792BCCD7AC006D48E6 /* Licenses.swift in Sources */,
 				8F8C48722BAD51B000C3A219 /* IgnorePasteboardTypesViewController.swift in Sources */,
 				8F8C48C62BAD5ED500C3A219 /* PagedWindow.swift in Sources */,
