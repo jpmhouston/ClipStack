@@ -1473,7 +1473,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\"\n";
+			shellScript = "if [ -x \"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\" ] ; then\n  echo \"before call to copy-helper-swiftpm.sh ONLY_ACTIVE_ARCH is $ONLY_ACTIVE_ARCH\"\nelse\n  echo \"copy-helper-swiftpm.sh appears to not exist or be executable\"\nfi\n\nif \"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\" ; then\n  if [ ! -d \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/LaunchAtLogin_LaunchAtLogin.bundle\" ] ; then\n    echo \"copy-helper-swiftpm.sh did indeed remove $BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/LaunchAtLogin_LaunchAtLogin.bundle\"\n  else\n    echo \"copy-helper-swiftpm.sh did NOT remove $BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/LaunchAtLogin_LaunchAtLogin.bundle\"\n  fi\nelse\n  echo \"copy-helper-swiftpm.sh failed\"\n  exit 1\nfi\n";
 		};
 		8F0D3C7F2BAB9B0900DDB603 /* Patch CFBundleVersion Script */ = {
 			isa = PBXShellScriptBuildPhase;
