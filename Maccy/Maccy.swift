@@ -167,6 +167,8 @@ class Maccy: NSObject {
     super.init()
     initializeObservers()
 
+    settingsWindowController.window?.collectionBehavior.formUnion(.moveToActiveSpace)
+
     #if CLEEPP
     initializeFeatureFlags()
     

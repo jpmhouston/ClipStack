@@ -8,7 +8,7 @@
 
 import AppKit
 import StoreKit
-import SwiftyStoreKit
+import Flare
 import TPInAppReceipt
 
 class Purchases: NSObject {
@@ -73,7 +73,16 @@ class Purchases: NSObject {
   }
   
   func start() {
-    SwiftyStoreKit.completeTransactions(atomically: true, completion: completeTransactionsCallback)
+    // !!!
+    // or call something like completeTransactionsCallback below? either with the full result or just the successful transaction
+    Flare.shared.addTransactionObserver { transactionResult in
+        switch transactionResult {
+        case let .success(transaction):
+            print("A transaction was received: \(transaction)")
+        case let .failure(error):
+            print("An error occurred while adding transaction observer: \(error.localizedDescription)")
+        }
+    }
     
     switch checkLocalReceipt() {
     case .success(let items):
@@ -87,7 +96,7 @@ class Purchases: NSObject {
     if let token = token {
       token.cancel()
     }
-    // anything needed to cleanup use of swiftystorekit?
+    // do anything to cleanup Flare?
   }
   
   @discardableResult
@@ -142,49 +151,47 @@ class Purchases: NSObject {
     }
     
     // temp test code:
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-      self?.boughtItems.insert(.bonus)
-      self?.callObservers(withUpdate: .success(.restorations([.bonus])))
-    }
-    
-    // probably don't bother redoing checkLocalReceipt() here, it was done at launch
-    // and we always want to hit apple's servers to guarantee we're in sync
-//    switch checkLocalReceipt() {
-//    case .success(let items):
-//      if items.contains(.bonus) {
-//        //return .success(items)
-//      }
-//    case .failure(_):
-//      // ignore this error and proceed to try refreshing/restoring
-//      break
+//    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+//      self?.boughtItems.insert(.bonus)
+//      self?.callObservers(withUpdate: .success(.restorations([.bonus])))
+//      return
 //    }
     
-    refreshReceipt() { [weak self] refreshResult in
+    restorePurchases() { [weak self] restoreResult in
       guard let self = self else { return }
       
-      switch refreshResult {
-      case .success(let items) where items.count > 0:
+      switch restoreResult {
+      case .success(let items):
         callObservers(withUpdate: .success(.restorations(items)))
-        
-      case .success(_): // does this matching pattern work?
-        restorePurchases()
-        
+      case .failure(let error):
+        callObservers(withUpdate: .failure(error))
+      }
+    }
+//    refreshReceipt() { [weak self] refreshResult in
+//      guard let self = self else { return }
+//      
+//      switch refreshResult {
+//      case .success(let items) where items.count > 0:
+//        callObservers(withUpdate: .success(.restorations(items)))
+//        
+//      case .success(_):
+//        restorePurchases() // will something else call observers??
+//        /*
 //        restorePurchases() { [weak self] restoreResult in
 //          guard let self = self else { return }
 //          
 //          switch restoreResult {
 //          case .success(let items):
-//            callObservers(withUpdate: .success(.restorations(items))) // oh completeTransactionsCallback does this
+//            callObservers(withUpdate: .success(.restorations(items)))
 //          case .failure(let error):
 //            callObservers(withUpdate: .failure(error))
 //          }
-//        }
-        
-      default:
-        break
-      }
-    }
-    
+//        }*/
+//        
+//      default:
+//        break
+//      }
+//    }
   }
   
   func callObservers(withUpdate update: ObservationUpdate) {
@@ -198,25 +205,36 @@ class Purchases: NSObject {
   @discardableResult
   private func checkLocalReceipt() -> ReceiptResult {
     boughtItems = []
-    guard let receiptData = SwiftyStoreKit.localReceiptData else {
-      return .success([])
+    let result = validateReceipt(nil) // nil parameter lets InAppReceipt grab the local receipt
+    if case .success(let items) = result {
+      boughtItems = items
     }
-    return validateReceipt(receiptData)
+    return result
   }
   
-  func validateReceipt(_ receiptData: Data) -> ReceiptResult {
+  func validateReceipt(_ receiptData: Data? = nil) -> ReceiptResult {
     let errorValue: PurchaseError
     do {
-      let receipt = try InAppReceipt(receiptData: receiptData)
+      let receipt: InAppReceipt
+      if let receiptData = receiptData {
+        receipt = try InAppReceipt(receiptData: receiptData)
+      } else {
+        receipt = try InAppReceipt()
+      }
       try receipt.validate()
-      // instead of comparing against a well-known product id, any purchase gets the user the bonus
-      boughtItems.insert(.bonus)
-      return .success([.bonus])
       
-    } catch IARError.initializationFailed {
+      // for now all purchases are identified the same, a having purchased the bonus
+      return receipt.hasPurchases ? .success([.bonus]) : .success([])
+      
+    } catch IARError.initializationFailed(let reason) {
       // catch let error as IARError.initializationFailed(reason) .. can swift let us do this?
-      print("Failure validating receipt: validator itself")
-      errorValue = .malformedReceipt
+      if reason == .appStoreReceiptNotFound {
+        return .success([]) // short-circuit to return success after all
+        
+      } else {
+        print("Failure validating receipt: validator itself")
+        errorValue = .malformedReceipt
+      }
       
     } catch IARError.validationFailed {
       // catch let error as IARError.validationFailed(reason)
@@ -224,7 +242,7 @@ class Purchases: NSObject {
       errorValue = .invalidReceipt
       
     } catch {
-      print("Unknown error during local receipt validation: \(error)") // TODO: either ditch logging these or improve the manner & messages
+      print("Error during local receipt validation: \(error.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
       errorValue = .unknown
     }
     
@@ -233,95 +251,148 @@ class Purchases: NSObject {
   }
   
   func refreshReceipt(_ completion: @escaping (ReceiptResult)->Void) {
-    SwiftyStoreKit.fetchReceipt(forceRefresh: true) { [weak self] fetchResult in
+    Flare.shared.receipt(updateTransactions: false) { [weak self] fetchResult in
       guard let self = self else { return }
       
       switch fetchResult {
-      case .success(let receiptData):
-        let validationResult = self.validateReceipt(receiptData)
-        completion(validationResult)
+      case .success(let receipt64String):
+        if let receipt = Data(base64Encoded: receipt64String) {
+          let validationResult = validateReceipt(receipt)
+          
+          completion(validationResult)
+          
+        } else {
+          completion(.failure(.malformedReceipt))
+        }
         
-      case .error(.noReceiptData), .error(.noRemoteData),
-           .error(.receiptInvalid(_, .subscriptionExpired)):
+      case .failure(.receiptNotFound):
         completion(.success([]))
         
-      case .error(.networkError(let osError)):
-        print("Network failure fetching receipts: \(osError)")
+      case .failure(.with(let underlyingError)):
+        print("Error during receipt refresh: \(underlyingError.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
         completion(.failure(.unreachable))
-        
-      case .error(.receiptInvalid(_, .receiptServerUnavailable)):
-        print("Failure fetching receipts: some apple server reported to be down")
-        completion(.failure(.unreachable))
-        
-      case .error(let error):
-        print("Failure fetching receipts: \(error)") // TOOD: either ditch logging these or improve the manner & messages
-        // perhaps this error case shouldn't be named "unknown", maybe "other"
+      case .failure(let error):
+        print("Error during receipt refresh: \(error.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
         completion(.failure(.unknown))
       }
     }
+    
+//    SwiftyStoreKit.fetchReceipt(forceRefresh: true) { [weak self] fetchResult in
+//      guard let self = self else { return }
+//      
+//      switch fetchResult {
+//      case .success(let receiptData):
+//        let validationResult = self.validateReceipt(receiptData)
+//        completion(validationResult)
+//        
+//      case .error(.noReceiptData), .error(.noRemoteData),
+//           .error(.receiptInvalid(_, .subscriptionExpired)):
+//        completion(.success([]))
+//        
+//      case .error(.networkError(let osError)):
+//        print("Network failure fetching receipts: \(osError)")
+//        completion(.failure(.unreachable))
+//        
+//      case .error(.receiptInvalid(_, .receiptServerUnavailable)):
+//        print("Failure fetching receipts: some apple server reported to be down")
+//        completion(.failure(.unreachable))
+//        
+//      case .error(let error):
+//        print("Failure fetching receipts: \(error)") // TOOD: either ditch logging these or improve the manner & messages
+//        // perhaps this error case shouldn't be named "unknown", maybe "other"
+//        completion(.failure(.unknown))
+//      }
+//    }
   }
   
-  func restorePurchases() { // _ completion: @escaping (ReceiptResult)->Void
-    SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] restoreResult in
+  func restorePurchases(_ completion: @escaping (ReceiptResult)->Void) {
+    // currently nearly identical to refreshReceipt
+    Flare.shared.receipt(updateTransactions: true) { [weak self] restoreResult in
       guard let self = self else { return }
       
-      if restoreResult.restoredPurchases.count > 0 {
-        print("Success restoring purchases: \(restoreResult.restoredPurchases)")
-        // validation and invoking observers done in completeTransactionsCallback, does that make sense?
-        //completion(.success([]))
+      switch restoreResult {
+      case .success(let receipt64String):
+        if let receipt = Data(base64Encoded: receipt64String) {
+          let validationResult = validateReceipt(receipt)
+          
+          completion(validationResult)
+          
+        } else {
+          completion(.failure(.malformedReceipt))
+        }
         
-      } else if restoreResult.restoreFailedPurchases.count > 0 {
-        print("Failure restoring purchases: \(restoreResult.restoreFailedPurchases)")
-        // invoking observers on failure in completeTransactionsCallback too? maybe don't need a completion parameter
-        //completion(.failure(.unknown)) // TODO: what error
+      case .failure(.receiptNotFound):
+        completion(.success([]))
         
-      } else {
-        print("Nothing to Restore")
-        // if no call to completeTransactionsCallback occurs in this case, invoke observers here?
-        //completion(.success([]))
-        self.callObservers(withUpdate: .success(.restorations([])))
+      case .failure(.with(let underlyingError)):
+        print("Error during restore: \(underlyingError.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
+        completion(.failure(.unreachable))
+      case .failure(let error):
+        print("Error during restore: \(error.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
+        completion(.failure(.unknown))
       }
     }
+    
+//    SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] restoreResult in
+//      guard let self = self else { return }
+//      
+//      if restoreResult.restoredPurchases.count > 0 {
+//        print("Success restoring purchases: \(restoreResult.restoredPurchases)")
+//        // validation and invoking observers done in completeTransactionsCallback, does that make sense?
+//        //completion(.success([]))
+//        
+//      } else if restoreResult.restoreFailedPurchases.count > 0 {
+//        print("Failure restoring purchases: \(restoreResult.restoreFailedPurchases)")
+//        // invoking observers on failure in completeTransactionsCallback too? maybe don't need a completion parameter
+//        //completion(.failure(.unknown)) // TODO: what error
+//        
+//      } else {
+//        print("Nothing to Restore")
+//        // if no call to completeTransactionsCallback occurs in this case, invoke observers here?
+//        //completion(.success([]))
+//        self.callObservers(withUpdate: .success(.restorations([])))
+//      }
+//    }
   }
   
-  private func completeTransactionsCallback(withPurchases purchases: [Purchase]) {
-    // TODO: consolidate set of successful purchases and failures and make just 1 call to observers
-    
-    for purchase in purchases {
-      switch purchase.transaction.transactionState {
-      case .purchased:
-        // when should we validate purchase receipts??
-        
-        // instead of comparing against a well-known product id, any purchase gets the user the bonus
-        boughtItems.insert(.bonus)
-        callObservers(withUpdate: .success(.purchases([.bonus])))
-        lastError = nil
-        
-        if purchase.needsFinishTransaction {
-          SwiftyStoreKit.finishTransaction(purchase.transaction)
-        }
-        
-      case .restored:
-        boughtItems.insert(.bonus)
-        callObservers(withUpdate: .success(.restorations([.bonus])))
-        lastError = nil
-        
-        if purchase.needsFinishTransaction {
-          SwiftyStoreKit.finishTransaction(purchase.transaction)
-        }
-        
-      case .failed:
-        print("Purchase failed: \(purchase.productId), \(purchase.transaction.transactionIdentifier ?? "unknown transaction")")
-        callObservers(withUpdate: .failure(.unknown))
-        lastError = .unknown
-        
-      case .purchasing, .deferred:
-        // TODO: look into these cases and see if we need to do anything
-        break
-      @unknown default:
-        break
-      }
-    }
-  }
+//  private func completeTransactionsCallback(withPurchases purchases: [Purchase]) {
+//    // TODO: consolidate set of successful purchases and failures and make just 1 call to observers
+//    
+//    for purchase in purchases {
+//      switch purchase.transaction.transactionState {
+//      case .purchased:
+//        // when should we validate purchase receipts??
+//        
+//        // instead of comparing against a well-known product id, any purchase gets the user the bonus
+//        boughtItems.insert(.bonus)
+//        callObservers(withUpdate: .success(.purchases([.bonus])))
+//        lastError = nil
+//        
+//        if purchase.needsFinishTransaction {
+//          SwiftyStoreKit.finishTransaction(purchase.transaction)
+//        }
+//        
+//      case .restored:
+//        boughtItems.insert(.bonus)
+//        callObservers(withUpdate: .success(.restorations([.bonus])))
+//        lastError = nil
+//        
+//        if purchase.needsFinishTransaction {
+//          SwiftyStoreKit.finishTransaction(purchase.transaction)
+//        }
+//        
+//      case .failed:
+//        print("Purchase failed: \(purchase.productId), \(purchase.transaction.transactionIdentifier ?? "unknown transaction")")
+//        callObservers(withUpdate: .failure(.unknown))
+//        lastError = .unknown
+//        
+//      case .purchasing, .deferred:
+//        // TODO: look into these cases and see if we need to do anything
+//        break
+//      @unknown default:
+//        break
+//      }
+//    }
+//  }
   
 }

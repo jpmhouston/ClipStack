@@ -160,6 +160,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     //  displayError("something")
     //  return
     } catch {
+      displayError(error.localizedDescription)
       return
     }
     
@@ -225,6 +226,9 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
 
     clearMessage()
     state = .showingProducts
+    
+    // !!! show sheet here
+    
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
       self?.performPurchase(product.identifier)

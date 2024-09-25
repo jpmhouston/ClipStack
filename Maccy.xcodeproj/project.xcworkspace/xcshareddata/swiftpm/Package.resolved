@@ -1,5 +1,5 @@
 {
-  "originHash" : "3c4121c20c1bb068c64816c4ea15ed42ff3f3b1d3a6527dbe1ff961ada884b4d",
+  "originHash" : "73b3b3b64299d266c64d24c8a097387e17456fc38bf7b00d8fb132e2bbf4df0c",
   "pins" : [
     {
       "identity" : "asn1swift",
@@ -8,6 +8,33 @@
       "state" : {
         "revision" : "177417b6bf89431a0750ee640012b6aed8961c6a",
         "version" : "1.2.5"
+      }
+    },
+    {
+      "identity" : "atomic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/atomic.git",
+      "state" : {
+        "revision" : "6a1473440c31c6debf1de2404265949ed7892b14",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "concurrency",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/concurrency.git",
+      "state" : {
+        "revision" : "4592824038749a14a0c2c0605bc3c6429a81634e",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "flare",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/flare",
+      "state" : {
+        "revision" : "357425fd5ba73d9c8d3881129917ab2ca2e91d21",
+        "version" : "3.0.2"
       }
     },
     {
@@ -38,6 +65,15 @@
       }
     },
     {
+      "identity" : "log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/log.git",
+      "state" : {
+        "revision" : "d99fff5656c31ef7e604965b90a50ec10539c98f",
+        "version" : "1.1.0"
+      }
+    },
+    {
       "identity" : "sauce",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Clipy/Sauce",
@@ -60,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/Settings.git",
       "state" : {
-        "revision" : "2f4f65eed252198be383aa0d9058bbaf8f740aa5",
-        "version" : "3.1.0"
+        "revision" : "879ea83a7bbc6dbebf62bed8c547f090146372a6",
+        "version" : "3.1.1"
       }
     },
     {
@@ -69,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sparkle-project/Sparkle",
       "state" : {
-        "revision" : "0a4caaf7a81eea2cece651ef4b17331fa0634dff",
-        "version" : "2.6.0"
+        "revision" : "0ef1ee0220239b3776f433314515fd849025673f",
+        "version" : "2.6.4"
       }
     },
     {

@@ -78,6 +78,7 @@
 		8F54639C2BE7B6DC008D67EF /* MenuBasicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463982BE7B6DC008D67EF /* MenuBasicUITests.swift */; };
 		8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
 		8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
+		8F5CBF342C8CFBB70058C06C /* Flare in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5CBF332C8CFBB70058C06C /* Flare */; };
 		8F710D5E2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */; };
 		8F710D5F2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */; };
 		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
@@ -671,6 +672,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F5CBF342C8CFBB70058C06C /* Flare in Frameworks */,
 				8F8C48962BAD51B000C3A219 /* Carbon.framework in Frameworks */,
 				8F8C48B32BAD536900C3A219 /* SwiftyStoreKit in Frameworks */,
 				8F8C48972BAD51B000C3A219 /* KeyboardShortcuts in Frameworks */,
@@ -1162,6 +1164,7 @@
 				8F8C48B22BAD536900C3A219 /* SwiftyStoreKit */,
 				8F8C48B52BAD538600C3A219 /* TPInAppReceipt */,
 				8FCDFC182BC7E96C00A16FBE /* SDWebImage */,
+				8F5CBF332C8CFBB70058C06C /* Flare */,
 			);
 			productName = Maccy;
 			productReference = 8F8C48AF2BAD51B000C3A219 /* Batch Clipboard.app */;
@@ -1325,6 +1328,7 @@
 				8F8C48B12BAD536900C3A219 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 				8F8C48B42BAD538600C3A219 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */,
 				8FCDFC152BC7E92400A16FBE /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				8F5CBF322C8CFBB70058C06C /* XCRemoteSwiftPackageReference "flare" */,
 			);
 			productRefGroup = DAEE38441E3DBEB100DD2966 /* Products */;
 			projectDirPath = "";
@@ -2409,6 +2413,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_ONLY_ACTIVE_RESOURCES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2468,11 +2473,12 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_ONLY_ACTIVE_RESOURCES = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2695,6 +2701,14 @@
 				minimumVersion = 3.0.3;
 			};
 		};
+		8F5CBF322C8CFBB70058C06C /* XCRemoteSwiftPackageReference "flare" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/space-code/flare";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
 		8F8C484F2BAD51B000C3A219 /* XCRemoteSwiftPackageReference "Sauce" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Clipy/Sauce";
@@ -2841,6 +2855,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2F39CB022AD9A93C00B749FD /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		8F5CBF332C8CFBB70058C06C /* Flare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F5CBF322C8CFBB70058C06C /* XCRemoteSwiftPackageReference "flare" */;
+			productName = Flare;
 		};
 		8F8C484E2BAD51B000C3A219 /* Sauce */ = {
 			isa = XCSwiftPackageProductDependency;
