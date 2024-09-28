@@ -490,7 +490,7 @@ extension Cleepp {
       do {
         try queue.remove(atIndex: index)
       } catch {
-        // !!! TODO: log or whatever and maybe reset queue
+        AppDelegate.logger.error("fixing queue after deleting item failed, \(error)")
         queue.off()
       }
       

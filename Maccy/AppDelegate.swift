@@ -8,13 +8,16 @@ import LaunchAtLogin
 #if !CLEEPP || ALLOW_SPARKLE_UPDATES
 import Sparkle
 #endif
+import os.log
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
   @IBOutlet weak var copyMenuItem: NSMenuItem!
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
-  #if CLEEPP
+  static let logger = Logger()
+
+#if CLEEPP
   private var copyHotKey: GlobalCopyHotKey!
   private var pasteHotKey: GlobalPasteHotKey!
   #else
@@ -51,8 +54,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+    #if CLEEPP
+    Self.logger.info("applicationShouldHandleReopen called")
+    return false
+    #else
     maccy.popUp()
     return true
+    #endif
   }
 
   #if CLEEPP

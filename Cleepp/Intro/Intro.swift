@@ -568,10 +568,12 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   private func openURL(string: String) {
     guard let url = URL(string: string) else {
-      // TODO: log url failure
+      AppDelegate.logger.error("failed to create URL \(string)")
       return
     }
-    NSWorkspace.shared.open(url)
+    if !NSWorkspace.shared.open(url) {
+      AppDelegate.logger.error("failed to open URL \(string)")
+    }
   }
   
 }

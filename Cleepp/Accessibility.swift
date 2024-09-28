@@ -52,17 +52,21 @@ struct Accessibility {
   
   static func openSecurityPanel() {
     guard let url = URL(string: openSettingsPaneURL) else {
-      // TODO: log url failure
+      AppDelegate.logger.error("failed to create in-app URL to show Settings \(openSettingsPaneURL)")
       return
     }
-    NSWorkspace.shared.open(url)
+    if !NSWorkspace.shared.open(url) {
+      AppDelegate.logger.error("failed to open in-app URL to show Settings \(openSettingsPaneURL)")
+    }
   }
   
   static func openIntro() {
     guard let url = URL(string: Cleepp.showIntroPermissionPageInAppURL) else {
-      // TODO: log url failure
+      AppDelegate.logger.error("failed to create in-app URL to show Intro permission page \(Cleepp.showIntroPermissionPageInAppURL)")
       return
     }
-    NSWorkspace.shared.open(url)
+    if !NSWorkspace.shared.open(url) {
+      AppDelegate.logger.error("failed to open in-app URL to show Intro permission page \(Cleepp.showIntroPermissionPageInAppURL)")
+    }
   }
 }
