@@ -56,7 +56,6 @@
 		8F0D3C5F2BAB8F5A00DDB603 /* SwiftHEXColors in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C142BAB8F5A00DDB603 /* SwiftHEXColors */; };
 		8F0D3C602BAB8F5A00DDB603 /* Sauce in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C102BAB8F5A00DDB603 /* Sauce */; };
 		8F0D3C612BAB8F5A00DDB603 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C1C2BAB8F5A00DDB603 /* Settings */; };
-		8F0D3C622BAB8F5A00DDB603 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C182BAB8F5A00DDB603 /* LaunchAtLogin */; };
 		8F0D3C632BAB8F5A00DDB603 /* Fuse in Frameworks */ = {isa = PBXBuildFile; productRef = 8F0D3C122BAB8F5A00DDB603 /* Fuse */; };
 		8F0D3C672BAB8F5A00DDB603 /* IgnoreSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA20EBB7268E54E80032D360 /* IgnoreSettingsViewController.xib */; };
 		8F0D3C692BAB8F5A00DDB603 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAB8CE4124E368F200A2500E /* container-migration.plist */; };
@@ -160,7 +159,6 @@
 		8F8C48982BAD51B000C3A219 /* SwiftHEXColors in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48522BAD51B000C3A219 /* SwiftHEXColors */; };
 		8F8C48992BAD51B000C3A219 /* Sauce in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C484E2BAD51B000C3A219 /* Sauce */; };
 		8F8C489A2BAD51B000C3A219 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48582BAD51B000C3A219 /* Settings */; };
-		8F8C489B2BAD51B000C3A219 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48562BAD51B000C3A219 /* LaunchAtLogin */; };
 		8F8C489C2BAD51B000C3A219 /* Fuse in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48502BAD51B000C3A219 /* Fuse */; };
 		8F8C489E2BAD51B000C3A219 /* GeneralSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C481D2BACD1A900C3A219 /* GeneralSettingsViewController.xib */; };
 		8F8C489F2BAD51B000C3A219 /* StorageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */; };
@@ -660,14 +658,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */,
 				8F0D3C5E2BAB8F5A00DDB603 /* Carbon.framework in Frameworks */,
+				8F12B56F2BD3B827004F059B /* Sparkle in Frameworks */,
 				8F0D3C5D2BAB8F5A00DDB603 /* KeyboardShortcuts in Frameworks */,
 				8FCDFC172BC7E92400A16FBE /* SDWebImage in Frameworks */,
 				8F0D3C5F2BAB8F5A00DDB603 /* SwiftHEXColors in Frameworks */,
 				8F0D3C602BAB8F5A00DDB603 /* Sauce in Frameworks */,
 				8F0D3C612BAB8F5A00DDB603 /* Settings in Frameworks */,
-				8F0D3C622BAB8F5A00DDB603 /* LaunchAtLogin in Frameworks */,
 				8F0D3C632BAB8F5A00DDB603 /* Fuse in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -683,7 +680,6 @@
 				8FCDFC192BC7E96C00A16FBE /* SDWebImage in Frameworks */,
 				8F8C48992BAD51B000C3A219 /* Sauce in Frameworks */,
 				8F8C489A2BAD51B000C3A219 /* Settings in Frameworks */,
-				8F8C489B2BAD51B000C3A219 /* LaunchAtLogin in Frameworks */,
 				8F8C489C2BAD51B000C3A219 /* Fuse in Frameworks */,
 				8F8C48B62BAD538600C3A219 /* TPInAppReceipt in Frameworks */,
 			);
@@ -1123,7 +1119,6 @@
 				8F0D3C1E2BAB8F5A00DDB603 /* Sources */,
 				8F0D3C5B2BAB8F5A00DDB603 /* Frameworks */,
 				8F0D3C642BAB8F5A00DDB603 /* Resources */,
-				8F0D3C762BAB8F5A00DDB603 /* Copy Launch at Login Helper */,
 				8F0D3C7F2BAB9B0900DDB603 /* Patch CFBundleVersion Script */,
 			);
 			buildRules = (
@@ -1153,7 +1148,6 @@
 				8F8C485A2BAD51B000C3A219 /* Sources */,
 				8F8C48952BAD51B000C3A219 /* Frameworks */,
 				8F8C489D2BAD51B000C3A219 /* Resources */,
-				8F8C48AA2BAD51B000C3A219 /* Copy Launch at Login Helper */,
 				8F8C48AB2BAD51B000C3A219 /* Patch CFBundleVersion Script */,
 			);
 			buildRules = (
@@ -1453,28 +1447,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8F0D3C762BAB8F5A00DDB603 /* Copy Launch at Login Helper */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh",
-				"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/LaunchAtLoginHelper.zip",
-				"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/LaunchAtLoginHelper-with-runtime.zip",
-			);
-			name = "Copy Launch at Login Helper";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -x \"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\" ] ; then\n  echo \"before call to copy-helper-swiftpm.sh ONLY_ACTIVE_ARCH is $ONLY_ACTIVE_ARCH\"\nelse\n  echo \"copy-helper-swiftpm.sh appears to not exist or be executable\"\nfi\n\nif \"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\" ; then\n  if [ ! -d \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/LaunchAtLogin_LaunchAtLogin.bundle\" ] ; then\n    echo \"copy-helper-swiftpm.sh did indeed remove $BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/LaunchAtLogin_LaunchAtLogin.bundle\"\n  else\n    echo \"copy-helper-swiftpm.sh did NOT remove $BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/LaunchAtLogin_LaunchAtLogin.bundle\"\n  fi\nelse\n  echo \"copy-helper-swiftpm.sh failed\"\n  exit 1\nfi\n";
-		};
 		8F0D3C7F2BAB9B0900DDB603 /* Patch CFBundleVersion Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1495,28 +1467,6 @@
 			shellPath = /bin/sh;
 			shellScript = "git branch --show-current >/dev/null || exit 0\ngitbranch=$(git branch --show-current)\ngitcommitcount=$(git rev-list --count HEAD)\necho \"Patching CFBundleVersion to be $gitcommitcount based on count of commits to branch $gitbranch\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $gitcommitcount\" \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		8F8C48AA2BAD51B000C3A219 /* Copy Launch at Login Helper */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh",
-				"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/LaunchAtLoginHelper.zip",
-				"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/LaunchAtLoginHelper-with-runtime.zip",
-			);
-			name = "Copy Launch at Login Helper";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\"\n";
 		};
 		8F8C48AB2BAD51B000C3A219 /* Patch CFBundleVersion Script */ = {
 			isa = PBXShellScriptBuildPhase;

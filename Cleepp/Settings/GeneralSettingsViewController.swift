@@ -1,9 +1,11 @@
 import Cocoa
 import KeyboardShortcuts
-import LaunchAtLogin
 import Settings
 #if ALLOW_SPARKLE_UPDATES
 import Sparkle
+#endif
+#if canImport(ServiceManagement)
+import ServiceManagement
 #endif
 
 class GeneralSettingsViewController: NSViewController, SettingsPane {
@@ -20,9 +22,16 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   private var sparkleUpdater: SPUUpdater
   #endif
   
+  private lazy var loginItemsURL = URL(
+    string: "x-apple.systempreferences:com.apple.LoginItems-Settings.extension"
+  )
+  
   @IBOutlet weak var copyHotkeyContainerView: NSView!
   @IBOutlet weak var pasteHotkeyContainerView: NSView!
   @IBOutlet weak var launchAtLoginButton: NSButton!
+  @IBOutlet weak var launchAtLoginRow: NSGridRow!
+  @IBOutlet weak var openLoginItemsPanelButton: NSButton!
+  @IBOutlet weak var openLoginItemsPanelRow: NSGridRow!
   @IBOutlet weak var automaticUpdatesButton: NSButton!
   @IBOutlet weak var searchModeSeparator: NSView!
   @IBOutlet weak var searchModeLabel: NSTextField!
@@ -53,8 +62,14 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
     #if !ALLOW_SPARKLE_UPDATES
     hideSparkleUpdateRows()
     #endif
+    
+    if #available(macOS 13.0, *) {
+      showLaunchAtLoginRow()
+    } else {
+      showOpenLoginItemsPanelRow()
+    }
   }
-
+  
   override func viewWillAppear() {
     super.viewWillAppear()
     populateLaunchAtLogin()
@@ -83,9 +98,35 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   }
   
   @IBAction func launchAtLoginChanged(_ sender: NSButton) {
-    LaunchAtLogin.isEnabled = (sender.state == .on)
+    guard #available(macOS 13.0, *) else {
+      return
+    }
+    if sender.state == .on {
+      do {
+        if SMAppService.mainApp.status == .enabled {
+          try? SMAppService.mainApp.unregister()
+        }
+        try SMAppService.mainApp.register()
+      } catch {
+        sender.state = .off
+      }
+      
+    } else {
+      do {
+        try SMAppService.mainApp.unregister()
+      } catch {
+        sender.state = .on
+      }
+    }
   }
-
+  
+  @IBAction func openLoginItemsPanel(_ sender: NSButton) {
+    guard let url = loginItemsURL else {
+      return
+    }
+    NSWorkspace.shared.open(url)
+  }
+  
   @IBAction func searchModeChanged(_ sender: NSPopUpButton) {
     switch sender.selectedTag() {
     case 3:
@@ -100,7 +141,10 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   }
 
   private func populateLaunchAtLogin() {
-    launchAtLoginButton.state = LaunchAtLogin.isEnabled ? .on : .off
+    guard #available(macOS 13.0, *) else {
+      return
+    }
+    launchAtLoginButton.state = SMAppService.mainApp.status == .enabled ? .on : .off
   }
 
   private func populateSearchMode() {
@@ -125,6 +169,16 @@ class GeneralSettingsViewController: NSViewController, SettingsPane {
   private func hideSparkleUpdateRows() {
     checkForUpdatesOptionRow.isHidden = true
     checkForUpdatesButtonRow.isHidden = true
+  }
+  
+  private func showLaunchAtLoginRow() {
+    launchAtLoginRow.isHidden = false
+    openLoginItemsPanelRow.isHidden = true
+  }
+  
+  private func showOpenLoginItemsPanelRow() {
+    launchAtLoginRow.isHidden = true
+    openLoginItemsPanelRow.isHidden = false
   }
   
 }

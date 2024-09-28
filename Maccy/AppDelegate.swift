@@ -1,8 +1,10 @@
 import Cocoa
 import Intents
 import KeyboardShortcuts
-import LaunchAtLogin
 import Sauce
+#if !CLEEPP
+import LaunchAtLogin
+#endif
 #if !CLEEPP || ALLOW_SPARKLE_UPDATES
 import Sparkle
 #endif
@@ -33,7 +35,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    #if !CLEEPP
     LaunchAtLogin.migrateIfNeeded()
+    #endif
     migrateUserDefaults()
     clearOrphanRecords()
 
