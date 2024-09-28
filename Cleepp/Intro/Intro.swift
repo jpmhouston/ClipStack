@@ -8,6 +8,7 @@
 
 import AppKit
 import SDWebImage
+import os.log
 
 extension NSWindow.FrameAutosaveName {
   static let cleeppIntro: NSWindow.FrameAutosaveName = "lol.bananameter.batchclip.intro.FrameAutosaveName"
@@ -568,11 +569,11 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   
   private func openURL(string: String) {
     guard let url = URL(string: string) else {
-      AppDelegate.logger.error("failed to create URL \(string)")
+      os_log(.default, "failed to create URL %@", string)
       return
     }
     if !NSWorkspace.shared.open(url) {
-      AppDelegate.logger.error("failed to open URL \(string)")
+      os_log(.default, "failed to open URL %@", string)
     }
   }
   

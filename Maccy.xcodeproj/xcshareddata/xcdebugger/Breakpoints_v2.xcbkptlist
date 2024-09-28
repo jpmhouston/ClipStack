@@ -669,8 +669,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "startQueueMode(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -694,8 +694,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -719,8 +719,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -744,8 +744,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -769,8 +769,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "queuedCopy(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -794,8 +794,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "clipboardChanged(_:)"
             landmarkType = "7">
             <Actions>
@@ -819,8 +819,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -844,8 +844,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -869,8 +869,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
             landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -894,8 +894,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "queuedPaste(interactive:)"
             landmarkType = "7">
             <Actions>
@@ -919,8 +919,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
             landmarkName = "queuedPasteMultiple(_:interactive:)"
             landmarkType = "7">
             <Actions>
@@ -944,8 +944,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "queuedPasteMultipleIterator(_:then:)"
             landmarkType = "7">
             <Actions>
@@ -969,8 +969,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
             landmarkName = "advanceReplay(_:)"
             landmarkType = "7">
             <Actions>
@@ -994,8 +994,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
             landmarkName = "replayFromHistory(atIndex:interactive:)"
             landmarkType = "7">
             <Actions>
@@ -1019,8 +1019,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
             landmarkName = "copyFromHistory(_:)"
             landmarkType = "7">
             <Actions>
@@ -1044,8 +1044,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
             landmarkName = "deleteHistoryItem(_:)"
             landmarkType = "7">
             <Actions>
@@ -1069,8 +1069,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
             landmarkName = "deleteHighlightedHistoryItem(_:)"
             landmarkType = "7">
             <Actions>
@@ -1094,8 +1094,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497"
+            startingLineNumber = "498"
+            endingLineNumber = "498"
             landmarkName = "fixQueueAfterDeletingItem(atIndex:)"
             landmarkType = "7">
             <Actions>
@@ -1119,8 +1119,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "509"
-            endingLineNumber = "509"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
             landmarkName = "clear(_:)"
             landmarkType = "7">
             <Actions>
@@ -1144,8 +1144,8 @@
             filePath = "Cleepp/Cleepp+Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "522"
-            endingLineNumber = "522"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
             landmarkName = "undoLastCopy(_:)"
             landmarkType = "7">
             <Actions>

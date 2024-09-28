@@ -15,8 +15,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   @IBOutlet weak var copyMenuItem: NSMenuItem!
   @IBOutlet weak var pasteMenuItem: NSMenuItem!
 
-  static let logger = Logger()
-
 #if CLEEPP
   private var copyHotKey: GlobalCopyHotKey!
   private var pasteHotKey: GlobalPasteHotKey!
@@ -55,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
     #if CLEEPP
-    Self.logger.info("applicationShouldHandleReopen called")
+    os_log(.default, "applicationShouldHandleReopen called")
     return false
     #else
     maccy.popUp()

@@ -8,6 +8,7 @@
 
 import AppKit
 import Settings
+import os.log
 
 // TODO: make methods return error instead of bool
 
@@ -490,7 +491,7 @@ extension Cleepp {
       do {
         try queue.remove(atIndex: index)
       } catch {
-        AppDelegate.logger.error("fixing queue after deleting item failed, \(error)")
+        os_log(.default, "fixing queue after deleting item failed, %@", error.localizedDescription)
         queue.off()
       }
       
