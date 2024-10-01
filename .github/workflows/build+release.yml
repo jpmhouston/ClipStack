@@ -33,7 +33,7 @@ env:
 jobs:
   build:
     name: Build Cleepp Non-AppStore Variant and Draft Release
-    runs-on: macos-14 # required to use Xcode 15, "macos-latest" is actually older and uses Xcode 14
+    runs-on: macos-15
     
     steps:
       - name: Checkout
@@ -158,6 +158,7 @@ jobs:
           echo "version=$bundleVersion" >> $GITHUB_OUTPUT
       
       - name: "Codesign app bundle"
+        if: success()
         run: |
           :
           test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
@@ -211,7 +212,7 @@ jobs:
             --options runtime "${{ env.builddir }}/${{ env.bundlename }}" -v
       
       - name: "Notarize app bundle"
-        if: success() && steps.version.outputs.tag
+        if: success()
         run: |
           :
           test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
