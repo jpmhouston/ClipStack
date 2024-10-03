@@ -55,18 +55,23 @@ jobs:
         run: |
           :
           brew update
-          brew install pandoc create-dmg
+          brew install pandoc create-dmg coreutils
       
       - name: Validate
         id: version
         run: |
           :
-          echo "- Extract version from project"
-          version=$(xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
-            -project "${{ env.projectfile }}" -showBuildSettings \
-            | sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p') 2>/dev/null
+          echo "- Extract version and bundle id from the project"
+          xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
+            -project "${{ env.projectfile }}" -showBuildSettings 2>/dev/null > buildsettings.txt
+          version=$(sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p' < buildsettings.txt)
           if [[ -z $version ]] ; then
             echo "::error::Unable to determine a version number for the current state of the xcode project"
+            exit 1
+          fi
+          bundleID=$(sed -nr 's/^.*PRODUCT_BUNDLE_IDENTIFIER = (.*)$/\1/p' < buildsettings.txt)
+          if [[ -z $bundleID ]] ; then
+            echo "::error::Unable to extract bundle id from the xcode project"
             exit 1
           fi
           
@@ -102,7 +107,7 @@ jobs:
               echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
             else
               echo "- Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
-              echo "::notice::Will skip notarizing and updating sparkle appcast"
+              echo "::notice::Updating the sparkle appcast is always skipped for untagged builds"
             fi
           elif [[ "${{ github.ref }}" == refs/tags/* ]] ; then
             ref="${{ github.ref }}"
@@ -114,6 +119,7 @@ jobs:
           fi
           
           echo "version=$version" >> $GITHUB_OUTPUT
+          echo "bundleID=$bundleID" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           echo "releaseArchivename=$releaseNameNoSpaces" >> $GITHUB_OUTPUT
           echo "isPrerelease=$isPrerelease" >> $GITHUB_OUTPUT
@@ -209,42 +215,71 @@ jobs:
           
           echo "- Sign subcomponents..."
           # this is thanks to https://stackoverflow.com/a/11284404/592739
-          subitems=""
-          frameworksdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Frameworks"
-          if [ -d "$frameworksdir" ] ; then
-              frameworksdiritems=$(find "$frameworksdir" -depth -type d \
-                -name "*.framework" -or -name "*.dylib" -or -name "*.bundle" \
-                | sed -e "s/\(.*framework\)/\1\/Versions\/Current\//")
-              if [ ${PIPESTATUS[0]} -ne 0 ] ; then
-                  exit 1
-              fi          
-              subitems="${frameworksdiritems}"
-          fi
-          # potentially grab more subitems from other places within the .app here
-          #resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
-          #..use find as above..
-          #subitems="${subitems}"'\n'"${resourcesdiritems}"
-          
-          # changing the Internal Field Separator (IFS) makes spaces in paths not cause problems below
+          # within this section change the Internal Field Separator (IFS) to
+          # iterate over newline-separated paths that contain spaces
           savedIFS=$IFS
           IFS=$(echo -en "\n\b")
+          
+          subitems=""
+          addsubitems()
+          {
+            if [ -z "$subitems" ] ; then
+              subitems="$1"
+            else
+              subitems="$subitems"$'\n'"$1"
+            fi
+          }
+          
+          frameworksdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Frameworks"
+          if [ -d "$frameworksdir" ] ; then
+            frameworksdirdylibs=$(find "$frameworksdir" -depth -name "*.dylib")
+            if [ -n "$frameworksdirdylibs" ] ; then
+              addsubitems "$frameworksdirdylibs"
+            fi
+            frameworksdirbundles=$(find "$frameworksdir" -depth -type d -name "*.bundle")
+            if [ -n "$frameworksdirbundles" ] ; then
+              addsubitems "$frameworksdirbundles"
+            fi
+            frameworksdirframeworks=$(find "$frameworksdir" -depth -type d -name "*.framework")
+            if [ -n "$frameworksdirframeworks" ] ; then
+              for framework in $frameworksdirframeworks; do
+                frameworksubapp=$(find "$framework" -depth -type d -name "*.app")
+                if [ -n "$frameworksubapp" ] ; then
+                  addsubitems "$frameworksubapp"
+                fi
+                frameworksubapp=$(find "$framework" -depth -type d -name "*.xpc")
+                if [ -n "$frameworksubapp" ] ; then
+                  addsubitems "$frameworksubapp"
+                fi
+                # search for executables with limited depth to avoid ones within an .app
+                frameworkname=$(basename -s ".framework" "$framework")
+                frameworksubexecutable=$(find "$framework" -maxdepth 4 -type f -perm +111 \
+                                        -not -name "$frameworkname")
+                if [ -n "$frameworksubexecutable" ] ; then
+                  addsubitems "$frameworksubexecutable"
+                fi
+              done
+              addsubitems "$frameworksdirframeworks"
+            fi
+            
+          fi
+          # potentially grab more subitems from other places within the .app here
+          # ie. resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
+          
           for subitem in $subitems; do
-            echo "- Sign $subitem"
             xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
-              --options runtime "$subitem" -v
+              --options runtime -v "$subitem"
           done
           IFS=$savedIFS
           
           echo "- Sign app"
           xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
-            --options runtime "${{ env.builddir }}/${{ env.bundlename }}" -v
+            --options runtime -v "${{ env.builddir }}/${{ env.bundlename }}"
       
       - name: "Notarize app bundle"
         if: success()
         run: |
           :
-          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
-          
           if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" ]] ; then
             echo "::error::Secret PROD_MACOS_NOTARIZATION_APPLE_ID not defined"
             exit 1
@@ -279,7 +314,7 @@ jobs:
           # characteristics. Visit the Notarization docs for more information and strategies on how to optimize it if
           # you're curious
           
-          echo "- Notarize"
+          echo "- Notarize app"
           xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait \
             2>&1 | tee notarytool-out.txt
           if [ ${PIPESTATUS[0]} -ne 0 ] || grep -q Invalid notarytool-out.txt ; then
@@ -316,8 +351,6 @@ jobs:
         id: dmg
         run: |
           :
-          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
-          
           if ! command -v create-dmg >/dev/null 2>&1 ; then
             echo "::warning::Required helper script not found: create-dmg. Skipping dmg creation"
             # not sure if need to do `echo "file=whatever" >> $GITHUB_OUTPUT`
@@ -350,6 +383,24 @@ jobs:
           #xcrun stapler staple "${{ env.builddir }}/$imageFileName"
           
           echo "file=${{ env.builddir }}/$imageFileName" >> $GITHUB_OUTPUT
+          
+      - name: "Sign and notarize disk image"
+        if: success()
+        run: |
+          :
+          echo "- Notarize disk image"
+          xcrun notarytool submit "${{ steps.dmg.outputs.file }}" --keychain-profile "notarytool-profile" --wait \
+            2>&1 | tee notarytool-out.txt
+          if [ ${PIPESTATUS[0]} -ne 0 ] || grep -q Invalid notarytool-out.txt ; then
+            if sed -nr '/^[[:space:]]*id: (.*)$/{s//\1/p;q;}' notarytool-out.txt > notarytool-id.txt ; then
+              echo "- Extract notarytool failure log"
+              xcrun notarytool log "$(<notarytool-id.txt)" --keychain-profile "notarytool-profile"
+            fi
+            exit 1
+          fi
+          
+          echo "- Attach staple"
+          xcrun stapler staple "${{ steps.dmg.outputs.file }}"
       
       - name: Release Notes
         id: notes
