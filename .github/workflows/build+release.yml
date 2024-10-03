@@ -214,7 +214,7 @@ jobs:
           if [ -d "$frameworksdir" ] ; then
               frameworksdiritems=$(find "$frameworksdir" -depth -type d \
                 -name "*.framework" -or -name "*.dylib" -or -name "*.bundle" \
-                | sed -e "s/\(.*framework\)/\1\/Versions\/A\//")
+                | sed -e "s/\(.*framework\)/\1\/Versions\/Current\//")
               if [ ${PIPESTATUS[0]} -ne 0 ] ; then
                   exit 1
               fi          
