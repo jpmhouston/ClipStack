@@ -207,7 +207,35 @@ jobs:
           
           # We finally codesign our app bundle, specifying the Hardened runtime option
           
-          echo "- Sign"
+          echo "- Sign subcomponents..."
+          # this is thanks to https://stackoverflow.com/a/11284404/592739
+          subitems=""
+          frameworksdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Frameworks"
+          if [ -d "$frameworksdir" ] ; then
+              frameworksdiritems=$(find "$frameworksdir" -depth -type d \
+                -name "*.framework" -or -name "*.dylib" -or -name "*.bundle" \
+                | sed -e "s/\(.*framework\)/\1\/Versions\/A\//")
+              if [ ${PIPESTATUS[0]} -ne 0 ] ; then
+                  exit 1
+              fi          
+              subitems="${frameworksdiritems}"
+          fi
+          # potentially grab more subitems from other places within the .app here
+          #resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
+          #..use find as above..
+          #subitems="${subitems}"'\n'"${resourcesdiritems}"
+          
+          # changing the Internal Field Separator (IFS) makes spaces in paths not cause problems below
+          savedIFS=$IFS
+          IFS=$(echo -en "\n\b")
+          for subitem in $subitems; do
+            echo "- Sign $subitem"
+            xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+              --options runtime "$subitem" -v
+          done
+          IFS=$savedIFS
+          
+          echo "- Sign app"
           xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
             --options runtime "${{ env.builddir }}/${{ env.bundlename }}" -v
       
