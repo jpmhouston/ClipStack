@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -143,16 +143,15 @@ DQ
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VNn-Zg-RaA">
                             <rect key="frame" x="36" y="104" width="538" height="76"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g8m-UI-Ipo">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g8m-UI-Ipo">
                                     <rect key="frame" x="-2" y="36" width="542" height="40"/>
-                                    <textFieldCell key="cell" id="u3E-8K-Lim">
+                                    <textFieldCell key="cell" title="Batch Clipboard is a simple clipboard utility that adds the ability to copy multiple items, and then later paste them." id="u3E-8K-Lim">
                                         <font key="font" metaFont="system" size="17"/>
-                                        <string key="title">Batch Clipboard is a simple clipboard utility give you the ability to copy multiple items in one place, then paste them somewhere else in order.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ed-EA-huu">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ed-EA-huu">
                                     <rect key="frame" x="-2" y="0.0" width="393" height="20"/>
                                     <textFieldCell key="cell" title="But there's a tiny bit of setup you need to do first …" id="136-X1-mq3">
                                         <font key="font" metaFont="system" size="17"/>
@@ -170,7 +169,7 @@ DQ
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-o6-hWz">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="300" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-o6-hWz">
                             <rect key="frame" x="34" y="20" width="287" height="30"/>
                             <textFieldCell key="cell" title="to open this window again use the About menu item, then using the Show Intro button within" id="nAg-nr-2O5">
                                 <font key="font" metaFont="cellTitle"/>
@@ -178,7 +177,7 @@ DQ
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vey-Vh-Zet">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vey-Vh-Zet">
                             <rect key="frame" x="357" y="20" width="229" height="15"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="press the next button below to continue" id="997-1T-N4Q">
                                 <font key="font" metaFont="cellTitle"/>
@@ -198,7 +197,7 @@ DQ
                             </connections>
                         </button>
                         <button id="VW6-3z-458" userLabel="Restart">
-                            <rect key="frame" x="376" y="200.5" width="16" height="24"/>
+                            <rect key="frame" x="376" y="201" width="16" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="3qP-vS-bAf">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -235,7 +234,7 @@ DQ
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="DiN-8O-NU2" userLabel="two">
                     <rect key="frame" x="604" y="0.0" width="604" height="324"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="gJb-ZW-iAj">
+                        <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="gJb-ZW-iAj">
                             <rect key="frame" x="34" y="76" width="200" height="212"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="🛂" id="ebn-Q0-N6T">
                                 <font key="font" metaFont="system" size="180"/>
@@ -243,7 +242,7 @@ DQ
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-fS-N36">
+                        <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-fS-N36">
                             <rect key="frame" x="34" y="76" width="200" height="212"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="✅" id="gnG-ZT-UMf">
                                 <font key="font" metaFont="system" size="180"/>
@@ -254,7 +253,7 @@ DQ
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDA-eq-AfB">
                             <rect key="frame" x="268" y="75" width="300" height="201"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-cs-oZY">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-cs-oZY">
                                     <rect key="frame" x="-2" y="144" width="304" height="57"/>
                                     <textFieldCell key="cell" title="Batch Clipboard needs your authorization to be able to instruct the frontmost application to perform a Copy or Paste." id="VI8-q1-aOr">
                                         <font key="font" metaFont="system" size="16"/>
@@ -262,7 +261,7 @@ DQ
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EvF-0r-9Z1">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EvF-0r-9Z1">
                                     <rect key="frame" x="-2" y="90" width="304" height="38"/>
                                     <textFieldCell key="cell" title="This authorization has not yet been granted." id="lhN-0D-29x">
                                         <font key="font" metaFont="system" size="16"/>
@@ -270,7 +269,7 @@ DQ
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DkE-IU-Osz">
+                                <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DkE-IU-Osz">
                                     <rect key="frame" x="-2" y="128" width="233" height="38"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" title="This authorization has already been granted." id="Jti-hB-gYF">
@@ -305,7 +304,7 @@ DQ
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-zK-yMR">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-zK-yMR">
                                     <rect key="frame" x="-2" y="0.0" width="304" height="38"/>
                                     <textFieldCell key="cell" title="Use the button to open the panel then return to this window for what to do next." id="naz-h7-dY3">
                                         <font key="font" metaFont="system" size="15"/>
@@ -352,18 +351,38 @@ DQ
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="introSettingsPanel" id="eFq-ol-dLN"/>
                         </imageView>
-                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NbK-HR-eEY">
-                            <rect key="frame" x="364" y="52" width="210" height="240"/>
+                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NbK-HR-eEY">
+                            <rect key="frame" x="364" y="38" width="210" height="254"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avZ-Lx-MdF">
-                                    <rect key="frame" x="-2" y="36" width="214" height="204"/>
-                                    <textFieldCell key="cell" id="gdT-wb-YBu">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avZ-Lx-MdF">
+                                    <rect key="frame" x="-2" y="203" width="214" height="51"/>
+                                    <textFieldCell key="cell" title="The Accessibility subpanel of your Mac's Privacy &amp; Security settings should have opened." id="gdT-wb-YBu">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <string key="title">The Accessibility subpanel of your Privacy &amp; Security settings should have opened. Unlock using the lock icon at the bottom if you have that.
-
-If Batch Clipboard is in the list, use the – button to remove it.
-
-Then use the + button and select Batch Clipboard from your Applications folder.</string>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KHW-LV-WPV">
+                                    <rect key="frame" x="-2" y="163" width="214" height="28"/>
+                                    <textFieldCell key="cell" title="Unlock using the lock icon at the bottom if you have that." id="qlp-HD-HkR">
+                                        <font key="font" metaFont="system" size="11"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GKA-E6-jD4">
+                                    <rect key="frame" x="-2" y="100" width="214" height="51"/>
+                                    <textFieldCell key="cell" title="If Batch Clipboard is in the list and off, turn it on. Verify all is setup with the button below." id="Ahq-i4-uGv">
+                                        <font key="font" metaFont="system" size="14"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-X6-Vmb">
+                                    <rect key="frame" x="-2" y="32" width="214" height="56"/>
+                                    <textFieldCell key="cell" id="uNZ-xu-9dB">
+                                        <font key="font" metaFont="system" size="11"/>
+                                        <string key="title">If the check fails, use the – button to remove that row if it exists then the + button and choose Batch Clipboard from your Applications folder.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -381,7 +400,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                                 <action selector="checkAccessibilityAuthorization:" target="o5X-kK-gzk" id="dsI-nd-dJb"/>
                                             </connections>
                                         </button>
-                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGq-Jf-faS">
+                                        <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGq-Jf-faS">
                                             <rect key="frame" x="-2" y="1" width="27" height="19"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="✅" id="oz9-Dx-jW0">
                                                 <font key="font" metaFont="system" size="16"/>
@@ -389,7 +408,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4k3-Do-TDL">
+                                        <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4k3-Do-TDL">
                                             <rect key="frame" x="-2" y="1" width="27" height="19"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="❌" id="ddF-JC-E3k">
                                                 <font key="font" metaFont="system" size="16"/>
@@ -413,8 +432,14 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                             <visibilityPriorities>
                                 <integer value="1000"/>
                                 <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
                             </visibilityPriorities>
                             <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
@@ -435,7 +460,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2od-RL-Ncb">
                             <rect key="frame" x="20" y="79" width="256" height="221"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HdN-b8-HK8">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HdN-b8-HK8">
                                     <rect key="frame" x="-2" y="201" width="207" height="20"/>
                                     <textFieldCell key="cell" title="All you really need to know" id="Jfu-p1-klM">
                                         <font key="font" metaFont="system" size="17"/>
@@ -443,7 +468,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j5D-BV-2Nj">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j5D-BV-2Nj">
                                     <rect key="frame" x="-2" y="115" width="247" height="76"/>
                                     <textFieldCell key="cell" id="sQU-xV-qk3">
                                         <font key="font" metaFont="system" size="15"/>
@@ -455,7 +480,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9NK-Et-oQ9">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9NK-Et-oQ9">
                                     <rect key="frame" x="-2" y="29" width="225" height="76"/>
                                     <textFieldCell key="cell" id="rY6-tp-XkG">
                                         <font key="font" metaFont="system" size="15"/>
@@ -467,7 +492,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xHv-6I-rzd">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xHv-6I-rzd">
                                     <rect key="frame" x="-2" y="0.0" width="259" height="19"/>
                                     <textFieldCell key="cell" title="The order copied is the order pasted." id="acT-Af-oDw">
                                         <font key="font" metaFont="system" size="15"/>
@@ -489,7 +514,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iIv-Wn-GsU">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iIv-Wn-GsU">
                             <rect key="frame" x="18" y="20" width="250" height="30"/>
                             <textFieldCell key="cell" title="^⌘ means hold down both the control and command keys" id="XxD-fk-TpK">
                                 <font key="font" metaFont="cellTitle"/>
@@ -508,7 +533,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                         <visualEffectView hidden="YES" blendingMode="withinWindow" material="contentBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="lnS-C6-5P3">
                             <rect key="frame" x="386" y="68" width="96" height="49"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qyg-M6-bxJ">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qyg-M6-bxJ">
                                     <rect key="frame" x="14" y="8" width="68" height="33"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="^⌘C" id="JCF-vV-xdu">
                                         <font key="font" metaFont="system" size="28"/>
@@ -534,7 +559,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                         <visualEffectView hidden="YES" blendingMode="withinWindow" material="contentBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="ge4-gO-Z9z">
                             <rect key="frame" x="387" y="208" width="94" height="49"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vpt-aV-2nZ">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vpt-aV-2nZ">
                                     <rect key="frame" x="14" y="8" width="66" height="33"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="^⌘V" id="VHV-TF-QnU">
                                         <font key="font" metaFont="system" size="28"/>
@@ -580,7 +605,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OXy-QF-9kR">
                             <rect key="frame" x="24" y="64" width="550" height="236"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ysO-Hd-YBl">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ysO-Hd-YBl">
                                     <rect key="frame" x="-2" y="216" width="192" height="20"/>
                                     <textFieldCell key="cell" title="About the menu bar icon" id="vdW-8n-96U">
                                         <font key="font" metaFont="system" size="17"/>
@@ -591,7 +616,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="veb-Qn-gI4">
                                     <rect key="frame" x="0.0" y="172" width="550" height="32"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="nXv-aL-ixw">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="nXv-aL-ixw">
                                             <rect key="frame" x="-2" y="8" width="519" height="17"/>
                                             <textFieldCell key="cell" title="Batch Clipboard lives in the menu bar and the icon looks outlined like this: " id="QSh-Vk-jUJ">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -616,7 +641,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sed-8H-0RI">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sed-8H-0RI">
                                     <rect key="frame" x="-2" y="109" width="554" height="51"/>
                                     <textFieldCell key="cell" id="Yqj-hi-edI">
                                         <font key="font" metaFont="system" size="14"/>
@@ -628,7 +653,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B5Q-l2-QAI">
                                     <rect key="frame" x="0.0" y="63" width="550" height="34"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="kPk-oe-jvZ">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="kPk-oe-jvZ">
                                             <rect key="frame" x="-2" y="0.0" width="450" height="34"/>
                                             <textFieldCell key="cell" title="When in _batch mode_, the menu bar icon appears filled in and with a counter beside it:" id="1VJ-eQ-OVc">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -653,7 +678,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vIb-cf-3Yn">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vIb-cf-3Yn">
                                     <rect key="frame" x="-2" y="0.0" width="554" height="51"/>
                                     <textFieldCell key="cell" id="xnL-y0-X6s">
                                         <font key="font" metaFont="system" size="14"/>
@@ -696,7 +721,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBa-yQ-aIe">
                             <rect key="frame" x="24" y="30" width="550" height="270"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pmd-4j-Qlf">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pmd-4j-Qlf">
                                     <rect key="frame" x="-2" y="250" width="57" height="20"/>
                                     <textFieldCell key="cell" title="More…" id="vD0-Lx-euk">
                                         <font key="font" metaFont="system" size="17"/>
@@ -704,7 +729,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ofc-pm-ZHJ">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ofc-pm-ZHJ">
                                     <rect key="frame" x="-2" y="204" width="554" height="34"/>
                                     <textFieldCell key="cell" title="You can enter _batch mode_ from the Start Collecting menu item, or by just control-clicking on the menu icon." id="Jnh-iX-NZD">
                                         <font key="font" metaFont="system" size="14"/>
@@ -712,7 +737,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c5b-Da-Iyj">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c5b-Da-Iyj">
                                     <rect key="frame" x="-2" y="141" width="554" height="51"/>
                                     <textFieldCell key="cell" id="ejz-po-1sn">
                                         <font key="font" metaFont="system" size="14"/>
@@ -721,7 +746,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TQG-Ao-b8j">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TQG-Ao-b8j">
                                     <rect key="frame" x="-2" y="78" width="554" height="51"/>
                                     <textFieldCell key="cell" id="GUY-i5-7Qv">
                                         <font key="font" metaFont="system" size="14"/>
@@ -730,7 +755,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Agw-Cz-wc3">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Agw-Cz-wc3">
                                     <rect key="frame" x="-2" y="32" width="554" height="34"/>
                                     <textFieldCell key="cell" id="h9x-EW-Yfr">
                                         <font key="font" metaFont="system" size="14"/>
@@ -742,7 +767,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m2v-U7-QYJ">
                                     <rect key="frame" x="0.0" y="0.0" width="500" height="20"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="ZDM-lj-aVO">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="ZDM-lj-aVO">
                                             <rect key="frame" x="-2" y="3" width="381" height="17"/>
                                             <textFieldCell key="cell" title="The keyboard shortcuts ^⌘C and ^⌘V can be customized" id="vFs-Ep-8cZ">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -802,7 +827,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUk-ID-IIs">
                             <rect key="frame" x="24" y="33" width="550" height="267"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UGh-0A-tPy">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UGh-0A-tPy">
                                     <rect key="frame" x="-2" y="247" width="408" height="20"/>
                                     <textFieldCell key="cell" title="A few more features are available by in-app purchace" id="9nO-9v-zui">
                                         <font key="font" metaFont="system" size="17"/>
@@ -813,7 +838,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2t-k7-gU7">
                                     <rect key="frame" x="0.0" y="186" width="550" height="51"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="vvo-Gm-qL1">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="vvo-Gm-qL1">
                                             <rect key="frame" x="-2" y="0.0" width="431" height="51"/>
                                             <textFieldCell key="cell" id="M8m-l6-A7W">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -846,7 +871,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5i0-OJ-wh8">
+                                <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5i0-OJ-wh8">
                                     <rect key="frame" x="-2" y="247" width="479" height="20"/>
                                     <textFieldCell key="cell" title="A few more features are available in the Mac App Store version" id="l42-8A-rIE">
                                         <font key="font" metaFont="system" size="17"/>
@@ -857,7 +882,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView hidden="YES" distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-x3-0gT">
                                     <rect key="frame" x="0.0" y="247" width="1192" height="20"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="CQJ-yb-PGa">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="CQJ-yb-PGa">
                                             <rect key="frame" x="-2" y="0.0" width="1063" height="20"/>
                                             <textFieldCell key="cell" id="Ff1-yi-L9o">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -893,7 +918,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="fPf-Q6-YbK" userLabel="That's all.. title container">
                                     <rect key="frame" x="0.0" y="152" width="385" height="24"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="As5-Hw-9DD">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="As5-Hw-9DD">
                                             <rect key="frame" x="-2" y="0.0" width="389" height="20"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="left" title="That's all. Where to go for still more information" id="e9P-Jx-zaW">
                                                 <font key="font" metaFont="system" size="17"/>
@@ -993,7 +1018,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="wgz-NP-bdb" userLabel="Open source.. title container">
                                     <rect key="frame" x="0.0" y="88" width="544" height="24"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JiV-Jm-peE">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JiV-Jm-peE">
                                             <rect key="frame" x="-2" y="0.0" width="548" height="20"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Batch Clipboard is open source!" id="dfQ-sj-HNd">
                                                 <font key="font" metaFont="system" size="17"/>
@@ -1012,7 +1037,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TSk-Ob-jbR">
                                     <rect key="frame" x="0.0" y="44" width="550" height="34"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-fV-YLk">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-fV-YLk">
                                             <rect key="frame" x="-2" y="0.0" width="405" height="34"/>
                                             <textFieldCell key="cell" title="It's source is available on GitHub where a non-App Store version can be downloaded." id="ncU-gg-tO7">
                                                 <font key="font" metaFont="system" size="14"/>
@@ -1055,7 +1080,7 @@ Then use the + button and select Batch Clipboard from your Applications folder.<
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G2F-sc-bmg">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="34"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="efI-DS-y9J">
+                                        <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="efI-DS-y9J">
                                             <rect key="frame" x="-2" y="0.0" width="408" height="34"/>
                                             <textFieldCell key="cell" title="Batch Clipboard is a derivative of Maccy. Check out the original for a free, more full-featured clipboard manager." id="wHd-ST-cAs">
                                                 <font key="font" metaFont="system" size="14"/>
