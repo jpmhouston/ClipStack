@@ -410,7 +410,7 @@ jobs:
           changeLogFilename=CHANGELOG.md
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
           if [[ ! -f $changeLogFilename ]] ; then
-            echo "::warning::Release notes file is missing"
+            echo "::warning::Change log file is missing"
             numlines=0
           else
             echo -n "" > "${{ env.builddir }}/$currentNotesFilename"
@@ -419,9 +419,12 @@ jobs:
             while read line || [[ -n $line ]] ; do
               if [[ -z $thisversion ]]; then
                 thisversion=$(echo $line | sed -n -E 's/^#+ version ([0-9.dabrc]+) .*$/\1/p')
-                if [[ -n $thisversion && $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
-                  echo "::warning::Version $thisversion at the top of the release notes doesn't match build version ${{ steps.version.outputs.version }}"
-                  break
+                if [[ -n $thisversion ]] ; then
+                  if [[ $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
+                    echo "::warning::Version $thisversion at the top of the change log doesn't match build version ${{ steps.version.outputs.version }}"
+                    break
+                  fi
+                  echo "- Found section for build version ${{ steps.version.outputs.version }} at the top of the change log"
                 fi
                 continue
               fi
