@@ -6,6 +6,45 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>1.0b2</title>
+            <pubDate>Tue, 08 Oct 2024 21:22:06 +0000</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>847</sparkle:version>
+            <sparkle:shortVersionString>1.0b2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>Made github CI script now do signing and notarization (non-appstore
+build).</li>
+<li>Fixed github CI script to really truly create universal app now
+(non-appstore build).</li>
+<li>Made github CI build with newer OS and tools.</li>
+<li>Made Intro and Licenses windows open in the current Mission Control
+space.</li>
+<li>Reworded Intro instructions for giving permissions in the Settings
+app.</li>
+<li>Minor edit to intro window text mentioning what’s now called “batch
+mode”.</li>
+<li>Changed description for history menu items settings control to not
+reference the storage panel maximum when that control not showm.</li>
+<li>For now only macOS 13 and later get login item checkbox in app’s
+setting window, otherwise just a button to open system login items
+panel.</li>
+<li>Changed “Get” intent to accept an item number parameter and not a
+selection as in Maccy.</li>
+<li>Added some error logging, to be expanded later.</li>
+<li>Temporarily for this release log invokations of application’s Reopen
+callback.</li>
+<li>Renamed release notes file to CHANGELOG.md and minor reformat,
+corresponding changes to github CI script.</li>
+<li>Minor edits to .dmg’s readme file and to wiki.</li>
+<li>More fixes to Sparkle appcast, fingers crossed this works well
+now.</li>
+<li>Added funding file for github pointing at buymeacoffee.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b2/Batch%20Clipboard.1.0b2.zip" length="6228035" type="application/octet-stream" sparkle:edSignature="DHDRe0DUbZzof5MTkLPZdY62mjvKlP+GLxwKopemGY2qPfl/pamaNhKoCoXrjUhJ6LbJSewCx6LzbFnQ7CqECA=="/>
+        </item>
+        <item>
             <title>1.0b1</title>
             <pubDate>Sun, 16 Jun 2024 04:20:09 -0700</pubDate>
             <link>https://github.com/jpmhouston/Cleepp/releases</link>
