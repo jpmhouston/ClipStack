@@ -3,8 +3,6 @@ name: Draft Cleepp Release
 on:
   create:
   workflow_dispatch:
-    branches:
-      - forkmain
     inputs:
       releaseVersion:
         description: "Version to title release with (like: 1.0rc3), blank for project's version"
@@ -29,6 +27,7 @@ env:
   productname: "Batch Clipboard"
   bundlename: "Batch Clipboard.app"
   builddir: Build/Products/Release
+  branch: forkmain
 
 jobs:
   build:
@@ -40,6 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # required for 'git show-ref --tags' to work
+          ref: "${{ env.branch }}"
       
       - name: Patch Xcode 15.3
         uses: jpmhouston/patch-package-resolved@v1
@@ -102,6 +102,10 @@ jobs:
           
           echo "- Parse trigger"
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
+            if [[ "${{ github.ref }}" != "refs/heads/${{ env.branch }}" ]] ; then
+              echo "::error::Manually triggered workflow supports ${{ env.branch }} only, gihub.ref == ${{ github.ref }})"
+              exit 1
+            fi
             if git show-ref --tags --verify refs/tags/v$version --quiet ; then
               tag="v$version"
               echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
@@ -110,6 +114,7 @@ jobs:
               echo "::notice::Updating the sparkle appcast is always skipped for untagged builds"
             fi
           elif [[ "${{ github.ref }}" == refs/tags/* ]] ; then
+            # TODO: how do we verify the branch of this tag and ensure its ${{ env.branch }} ?
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
             echo "- Will build and draft release \"$releaseName\" because triggered by pushed tag \"$tag\""
