@@ -1,15 +1,18 @@
 Batch Clipboard Changelog
 
-## version 1.0b2 (2024-09-23)
+## version 1.0b2 (2024-10-07)
 
 - Made github CI script now do signing and notarization (non-appstore build).
 - Fixed github CI script to really truly create universal app now (non-appstore build).
+- Made github CI build with newer OS and tools.
 - Made Intro and Licenses windows open in the current Mission Control space.
+- Reworded Intro instructions for giving permissions in the Settings app.
+- Minor edit to intro window text mentioning what's now called "batch mode".
 - Changed "Get" intent to accept an item number parameter and not a selection as in Maccy.
 - For now only macOS 13 and later get login item checkbox in app's setting window, otherwise just a button to open system login items panel.
-- Added some error logging, to be expanded later, temporarily for this release log within application's Reopen callback.
+- Added some error logging, to be expanded later.
+- Temporarily for this release log invokations of application's Reopen callback.
 - Renamed release notes file to CHANGELOG.md and minor reformat, corresponding changes to github CI script.
-- Minor edit to intro window text mentioning what's now called "batch mode".
 - Minor edits to .dmg's readme file and to wiki.
 - More fixes to Sparkle appcast, fingers crossed this works well now.
 - Added funding file for github pointing at buymeacoffee.
