@@ -413,12 +413,13 @@ jobs:
           :
           echo "- Collect release notes"
           changeLogFilename=CHANGELOG.md
+          tempNotesFilename="${{ steps.version.outputs.releaseName }}.temp.md"
           currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
           if [[ ! -f $changeLogFilename ]] ; then
             echo "::warning::Change log file is missing"
             numlines=0
           else
-            echo -n "" > "${{ env.builddir }}/$currentNotesFilename"
+            echo -n "" > "${{ env.builddir }}/$tempNotesFilename"
             thisversion=''
             prevversion=''
             while read line || [[ -n $line ]] ; do
@@ -437,13 +438,13 @@ jobs:
               if [[ -n $prevversion ]] ; then
                 break
               fi
-              echo $line >> "${{ env.builddir }}/$currentNotesFilename"
+              echo $line >> "${{ env.builddir }}/$tempNotesFilename"
             done < "$changeLogFilename"
             
             # sed command removes initial and trailing blank lines, don't ask me how it works
             # from https://unix.stackexchange.com/a/552195
-            cat "${{ env.builddir }}/$currentNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
-              | tee "${{ env.builddir }}/$currentNotesFilename" >/dev/null
+            cat "${{ env.builddir }}/$tempNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
+              > "${{ env.builddir }}/$currentNotesFilename"
             numlines=$(wc -l "${{ env.builddir }}/$currentNotesFilename" | cut -w -f2)
           fi
           
