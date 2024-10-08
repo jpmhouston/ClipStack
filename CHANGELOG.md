@@ -8,8 +8,9 @@ Batch Clipboard Changelog
 - Made Intro and Licenses windows open in the current Mission Control space.
 - Reworded Intro instructions for giving permissions in the Settings app.
 - Minor edit to intro window text mentioning what's now called "batch mode".
-- Changed "Get" intent to accept an item number parameter and not a selection as in Maccy.
+- Changed description for history menu items settings control to not reference the storage panel maximum when that control not showm.
 - For now only macOS 13 and later get login item checkbox in app's setting window, otherwise just a button to open system login items panel.
+- Changed "Get" intent to accept an item number parameter and not a selection as in Maccy.
 - Added some error logging, to be expanded later.
 - Temporarily for this release log invokations of application's Reopen callback.
 - Renamed release notes file to CHANGELOG.md and minor reformat, corresponding changes to github CI script.

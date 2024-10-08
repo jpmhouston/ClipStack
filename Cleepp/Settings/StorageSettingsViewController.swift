@@ -6,7 +6,7 @@ class StorageSettingsViewController: NSViewController, SettingsPane {
   let paneTitle = NSLocalizedString("preferences_storage", comment: "")
   let toolbarItemIcon = NSImage(named: .externaldrive)!
 
-  let sizeMin = 10
+  let sizeMin = CleeppMenu.minNumMenuItems
   let sizeMax = 999
 
   override var nibName: NSNib.Name? { "StorageSettingsViewController" }

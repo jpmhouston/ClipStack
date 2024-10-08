@@ -12,6 +12,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
   @IBOutlet weak var imageHeightStepper: NSStepper!
   @IBOutlet weak var numberOfItemsField: NSTextField!
   @IBOutlet weak var numberOfItemsDescription: NSTextField!
+  @IBOutlet weak var numberOfItemsExtendedDescription: NSTextField!
   @IBOutlet weak var numberOfItemsAltDescription: NSTextField!
   @IBOutlet weak var numberOfItemsStepper: NSStepper!
   @IBOutlet weak var titleLengthField: NSTextField!
@@ -39,15 +40,16 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setMinAndMaxImageHeight()
-    setMinAndMaxNumberOfItems()
-    setMinAndMaxTitleLength()
-    setMinAndMaxPreviewDelay()
+    setImageHeightRange()
+    setNumberOfItemsRange()
+    setTitleLengthRange()
+    setPreviewDelayRange()
   }
   
   override func viewWillAppear() {
     super.viewWillAppear()
     populateImageHeight()
+    updateMinNumberOfItems()
     populateNumberOfItems()
     populateTitleLength()
     populatePreviewDelay()
@@ -68,7 +70,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
   @IBAction func numberOfItemsFieldChanged(_ sender: NSTextField) {
     UserDefaults.standard.maxMenuItems = sender.integerValue
     numberOfItemsStepper.integerValue = sender.integerValue
-    showAltNumberOfItemsDescription(sender.integerValue == 0)
+    showNumberOfItemsDescription(forSimpleMode: !Cleepp.allowDictinctStorageSize, forZeroEntered: sender.integerValue == 0)
   }
   
   @IBAction func numberOfItemsStepperChanged(_ sender: NSStepper) {
@@ -104,7 +106,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
     UserDefaults.standard.hideSearch = (sender.state == .off)
   }
   
-  private func setMinAndMaxImageHeight() {
+  private func setImageHeightRange() {
     imageHeightFormatter = NumberFormatter()
     imageHeightFormatter.minimum = imageHeightMin as NSNumber
     imageHeightFormatter.maximum = imageHeightMax as NSNumber
@@ -114,9 +116,9 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
     imageHeightStepper.maxValue = Double(imageHeightMax)
   }
   
-  private func setMinAndMaxNumberOfItems() {
+  private func setNumberOfItemsRange() {
     numberOfItemsFormatter = NumberFormatter()
-    numberOfItemsFormatter.minimum = 0 as NSNumber // not numberOfItemsMin, that's enforced in delegate func
+    updateMinNumberOfItems()
     numberOfItemsFormatter.maximum = numberOfItemsMax as NSNumber
     numberOfItemsFormatter.maximumFractionDigits = 0
     numberOfItemsField.formatter = numberOfItemsFormatter
@@ -125,20 +127,31 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
     numberOfItemsStepper.maxValue = Double(numberOfItemsMax)
   }
   
+  func updateMinNumberOfItems() {
+    if Cleepp.allowDictinctStorageSize {
+      numberOfItemsFormatter.minimum = 0 as NSNumber // not numberOfItemsMin, that's enforced in delegate func
+    } else {
+      numberOfItemsFormatter.minimum = numberOfItemsMin as NSNumber
+    }
+  }
+  
   func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
     guard let textField = control as? NSTextField, textField === numberOfItemsField else {
       return true
     }
-    let value = Int(fieldEditor.string) ?? 0
-    if value > 0 && value < numberOfItemsMin {
-      fieldEditor.string = String(numberOfItemsMin)
+    if Cleepp.allowDictinctStorageSize {
+      let value = Int(fieldEditor.string) ?? 0
+      if value > 0 && value < numberOfItemsMin {
+        fieldEditor.string = String(numberOfItemsMin)
+      }
     }
     return true
   }
   
-  private func showAltNumberOfItemsDescription(_ showAltDescrition: Bool) {
-    numberOfItemsDescription.isHidden = showAltDescrition
-    numberOfItemsAltDescription.isHidden = !showAltDescrition
+  private func showNumberOfItemsDescription(forSimpleMode simpleMode: Bool, forZeroEntered zeroEntered: Bool) {
+    numberOfItemsDescription.isHidden = !simpleMode
+    numberOfItemsExtendedDescription.isHidden = simpleMode || zeroEntered
+    numberOfItemsAltDescription.isHidden = simpleMode || !zeroEntered
   }
   
   private func populateImageHeight() {
@@ -147,11 +160,17 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
   }
   
   private func populateNumberOfItems() {
-    numberOfItemsField.integerValue = UserDefaults.standard.maxMenuItems
-    numberOfItemsStepper.integerValue = UserDefaults.standard.maxMenuItems
+    var value = UserDefaults.standard.maxMenuItems
+    // when allowing separate storage setting, also allow 0, otherwise numberOfItemsMin..numberOfItemsMax
+    if !Cleepp.allowDictinctStorageSize || value != 0 {
+      value = max(value, numberOfItemsMin)
+    }
+    numberOfItemsField.integerValue = value
+    numberOfItemsStepper.integerValue = value
+    showNumberOfItemsDescription(forSimpleMode: !Cleepp.allowDictinctStorageSize, forZeroEntered: value == 0)
   }
   
-  private func setMinAndMaxTitleLength() {
+  private func setTitleLengthRange() {
     titleLengthFormatter = NumberFormatter()
     titleLengthFormatter.minimum = titleLengthMin as NSNumber
     titleLengthFormatter.maximum = titleLengthMax as NSNumber
@@ -166,7 +185,7 @@ class AppearanceSettingsViewController: NSViewController, SettingsPane, NSTextFi
     titleLengthStepper.integerValue = UserDefaults.standard.maxMenuItemLength
   }
   
-  private func setMinAndMaxPreviewDelay() {
+  private func setPreviewDelayRange() {
     previewDelayFormatter = NumberFormatter()
     previewDelayFormatter.minimum = previewDelayMin as NSNumber
     previewDelayFormatter.maximum = previewDelayMax as NSNumber
