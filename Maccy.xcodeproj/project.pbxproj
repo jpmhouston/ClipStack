@@ -2105,7 +2105,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0b2;
+				MARKETING_VERSION = 1.0b3;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
 				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2141,7 +2141,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0b2;
+				MARKETING_VERSION = 1.0b3;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
 				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2176,7 +2176,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0b2;
+				MARKETING_VERSION = 1.0b3;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
 				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2212,7 +2212,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0b2;
+				MARKETING_VERSION = 1.0b3;
 				PRODUCT_BUNDLE_IDENTIFIER = lol.bananameter.batchclip;
 				PRODUCT_NAME = "Batch Clipboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2687,14 +2687,6 @@
 				minimumVersion = 0.3.0;
 			};
 		};
-		8F0D3C192BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		8F0D3C1D2BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "Settings" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Settings.git";
@@ -2733,14 +2725,6 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.3.0;
-			};
-		};
-		8F8C48572BAD51B000C3A219 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 5.0.0;
 			};
 		};
 		8F8C48592BAD51B000C3A219 /* XCRemoteSwiftPackageReference "Settings" */ = {
@@ -2848,11 +2832,6 @@
 			package = 8F0D3C172BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
-		8F0D3C182BAB8F5A00DDB603 /* LaunchAtLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8F0D3C192BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
-			productName = LaunchAtLogin;
-		};
 		8F0D3C1C2BAB8F5A00DDB603 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8F0D3C1D2BAB8F5A00DDB603 /* XCRemoteSwiftPackageReference "Settings" */;
@@ -2882,11 +2861,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F8C48552BAD51B000C3A219 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
-		};
-		8F8C48562BAD51B000C3A219 /* LaunchAtLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8F8C48572BAD51B000C3A219 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
-			productName = LaunchAtLogin;
 		};
 		8F8C48582BAD51B000C3A219 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;

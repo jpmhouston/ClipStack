@@ -1,6 +1,14 @@
 Batch Clipboard Changelog
 
-## version 1.0b2 (2024-10-07)
+## version 1.0b3 (2024-10-09)
+
+Rather than continuing to roll polish updates into b2, released it and this new one in succession in order to test Sparkle updates with a signed app.
+
+- Minor updates to wording in the about box, intro, and disk image read me file.
+- If user is hiding the status item then show the settings window when the application is reopened (for when we added back the user setting for hiding the status icon).
+- Remove logging from the application's Reopen callback.
+
+## version 1.0b2 (2024-10-08)
 
 - Made github CI script now do signing and notarization (non-appstore build).
 - Fixed github CI script to really truly create universal app now (non-appstore build).
@@ -12,7 +20,7 @@ Batch Clipboard Changelog
 - For now only macOS 13 and later get login item checkbox in app's setting window, otherwise just a button to open system login items panel.
 - Changed "Get" intent to accept an item number parameter and not a selection as in Maccy.
 - Added some error logging, to be expanded later.
-- Temporarily for this release log invokations of application's Reopen callback.
+- Temporarily for this release log invocations of application's Reopen callback.
 - Renamed release notes file to CHANGELOG.md and minor reformat, corresponding changes to github CI script.
 - Minor edits to .dmg's readme file and to wiki.
 - More fixes to Sparkle appcast, fingers crossed this works well now.
