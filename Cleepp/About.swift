@@ -7,23 +7,23 @@ class About {
   
   private var blurb: NSAttributedString {
     return NSAttributedString(
-      string: "Batch Clipboard adds a new clipboard mode\nthat lets you copy multiple times from one\nplace then paste them somewhere else in order.",
+      string: "Batch Clipboard adds the ability to\ncopy and paste many items together.",
       attributes: [.foregroundColor: NSColor.labelColor]);
   }
   
   private var links: NSAttributedString {
-    let string = NSMutableAttributedString(string: "Website│GitHub│Support",
+    let string = NSMutableAttributedString(string: "Website │ GitHub │ Support",
                                            attributes: [.foregroundColor: NSColor.labelColor])
     string.addAttribute(.link, value: Cleepp.homepageURL, range: NSRange(location: 0, length: 7))
-    string.addAttribute(.link, value: Cleepp.githubURL, range: NSRange(location: 8, length: 6))
-    string.addAttribute(.link, value: Cleepp.supportEmailURL, range: NSRange(location: 15, length: 7))
+    string.addAttribute(.link, value: Cleepp.githubURL, range: NSRange(location: 10, length: 6))
+    string.addAttribute(.link, value: Cleepp.supportEmailURL, range: NSRange(location: 19, length: 7))
     return string
   }
   
   private var introLink: NSAttributedString {
-    let string = NSMutableAttributedString(string: "More information: Show Intro",
+    let string = NSMutableAttributedString(string: "For more information click this link to\nreopen the intro window.",
                                            attributes: [.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 18, length: 10))
+    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 40, length: 23))
     return string
   }
   
@@ -48,11 +48,10 @@ class About {
     let credits = NSMutableAttributedString(string: "", attributes: [.foregroundColor: NSColor.labelColor])
     credits.append(blurb)
     credits.append(newLine)
-    credits.append(shortSpacingLine)
-    credits.append(links)
+    credits.append(introLink)
     credits.append(newLine)
     credits.append(shortSpacingLine)
-    credits.append(introLink)
+    credits.append(links)
     credits.append(newLine)
     credits.append(shortSpacingLine)
     credits.append(creditsLink)

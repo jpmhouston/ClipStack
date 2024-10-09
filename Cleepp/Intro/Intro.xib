@@ -141,12 +141,13 @@ DQ
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yi0-pt-hiF"/>
                         </imageView>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VNn-Zg-RaA">
-                            <rect key="frame" x="36" y="104" width="538" height="76"/>
+                            <rect key="frame" x="36" y="84" width="538" height="96"/>
                             <subviews>
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g8m-UI-Ipo">
-                                    <rect key="frame" x="-2" y="36" width="542" height="40"/>
-                                    <textFieldCell key="cell" title="Batch Clipboard is a simple clipboard utility that adds the ability to copy multiple items, and then later paste them." id="u3E-8K-Lim">
+                                    <rect key="frame" x="-2" y="36" width="542" height="60"/>
+                                    <textFieldCell key="cell" id="u3E-8K-Lim">
                                         <font key="font" metaFont="system" size="17"/>
+                                        <string key="title">Batch Clipboard is a menu bar utility for macOS that adds the ability to copy and paste many items together. Use the app's global shortcut ^⌘C to copy multiple items and then ^⌘V to paste them.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -365,7 +366,7 @@ DQ
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KHW-LV-WPV">
                                     <rect key="frame" x="-2" y="163" width="214" height="28"/>
                                     <textFieldCell key="cell" title="Unlock using the lock icon at the bottom if you have that." id="qlp-HD-HkR">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -381,7 +382,7 @@ DQ
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-X6-Vmb">
                                     <rect key="frame" x="-2" y="32" width="214" height="56"/>
                                     <textFieldCell key="cell" id="uNZ-xu-9dB">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <string key="title">If the check fails, use the – button to remove that row if it exists then the + button and choose Batch Clipboard from your Applications folder.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

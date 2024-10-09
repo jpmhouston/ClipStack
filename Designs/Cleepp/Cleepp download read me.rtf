@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2761
+{\rtf1\ansi\ansicpg1252\cocoartf2818
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 HelveticaNeue-Bold;\f2\fnil\fcharset0 HelveticaNeue-BoldItalic;
 \f3\fnil\fcharset0 LucidaGrande;\f4\froman\fcharset0 TimesNewRomanPSMT;}
 {\colortbl;\red255\green255\blue255;}
@@ -17,7 +17,9 @@
 \f1\b \cf0 About
 \f0\b0 \
 \
-Batch Clipboard adds a menu to the top-right of your menu bar that mainly implements one feature: a new mode for the clipboard that lets you copy multiple times from one place, then paste them in order elsewhere. For more information go to the {\field{\*\fldinst{HYPERLINK "https://batchclipboard.bananameter.lol"}}{\fldrslt Batch Clipboard help pages}}.\
+Batch Clipboard is a free, simple menu bar utility for macOS that that adds the ability to copy and paste many items together. Use the app's global shortcut Control-Command-C to copy multiple items and then Control-Command-V to paste them in the same order. The app also caches a history of recent clipboard items and gives you a way to repeat a paste of an old item, but the feature never gets in your way if you don't need it. It is a fast native application, local only and never shares data with any online servers.\
+\
+For more information go to the {\field{\*\fldinst{HYPERLINK "https://batchclipboard.bananameter.lol"}}{\fldrslt Batch Clipboard help pages}}.\
 \
 A portion of Batch Clipboard is adapted from the open source project {\field{\*\fldinst{HYPERLINK "https://maccy.app"}}{\fldrslt Maccy}}, a full featured clipboard history manager. Batch Clipboard simplifies its Maccy greatly and adds the multiple-clipboard feature, but if you're wanting a popup window and pinned items to re-paste frequently, check it out.\
 \
@@ -28,17 +30,16 @@ Batch Clipboard 1.0 will be available to download from github.com, plus will be 
 \f1\b First of All
 \f0\b0 \
 \
-Drag Batch Clipboard from the disk image window it came in to your Mac's Applications folder, then eject the disk image, and then open the copy in your Applications folder. For now, the first time you launch the app your Mac will ask you to confirm that you want to launch an unsigned app. On macOS Sonoma choose the \'93Open Anyway\'94 button, on older versions of the OS the alert might be different but similar. 
-\f1\b If instead this alert only shows you a \'93Cancel\'94 button, try again opening the app by right-clicking (/control-clicking) its icon and choosing \'93Open\'94 in the contextual menu.
-\f0\b0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 Batch Clipboard adds an icon to your menu bar looking like its application's icon, a clipboard adorned with an asterisk. It won't show up in your dock.\
 \
-In future versions, this first step will be streamlined away.\
-\
-The app also needs you to grant access for controlling the computer with accessibility features. A intro window should walk you through doing this.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 When running Batch Clipboard for the first time an Intro window will open walking you through granting permissions in your System Settings app (or System Preferences app). If you close this window without going through the permission step then you can reopen it: choose "About Batch Clipboard" from its menu, then in the about box is a link to click to reopen the Intro.\
 \
 \
+\pard\pardeftab560\slleading20\partightenfactor0
 
-\f1\b Basic Usage
+\f1\b \cf0 Basic Usage
 \f0\b0 \
 \
 This should be described in the intro walkthrough as well, but briefly:\
@@ -76,9 +77,9 @@ In other words, ^
 \ls2\ilvl0\cf0 {\listtext	\uc0\u8259 	}Batch Clipboard doesn't have its own separate clipboard, but after first using ^
 \f3 \uc0\u8984 
 \f0 C, everything copied or cut in any application gets collected into the sequence.\uc0\u8232 \
-{\listtext	\uc0\u8259 	}Use it for a set of things you want to copy and then paste, letting the icon and clipboard behavior return to normal. If you change your mind and don't paste all the things, use the 
+{\listtext	\uc0\u8259 	}Don't leave Batch Clipboard active and collecting clipboard items. Use it for a set of things you want to copy at one time, and then paste them all letting the menu icon and clipboard behavior return to normal. If you change your mind and don't paste all the things, use the 
 \f1\b Cancel Collecting / Replaying
-\f0\b0  item in the menu.\
+\f0\b0  item in the menu afterwards.\
 \pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
 \cf0 \
 That should be everything you need to know. There's more ways to get to this feature and use the app, and more things to read about in the documentation pages for the app at {\field{\*\fldinst{HYPERLINK "http://batchclipboard.bananameter.lol"}}{\fldrslt https://batchclipboard.bananameter.lol}}.\
