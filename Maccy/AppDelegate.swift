@@ -53,8 +53,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
     #if CLEEPP
-    os_log(.default, "applicationShouldHandleReopen called")
-    return false
+    // if the user has chosen to hide the menu bar icon when not in batch mode then
+    // open the Settings window whenever the application icon is double clicked again
+    if !UserDefaults.standard.showInStatusBar {
+      maccy.showSettings(selectingPane: .general)
+    }
+    return false // best to return false instead of true to tell NSApp to do nothing
     #else
     maccy.popUp()
     return true
