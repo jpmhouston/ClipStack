@@ -24,7 +24,7 @@ hiding the status icon).</li>
 <li>Remove logging from the application’s Reopen callback.</li>
 </ul>
 ]]></description>
-            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b3/Batch%20Clipboard.1.0b3.zip" length="6228096" type="application/octet-stream" sparkle:edSignature="6ykzRSlnqwzj0YSCZvEGNqZQay1VqmF1C4uB2fThk4y6BVq3CtL2BuAgNV+1SjBXNqUOmMiRgF9KC1TMEgf5Cw=="/>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b3/Batch.Clipboard.1.0b3.zip" length="6228096" type="application/octet-stream" sparkle:edSignature="6ykzRSlnqwzj0YSCZvEGNqZQay1VqmF1C4uB2fThk4y6BVq3CtL2BuAgNV+1SjBXNqUOmMiRgF9KC1TMEgf5Cw=="/>
         </item>
         <item>
             <title>1.0b2</title>
@@ -63,7 +63,7 @@ now.</li>
 <li>Added funding file for github pointing at buymeacoffee.</li>
 </ul>
 ]]></description>
-            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b2/Batch%20Clipboard.1.0b2.zip" length="6228035" type="application/octet-stream" sparkle:edSignature="DHDRe0DUbZzof5MTkLPZdY62mjvKlP+GLxwKopemGY2qPfl/pamaNhKoCoXrjUhJ6LbJSewCx6LzbFnQ7CqECA=="/>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b2/Batch.Clipboard.1.0b2.zip" length="6228035" type="application/octet-stream" sparkle:edSignature="DHDRe0DUbZzof5MTkLPZdY62mjvKlP+GLxwKopemGY2qPfl/pamaNhKoCoXrjUhJ6LbJSewCx6LzbFnQ7CqECA=="/>
         </item>
         <item>
             <title>1.0b1</title>
@@ -85,7 +85,7 @@ and 1.0, as update that changes app name and bundle id seems
 problematic.</li>
 </ul>
 ]]></description>
-            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/Batch%20Clipboard.1.0b1.zip" length="9697753" type="application/octet-stream" sparkle:edSignature="XMm3IoGKOLdHnme8OGV8Y100KadwWMJq1gHrou7r/U8/grq5tIlLxSEovFvfDekeCHhT4Vwi9LYMFFOLR8bbBQ=="/>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/Batch.Clipboard.1.0b1.zip" length="9697753" type="application/octet-stream" sparkle:edSignature="XMm3IoGKOLdHnme8OGV8Y100KadwWMJq1gHrou7r/U8/grq5tIlLxSEovFvfDekeCHhT4Vwi9LYMFFOLR8bbBQ=="/>
         </item>
     </channel>
 </rss>
