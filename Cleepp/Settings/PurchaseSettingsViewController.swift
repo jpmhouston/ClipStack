@@ -169,13 +169,11 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     startWaitingForCompletion(withTimeout: 10, errorMessage: "No repsonse from requesting product details") // TODO: localize
   }
   
-  func performPurchase(_ productID: String) {
+  func performPurchase(_ product: any Purchases.ProductDetail) {
     do {
-      try purchaseManager.startPurchase(productID)
-    //} catch .xxxx {
-    //  displayError("something")
-    //  return
+      try purchaseManager.startPurchase(product)
     } catch {
+      displayError("Something went wrong, unable to purchase") // TODO: localize
       return
     }
     
@@ -188,13 +186,11 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   func restorePurchases(_ sender: AnyObject) {
     do {
       try purchaseManager.startRestore()
-    //} catch .xxxx {
-    //  displayError("something")
-    //  return
     } catch {
+      displayError("Something went wrong, unable to restore previous purchases") // TODO: localize
       return
     }
-
+    
     state = .restoring
     displayMessage("Attempting to restoring purchases") // TODO: localize
     startWaitingForCompletion(withTimeout: 10, errorMessage: "No repsonse from request to restore previous purchases") // TODO: localize
@@ -219,7 +215,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   private func showConfirmationSheet(withProducts products: [Purchases.ProductDetail]) {
     print("would show sheet here with: ", products.map({ "\($0.identifier) \($0.localizedPrice)" }))
-    guard let product = products.first else {
+    guard !products.isEmpty else {
       displayError("Purchases unavailable at the moment, please again another time") // TODO: localize
       return
     }
@@ -229,9 +225,8 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     
     // !!! show sheet here
     
-    
     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-      self?.performPurchase(product.identifier)
+      self?.performPurchase(products.first!)
     }
   }
   
@@ -246,7 +241,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
       cancelTimeoutTimer()
     }
     timeoutTimer = DispatchSource.scheduledTimerForRunningOnMainQueue(afterDelay: duration) { [weak self] in
-      self?.timeoutTimer = nil // doing this before calling closure supports closure itself calling runOnIconBlinkTimer, fwiw
+      self?.timeoutTimer = nil // doing this before calling closure supports closure itself calling startTimeoutTimer, fwiw
       timeout()
     }
   }
