@@ -42,52 +42,48 @@ class MenuController {
   }
 
   @objc
-  private func performStatusItemClick(_ event: NSEvent?) {
-    if let event = event {
-      let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
-
-      #if CLEEPP
-      #if DEBUG
-      if AppDelegate.shouldFakeAppInteraction && modifierFlags.contains(.capsLock) {
-        AppDelegate.putPasteHistoryOnClipboard()
-        return
-      }
-      #endif // DEBUG
-      
-      if !Cleepp.busy {
-        if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
-          UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
-          
-          if !modifierFlags.contains(.shift) && UserDefaults.standard.ignoreEvents {
-            UserDefaults.standard.ignoreOnlyNextEvent = true
-          }
-          return
-        }
-        
-        if !modifierFlags.contains(.option) &&
-            (modifierFlags.contains(.control) || modifierFlags.contains(.shift)) {
-          menu.performQueueModeToggle()
-          return
-        }
-      }
-      
-      if modifierFlags.contains(.option) {
-        menu.enableExpandedMenu(true, full: modifierFlags.contains(.shift))
-      }
-      
-      #else
-      if modifierFlags.contains(.option) {
-        UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
-
-        if modifierFlags.contains(.shift) {
-          UserDefaults.standard.ignoreOnlyNextEvent = UserDefaults.standard.ignoreEvents
-        }
-
-        return
-      }
-      #endif
+  private func performStatusItemClick(_ modifierFlags: NSEvent.ModifierFlags) {
+    #if CLEEPP
+    #if DEBUG
+    if AppDelegate.shouldFakeAppInteraction && modifierFlags.contains(.capsLock) {
+      AppDelegate.putPasteHistoryOnClipboard()
+      return
     }
+    #endif // DEBUG
+    
+    if !Cleepp.busy {
+      if modifierFlags.contains(.control) && modifierFlags.contains(.option) {
+        UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
+        
+        if !modifierFlags.contains(.shift) && UserDefaults.standard.ignoreEvents {
+          UserDefaults.standard.ignoreOnlyNextEvent = true
+        }
+        return
+      }
+      
+      if !modifierFlags.contains(.option) &&
+          (modifierFlags.contains(.control) || modifierFlags.contains(.shift)) {
+        menu.performQueueModeToggle()
+        return
+      }
+    }
+    
+    if modifierFlags.contains(.option) {
+      menu.enableExpandedMenu(true, full: modifierFlags.contains(.shift))
+    }
+    
+    #else
+    if modifierFlags.contains(.option) {
+      UserDefaults.standard.ignoreEvents = !UserDefaults.standard.ignoreEvents
 
+      if modifierFlags.contains(.shift) {
+        UserDefaults.standard.ignoreOnlyNextEvent = UserDefaults.standard.ignoreEvents
+      }
+
+      return
+    }
+    #endif
+    
     withFocus {
       self.simulateStatusItemClick()
     }

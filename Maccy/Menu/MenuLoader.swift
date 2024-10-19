@@ -5,7 +5,7 @@ import AppKit
 // possibility to load other menu in a non-blocking manner.
 // See Maccy.withFocus() for more details about why this is needed.
 class MenuLoader: NSMenu, NSMenuDelegate {
-  typealias LoaderCallback = (NSEvent?) -> Void
+  typealias LoaderCallback = (NSEvent.ModifierFlags) -> Void
   private var loader: LoaderCallback!
 
   required init(coder decoder: NSCoder) {
@@ -20,11 +20,13 @@ class MenuLoader: NSMenu, NSMenuDelegate {
   }
 
   func menuWillOpen(_ menu: NSMenu) {
-    let event = NSApp.currentEvent
+    guard let event = NSApp.currentEvent else { return }
+    let modifierFlags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+    
     menu.cancelTrackingWithoutAnimation()
     // Just calling loader() doesn't work when avoidTakingFocus is true.
     Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in
-      self.loader(event)
+      self.loader(modifierFlags)
     }
   }
 }
