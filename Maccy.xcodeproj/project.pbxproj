@@ -79,6 +79,8 @@
 		8F54639D2BE7B6DC008D67EF /* CleeppUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */; };
 		8F54639E2BE7B6DC008D67EF /* QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */; };
 		8F5CBF342C8CFBB70058C06C /* Flare in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5CBF332C8CFBB70058C06C /* Flare */; };
+		8F60690E2CC42824002DFAF7 /* PurchaseDetailWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F60690D2CC42824002DFAF7 /* PurchaseDetailWindow.xib */; };
+		8F6069122CC4286D002DFAF7 /* PurchaseDetailWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6069102CC4286D002DFAF7 /* PurchaseDetailWindowController.swift */; };
 		8F710D5E2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */; };
 		8F710D5F2BED67B2004FB15A /* AppDelegate+UITestability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */; };
 		8F8C47E12BACA84500C3A219 /* NSImage+CleeppNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */; };
@@ -422,6 +424,8 @@
 		8F5463992BE7B6DC008D67EF /* CleeppUITestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleeppUITestBase.swift; sourceTree = "<group>"; };
 		8F54639A2BE7B6DC008D67EF /* QueueUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueUITests.swift; sourceTree = "<group>"; };
 		8F54639F2BE8FA58008D67EF /* MenuSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSearchUITests.swift; sourceTree = "<group>"; };
+		8F60690D2CC42824002DFAF7 /* PurchaseDetailWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseDetailWindow.xib; sourceTree = "<group>"; };
+		8F6069102CC4286D002DFAF7 /* PurchaseDetailWindowController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PurchaseDetailWindowController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		8F710D5D2BED67B2004FB15A /* AppDelegate+UITestability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UITestability.swift"; sourceTree = "<group>"; };
 		8F710D602BFA151B004FB15A /* Cleepp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cleepp.entitlements; sourceTree = "<group>"; };
 		8F8C47E02BACA84500C3A219 /* NSImage+CleeppNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CleeppNames.swift"; sourceTree = "<group>"; };
@@ -833,6 +837,8 @@
 				8F8C481D2BACD1A900C3A219 /* GeneralSettingsViewController.xib */,
 				8F8C47ED2BACD0D200C3A219 /* PurchaseSettingsViewController.swift */,
 				8F8C47EE2BACD0D200C3A219 /* PurchaseSettingsViewController.xib */,
+				8F6069102CC4286D002DFAF7 /* PurchaseDetailWindowController.swift */,
+				8F60690D2CC42824002DFAF7 /* PurchaseDetailWindow.xib */,
 				8F8C47F12BACD0D300C3A219 /* Settings.PaneIdentifier+Panes.swift */,
 				8F8C47F22BACD0D300C3A219 /* StorageSettingsViewController.swift */,
 				8F8C482F2BACD1B100C3A219 /* StorageSettingsViewController.xib */,
@@ -1379,6 +1385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FB88D752BCCD72F006D48E6 /* License credits-MAS.mkdn in Resources */,
+				8F60690E2CC42824002DFAF7 /* PurchaseDetailWindow.xib in Resources */,
 				8FBDF6B12BB4EE3600219889 /* Localizable.strings in Resources */,
 				8F8C489E2BAD51B000C3A219 /* GeneralSettingsViewController.xib in Resources */,
 				8FB88D7E2BCCFED8006D48E6 /* Licenses.xib in Resources */,
@@ -1673,6 +1680,7 @@
 				8F8C48922BAD51B000C3A219 /* NSImage+Names.swift in Sources */,
 				8F8C48932BAD51B000C3A219 /* NSSound+Named.swift in Sources */,
 				8FBDF6AE2BB269AE00219889 /* Cleepp+Links.swift in Sources */,
+				8F6069122CC4286D002DFAF7 /* PurchaseDetailWindowController.swift in Sources */,
 				8F8C48942BAD51B000C3A219 /* Storage.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

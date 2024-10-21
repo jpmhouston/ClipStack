@@ -1,6 +1,6 @@
 //
 //  Purchase.swift
-//  ClipStack
+//  Cleepp
 //
 //  Created by Pierre Houston on 2024-03-10.
 //  Copyright © 2024 Bananameter Labs. All rights reserved.
@@ -25,6 +25,7 @@ class Purchases: NSObject {
   
   enum Item {
     case bonus
+    case corporateSubscription
   }
   
   enum SubscriptionOption {
@@ -35,6 +36,7 @@ class Purchases: NSObject {
   
   protocol ProductDetail {
     var identifier: String { get }
+    var item: Item { get }
     var localizedDescription: String { get }
     var localizedPrice: String { get }
     var subscription: SubscriptionOption { get }
@@ -42,6 +44,7 @@ class Purchases: NSObject {
 
   struct DummyProductDetail: ProductDetail {
     let identifier: String
+    let item: Item
     let localizedDescription: String
     let localizedPrice: String
     let subscription: SubscriptionOption
@@ -49,6 +52,7 @@ class Purchases: NSObject {
   
   struct FlareProductDetail: ProductDetail {
     var product: StoreProduct
+    var item: Item { itemValueForProductIdentifier(product.productIdentifier) }
     var identifier: String { product.productIdentifier }
     var localizedDescription: String { product.localizedDescription }
     var localizedPrice: String { product.localizedPriceString ?? "" }
@@ -84,15 +88,14 @@ class Purchases: NSObject {
   
   private var observations: [UUID: (ObservationUpdate) -> Void] = [:]
   
-  private let basicProductIdentifier = "lol.bananameter.batchclip.basicsupport"
-  private let corporateProductIdentifier = "lol.bananameter.batchclip.subcription.corporate1"
-  private lazy var knownProductIdentifiers = [basicProductIdentifier, corporateProductIdentifier]
+  private static let basicProductIdentifier = "lol.bananameter.batchclip.basicsupport"
+  private static let corporateProductIdentifier = "lol.bananameter.batchclip.subcription.corporate1"
+  private lazy var knownProductIdentifiers = [Self.basicProductIdentifier, Self.corporateProductIdentifier]
   
-  var hasBoughtExtras: Bool { boughtItems.contains(.bonus) }
+  var hasBoughtExtras: Bool { !boughtItems.isEmpty }
   var boughtItems: Set<Item> = []
   var lastError: PurchaseError? // possibly not needed
-  var reviewFunctionCounter = 0
-
+  
   // MARK: -
   
   @discardableResult
@@ -139,6 +142,13 @@ class Purchases: NSObject {
     token.cancel()
   }
   
+  static func itemValueForProductIdentifier(_ productIdentifier: String) -> Item {
+    switch productIdentifier {
+    case corporateProductIdentifier: Item.corporateSubscription
+    default: Item.bonus
+    }
+  }
+  
   // MARK: -
   
   func startFetchingProductDetails() throws {
@@ -161,8 +171,8 @@ class Purchases: NSObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
       guard let self = self else { return }
       let productList = [
-        DummyProductDetail(identifier: basicProductIdentifier, localizedDescription: "Support us and unlock bonus features", localizedPrice: "$3.99", subscription: .not),
-        DummyProductDetail(identifier: corporateProductIdentifier, localizedDescription: "Corporate yearly subscription", localizedPrice: "$9.99", subscription: .yearly)
+        DummyProductDetail(identifier: Self.basicProductIdentifier, item: .bonus, localizedDescription: "Support us and unlock bonus features", localizedPrice: "$3.99", subscription: .not),
+        DummyProductDetail(identifier: Self.corporateProductIdentifier, item: .corporateSubscription, localizedDescription: "Corporate yearly subscription", localizedPrice: "$9.99", subscription: .yearly)
       ]
       callObservers(withUpdate: .success(.products(productList)))
     }
@@ -176,8 +186,8 @@ class Purchases: NSObject {
     if product is DummyProductDetail {
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
         guard let self = self else { return }
-        boughtItems.insert(.bonus)
-        callObservers(withUpdate: .success(.purchases([.bonus])))
+        boughtItems.insert(product.item)
+        callObservers(withUpdate: .success(.purchases(boughtItems)))
       }
       return
     }
@@ -271,8 +281,9 @@ class Purchases: NSObject {
       }
       try receipt.validate()
       
-      // for now all purchases are identified the same, a having purchased the bonus
-      return receipt.hasPurchases ? .success([.bonus]) : .success([])
+      let restoredItems = receipt.purchases.map { itemValueForProductIdentifier($0.productIdentifier) }
+      return .success(Set(restoredItems))
+      // receipt.hasPurchases ? .success([.bonus]) : .success([])
       
     } catch IARError.initializationFailed(let reason) {
       // catch let error as IARError.initializationFailed(reason) .. can swift let us do this?
@@ -294,7 +305,6 @@ class Purchases: NSObject {
       errorValue = .unknown
     }
     
-    //lastError = errorValue
     return .failure(errorValue)
   }
   
@@ -420,7 +430,7 @@ class Purchases: NSObject {
     Flare.shared.purchase(product: productDetail.product) { flarePurchaseResult in
       switch flarePurchaseResult {
       case .success(_):
-        completion(.success(([.bonus])))
+        completion(.success(([productDetail.item])))
       case .failure(let error):
         print("Error during purchase: \(error.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
         completion(.failure(.unknown))

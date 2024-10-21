@@ -1,6 +1,6 @@
 //
 //  PurchaseSettingsViewController.swift
-//  ClipStack
+//  Cleepp
 //
 //  Created by Pierre Houston on 2024-03-10.
 //  Copyright © 2024 Bananameter Labs. All rights reserved.
@@ -8,6 +8,7 @@
 
 import AppKit
 import Settings
+import os.log
 
 class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
@@ -22,6 +23,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   }
   
   private let purchaseManager: Purchases
+  private var productWindowController: PurchaseDetailWindowController?
   
   private var cancelToken: Purchases.ObservationToken?
   private var timeoutTimer: DispatchSourceTimer?
@@ -39,6 +41,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   @IBOutlet weak var featureLabel4: NSTextField!
   @IBOutlet weak var documentationLabel: NSTextField!
   @IBOutlet weak var purchaseButton: NSButton!
+  @IBOutlet weak var altPurchaseButton: NSButton!
   @IBOutlet weak var restoreButton: NSButton!
   @IBOutlet weak var progressIndicator: NSProgressIndicator!
   @IBOutlet weak var messageLabel: NSTextField!
@@ -65,10 +68,6 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   override func viewWillAppear() {
     super.viewWillAppear()
-    
-//    #if DEBUG
-//    showBonusFeaturesPurchased = false // TODO: reset state for testing, to be removed
-//    #endif
     
     updateTitleLabel()
     updatePurchaseButtons()
@@ -98,7 +97,8 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   func purchasesUpdated(_ update: Purchases.ObservationUpdate) {
     self.progressIndicator.stopAnimation(self)
     
-    // TODO: localize:
+    // TODO: localize all these
+    
     switch (update, state) {
     case (.success(.products(let products)), .fetchingProducts):
       cancelTimeoutTimer()
@@ -148,19 +148,14 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   }
   
   @IBAction
-  func purchase(_ sender: AnyObject) {
-//    #if DEBUG
-//    displayMessage("All features already enabled. Purchases will work in the 1.0 App Store version. Try the other button.")
-//    #endif
-    
+  func showProducts(_ sender: AnyObject) {
     // fetch products, when its done purchasesUpdated shows alert/sheet with product(s) & price(s)
+    disablePurchaseButtons()
     do {
       try purchaseManager.startFetchingProductDetails()
-    //} catch .xxxx {
-    //  displayError("something")
-    //  return
     } catch {
       displayError(error.localizedDescription)
+      updatePurchaseButtons()
       return
     }
     
@@ -169,11 +164,56 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     startWaitingForCompletion(withTimeout: 10, errorMessage: "No repsonse from requesting product details") // TODO: localize
   }
   
+  private func showConfirmationSheet(withProducts products: [Purchases.ProductDetail]) {
+    guard !products.isEmpty else {
+      displayError("Purchases unavailable at the moment, please again another time") // TODO: localize
+      updatePurchaseButtons()
+      return
+    }
+    
+    clearMessage()
+    
+    productWindowController = PurchaseDetailWindowController.createFromNib()
+    productWindowController?.products = products
+    productWindowController?.purchases = purchaseManager.boughtItems
+    guard let settingsWindow = view.window, let productWindow = productWindowController?.window else {
+      os_log(.default, "failed to instantiate the products detail sheet")
+      updatePurchaseButtons()
+      return
+    }
+    
+    state = .showingProducts
+    
+    settingsWindow.beginSheet(productWindow) { [weak self] response in
+      guard let self = self else { return }
+      
+      let product = productWindowController?.chosenProduct
+      productWindowController = nil
+      
+      if response != .cancel, let product = product {
+        displayError("Closed sheet with Buy button, \(product.identifier)")
+        
+        performPurchase(product)
+      } else {
+        updatePurchaseButtons()
+      }
+    }
+  }
+  
+  private func cancelConfirmationSheet() {
+    guard let settingsWindow = view.window, let productWindow = productWindowController?.window else {
+      os_log(.default, "No products detail sheet found to dismiss")
+      return
+    }
+    settingsWindow.endSheet(productWindow)
+  }
+  
   func performPurchase(_ product: any Purchases.ProductDetail) {
     do {
       try purchaseManager.startPurchase(product)
     } catch {
       displayError("Something went wrong, unable to purchase") // TODO: localize
+      updatePurchaseButtons()
       return
     }
     
@@ -184,10 +224,12 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   
   @IBAction
   func restorePurchases(_ sender: AnyObject) {
+    disablePurchaseButtons()
     do {
       try purchaseManager.startRestore()
     } catch {
       displayError("Something went wrong, unable to restore previous purchases") // TODO: localize
+      updatePurchaseButtons()
       return
     }
     
@@ -199,39 +241,16 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   }
   
   private func startWaitingForCompletion(withTimeout timeout: Double, errorMessage: String) {
-    disablePurchaseButtons()
     progressIndicator.startAnimation(self)
 
     startTimeoutTimer(withDuration: timeout) { [weak self] in
-      guard let self = self else {
-        return
-      }
+      guard let self = self else { return }
+      
       progressIndicator.stopAnimation(self)
       state = .idle
       updatePurchaseButtons()
       displayError(errorMessage)
     }
-  }
-  
-  private func showConfirmationSheet(withProducts products: [Purchases.ProductDetail]) {
-    print("would show sheet here with: ", products.map({ "\($0.identifier) \($0.localizedPrice)" }))
-    guard !products.isEmpty else {
-      displayError("Purchases unavailable at the moment, please again another time") // TODO: localize
-      return
-    }
-
-    clearMessage()
-    state = .showingProducts
-    
-    // !!! show sheet here
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-      self?.performPurchase(products.first!)
-    }
-  }
-  
-  private func cancelConfirmationSheet() {
-    print("would close sheet here")
   }
   
   // MARK: -
@@ -257,13 +276,17 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
   }
   
   private func disablePurchaseButtons() {
-    purchaseButton.isEnabled = !showBonusFeaturesPurchased
-    restoreButton.isEnabled = !showBonusFeaturesPurchased
+    purchaseButton.isEnabled = false
+    altPurchaseButton.isEnabled = false
+    restoreButton.isEnabled = false
   }
   
   private func updatePurchaseButtons() {
-    purchaseButton.isEnabled = !showBonusFeaturesPurchased
-    restoreButton.isEnabled = true // !showBonusFeaturesPurchased
+    purchaseButton.isEnabled = true
+    altPurchaseButton.isEnabled = true
+    purchaseButton.isHidden = showBonusFeaturesPurchased
+    altPurchaseButton.isHidden = !showBonusFeaturesPurchased
+    restoreButton.isEnabled = true
   }
   
   private func clearMessage() {
