@@ -1,4 +1,4 @@
-name: Draft Cleepp Release
+name: Build Non-App Store Release
 
 on:
   create:
@@ -8,20 +8,26 @@ on:
         description: "Version to title release with (like: 1.0rc3), blank for project's version"
         type: string
         required: false
-      isPrerelease:
-        description: "Prerelease"
+      githubRelease:
+        description: "Make full GitHub Release"
         type: boolean
         required: true
         default: true
       updateAppcast:
-        description: "Update Sparkle Appcast"
+        description: "Update Sparkle"
         type: boolean
         required: true
         default: true
+      isPrerelease:
+        description: "Prerelease"
+        type: boolean
+        required: true
+        default: false
 
 env:
-  isPrereleaseDefault: true
+  githubReleaseDefault: true
   updateAppcastDefault: true
+  isPrereleaseDefault: false
   projectfile: Maccy.xcodeproj
   buildscheme: Cleepp
   productname: "Batch Clipboard"
@@ -92,6 +98,13 @@ jobs:
             echo "- Use supplied value for isPrerelease: ${{ inputs.isPrerelease }}"
             isPrerelease=${{ inputs.isPrerelease }}
           fi
+          if [[ -z "${{ inputs.githubRelease }}" ]] ; then
+            echo "- Use default value for githubRelease: ${{ env.githubReleaseDefault }}"
+            githubRelease=${{ env.githubReleaseDefault }}
+          else
+            echo "- Use supplied value for githubRelease: ${{ inputs.githubRelease }}"
+            githubRelease=${{ inputs.githubRelease }}
+          fi
           if [[ -z "${{ inputs.updateAppcast }}" ]] ; then
             echo "- Use default value for updateAppcast: ${{ env.updateAppcastDefault }}"
             updateAppcast=${{ env.updateAppcastDefault }}
@@ -108,10 +121,15 @@ jobs:
             fi
             if git show-ref --tags --verify refs/tags/v$version --quiet ; then
               tag="v$version"
-              echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
+              if [[ $githubRelease != 'true' ]] ; then
+                echo "- Will build and save release \"$releaseName\" as artifact"
+              else
+                echo "- Will build and draft release \"$releaseName\" with matching tag \"$tag\""
+              fi
+            elif [[ $githubRelease != 'true' ]] ; then
+              echo "- Will build and save release \"$releaseName\" as artifact"
             else
-              echo "- Will build and draft untagged release \"$releaseName\" because triggered manually and no tag \"v$version\" was found"
-              echo "::notice::Updating the sparkle appcast is always skipped for untagged builds"
+              echo "- Will build and save release \"$releaseName\" as artifact because no tag \"v$version\" was found"
             fi
           elif [[ "${{ github.ref }}" == refs/tags/* ]] ; then
             # TODO: how do we verify the branch of this tag and ensure its ${{ env.branch }} ?
@@ -122,13 +140,20 @@ jobs:
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
             exit 1
           fi
+          if [[ -z $tag && $githubRelease == 'true' ]] ; then
+            echo "::notice::Creating a github release skipped because no tag \"v$version\" was found"
+          fi
+          if [[ $updateAppcast == 'true' && ( -z $tag || $githubRelease != 'true' ) ]] ; then
+            echo "::notice::Updating the sparkle appcast is always skipped for untagged or non-github release builds"
+          fi
           
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "bundleID=$bundleID" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           echo "releaseArchivename=$releaseNameNoSpaces" >> $GITHUB_OUTPUT
-          echo "isPrerelease=$isPrerelease" >> $GITHUB_OUTPUT
+          echo "githubRelease=$githubRelease" >> $GITHUB_OUTPUT
           echo "updateAppcast=$updateAppcast" >> $GITHUB_OUTPUT
+          echo "isPrerelease=$isPrerelease" >> $GITHUB_OUTPUT
           if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
@@ -383,10 +408,7 @@ jobs:
             --app-drop-link 360 60 \
             "${{ env.builddir }}/$imageFileName" "$imageDir"
           
-          # IMPORTANT: when notarize enabled above, enable this too
-          #echo "- Attach staple"
-          #xcrun stapler staple "${{ env.builddir }}/$imageFileName"
-          
+          echo "filename=${{ env.bundlename }}" >> $GITHUB_OUTPUT
           echo "file=${{ env.builddir }}/$imageFileName" >> $GITHUB_OUTPUT
           
       - name: "Sign and notarize disk image"
@@ -455,16 +477,18 @@ jobs:
             echo "Release notes unavailable at this time" > "${{ env.builddir }}/$currentNotesFilename"
           fi
           
+          echo "filename=$currentNotesFilename" >> $GITHUB_OUTPUT
           echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
       
       - name: Setup Sparkle
-        if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag
+        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag
         uses: jozefizso/setup-sparkle@v1
         with:
           version: 2.6.0
+      
       - name: Generate Sparkle appcast.xml
         id: sparkle
-        if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag
+        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag
         run: |
           :
           echo "::add-mask::${{ secrets.SPARKLE_PRIVATE_KEY }}"
@@ -512,28 +536,24 @@ jobs:
           echo "appcastGenerated=true" >> $GITHUB_OUTPUT
       
       - name: Commit appcast.xml
-        if: success() && steps.version.outputs.updateAppcast && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
+        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
           file_pattern: "appcast.xml"
           status_options: "--untracked-files=no"
       
-      - name: Draft Untagged Release
-        if: success() && steps.version.outputs.tag == ''
-        uses: softprops/action-gh-release@v2
+      - name: Save as artifact
+        if: success() && !(steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag)
+        uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.version.outputs.releaseName }}
-          draft: true
-          prerelease: ${{ steps.version.outputs.isPrerelease }}
-          body_path: ${{ steps.notes.outputs.file }}
-          files: |
-            ${{ steps.zip.outputs.file }}
+          name: Non-App Store build
+          path: |
             ${{ steps.dmg.outputs.file }}
-          fail_on_unmatched_files: false
+            ${{ steps.notes.outputs.file }}
       
       - name: Draft Tagged Release
-        if: success() && steps.version.outputs.tag
+        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.version.outputs.releaseName }}
@@ -547,6 +567,11 @@ jobs:
           fail_on_unmatched_files: false
       
       - name: Fin
+        if: success()
         run: |
           :
-          echo "::notice::Release \"${{ steps.version.outputs.releaseName }}\" draft created continaing \"${{ steps.zip.outputs.file }}\""
+          if [[ steps.version.outputs.githubRelease == 'true' && -n "${{ steps.version.outputs.tag }}" ]] ; then
+            echo "::notice::Release \"${{ steps.version.outputs.releaseName }}\" draft created continaing \"${{ steps.dmg.outputs.filename }}\""
+          else
+            echo "::notice::Release \"${{ steps.version.outputs.releaseName }}\" built and saved as artifact \"${{ steps.dmg.outputs.filename }}\""
+          fi
