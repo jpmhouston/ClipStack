@@ -1,0 +1,384 @@
+name: Build Mac App Store Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: "Version to title release with (like: 1.0rc3), blank for project's version"
+        type: string
+        required: false
+      uploadToStore:
+        description: "Upload to App Store Connect"
+        type: boolean
+        required: true
+        default: false
+
+env:
+  uploadToStoreDefault: true
+  projectfile: Maccy.xcodeproj
+  buildscheme: "Cleepp (App Store)"
+  productname: "Batch Clipboard"
+  bundlename: "Batch Clipboard.app"
+  builddir: Build/Products/Release
+  branch: forkmain
+
+jobs:
+  build:
+    name: Build and Upload Cleepp AppStore Variant
+    runs-on: macos-15
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # required for 'git show-ref --tags' to work
+          ref: "${{ env.branch }}"
+      
+      - name: Patch Xcode 15.3
+        uses: jpmhouston/patch-package-resolved@v1
+        # this fixes a mysterious build failure
+        #   xcodebuild: error: Could not resolve package dependencies:
+        #     Package.resolved file is corrupted or malformed; fix or delete the file
+        #     to continue: unknown 'PinsStorage' version '3'
+        # should probably remove this when upgrading the "runs-on" platform
+      
+      - name: Install tools
+        # pandoc is used by sparkle step and by one of the xcode project's build rules
+        # create-dmg is to define dmg entirely from script below instead of using a tempplate
+        run: |
+          :
+          brew update
+          brew install pandoc create-dmg coreutils
+      
+      - name: Validate
+        id: version
+        run: |
+          :
+          echo "- Extract version and bundle id from the project"
+          xcodebuild -scheme "${{ env.buildscheme }}" -configuration Release \
+            -project "${{ env.projectfile }}" -showBuildSettings 2>/dev/null > buildsettings.txt
+          version=$(sed -nr 's/^.*MARKETING_VERSION = (.*)$/\1/p' < buildsettings.txt)
+          if [[ -z $version ]] ; then
+            echo "::error::Unable to determine a version number for the current state of the xcode project"
+            exit 1
+          fi
+          bundleID=$(sed -nr 's/^.*PRODUCT_BUNDLE_IDENTIFIER = (.*)$/\1/p' < buildsettings.txt)
+          if [[ -z $bundleID ]] ; then
+            echo "::error::Unable to extract bundle id from the xcode project"
+            exit 1
+          fi
+          
+          echo "- Check script inputs"
+          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
+            echo "- Build version is $version"
+          else
+            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
+            version="${{ inputs.releaseVersion }}"
+          fi
+          releaseName="${{ env.productname }} $version"
+          releaseNameNoSpaces="$(echo "${{ env.productname }}" |  sed -nr "s/ /./").$version"
+          
+          if [[ -z "${{ inputs.uploadToStore }}" ]] ; then
+            echo "- Use default value for uploadToStore: ${{ env.uploadToStoreDefault }}"
+            uploadToStore=${{ env.uploadToStoreDefault }}
+          else
+            echo "- Use supplied value for uploadToStore: ${{ inputs.uploadToStore }}"
+            uploadToStore=${{ inputs.uploadToStore }}
+          fi
+          
+          echo "- Parse trigger"
+          if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
+            if [[ "${{ github.ref }}" != "refs/heads/${{ env.branch }}" ]] ; then
+              echo "::error::Manually triggered workflow supports ${{ env.branch }} only, gihub.ref == ${{ github.ref }})"
+              exit 1
+            fi
+            if $uploadToStore == "true" ; then
+              echo "- Will build and save as artifacts verison \"$releaseName\" and associated release notes"
+            else
+              echo "- Will build and deplay verison \"$releaseName\" and save as as artifact with associated release notes"
+            fi
+          else
+            echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
+            exit 1
+          fi
+          
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "bundleID=$bundleID" >> $GITHUB_OUTPUT
+          echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+          echo "releaseArchivename=$releaseNameNoSpaces" >> $GITHUB_OUTPUT
+          echo "uploadToStore=$uploadToStore" >> $GITHUB_OUTPUT
+          if [[ -n $tag ]] ; then
+            echo "tag=$tag" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Build
+        id: build
+        run: |
+          :
+          if ! command -v xcodebuild >/dev/null 2>&1 || ! command -v xcbeautify >/dev/null 2>&1 \
+            || ! command -v plutil >/dev/null 2>&1 
+          then
+            echo "::error::Required executables not found: xcodebuild, xcbeautify, plutil"
+            exit 1
+          fi
+          
+          buildlogfile=xcodebuild-out.txt
+          
+          echo "- Build with xcodebuild from $(xcodebuild -version)"
+          # requires that env.projectfile is the name of the .xcodeproj, env.buildscheme is
+          # a valid build scheme, and and env.bundlename is name of the produced .app
+          # note: not sure why ONLY_ACTIVE_ARCH=NO is required for xcodebuild, it should
+          # already be NO for Release configuration
+          set -o pipefail && xcodebuild ONLY_ACTIVE_ARCH=NO clean build analyze \
+            -scheme "${{ env.buildscheme }}" -configuration Release \
+            -project "${{ env.projectfile }}" -derivedDataPath . | \
+            tee "$buildlogfile" | xcbeautify --renderer github-actions
+          
+          echo "- Extract bundle version from app"
+          plutil -extract CFBundleVersion raw \
+            "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist"
+          bundleVersion=$(plutil -extract CFBundleVersion raw \
+            "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist" 2> /dev/null)
+          # if [[ -z $bundleVersion ]] ; then
+          #   echo "::warning::Unable to find app's bundle version"
+          # fi
+          
+          echo "version=$bundleVersion" >> $GITHUB_OUTPUT
+          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
+      
+      - name: Save build log as artifact
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build log
+          path: |
+            ${{ steps.build.outputs.log }}
+      
+      - name: "Codesign app bundle"
+        run: |
+          :
+          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
+          
+          if ! command -v xcrun >/dev/null 2>&1 || ! command -v security >/dev/null 2>&1 ; then
+            echo "::error::Required executables not found: xcrun, security"
+            exit 1
+          fi
+          
+          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CERTIFICATE not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CI_KEYCHAIN_PWD not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CERTIFICATE_PWD not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CERTIFICATE_NAME not defined"
+            exit 1
+          fi
+          
+          # Turn our base64-encoded certificate back to a regular .p12 file
+          
+          echo "- Base64-encode certificate to make \"certificate.p12\""
+          echo "${{ secrets.PROD_MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
+          
+          # We need to create a new keychain, otherwise using the certificate will prompt
+          # with a UI dialog asking for the certificate password, which we can't
+          # use in a headless CI environment
+          
+          echo "- Create unlocked keychain \"build.keychain\""
+          security create-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain 
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
+          
+          echo "- Import \"certificate.p12\" into \"build.keychain\""
+          security import certificate.p12 -k build.keychain \
+            -P "${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: \
+            -s -k "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
+          
+          # We finally codesign our app bundle, specifying the Hardened runtime option
+          
+          echo "- Sign subcomponents..."
+          # this is thanks to https://stackoverflow.com/a/11284404/592739
+          # within this section change the Internal Field Separator (IFS) to
+          # iterate over newline-separated paths that contain spaces
+          savedIFS=$IFS
+          IFS=$(echo -en "\n\b")
+          
+          subitems=""
+          addsubitems()
+          {
+            if [ -z "$subitems" ] ; then
+              subitems="$1"
+            else
+              subitems="$subitems"$'\n'"$1"
+            fi
+          }
+          
+          frameworksdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Frameworks"
+          if [ -d "$frameworksdir" ] ; then
+            frameworksdirdylibs=$(find "$frameworksdir" -depth -name "*.dylib")
+            if [ -n "$frameworksdirdylibs" ] ; then
+              addsubitems "$frameworksdirdylibs"
+            fi
+            frameworksdirbundles=$(find "$frameworksdir" -depth -type d -name "*.bundle")
+            if [ -n "$frameworksdirbundles" ] ; then
+              addsubitems "$frameworksdirbundles"
+            fi
+            frameworksdirframeworks=$(find "$frameworksdir" -depth -type d -name "*.framework")
+            if [ -n "$frameworksdirframeworks" ] ; then
+              for framework in $frameworksdirframeworks; do
+                frameworksubapp=$(find "$framework" -depth -type d -name "*.app")
+                if [ -n "$frameworksubapp" ] ; then
+                  addsubitems "$frameworksubapp"
+                fi
+                frameworksubapp=$(find "$framework" -depth -type d -name "*.xpc")
+                if [ -n "$frameworksubapp" ] ; then
+                  addsubitems "$frameworksubapp"
+                fi
+                # search for executables with limited depth to avoid ones within an .app
+                frameworkname=$(basename -s ".framework" "$framework")
+                frameworksubexecutable=$(find "$framework" -maxdepth 4 -type f -perm +111 \
+                                        -not -name "$frameworkname")
+                if [ -n "$frameworksubexecutable" ] ; then
+                  addsubitems "$frameworksubexecutable"
+                fi
+              done
+              addsubitems "$frameworksdirframeworks"
+            fi
+            
+          fi
+          # potentially grab more subitems from other places within the .app here
+          # ie. resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
+          
+          for subitem in $subitems; do
+            xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+              --options runtime -v "$subitem"
+          done
+          IFS=$savedIFS
+          
+          echo "- Sign app"
+          xcrun codesign --force -s "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+            --options runtime -v "${{ env.builddir }}/${{ env.bundlename }}"
+      
+      - name: Verify and Prepare AppStore Connect Acceess
+        id: connect
+        run: |
+          :
+          if [[ -z "${{ secrets.APPSTORECONNECT_APIKEY }}" ]] ; then
+            echo "::error::Secret APPSTORECONNECT_APIKEY not defined"
+            exit 1
+          fi
+                    
+          # Turn our base64-encoded key back to a regular .p8 file
+          
+          keyid="appstoreconnectapikey"
+          keyname="AuthKey_${keyid}.p8"
+          keydir="private_keys"
+          mkdir "$keydir"
+          
+          echo "- Base64-decode key to make \"$keyname\""
+          echo "${{ secrets.APPSTORECONNECT_APIKEY }}" | base64 --decode > "./$keydir/$keyname"
+          
+          echo "- Run verification"
+          xcrun altool --validate-app --file "${{ env.builddir }}/${{ env.bundlename }}" \
+            --type macos --apiKey "$keyid" # --output-format json
+            
+          echo "keyid=$keyid" >> $GITHUB_OUTPUT
+      
+      - name: Release Notes
+        id: notes
+        run: |
+          :
+          echo "- Collect release notes"
+          changeLogFilename=CHANGELOG.md
+          tempNotesFilename="${{ steps.version.outputs.releaseName }}.temp.md"
+          currentNotesFilename="${{ steps.version.outputs.releaseName }}.md"
+          if [[ ! -f $changeLogFilename ]] ; then
+            echo "::warning::Change log file is missing"
+            numlines=0
+          else
+            echo -n "" > "${{ env.builddir }}/$tempNotesFilename"
+            thisversion=''
+            prevversion=''
+            while read line || [[ -n $line ]] ; do
+              if [[ -z $thisversion ]]; then
+                thisversion=$(echo $line | sed -n -E 's/^#+ version ([0-9.dabrc]+) .*$/\1/p')
+                if [[ -n $thisversion ]] ; then
+                  if [[ $thisversion != "${{ steps.version.outputs.version }}" ]] ; then
+                    echo "::warning::Version $thisversion at the top of the change log doesn't match build version ${{ steps.version.outputs.version }}"
+                    break
+                  fi
+                  echo "- Found section for build version ${{ steps.version.outputs.version }} at the top of the change log"
+                fi
+                continue
+              fi
+              prevversion=$(echo $line | sed -n -E 's/^#+ version ([0-9.dabrc]+) .*$/\1/p')
+              if [[ -n $prevversion ]] ; then
+                break
+              fi
+              echo $line >> "${{ env.builddir }}/$tempNotesFilename"
+            done < "$changeLogFilename"
+            
+            # sed command removes initial and trailing blank lines, don't ask me how it works
+            # from https://unix.stackexchange.com/a/552195
+            cat "${{ env.builddir }}/$tempNotesFilename" | sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' \
+              > "${{ env.builddir }}/$currentNotesFilename"
+            numlines=$(wc -l "${{ env.builddir }}/$currentNotesFilename" | cut -w -f2)
+          fi
+          
+          if [[ $numlines -gt 0 ]] ; then
+            echo "- Save $numlines lines of release notes to \"$currentNotesFilename\""
+          else
+            echo "- Save placeholder release notes to \"$currentNotesFilename\""
+            echo "Release notes unavailable at this time" > "${{ env.builddir }}/$currentNotesFilename"
+          fi
+          
+          echo "filename=$currentNotesFilename" >> $GITHUB_OUTPUT
+          echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
+      
+      - name: Save build as artifact
+        if: ${{ success() && steps.version.outputs.uploadToStore != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: App Store build
+          path: |
+            ${{ env.builddir }}/${{ env.bundlename }}
+      
+      - name: Save release notes as artifact
+        if: ${{ success() && steps.version.outputs.uploadToStore != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release notes
+          path: |
+            ${{ steps.notes.outputs.file }}
+      
+      - name: Deploy
+        if: ${{ success() && steps.version.outputs.uploadToStore == 'true' }}
+        run: |
+          :
+          if [[ -z "${{ secrets.APPSTORECONNECT_APPLEID }}" ]] ; then
+            echo "::error::Secret APPSTORECONNECT_APPLEID not defined"
+            exit 1
+          fi
+          
+          echo "- Deploy"
+          xcrun altool --upload-package --file "${{ env.builddir }}/${{ env.bundlename }}" \
+            --type macos --apiKey "${{ steps.connect.outputs.keyid }}" \
+            --bundle-id "${{ steps.build.outputs.bundleID }}" --bundle-version "${{ steps.build.outputs.version }}" \
+            --bundle-short-version-string "${{ steps.version.outputs.version }}" \
+            --apple-id "${{ secrets.APPSTORECONNECT_APPLEID }}" \ # --output-format json
+      
+      - name: Fin
+        run: |
+          :
+          if [[ "${{ steps.version.outputs.uploadToStore }}" == "true" ]] ; then
+            echo "::notice::Deployed \"${{ env.bundlename }}\" to app store, saved it and \"${{ steps.notes.outputs.filename }}\" as artifacts"
+          else
+            echo "::notice::Saved \"${{ env.bundlename }}\" and \"${{ steps.notes.outputs.filename }}\" as artifacts"
+          fi
