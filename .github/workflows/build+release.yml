@@ -37,7 +37,7 @@ env:
 
 jobs:
   build:
-    name: Build Cleepp Non-AppStore Variant and Draft Release
+    name: Build and Release Cleepp Non-AppStore Variant
     runs-on: macos-15
     
     steps:
@@ -169,6 +169,8 @@ jobs:
             exit 1
           fi
           
+          buildlogfile=xcodebuild-out.txt
+          
           echo "- Build with xcodebuild from $(xcodebuild -version)"
           # requires that env.projectfile is the name of the .xcodeproj, env.buildscheme is
           # a valid build scheme, and and env.bundlename is name of the produced .app
@@ -177,7 +179,7 @@ jobs:
           set -o pipefail && xcodebuild ONLY_ACTIVE_ARCH=NO clean build analyze \
             -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -derivedDataPath . | \
-            xcbeautify --renderer github-actions --preserve-unbeautified
+            tee "$buildlogfile" | xcbeautify --renderer github-actions
           
           echo "- Extract bundle version from app"
           plutil -extract CFBundleVersion raw \
@@ -192,9 +194,17 @@ jobs:
           fi
           
           echo "version=$bundleVersion" >> $GITHUB_OUTPUT
+          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
+      
+      - name: Save build log as artifact
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build log
+          path: |
+            ${{ steps.build.outputs.log }}
       
       - name: "Codesign app bundle"
-        if: success()
         run: |
           :
           test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
@@ -223,7 +233,7 @@ jobs:
           
           # Turn our base64-encoded certificate back to a regular .p12 file
           
-          echo "- Base64-encode certificate to make \"certificate.p12\""
+          echo "- Base64-decode certificate to make \"certificate.p12\""
           echo "${{ secrets.PROD_MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
           
           # We need to create a new keychain, otherwise using the certificate will prompt
@@ -307,7 +317,6 @@ jobs:
             --options runtime -v "${{ env.builddir }}/${{ env.bundlename }}"
       
       - name: "Notarize app bundle"
-        if: success()
         run: |
           :
           if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" ]] ; then
@@ -412,7 +421,6 @@ jobs:
           echo "file=${{ env.builddir }}/$imageFileName" >> $GITHUB_OUTPUT
           
       - name: "Sign and notarize disk image"
-        if: success()
         run: |
           :
           echo "- Notarize disk image"
@@ -481,14 +489,14 @@ jobs:
           echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
       
       - name: Setup Sparkle
-        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag
+        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag }}
         uses: jozefizso/setup-sparkle@v1
         with:
           version: 2.6.0
       
       - name: Generate Sparkle appcast.xml
         id: sparkle
-        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag
+        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag }}
         run: |
           :
           echo "::add-mask::${{ secrets.SPARKLE_PRIVATE_KEY }}"
@@ -536,24 +544,31 @@ jobs:
           echo "appcastGenerated=true" >> $GITHUB_OUTPUT
       
       - name: Commit appcast.xml
-        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated
+        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
           file_pattern: "appcast.xml"
           status_options: "--untracked-files=no"
       
-      - name: Save as artifact
-        if: success() && !(steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag)
+      - name: Save build as artifact
+        if: ${{ success() && !(steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag) }}
         uses: actions/upload-artifact@v4
         with:
           name: Non-App Store build
           path: |
             ${{ steps.dmg.outputs.file }}
+      
+      - name: Save release notes as artifact
+        if: ${{ success() && !(steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag) }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release notes
+          path: |
             ${{ steps.notes.outputs.file }}
       
       - name: Draft Tagged Release
-        if: success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag
+        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag }}
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.version.outputs.releaseName }}
@@ -567,7 +582,6 @@ jobs:
           fail_on_unmatched_files: false
       
       - name: Fin
-        if: success()
         run: |
           :
           if [[ steps.version.outputs.githubRelease == 'true' && -n "${{ steps.version.outputs.tag }}" ]] ; then

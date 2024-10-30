@@ -1,4 +1,4 @@
-name: Build Cleepp
+name: Build for CI
 
 on:
   push:
@@ -21,7 +21,7 @@ env:
 
 jobs:
   build:
-    name: Build Cleepp Non-AppStore Variant
+    name: Test Build Cleepp Non-AppStore Variant
     runs-on: macos-15
     if: ${{ ! contains(github.ref, 'refs/tags') }}
 
@@ -41,6 +41,9 @@ jobs:
           :
           xcodebuild -version
           
+          buildlogfile=xcodebuild-out.txt
+          
+          echo "- Build with xcodebuild from $(xcodebuild -version)"
           # requires that env.projectfile is the name of the .xcodeproj, and
           # env.buildscheme is a valid build scheme.
           # note: not sure why ONLY_ACTIVE_ARCH=NO is required for xcodebuild,
@@ -48,4 +51,14 @@ jobs:
           set -o pipefail && xcodebuild ONLY_ACTIVE_ARCH=NO clean build analyze \
             -scheme "${{ env.buildscheme }}" -configuration Release \
             -project "${{ env.projectfile }}" -derivedDataPath . | \
-            xcbeautify --renderer github-actions --preserve-unbeautified
+            tee "$buildlogfile" | xcbeautify --renderer github-actions
+          
+          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
+      
+      - name: Save build log as artifact
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build log
+          path: |
+            ${{ steps.build.outputs.log }}
