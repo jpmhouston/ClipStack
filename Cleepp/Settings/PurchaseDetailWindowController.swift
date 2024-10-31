@@ -39,8 +39,13 @@ class PurchaseDetailWindowController: NSWindowController, NSWindowDelegate, NSTa
   }
   
   override func windowDidLoad() {
-    templateBuyButtonTitle = buyButton.title
+    if let product = products.first, product is Purchases.DummyProductDetail {
+      templateBuyButtonTitle = "Test, won't be charged $" // do not localize
+    } else {
+      templateBuyButtonTitle = buyButton.title
+    }
     disabledBuyButtonTitle = buyButton.alternateTitle
+    buyButton.alternateTitle = ""
     
     if purchases.isEmpty, let defaultSelectRow = products.firstIndex(where: { $0.item == .bonus }) {
       let product = products[defaultSelectRow]
