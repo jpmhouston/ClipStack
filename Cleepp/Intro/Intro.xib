@@ -252,10 +252,10 @@ DQ
                             </textFieldCell>
                         </textField>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalCompressionResistancePriority="600" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDA-eq-AfB">
-                            <rect key="frame" x="268" y="75" width="300" height="201"/>
+                            <rect key="frame" x="268" y="47" width="300" height="231"/>
                             <subviews>
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BCE-cs-oZY">
-                                    <rect key="frame" x="-2" y="144" width="304" height="57"/>
+                                    <rect key="frame" x="-2" y="174" width="304" height="57"/>
                                     <textFieldCell key="cell" title="Batch Clipboard needs your authorization to be able to instruct the frontmost application to perform a Copy or Paste." id="VI8-q1-aOr">
                                         <font key="font" metaFont="system" size="16"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -263,7 +263,7 @@ DQ
                                     </textFieldCell>
                                 </textField>
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EvF-0r-9Z1">
-                                    <rect key="frame" x="-2" y="90" width="304" height="38"/>
+                                    <rect key="frame" x="-2" y="120" width="304" height="38"/>
                                     <textFieldCell key="cell" title="This authorization has not yet been granted." id="lhN-0D-29x">
                                         <font key="font" metaFont="system" size="16"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -271,7 +271,7 @@ DQ
                                     </textFieldCell>
                                 </textField>
                                 <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DkE-IU-Osz">
-                                    <rect key="frame" x="-2" y="128" width="233" height="38"/>
+                                    <rect key="frame" x="-2" y="158" width="233" height="38"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" title="This authorization has already been granted." id="Jti-hB-gYF">
                                         <font key="font" metaFont="system" size="16"/>
@@ -280,7 +280,7 @@ DQ
                                     </textFieldCell>
                                 </textField>
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nCR-Wr-cCe">
-                                    <rect key="frame" x="0.0" y="54" width="252" height="20"/>
+                                    <rect key="frame" x="0.0" y="84" width="252" height="20"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2VO-Pm-i8d">
                                             <rect key="frame" x="-7" y="-7" width="242" height="32"/>
@@ -306,9 +306,10 @@ DQ
                                     </customSpacing>
                                 </stackView>
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-zK-yMR">
-                                    <rect key="frame" x="-2" y="0.0" width="304" height="38"/>
-                                    <textFieldCell key="cell" title="Use the button to open the panel then return to this window for what to do next." id="naz-h7-dY3">
-                                        <font key="font" metaFont="system" size="15"/>
+                                    <rect key="frame" x="-2" y="0.0" width="304" height="68"/>
+                                    <textFieldCell key="cell" id="naz-h7-dY3">
+                                        <font key="font" metaFont="system" size="14"/>
+                                        <string key="title">Use the button above to open the panel (or manually open the Accessibility section of Privacy &amp; Security in your system settings) then return to this window for what to do next.</string>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -332,12 +333,13 @@ DQ
                     </subviews>
                     <constraints>
                         <constraint firstItem="Blh-fS-N36" firstAttribute="top" secondItem="gJb-ZW-iAj" secondAttribute="top" id="0jH-qu-pnA"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EDA-eq-AfB" secondAttribute="bottom" constant="48" id="22M-JT-RgM"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EDA-eq-AfB" secondAttribute="bottom" constant="16" id="22M-JT-RgM"/>
                         <constraint firstItem="Blh-fS-N36" firstAttribute="leading" secondItem="gJb-ZW-iAj" secondAttribute="leading" id="6iv-cc-YnB"/>
-                        <constraint firstItem="EDA-eq-AfB" firstAttribute="top" secondItem="DiN-8O-NU2" secondAttribute="top" constant="48" id="H1m-E8-SVD"/>
+                        <constraint firstItem="EDA-eq-AfB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DiN-8O-NU2" secondAttribute="top" constant="18" id="H1m-E8-SVD"/>
                         <constraint firstItem="EDA-eq-AfB" firstAttribute="leading" secondItem="gJb-ZW-iAj" secondAttribute="trailing" constant="36" id="PJ8-tI-10c"/>
                         <constraint firstAttribute="trailing" secondItem="EDA-eq-AfB" secondAttribute="trailing" constant="36" id="R2l-V7-dky"/>
                         <constraint firstItem="gJb-ZW-iAj" firstAttribute="leading" secondItem="DiN-8O-NU2" secondAttribute="leading" constant="36" id="eqa-Gy-jML"/>
+                        <constraint firstItem="EDA-eq-AfB" firstAttribute="centerY" secondItem="DiN-8O-NU2" secondAttribute="centerY" id="mjm-Am-5El"/>
                         <constraint firstItem="gJb-ZW-iAj" firstAttribute="top" secondItem="DiN-8O-NU2" secondAttribute="top" constant="36" id="rhR-Pb-uaU"/>
                     </constraints>
                 </customView>
