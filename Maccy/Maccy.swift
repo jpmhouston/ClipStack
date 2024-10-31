@@ -269,6 +269,12 @@ class Maccy: NSObject {
 
     #if CLEEPP
     menu.buildItems()
+    // prepareForPopup() can take a while the first time so do it early
+    // instead of the first time the menu is clicked on, and in case the
+    // intro needs to be shown, delay this call a bit to let that open
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      self.menu.prepareForPopup(location: .inMenuBar)
+    }
     #else
     populateHeader()
     populateItems()
