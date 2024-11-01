@@ -6,6 +6,39 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>1.0b4</title>
+            <pubDate>Fri, 01 Nov 2024 18:42:45 +0000</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>868</sparkle:version>
+            <sparkle:shortVersionString>1.0b4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>Moved a setup step from the first time the menu bar is opened to
+right after launch, fixing a short delay on that first click.</li>
+<li>Intro wording changed to name the Privacy &amp; Security sub-panel,
+Accessibility, that needs permission given.</li>
+<li>App Store build no longer hardcodes bonus features on.</li>
+<li>App Store build replaces temporary payment wrapper with new
+well-maintained one Flare frameowrk.</li>
+<li>App Store build has new products alert opened by the settings panel
+purchase button, supports one time payment and corporate yearly
+subscription products.</li>
+<li>App Store build settings panel purchase button hit with option key
+shows dummy products, its buy button makes clear they are a test and no
+money charged.</li>
+<li>App Store build pament code still a work in progress, still
+incomplete and untested with actual App Store products and
+purchasing.</li>
+<li>GitHub build workflow for Mac App Store builds.</li>
+<li>GitHub build workflows save results as artifacts, non-App Store
+build no longer adds untagged releases for this purpose.</li>
+<li>GitHub build workflows save full build logs as artifacts.</li>
+<li>Fixed Swift 6 compiler warnings.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b4/Batch.Clipboard.1.0b4.zip" length="6234070" type="application/octet-stream" sparkle:edSignature="bpskE5aNj8txenrpr3sEHtTUZBfNs0tmz9d4LIRz+i5XE8K30z18LVu1b3BG148kXgsJDn7ZgxE5yg63w6sTBA=="/>
+        </item>
+        <item>
             <title>1.0b3</title>
             <pubDate>Thu, 10 Oct 2024 04:47:28 +0000</pubDate>
             <link>https://github.com/jpmhouston/Cleepp/releases</link>
