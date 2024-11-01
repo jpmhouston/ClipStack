@@ -1,5 +1,19 @@
 Batch Clipboard Changelog
 
+## version 1.0b4 (2024-10-31 🎃)
+
+- Moved a setup step from first menu bar click to right after launch.
+- Intro wording changed to better describe the settings accessibility panel where permission is given.
+- Fixed a Swift 6 warning.
+- App Store build no longer hardcodes bonus features on.
+- App Store build replaces temporary payment wrapper with new well-maintained one Flare frameowrk.
+- App Store build has new products alert opened by the settings panel purchase button, supports one time payment and corporate yearly subscription products.
+- App Store build settings panel purchase button hit with option key shows dummy products, its buy button makes clear they are a test and no money charged.
+- App Store build pament code still a work in progress, still incomplete and untested with actual App Store products and purchasing.
+- GitHub build workflow for Mac App Store builds.
+- GitHub build workflows save results as artifacts, non-App Store build no longer adds untagged releases for this purpose.
+- GitHub build workflows save full build logs as artifacts.
+
 ## version 1.0b3 (2024-10-09)
 
 Rather than continuing to roll polish updates into b2, released it and this new one in succession in order to test Sparkle updates with a signed app.
