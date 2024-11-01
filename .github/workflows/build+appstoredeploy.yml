@@ -76,7 +76,7 @@ jobs:
             version="${{ inputs.releaseVersion }}"
           fi
           releaseName="${{ env.productname }} $version"
-          releaseNameNoSpaces="$(echo "${{ env.productname }}" |  sed -nr "s/ /./").$version"
+          releaseNameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
           
           if [[ -z "${{ inputs.uploadToStore }}" ]] ; then
             echo "- Use default value for uploadToStore: ${{ env.uploadToStoreDefault }}"
