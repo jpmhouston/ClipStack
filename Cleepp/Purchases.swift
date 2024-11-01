@@ -166,16 +166,18 @@ class Purchases: NSObject {
         callObservers(withUpdate: .failure(error))
       }
     }
-    
-//    // temp test code:
-//    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-//      guard let self = self else { return }
-//      let productList = [
-//        DummyProductDetail(identifier: Self.basicProductIdentifier, item: .bonus, localizedDescription: "Support us and unlock bonus features", localizedPrice: "$3.99", subscription: .not),
-//        DummyProductDetail(identifier: Self.corporateProductIdentifier, item: .corporateSubscription, localizedDescription: "Corporate yearly subscription", localizedPrice: "$9.99", subscription: .yearly)
-//      ]
-//      callObservers(withUpdate: .success(.products(productList)))
-//    }
+  }
+  
+  func startFetchingDummyProductDetails() throws {
+    // probably should remove before 1.0
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+      guard let self = self else { return }
+      let productList = [
+        DummyProductDetail(identifier: Self.basicProductIdentifier, item: .bonus, localizedDescription: "Support us and unlock bonus features", localizedPrice: "$3.99", subscription: .not),
+        DummyProductDetail(identifier: Self.corporateProductIdentifier, item: .corporateSubscription, localizedDescription: "Corporate yearly subscription", localizedPrice: "$9.99", subscription: .yearly)
+      ]
+      callObservers(withUpdate: .success(.products(productList)))
+    }
   }
   
   func startPurchase(_ product: ProductDetail) throws {

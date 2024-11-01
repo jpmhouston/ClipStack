@@ -152,7 +152,11 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     // fetch products, when its done purchasesUpdated shows alert/sheet with product(s) & price(s)
     disablePurchaseButtons()
     do {
-      try purchaseManager.startFetchingProductDetails()
+      if NSEvent.modifierFlags.contains(.option) {
+        try purchaseManager.startFetchingDummyProductDetails()
+      } else {
+        try purchaseManager.startFetchingProductDetails()
+      }
     } catch {
       displayError(error.localizedDescription)
       updatePurchaseButtons()
