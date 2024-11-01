@@ -2,9 +2,8 @@ Batch Clipboard Changelog
 
 ## version 1.0b4 (2024-10-31 🎃)
 
-- Moved a setup step from first menu bar click to right after launch.
-- Intro wording changed to better describe the settings accessibility panel where permission is given.
-- Fixed a Swift 6 warning.
+- Moved a setup step from the first time the menu bar is opened to right after launch, fixing a short delay on that first click.
+- Intro wording changed to name the Privacy & Security sub-panel, Accessibility, that needs permission given.
 - App Store build no longer hardcodes bonus features on.
 - App Store build replaces temporary payment wrapper with new well-maintained one Flare frameowrk.
 - App Store build has new products alert opened by the settings panel purchase button, supports one time payment and corporate yearly subscription products.
@@ -13,6 +12,7 @@ Batch Clipboard Changelog
 - GitHub build workflow for Mac App Store builds.
 - GitHub build workflows save results as artifacts, non-App Store build no longer adds untagged releases for this purpose.
 - GitHub build workflows save full build logs as artifacts.
+- Fixed Swift 6 compiler warnings.
 
 ## version 1.0b3 (2024-10-09)
 
