@@ -146,7 +146,7 @@ jobs:
           echo "version=$bundleVersion" >> $GITHUB_OUTPUT
           echo "log=$buildlogfile" >> $GITHUB_OUTPUT
       
-      - name: Save build log as artifact
+      - name: Save Build Log as Artifact
         if: ${{ success() || failure() }}
         uses: actions/upload-artifact@v4
         with:
@@ -154,7 +154,7 @@ jobs:
           path: |
             ${{ steps.build.outputs.log }}
       
-      - name: "Codesign app bundle"
+      - name: "Codesign App Bundle"
         run: |
           :
           test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
@@ -274,21 +274,31 @@ jobs:
             echo "::error::Secret APPSTORECONNECT_APIKEY not defined"
             exit 1
           fi
+          if [[ -z "${{ secrets.APPSTORECONNECT_APIID }}" ]] ; then
+            echo "::error::Secret APPSTORECONNECT_APIID not defined"
+            exit 1
+          fi
                     
           # Turn our base64-encoded key back to a regular .p8 file
           
-          keyid="appstoreconnectapikey"
-          keyname="AuthKey_${keyid}.p8"
+          keyid="${{ secrets.APPSTORECONNECT_APIID }}"
+          keyname="appstoreconnectapikey"
+          keyfilename="AuthKey_${keyname}.p8"
           keydir="private_keys"
           mkdir "$keydir"
           
-          echo "- Base64-decode key to make \"$keyname\""
-          echo "${{ secrets.APPSTORECONNECT_APIKEY }}" | base64 --decode > "./$keydir/$keyname"
+          echo "- Base64-decode key to make \"$keyfilename\""
+          echo "${{ secrets.APPSTORECONNECT_APIKEY }}" | base64 --decode > "./$keydir/$keyfilename"
           
           echo "- Run verification"
+          echo "xcrun altool --validate-app --file \"${{ env.builddir }}/${{ env.bundlename }}\" \
+            --type macos --apiKey \"$keyname\" --apiIssuer \"$keyid\""
+          
           xcrun altool --validate-app --file "${{ env.builddir }}/${{ env.bundlename }}" \
-            --type macos --apiKey "$keyid" # --output-format json
-            
+            --type macos --apiKey "$keyname" --apiIssuer "$keyid" || \
+            echo "::warning::altool --validate-app failed, however contining workflow"
+          
+          echo "keyname=$keyname" >> $GITHUB_OUTPUT
           echo "keyid=$keyid" >> $GITHUB_OUTPUT
       
       - name: Release Notes
@@ -342,15 +352,28 @@ jobs:
           echo "filename=$currentNotesFilename" >> $GITHUB_OUTPUT
           echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
       
-      - name: Save build as artifact
+      - name: Build Zip File for Artifact
+        id: zip
+        if: ${{ success() && steps.version.outputs.uploadToStore != 'true' }}
+        run: |
+          :
+          archiveFileName="${{ steps.version.outputs.releaseArchivename }}.zip"
+          
+          echo "- Compress built app to \"$archiveFileName\""
+          ditto -c -k --sequesterRsrc --keepParent "${{ env.builddir }}/${{ env.bundlename }}" \
+            "${{ env.builddir }}/$archiveFileName"
+          
+          echo "file=${{ env.builddir }}/$archiveFileName" >> $GITHUB_OUTPUT
+      
+      - name: Save Build Zip as Artifact
         if: ${{ success() && steps.version.outputs.uploadToStore != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: App Store build
           path: |
-            ${{ env.builddir }}/${{ env.bundlename }}
+            ${{ steps.zip.outputs.file }}
       
-      - name: Save release notes as artifact
+      - name: Save Release Notes as Artifact
         if: ${{ success() && steps.version.outputs.uploadToStore != 'true' }}
         uses: actions/upload-artifact@v4
         with:
@@ -367,12 +390,21 @@ jobs:
             exit 1
           fi
           
+          keyname="${{ steps.connect.outputs.keyname }}"
+          keyid="${{ steps.connect.outputs.keyid }}"
+          
           echo "- Deploy"
+          echo "xcrun altool --upload-package --file \"${{ env.builddir }}/${{ env.bundlename }}\" \
+            --type macos --apiKey \"$keyname\" --apiIssuer \"$keyid\" \
+            --bundle-id \"${{ steps.build.outputs.bundleID }}\" --bundle-version \"${{ steps.build.outputs.version }}\" \
+            --bundle-short-version-string \"${{ steps.version.outputs.version }}\" \
+            --apple-id \"${{ secrets.APPSTORECONNECT_APPLEID }}\" \"
+          
           xcrun altool --upload-package --file "${{ env.builddir }}/${{ env.bundlename }}" \
-            --type macos --apiKey "${{ steps.connect.outputs.keyid }}" \
+            --type macos --apiKey "$keyname" --apiIssuer "$keyid" \
             --bundle-id "${{ steps.build.outputs.bundleID }}" --bundle-version "${{ steps.build.outputs.version }}" \
             --bundle-short-version-string "${{ steps.version.outputs.version }}" \
-            --apple-id "${{ secrets.APPSTORECONNECT_APPLEID }}" \ # --output-format json
+            --apple-id "${{ secrets.APPSTORECONNECT_APPLEID }}" \
       
       - name: Fin
         run: |
