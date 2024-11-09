@@ -164,27 +164,27 @@ jobs:
             exit 1
           fi
           
-          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE }}" ]] ; then
-            echo "::error::Secret PROD_MACOS_CERTIFICATE not defined"
+          if [[ -z "${{ secrets.STORE_MACOS_CERTIFICATE }}" ]] ; then
+            echo "::error::Secret STORE_MACOS_CERTIFICATE not defined"
             exit 1
           fi
           if [[ -z "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" ]] ; then
             echo "::error::Secret PROD_MACOS_CI_KEYCHAIN_PWD not defined"
             exit 1
           fi
-          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}" ]] ; then
-            echo "::error::Secret PROD_MACOS_CERTIFICATE_PWD not defined"
+          if [[ -z "${{ secrets.STORE_MACOS_CERTIFICATE_PWD }}" ]] ; then
+            echo "::error::Secret STORE_MACOS_CERTIFICATE_PWD not defined"
             exit 1
           fi
-          if [[ -z "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" ]] ; then
-            echo "::error::Secret PROD_MACOS_CERTIFICATE_NAME not defined"
+          if [[ -z "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" ]] ; then
+            echo "::error::Secret STORE_MACOS_CERTIFICATE_NAME not defined"
             exit 1
           fi
           
           # Turn our base64-encoded certificate back to a regular .p12 file
           
           echo "- Base64-encode certificate to make \"certificate.p12\""
-          echo "${{ secrets.PROD_MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
+          echo "${{ secrets.STORE_MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
           
           # We need to create a new keychain, otherwise using the certificate will prompt
           # with a UI dialog asking for the certificate password, which we can't
@@ -197,7 +197,7 @@ jobs:
           
           echo "- Import \"certificate.p12\" into \"build.keychain\""
           security import certificate.p12 -k build.keychain \
-            -P "${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
+            -P "${{ secrets.STORE_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: \
             -s -k "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
           
@@ -257,13 +257,13 @@ jobs:
           # ie. resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
           
           for subitem in $subitems; do
-            xcrun codesign --force --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+            xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
               --options runtime -v "$subitem"
           done
           IFS=$savedIFS
           
           echo "- Sign app"
-          xcrun codesign --force --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+          xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
             --options runtime -v "${{ env.builddir }}/${{ env.bundlename }}"
       
       - name: Package App
@@ -273,11 +273,11 @@ jobs:
           packagefilename="${{ steps.version.outputs.releaseArchivename }}.pkg"
           
           echo "- Package app to make \"$packagefilename\""
-          echo "xcrun productbuild --sign \"${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}\" \
+          echo "xcrun productbuild --sign \"${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}\" \
             --component \"${{ env.builddir }}/${{ env.bundlename }}\" /Applications \
             \"$packagefilename\""
           
-          xcrun productbuild --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
+          xcrun productbuild --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
             --component "${{ env.builddir }}/${{ env.bundlename }}" /Applications \
             "$packagefilename"
       
@@ -409,16 +409,14 @@ jobs:
           versionstr="${{ steps.version.outputs.version }}"
           
           echo "- Deploy"
-          echo "xcrun altool --upload-package --file \"$packagefile\" \
-            --type macos --apiKey \"$keyid\" --apiIssuer \"$issuerid\" \
-            --bundle-id \"$bundleid\" --bundle-version \"$bundleversion\" \
-            --bundle-short-version-string \"$versionstr\" \
+          echo "xcrun altool --upload-package --file \"$packagefile\" --type macos \
+            --apiKey \"$keyid\" --apiIssuer \"$issuerid\" --bundle-id \"$bundleid\" \
+            --bundle-version \"$bundleversion\" --bundle-short-version-string \"$versionstr\" \
             --apple-id \"${{ secrets.APPSTORECONNECT_APPLEID }}\" \"
           
-          xcrun altool --upload-package --file "$packagefile" \
-            --type macos --apiKey "$keyid" --apiIssuer "$issuerid" \
-            --bundle-id "$bundleid" --bundle-version "$bundleversion" \
-            --bundle-short-version-string "$versionstr" \
+          xcrun altool --upload-package --file "$packagefile" --type macos \
+            --apiKey "$keyid" --apiIssuer "$issuerid" --bundle-id "$bundleid" \
+            --bundle-version "$bundleversion" --bundle-short-version-string "$versionstr" \
             --apple-id "${{ secrets.APPSTORECONNECT_APPLEID }}" \
       
       - name: Fin
