@@ -182,9 +182,11 @@ jobs:
           fi
           
           # Turn our base64-encoded certificate back to a regular .p12 file
+          # and add it to a temporary keychain lasting the duration of this workflow
           
-          echo "- Base64-encode certificate to make \"certificate.p12\""
-          echo "${{ secrets.STORE_MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
+          certname="signcertificate.p12"
+          echo "- Base64-encode certificate to make \"$certname\""
+          echo "${{ secrets.STORE_MACOS_CERTIFICATE }}" | base64 --decode > "$certname"
           
           # We need to create a new keychain, otherwise using the certificate will prompt
           # with a UI dialog asking for the certificate password, which we can't
@@ -195,8 +197,8 @@ jobs:
           security default-keychain -s build.keychain
           security unlock-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
           
-          echo "- Import \"certificate.p12\" into \"build.keychain\""
-          security import certificate.p12 -k build.keychain \
+          echo "- Import \"$certname\" into \"build.keychain\""
+          security import "$certname" -k build.keychain \
             -P "${{ secrets.STORE_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: \
             -s -k "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
@@ -270,14 +272,47 @@ jobs:
         id: package
         run: |
           :
+          if [[ -z "${{ secrets.PKG_MACOS_CERTIFICATE }}" ]] ; then
+            echo "::error::Secret PKG_MACOS_CERTIFICATE not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" ]] ; then
+            echo "::error::Secret PROD_MACOS_CI_KEYCHAIN_PWD not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PKG_MACOS_CERTIFICATE_PWD }}" ]] ; then
+            echo "::error::Secret PKG_MACOS_CERTIFICATE_PWD not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" ]] ; then
+            echo "::error::Secret PKG_MACOS_CERTIFICATE_NAME not defined"
+            exit 1
+          fi
+          
+          # Turn our pkg-creation base64-encoded certificate back to a regular .p12 file
+          # and add it to our temporary keychain
+          
+          certname="pkgcertificate.p12"
+          echo "- Base64-encode certificate to make \"$certname\""
+          echo "${{ secrets.PKG_MACOS_CERTIFICATE }}" | base64 --decode > "$certname"
+          
+          # it might or might not be necessary to unlock the keychain again
+          #security unlock-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
+          
+          echo "- Import \"$certname\" into \"build.keychain\""
+          security import "$certname" -k build.keychain \
+            -P "${{ secrets.PKG_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
+          
+          # Build a pkg from the built app for uploading to App Store Connect
+          
           packagefilename="${{ steps.version.outputs.releaseArchivename }}.pkg"
           
           echo "- Package app to make \"$packagefilename\""
-          echo "xcrun productbuild --sign \"${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}\" \
+          echo "xcrun productbuild --sign \"${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}\" \
             --component \"${{ env.builddir }}/${{ env.bundlename }}\" /Applications \
             \"$packagefilename\""
           
-          xcrun productbuild --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
+          xcrun productbuild --sign "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" \
             --component "${{ env.builddir }}/${{ env.bundlename }}" /Applications \
             "$packagefilename"
       
@@ -300,7 +335,7 @@ jobs:
             exit 1
           fi
           
-          # Turn our base64-encoded key back to a regular .p8 file
+          # Turn our base64-encoded acess key back to a regular .p8 file
           # in the expected subdirectory with the expected name containing the key id
           
           packagefile="${{ steps.package.outputs.file }}"
