@@ -124,6 +124,9 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     case (.success(.restorations(_)), _):
       displayMessage("Delayed purchase restoration has completed and you've got the bonus features, thank you!")
       
+    case (.failure(.cancelled), let s) where s != .idle:
+      displayMessage("Cancelled")
+    
     case (.failure(.unreachable), .fetchingProducts):
       displayError("Failed to reach network and fetch the purchase details")
     case (.failure(.unreachable), .purchasing):

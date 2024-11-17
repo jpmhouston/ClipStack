@@ -77,8 +77,9 @@ class Purchases: NSObject {
     case malformedReceipt, invalidReceipt
     case unreachable, unknown
     case malformedProducts
+    case cancelled
     //case unrecognized, unavailable, noneToRestore
-    //case cancelled, declined
+    //case declined
   }
   
   typealias ObservationUpdate = Result<UpdateItem, PurchaseError>
@@ -435,7 +436,12 @@ class Purchases: NSObject {
         completion(.success(([productDetail.item])))
       case .failure(let error):
         print("Error during purchase: \(error.localizedDescription)") // TODO: either ditch logging these or improve the manner & messages
-        completion(.failure(.unknown))
+        switch error {
+        case .paymentCancelled:
+          completion(.failure(.cancelled))
+        default:
+          completion(.failure(.unknown))
+        }
       }
     }
   }
