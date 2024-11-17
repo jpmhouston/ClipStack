@@ -6,6 +6,36 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>1.0b5</title>
+            <pubDate>Sun, 17 Nov 2024 14:44:28 +0000</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>882</sparkle:version>
+            <sparkle:shortVersionString>1.0b5</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>App Store build should now successfully fetch products from Apple
+servers and support making purchases.</li>
+<li>App Store build product details now displays the product titles not
+the descriptions.</li>
+<li>Only allow debug App Store builds to detect option key held when
+starting purchase and show dummy product details, “buy” without
+purchasing.</li>
+<li>Longer timeouts for some App Store transactions, to account for
+potential sign in dialogs, before spinner stops and “delayed” message
+shown.</li>
+<li>Improve wording of some delayed App Store transaction messages,
+message shown when cancelling purchase.</li>
+<li>Simplify copyright string in Info plist, omit Maccy author (still
+fully acknowledged in the credits file/window).</li>
+<li>App Store build get version number suffixes stripped (1.0b5 -&gt;
+1.0) to appease App Store Connect.</li>
+<li>App Store and non-App Store builds no longer lose entitlements in
+the GitHub build workflow resigning steps.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b5/Batch.Clipboard.1.0b5.zip" length="6235754" type="application/octet-stream" sparkle:edSignature="Rc6ChEEyybgLxTodMMfVtKcZWQ1ktyb7CBirQOZ0kFnlKCgveMDiDwVKZYmuzG+r6N4QvIrWFFbQms6bjnP4CQ=="/>
+        </item>
+        <item>
             <title>1.0b4</title>
             <pubDate>Fri, 01 Nov 2024 18:42:45 +0000</pubDate>
             <link>https://github.com/jpmhouston/Cleepp/releases</link>
@@ -58,45 +88,6 @@ hiding the status icon).</li>
 </ul>
 ]]></description>
             <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b3/Batch.Clipboard.1.0b3.zip" length="6228096" type="application/octet-stream" sparkle:edSignature="6ykzRSlnqwzj0YSCZvEGNqZQay1VqmF1C4uB2fThk4y6BVq3CtL2BuAgNV+1SjBXNqUOmMiRgF9KC1TMEgf5Cw=="/>
-        </item>
-        <item>
-            <title>1.0b2</title>
-            <pubDate>Tue, 08 Oct 2024 21:22:06 +0000</pubDate>
-            <link>https://github.com/jpmhouston/Cleepp/releases</link>
-            <sparkle:version>847</sparkle:version>
-            <sparkle:shortVersionString>1.0b2</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<ul>
-<li>Made github CI script now do signing and notarization (non-appstore
-build).</li>
-<li>Fixed github CI script to really truly create universal app now
-(non-appstore build).</li>
-<li>Made github CI build with newer OS and tools.</li>
-<li>Made Intro and Licenses windows open in the current Mission Control
-space.</li>
-<li>Reworded Intro instructions for giving permissions in the Settings
-app.</li>
-<li>Minor edit to intro window text mentioning what’s now called “batch
-mode”.</li>
-<li>Changed description for history menu items settings control to not
-reference the storage panel maximum when that control not showm.</li>
-<li>For now only macOS 13 and later get login item checkbox in app’s
-setting window, otherwise just a button to open system login items
-panel.</li>
-<li>Changed “Get” intent to accept an item number parameter and not a
-selection as in Maccy.</li>
-<li>Added some error logging, to be expanded later.</li>
-<li>Temporarily for this release log invokations of application’s Reopen
-callback.</li>
-<li>Renamed release notes file to CHANGELOG.md and minor reformat,
-corresponding changes to github CI script.</li>
-<li>Minor edits to .dmg’s readme file and to wiki.</li>
-<li>More fixes to Sparkle appcast, fingers crossed this works well
-now.</li>
-<li>Added funding file for github pointing at buymeacoffee.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b2/Batch.Clipboard.1.0b2.zip" length="6228035" type="application/octet-stream" sparkle:edSignature="DHDRe0DUbZzof5MTkLPZdY62mjvKlP+GLxwKopemGY2qPfl/pamaNhKoCoXrjUhJ6LbJSewCx6LzbFnQ7CqECA=="/>
         </item>
         <item>
             <title>1.0b1</title>
