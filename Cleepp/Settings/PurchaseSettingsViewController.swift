@@ -168,7 +168,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     
     state = .fetchingProducts
     displayMessage("Fetching product details") // TODO: localize
-    startWaitingForCompletion(withTimeout: 10, errorMessage: "No repsonse from requesting product details") // TODO: localize
+    startWaitingForCompletion(withTimeout: 10, message: "Retrieval of product details delayed") // TODO: localize
   }
   
   private func showConfirmationSheet(withProducts products: [Purchases.ProductDetail]) {
@@ -226,7 +226,7 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     
     state = .purchasing
     displayMessage("Completing purchase") // TODO: localize
-    startWaitingForCompletion(withTimeout: 10, errorMessage: "No repsonse after submitting purchase") // TODO: localize
+    startWaitingForCompletion(withTimeout: 60, message: "Purchase completion delayed") // TODO: localize
   }
   
   @IBAction
@@ -242,12 +242,10 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
     
     state = .restoring
     displayMessage("Attempting to restoring purchases") // TODO: localize
-    startWaitingForCompletion(withTimeout: 10, errorMessage: "No repsonse from request to restore previous purchases") // TODO: localize
-//    startWaitingForCompletion(withTimeout: 0.1, errorMessage:
-//                                "For now this just exercises the 2 states of this window. Purchases will work in the 1.0 App Store version.")
+    startWaitingForCompletion(withTimeout: 60, message: "Restoration of previous purchases delayed") // TODO: localize
   }
   
-  private func startWaitingForCompletion(withTimeout timeout: Double, errorMessage: String) {
+  private func startWaitingForCompletion(withTimeout timeout: Double, message: String, asError: Bool = false) {
     progressIndicator.startAnimation(self)
 
     startTimeoutTimer(withDuration: timeout) { [weak self] in
@@ -256,7 +254,11 @@ class PurchaseSettingsViewController: NSViewController, SettingsPane {
       progressIndicator.stopAnimation(self)
       state = .idle
       updatePurchaseButtons()
-      displayError(errorMessage)
+      if asError {
+        displayError(message)
+      } else {
+        displayMessage(message)
+      }
     }
   }
   
