@@ -259,14 +259,18 @@ jobs:
           # ie. resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
           
           for subitem in $subitems; do
+            xcrun codesign -d --entitlements entitlements.xml --xml "$subitem"
             xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
-              --options runtime -v "$subitem"
+              --entitlements entitlements.xml --options runtime -v "$subitem"
           done
           IFS=$savedIFS
           
           echo "- Sign app"
+          xcrun codesign -d --entitlements entitlements.xml --xml \
+            "${{ env.builddir }}/${{ env.bundlename }}"
           xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
-            --options runtime -v "${{ env.builddir }}/${{ env.bundlename }}"
+            --entitlements entitlements.xml --options runtime -v \
+            "${{ env.builddir }}/${{ env.bundlename }}"
       
       - name: Package App
         id: package
