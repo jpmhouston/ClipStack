@@ -266,12 +266,12 @@ jobs:
               done
               addsubitems "$frameworksdirframeworks"
             fi
-            
           fi
           # potentially grab more subitems from other places within the .app here
           # ie. resourcesdir="${{ env.builddir }}/${{ env.bundlename }}/Contents/Resources"
           
           for subitem in $subitems; do
+            echo -n "" > entitlements.xml # codesign doesn't erase prev contents but appends, avoid this problem
             xcrun codesign -d --entitlements entitlements.xml --xml "$subitem"
             xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
               --entitlements entitlements.xml --options runtime -v "$subitem"
@@ -279,6 +279,7 @@ jobs:
           IFS=$savedIFS
           
           echo "- Sign app"
+          echo -n "" > entitlements.xml # codesign doesn't erase prev contents but appends, avoid this problem
           xcrun codesign -d --entitlements entitlements.xml --xml \
             "${{ env.builddir }}/${{ env.bundlename }}"
           xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
