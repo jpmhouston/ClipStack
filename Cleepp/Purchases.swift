@@ -249,14 +249,8 @@ class Purchases: NSObject {
   // MARK: - wrappers for StoreKit helper framework
   
   func setupStoreKit() {
-    // !!! or call something like completeTransactionsCallback below? either with the full result or just the successful transaction
-    Flare.shared.addTransactionObserver { transactionResult in
-      switch transactionResult {
-      case let .success(transaction):
-          print("A transaction was received: \(transaction)")
-      case let .failure(error):
-          print("A transaction failure was received: \(error.localizedDescription)")
-      }
+    Flare.shared.addTransactionObserver { [weak self] transactionResult in
+      self?.completeTransactionsCallback(withResult: transactionResult)
     }
   }
   
@@ -335,33 +329,6 @@ class Purchases: NSObject {
         completion(.failure(.unknown))
       }
     }
-    
-//    SwiftyStoreKit.fetchReceipt(forceRefresh: true) { [weak self] fetchResult in
-//      guard let self = self else { return }
-//      
-//      switch fetchResult {
-//      case .success(let receiptData):
-//        let validationResult = Self.validateReceipt(receiptData)
-//        completion(validationResult)
-//        
-//      case .error(.noReceiptData), .error(.noRemoteData),
-//           .error(.receiptInvalid(_, .subscriptionExpired)):
-//        completion(.success([]))
-//        
-//      case .error(.networkError(let osError)):
-//        print("Network failure fetching receipts: \(osError)")
-//        completion(.failure(.unreachable))
-//        
-//      case .error(.receiptInvalid(_, .receiptServerUnavailable)):
-//        print("Failure fetching receipts: some apple server reported to be down")
-//        completion(.failure(.unreachable))
-//        
-//      case .error(let error):
-//        print("Failure fetching receipts: \(error)") // TOOD: either ditch logging these or improve the manner & messages
-//        // perhaps this error case shouldn't be named "unknown", maybe "other"
-//        completion(.failure(.unknown))
-//      }
-//    }
   }
   
   func restorePurchases(_ completion: @escaping (ReceiptResult)->Void) {
@@ -389,27 +356,6 @@ class Purchases: NSObject {
         completion(.failure(.unknown))
       }
     }
-    
-//    SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] restoreResult in
-//      guard let self = self else { return }
-//      
-//      if restoreResult.restoredPurchases.count > 0 {
-//        print("Success restoring purchases: \(restoreResult.restoredPurchases)")
-//        // validation and invoking observers done in completeTransactionsCallback, does that make sense?
-//        //completion(.success([]))
-//        
-//      } else if restoreResult.restoreFailedPurchases.count > 0 {
-//        print("Failure restoring purchases: \(restoreResult.restoreFailedPurchases)")
-//        // invoking observers on failure in completeTransactionsCallback too? maybe don't need a completion parameter
-//        //completion(.failure(.unknown)) // TODO: what error
-//        
-//      } else {
-//        print("Nothing to Restore")
-//        // if no call to completeTransactionsCallback occurs in this case, invoke observers here?
-//        //completion(.success([]))
-//        self.callObservers(withUpdate: .success(.restorations([])))
-//      }
-//    }
   }
   
   private func fetchProducts(withIDs ids: [String], _ completion: @escaping (ProductResult)->Void) {
@@ -446,9 +392,25 @@ class Purchases: NSObject {
     }
   }
   
+  private func completeTransactionsCallback(withResult transactionResult: Result<StoreTransaction, IAPError>) {
+    switch transactionResult {
+    case .success(let transaction):
+      print("A transaction was received: \(transaction)")
+      // I don't think purchase or restore relies on this callback, although I think we could
+      // in theory we could take out the existing data flow through completions and use this.
+      // Keeping below the original version of this callback from attempt to use SwiftyStoreKit
+      // for an idea of what could be done here.
+      
+    case .failure(.paymentCancelled):
+      print("A transaction cancellation was received")
+      callObservers(withUpdate: .failure(.cancelled))
+    case .failure(let error):
+      print("A transaction failure was received: \(error.localizedDescription)")
+      callObservers(withUpdate: .failure(.unknown))
+    }
+  }
+  
 //  private func completeTransactionsCallback(withPurchases purchases: [Purchase]) {
-//    // TODO: consolidate set of successful purchases and failures and make just 1 call to observers
-//    
 //    for purchase in purchases {
 //      switch purchase.transaction.transactionState {
 //      case .purchased:
