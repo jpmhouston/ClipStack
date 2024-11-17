@@ -1,5 +1,16 @@
 Batch Clipboard Changelog
 
+## version 1.0b5 (2024-11-17)
+
+- App Store build should now successfully fetch products from Apple servers and support making purchases.
+- App Store build product details now displays the product titles not the descriptions.
+- Only allow debug App Store builds to detect option key held when starting purchase and show dummy product details, "buy" without purchasing.
+- Longer timeouts for some App Store transactions, to account for potential sign in dialogs, before spinner stops and "delayed" message shown.
+- Improve wording of some delayed App Store transaction messages, message shown when cancelling purchase.
+- Simplify copyright string in Info plist, omit Maccy author (still fully acknowledged in the credits file/window).
+- App Store build get version number suffixes stripped (1.0b5 -> 1.0) to appease App Store Connect.
+- App Store and non-App Store builds no longer lose entitlements in the GitHub build workflow resigning steps.
+
 ## version 1.0b4 (2024-10-31 🎃)
 
 - Moved a setup step from the first time the menu bar is opened to right after launch, fixing a short delay on that first click.
