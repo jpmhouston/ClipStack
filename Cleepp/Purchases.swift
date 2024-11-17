@@ -37,7 +37,7 @@ class Purchases: NSObject {
   protocol ProductDetail {
     var identifier: String { get }
     var item: Item { get }
-    var localizedDescription: String { get }
+    var localizedTitle: String { get }
     var localizedPrice: String { get }
     var subscription: SubscriptionOption { get }
   }
@@ -45,7 +45,7 @@ class Purchases: NSObject {
   struct DummyProductDetail: ProductDetail {
     let identifier: String
     let item: Item
-    let localizedDescription: String
+    let localizedTitle: String
     let localizedPrice: String
     let subscription: SubscriptionOption
   }
@@ -54,7 +54,7 @@ class Purchases: NSObject {
     var product: StoreProduct
     var item: Item { itemValueForProductIdentifier(product.productIdentifier) }
     var identifier: String { product.productIdentifier }
-    var localizedDescription: String { product.localizedDescription }
+    var localizedTitle: String { product.localizedTitle }
     var localizedPrice: String { product.localizedPriceString ?? "" }
     var subscription: SubscriptionOption {
       switch product.subscriptionPeriod?.unit {
@@ -173,8 +173,8 @@ class Purchases: NSObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
       guard let self = self else { return }
       let productList = [
-        DummyProductDetail(identifier: Self.basicProductIdentifier, item: .bonus, localizedDescription: "Support us and unlock bonus features", localizedPrice: "$3.99", subscription: .not),
-        DummyProductDetail(identifier: Self.corporateProductIdentifier, item: .corporateSubscription, localizedDescription: "Corporate yearly subscription", localizedPrice: "$9.99", subscription: .yearly)
+        DummyProductDetail(identifier: Self.basicProductIdentifier, item: .bonus, localizedTitle: "Support us and unlock bonus features", localizedPrice: "$3.99", subscription: .not),
+        DummyProductDetail(identifier: Self.corporateProductIdentifier, item: .corporateSubscription, localizedTitle: "Corporate yearly subscription", localizedPrice: "$9.99", subscription: .yearly)
       ]
       callObservers(withUpdate: .success(.products(productList)))
     }

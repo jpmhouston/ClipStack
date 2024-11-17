@@ -96,7 +96,7 @@ class PurchaseDetailWindowController: NSWindowController, NSWindowDelegate, NSTa
     //cellView.wantsLayer = true
     
     let product = products[row]
-    cellView.productDescription.stringValue = product.localizedDescription
+    cellView.productDescription.stringValue = product.localizedTitle
     cellView.priceLabel.stringValue = product.localizedPrice
     cellView.oneTimeLabel.isHidden = true
     cellView.monthlyLabel.isHidden = true
