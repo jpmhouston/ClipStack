@@ -86,7 +86,7 @@ jobs:
             uploadToStore=${{ inputs.uploadToStore }}
           fi
           
-          echo "- Parse trigger"
+          echo "- Parse trigger" # NOTE: only support triggering manually for now
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
             if [[ "${{ github.ref }}" != "refs/heads/${{ env.branch }}" ]] ; then
               echo "::error::Manually triggered workflow supports ${{ env.branch }} only, gihub.ref == ${{ github.ref }})"
@@ -102,7 +102,13 @@ jobs:
             exit 1
           fi
           
+          # parse version to set these
+          bareversion=$(echo $version | sed -r 's/([0-9](\.[0-9]){1,2}).*/\1/')
+          versionsuffix=$(echo $version | sed -r 's/[0-9\.]+(.*)/\1/')
+          
           echo "version=$version" >> $GITHUB_OUTPUT
+          echo "bareversion=$bareversion" >> $GITHUB_OUTPUT
+          echo "versionsuffix=$versionsuffix" >> $GITHUB_OUTPUT
           echo "bundleID=$bundleID" >> $GITHUB_OUTPUT
           echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
           echo "releaseArchivename=$releaseNameNoSpaces" >> $GITHUB_OUTPUT
@@ -153,6 +159,13 @@ jobs:
           name: Build log
           path: |
             ${{ steps.build.outputs.log }}
+      
+      - name: "Patch Version String"
+        if: ${{ steps.version.outputs.versionsuffix != '' }}
+        run: |
+          :
+          echo "- Removing trailing ${{ steps.version.outputs.versionsuffix }} from Info.plist CFBundleShortVersionString"
+          plutil something-something
       
       - name: "Codesign App Bundle"
         run: |
@@ -300,9 +313,6 @@ jobs:
           echo "- Base64-encode certificate to make \"$certname\""
           echo "${{ secrets.PKG_MACOS_CERTIFICATE }}" | base64 --decode > "$certname"
           
-          # it might or might not be necessary to unlock the keychain again
-          #security unlock-keychain -p "${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}" build.keychain
-          
           echo "- Import \"$certname\" into \"build.keychain\""
           security import "$certname" -k build.keychain \
             -P "${{ secrets.PKG_MACOS_CERTIFICATE_PWD }}" -T /usr/bin/codesign
@@ -312,14 +322,10 @@ jobs:
           packagefilename="${{ steps.version.outputs.releaseArchivename }}.pkg"
           
           echo "- Package app to make \"$packagefilename\""
-          echo "xcrun productbuild --sign \"${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}\" \
-            --component \"${{ env.builddir }}/${{ env.bundlename }}\" /Applications \
-            \"$packagefilename\""
-          
           xcrun productbuild --sign "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" \
             --component "${{ env.builddir }}/${{ env.bundlename }}" /Applications \
             "$packagefilename"
-      
+          
           echo "file=$packagefilename" >> $GITHUB_OUTPUT
       
       - name: Verify Package and AppStore Connect Acceess
@@ -343,9 +349,7 @@ jobs:
           # in the expected subdirectory with the expected name containing the key id
           
           packagefile="${{ steps.package.outputs.file }}"
-          issuerid="${{ secrets.APPSTORECONNECT_APIISSUERID }}"
-          keyid="${{ secrets.APPSTORECONNECT_APIKEYID }}"
-          keyfilename="AuthKey_${keyid}.p8"
+          keyfilename="AuthKey_${{ secrets.APPSTORECONNECT_APIKEYID }}.p8"
           keydir="private_keys"
           mkdir "$keydir"
           
@@ -354,14 +358,12 @@ jobs:
           # if deploying, this decoded key file will be used again by altool
           
           echo "- Run verification"
-          echo "xcrun altool --validate-app --file \"$packagefile\" --type macos \
-            --apiKey \"$keyid\" --apiIssuer \"$issuerid\""
-          
           xcrun altool --validate-app --file "$packagefile" --type macos \
-            --apiKey "$keyid" --apiIssuer "$issuerid"
+            --apiKey "${{ secrets.APPSTORECONNECT_APIKEYID }}" \
+            --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}"
           
-          echo "keyid=$keyid" >> $GITHUB_OUTPUT
-          echo "issuerid=$issuerid" >> $GITHUB_OUTPUT
+          echo "keyid=${{ secrets.APPSTORECONNECT_APIKEYID }}" >> $GITHUB_OUTPUT
+          echo "issuerid=${{ secrets.APPSTORECONNECT_APIISSUERID }}" >> $GITHUB_OUTPUT
       
       - name: Release Notes
         id: notes
@@ -448,11 +450,6 @@ jobs:
           versionstr="${{ steps.version.outputs.version }}"
           
           echo "- Deploy"
-          echo "xcrun altool --upload-package --file \"$packagefile\" --type macos \
-            --apiKey \"$keyid\" --apiIssuer \"$issuerid\" --bundle-id \"$bundleid\" \
-            --bundle-version \"$bundleversion\" --bundle-short-version-string \"$versionstr\" \
-            --apple-id \"${{ secrets.APPSTORECONNECT_APPLEID }}\" \"
-          
           xcrun altool --upload-package --file "$packagefile" --type macos \
             --apiKey "$keyid" --apiIssuer "$issuerid" --bundle-id "$bundleid" \
             --bundle-version "$bundleversion" --bundle-short-version-string "$versionstr" \
