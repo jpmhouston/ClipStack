@@ -161,11 +161,15 @@ jobs:
             ${{ steps.build.outputs.log }}
       
       - name: "Patch Version String"
-        if: ${{ steps.version.outputs.versionsuffix != '' }}
+        if: ${{ steps.version.outputs.versionsuffix != '' && steps.version.outputs.bareversion != '' }}
         run: |
           :
-          echo "- Removing trailing ${{ steps.version.outputs.versionsuffix }} from Info.plist CFBundleShortVersionString"
-          plutil something-something
+          test -d "${{ env.builddir }}/${{ env.bundlename }}" || exit 1
+          
+          echo "- Removing suffix \"${{ steps.version.outputs.versionsuffix }}\" from Info.plist CFBundleShortVersionString"
+          plutil -replace CFBundleShortVersionString -string \
+            "${{ steps.version.outputs.bareversion }}" \
+            "${{ env.builddir }}/${{ env.bundlename }}/Contents/Info.plist"
       
       - name: "Codesign App Bundle"
         run: |
