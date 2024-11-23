@@ -16,6 +16,8 @@ on:
 env:
   uploadDefault: true
   projectfile: Maccy.xcodeproj
+  entitlementsfile: Cleepp/Cleepp.entitlements
+  profiledestinationfile: embedded.provisionprofile
   buildscheme: "Cleepp (App Store)"
   productname: "Batch Clipboard"
   bundlename: "Batch Clipboard.app"
@@ -48,7 +50,7 @@ jobs:
         run: |
           :
           brew update
-          brew install pandoc create-dmg # coreutils
+          brew install pandoc create-dmg xmlstarlet
           
           if ! command -v xcodebuild >/dev/null 2>&1 || ! command -v xcbeautify >/dev/null 2>&1 \
             || ! command -v plutil >/dev/null 2>&1 || ! command -v security >/dev/null 2>&1 \
@@ -63,9 +65,10 @@ jobs:
             echo "::error::Required developer executables not found: codesign, productbuild, altool"
             exit 1
           fi
-          if ! command -v pandoc >/dev/null 2>&1 || ! command -v create-dmg >/dev/null 2>&1
+          if ! command -v pandoc >/dev/null 2>&1 || ! command -v create-dmg >/dev/null 2>&1 \
+            || ! command -v xml >/dev/null 2>&1
           then
-            echo "::error::Required packge executables not found: pandoc, create-dmg, xcodeproj"
+            echo "::error::Required homebrew executables not found: pandoc, create-dmg, xml"
             exit 1
           fi
       
@@ -139,6 +142,30 @@ jobs:
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
       
+      - name: Patch Entitlements
+        run: |
+          :
+          if [[ -z "${{ secrets.STORE_MACOS_TEAMID }}" ]] ; then
+            echo "::error::Secret STORE_MACOS_TEAMID not defined"
+            exit 1
+          fi
+          
+          echo "- Amend entitlements to include app and team IDs for testflight"
+          
+          # from tips at https://forums.developer.apple.com/forums/thread/733942
+          # com.apple.application-identifier = app ID which is <teamID>.<bundleid>
+          # com.apple.developer.team-identifier = team ID
+          
+          xml ed --inplace \
+            --subnode "/plist/dict" --type elem -n "key" -v "com.apple.application-identifier" \
+            --subnode "/plist/dict" --type elem -n "string" -v \
+              "${{ secrets.STORE_MACOS_TEAMID }}.${{ steps.version.outputs.bundleid }}" \
+            --subnode "/plist/dict" --type elem -n "key" -v "com.apple.developer.team-identifier" \
+            --subnode "/plist/dict" --type elem -n "string" -v "${{ secrets.STORE_MACOS_TEAMID }}" \
+            "${{ env.entitlementsfile }}"
+          
+          cat "${{ env.entitlementsfile }}" # for now output it to the log
+      
       - name: Build
         id: build
         run: |
@@ -179,6 +206,19 @@ jobs:
           echo "version=$bundleVersion" >> $GITHUB_OUTPUT
           echo "log=$buildlogfile" >> $GITHUB_OUTPUT
           echo "appbundle=${{ env.builddir }}/${{ env.bundlename }}" >> $GITHUB_OUTPUT
+      
+      - name: Add Provisioning Profile
+        run: |
+          :
+          if [[ -z "${{ secrets.STORE_MACOS_PROFILE }}" ]] ; then
+            echo "::error::Secret STORE_MACOS_PROFILE not defined"
+            exit 1
+          fi
+          
+          echo "- Copy provisioning profile into app bundle"
+          
+          profiledest="${{ env.builddir }}/${{ env.bundlename }}/Contents/${{ env.profiledestinationfile }}"
+          echo "${{ secrets.STORE_MACOS_PROFILE }}" | base64 --decode > "$profiledest"
       
       - name: Save Build Log as Artifact
         if: ${{ success() || failure() }}
@@ -464,7 +504,7 @@ jobs:
           
           keyid="${{ steps.connect.outputs.keyid }}"
           issuerid="${{ steps.connect.outputs.issuerid }}"
-          bundleid="${{ steps.build.outputs.bundleid }}"
+          bundleid="${{ steps.version.outputs.bundleid }}"
           bundleversion="${{ steps.build.outputs.version }}"
           versionstr="${{ steps.version.outputs.bareversion }}"
           
