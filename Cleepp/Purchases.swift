@@ -170,7 +170,7 @@ class Purchases: NSObject {
   }
   
   func startFetchingDummyProductDetails() throws {
-    // probably should remove before 1.0
+    #if DEBUG
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
       guard let self = self else { return }
       let productList = [
@@ -179,6 +179,9 @@ class Purchases: NSObject {
       ]
       callObservers(withUpdate: .success(.products(productList)))
     }
+    #else
+    throw PurchaseError.unknown
+    #endif
   }
   
   func startPurchase(_ product: ProductDetail) throws {
@@ -216,13 +219,6 @@ class Purchases: NSObject {
     guard SKPaymentQueue.canMakePayments() else {
       throw PurchaseError.prohibited
     }
-    
-    // temp test code:
-//    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-//      self?.boughtItems.insert(.bonus)
-//      self?.callObservers(withUpdate: .success(.restorations([.bonus])))
-//      return
-//    }
     
     // previously called refreshReceipt() first here, but now the helper/wrapper
     // method restorePurchases() is expected to transparently refresh the receipt first
@@ -409,6 +405,10 @@ class Purchases: NSObject {
       callObservers(withUpdate: .failure(.unknown))
     }
   }
+  
+  // Below is what I thought was needed when first using SwiftyStoreKit ...
+  // I still don't know for sure if anything like these .purchased and .restored
+  // handlers are needed:
   
 //  private func completeTransactionsCallback(withPurchases purchases: [Purchase]) {
 //    for purchase in purchases {
