@@ -6,6 +6,27 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>1.0b6</title>
+            <pubDate>Wed, 11 Dec 2024 08:08:00 +0000</pubDate>
+            <link>https://github.com/jpmhouston/Cleepp/releases</link>
+            <sparkle:version>890</sparkle:version>
+            <sparkle:shortVersionString>1.0b6</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<ul>
+<li>Minor edits to section that brags about open source in the Intro
+widow.</li>
+<li>App Store build removes from the Intro widow references to a non-App
+Store build being downloadable from GitHub.</li>
+<li>App Store build shows links to standard store EULA and privacy
+policy in purchase window, button to open privacy policy also in the
+Intro widow.</li>
+<li>App Store build and the Xcode project have the now-unused framework
+SwiftyStoreKit fully removed.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b6/Batch.Clipboard.1.0b6.zip" length="6238205" type="application/octet-stream" sparkle:edSignature="x+YqmSu0qotrlpthG65L9P0j6Mi4oMwxAKi3nfGYjQveoAzbiTfHSD7VWd2CxufvgL+UO9ZIWfDOyyOm7aDnDA=="/>
+        </item>
+        <item>
             <title>1.0b5</title>
             <pubDate>Sun, 17 Nov 2024 14:44:28 +0000</pubDate>
             <link>https://github.com/jpmhouston/Cleepp/releases</link>
@@ -67,27 +88,6 @@ build no longer adds untagged releases for this purpose.</li>
 </ul>
 ]]></description>
             <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b4/Batch.Clipboard.1.0b4.zip" length="6234070" type="application/octet-stream" sparkle:edSignature="bpskE5aNj8txenrpr3sEHtTUZBfNs0tmz9d4LIRz+i5XE8K30z18LVu1b3BG148kXgsJDn7ZgxE5yg63w6sTBA=="/>
-        </item>
-        <item>
-            <title>1.0b3</title>
-            <pubDate>Thu, 10 Oct 2024 04:47:28 +0000</pubDate>
-            <link>https://github.com/jpmhouston/Cleepp/releases</link>
-            <sparkle:version>851</sparkle:version>
-            <sparkle:shortVersionString>1.0b3</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Rather than continuing to roll polish updates into b2, released it
-and this new one in succession in order to test Sparkle updates with a
-signed app.</p>
-<ul>
-<li>Minor updates to wording in the about box, intro, and disk image
-read me file.</li>
-<li>If user is hiding the status item then show the settings window when
-the application is reopened (for when we added back the user setting for
-hiding the status icon).</li>
-<li>Remove logging from the application’s Reopen callback.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/jpmhouston/Cleepp/releases/download/v1.0b3/Batch.Clipboard.1.0b3.zip" length="6228096" type="application/octet-stream" sparkle:edSignature="6ykzRSlnqwzj0YSCZvEGNqZQay1VqmF1C4uB2fThk4y6BVq3CtL2BuAgNV+1SjBXNqUOmMiRgF9KC1TMEgf5Cw=="/>
         </item>
         <item>
             <title>1.0b1</title>
