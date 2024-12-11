@@ -1,5 +1,5 @@
 {
-  "originHash" : "73b3b3b64299d266c64d24c8a097387e17456fc38bf7b00d8fb132e2bbf4df0c",
+  "originHash" : "50885dd66f3abcef39ee518c37e23450ee0a8be8ca1b8401331cd0331de80060",
   "pins" : [
     {
       "identity" : "asn1swift",
@@ -116,15 +116,6 @@
       "state" : {
         "revision" : "1f886cb20fedda14a5ac75efd09bc99c95b43a18",
         "version" : "1.4.1"
-      }
-    },
-    {
-      "identity" : "swiftystorekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bizz84/SwiftyStoreKit",
-      "state" : {
-        "revision" : "9ce911639680113dac9b554d6243e406a9758ebe",
-        "version" : "0.16.4"
       }
     },
     {

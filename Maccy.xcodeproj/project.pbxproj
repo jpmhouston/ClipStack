@@ -170,7 +170,6 @@
 		8F8C48A32BAD51B000C3A219 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C48462BAD33BB00C3A219 /* Application.xib */; };
 		8F8C48A42BAD51B000C3A219 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F0D3C8B2BABB17200DDB603 /* Menu.xib */; };
 		8F8C48A92BAD51B000C3A219 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DA00992F256411F90030E697 /* LICENSE */; };
-		8F8C48B32BAD536900C3A219 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48B22BAD536900C3A219 /* SwiftyStoreKit */; };
 		8F8C48B62BAD538600C3A219 /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8C48B52BAD538600C3A219 /* TPInAppReceipt */; };
 		8F8C48B92BAD547E00C3A219 /* PurchaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C47ED2BACD0D200C3A219 /* PurchaseSettingsViewController.swift */; };
 		8F8C48BA2BAD549300C3A219 /* PurchaseSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C47EE2BACD0D200C3A219 /* PurchaseSettingsViewController.xib */; };
@@ -678,7 +677,6 @@
 			files = (
 				8F5CBF342C8CFBB70058C06C /* Flare in Frameworks */,
 				8F8C48962BAD51B000C3A219 /* Carbon.framework in Frameworks */,
-				8F8C48B32BAD536900C3A219 /* SwiftyStoreKit in Frameworks */,
 				8F8C48972BAD51B000C3A219 /* KeyboardShortcuts in Frameworks */,
 				8F8C48982BAD51B000C3A219 /* SwiftHEXColors in Frameworks */,
 				8FCDFC192BC7E96C00A16FBE /* SDWebImage in Frameworks */,
@@ -1167,7 +1165,6 @@
 				8F8C48522BAD51B000C3A219 /* SwiftHEXColors */,
 				8F8C48542BAD51B000C3A219 /* KeyboardShortcuts */,
 				8F8C48582BAD51B000C3A219 /* Settings */,
-				8F8C48B22BAD536900C3A219 /* SwiftyStoreKit */,
 				8F8C48B52BAD538600C3A219 /* TPInAppReceipt */,
 				8FCDFC182BC7E96C00A16FBE /* SDWebImage */,
 				8F5CBF332C8CFBB70058C06C /* Flare */,
@@ -1331,7 +1328,6 @@
 				DAC6CE8F26E1AC19002B70B8 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				2F39CB022AD9A93C00B749FD /* XCRemoteSwiftPackageReference "Sparkle" */,
 				2F39CB082AD9AE1F00B749FD /* XCRemoteSwiftPackageReference "Settings" */,
-				8F8C48B12BAD536900C3A219 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 				8F8C48B42BAD538600C3A219 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */,
 				8FCDFC152BC7E92400A16FBE /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				8F5CBF322C8CFBB70058C06C /* XCRemoteSwiftPackageReference "flare" */,
@@ -2757,14 +2753,6 @@
 				minimumVersion = 3.0.3;
 			};
 		};
-		8F8C48B12BAD536900C3A219 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.16.0;
-			};
-		};
 		8F8C48B42BAD538600C3A219 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tikhop/TPInAppReceipt";
@@ -2893,11 +2881,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F8C48592BAD51B000C3A219 /* XCRemoteSwiftPackageReference "Settings" */;
 			productName = Settings;
-		};
-		8F8C48B22BAD536900C3A219 /* SwiftyStoreKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8F8C48B12BAD536900C3A219 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */;
-			productName = SwiftyStoreKit;
 		};
 		8F8C48B52BAD538600C3A219 /* TPInAppReceipt */ = {
 			isa = XCSwiftPackageProductDependency;
