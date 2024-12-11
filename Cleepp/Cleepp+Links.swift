@@ -15,6 +15,8 @@ extension Cleepp {
   static var homepageBonusDocsURL = "https://github.com/jpmhouston/Cleepp/wiki/Bonus-Features-for-the-Mac-App-Store-Version"
   static var donationURL = "https://www.buymeacoffee.com/bananameterlabs"
   static var macAppStoreURL = "https://github.com/jpmhouston/Cleepp/wiki/Available-in-the-Mac-App-Store-Soon"
+  static var appStoreUserAgreementURL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+  static var privacyPolicyURL = "https://github.com/jpmhouston/Cleepp/wiki/Privacy-Policy"
   static var maccyURL = "https://maccy.app"
   static var supportEmailAddress = "batchclip.support@bananameter.lol"
   static var supportEmailURL = "mailto:" + Cleepp.supportEmailAddress
