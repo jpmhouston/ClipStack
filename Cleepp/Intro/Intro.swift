@@ -103,8 +103,12 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var copySupportEmailButton: NSButton?
   @IBOutlet var openDonationLinkButton: NSButton?
   @IBOutlet var copyDonationLinkButton: NSButton?
+  @IBOutlet var openPrivacyPolicyLinkButton: NSButton?
+  @IBOutlet var copyPrivacyPolicyLinkButton: NSButton?
   //@IBOutlet var sendL10nEmailButton: NSButton?
   //@IBOutlet var copyL10nEmailButton: NSButton?
+  @IBOutlet var aboutGitHubLabel: NSTextField?
+  @IBOutlet var appStoreAboutGitHubLabel: NSTextField?
   @IBOutlet var openGitHubLinkButton: NSButton?
   @IBOutlet var copyGitHubLinkButton: NSButton?
   @IBOutlet var openMaccyLinkButton: NSButton?
@@ -198,11 +202,21 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       inAppPurchageLabel?.isHidden = false
       appStorePromoTitle?.isHidden = true
       appStorePromoLabel?.isHidden = true
+      openDonationLinkButton?.isHidden = true
+      copyDonationLinkButton?.isHidden = true
+      openPrivacyPolicyLinkButton?.isHidden = false
+      copyPrivacyPolicyLinkButton?.isHidden = true
+      aboutGitHubLabel?.isHidden = true
+      appStoreAboutGitHubLabel?.isHidden = false
       #else
       inAppPurchageTitle?.isHidden = true
       inAppPurchageLabel?.isHidden = true
       appStorePromoTitle?.isHidden = false
       appStorePromoLabel?.isHidden = false
+      openPrivacyPolicyLinkButton?.isHidden = true
+      copyPrivacyPolicyLinkButton?.isHidden = true
+      appStoreAboutGitHubLabel?.isHidden = true
+      aboutGitHubLabel?.isHidden = false
       #endif
       
     default:
@@ -338,8 +352,13 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     copySupportEmailButton?.isHidden = !showCopy
     //sendL10nEmailButton?.isHidden = showCopy  // for now i've removed the translation buttons
     //copyL10nEmailButton?.isHidden = !showCopy  // until i form some l10n plans
+    #if FOR_APP_STORE
+    openPrivacyPolicyLinkButton?.isHidden = showCopy
+    copyPrivacyPolicyLinkButton?.isHidden = !showCopy
+    #else
     openDonationLinkButton?.isHidden = showCopy
     copyDonationLinkButton?.isHidden = !showCopy
+    #endif
     openGitHubLinkButton?.isHidden = showCopy
     copyGitHubLinkButton?.isHidden = !showCopy
     openMaccyLinkButton?.isHidden = showCopy
@@ -511,7 +530,15 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBAction func copyDonationWebpage(_ sender: AnyObject) {
     Clipboard.shared.copy(Cleepp.donationURL, excludeFromHistory: false)
   }
-
+  
+  @IBAction func openPrivacyPolicyWebpage(_ sender: AnyObject) {
+    openURL(string: Cleepp.privacyPolicyURL)
+  }
+  
+  @IBAction func copyPrivacyPolicyWebpage(_ sender: AnyObject) {
+    Clipboard.shared.copy(Cleepp.privacyPolicyURL, excludeFromHistory: false)
+  }
+  
   @IBAction func openMaccyWebpage(_ sender: AnyObject) {
     openURL(string: Cleepp.maccyURL)
   }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1000,8 +1000,30 @@ DQ
                                                 <action selector="copyDonationWebpage:" target="o5X-kK-gzk" id="OxY-R5-YAJ"/>
                                             </connections>
                                         </button>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xiZ-Qf-6K9">
+                                            <rect key="frame" x="-7" y="-7" width="155" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Open Privacy Policy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RSV-zx-Ocu">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="openPrivacyPolicyWebpage:" target="o5X-kK-gzk" id="n24-Od-GVB"/>
+                                            </connections>
+                                        </button>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GsH-9g-ozW">
+                                            <rect key="frame" x="-7" y="-7" width="182" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Copy Privacy Policy Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KiV-53-hoh">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="copyPrivacyPolicyWebpage:" target="o5X-kK-gzk" id="VNp-1W-6OX"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
@@ -1016,6 +1038,8 @@ DQ
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="wgz-NP-bdb" userLabel="Open source.. title container">
@@ -1023,7 +1047,7 @@ DQ
                                     <subviews>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JiV-Jm-peE">
                                             <rect key="frame" x="-2" y="0.0" width="548" height="20"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Batch Clipboard is open source!" id="dfQ-sj-HNd">
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Batch Clipboard is open source with proven foundations" id="dfQ-sj-HNd">
                                                 <font key="font" metaFont="system" size="17"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1042,7 +1066,15 @@ DQ
                                     <subviews>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-fV-YLk">
                                             <rect key="frame" x="-2" y="0.0" width="405" height="34"/>
-                                            <textFieldCell key="cell" title="It's source is available on GitHub where a non-App Store version can be downloaded." id="ncU-gg-tO7">
+                                            <textFieldCell key="cell" title="It's source code is available on GitHub for inspection, the non-App Store version can be download from here." id="ncU-gg-tO7">
+                                                <font key="font" metaFont="system" size="14"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="id9-2O-9Q5">
+                                            <rect key="frame" x="-2" y="17" width="742" height="17"/>
+                                            <textFieldCell key="cell" title="It's source code is available on GitHub for inspection, it's safe handling of your data can be checked and validated." id="ON8-N1-vLv">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1073,8 +1105,10 @@ DQ
                                         <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
+                                        <integer value="1000"/>
                                     </visibilityPriorities>
                                     <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
@@ -1085,7 +1119,7 @@ DQ
                                     <subviews>
                                         <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="efI-DS-y9J">
                                             <rect key="frame" x="-2" y="0.0" width="408" height="34"/>
-                                            <textFieldCell key="cell" title="Batch Clipboard is a derivative of Maccy. Check out the original for a free, more full-featured clipboard manager." id="wHd-ST-cAs">
+                                            <textFieldCell key="cell" title="Batch Clipboard is a derivative of Maccy. Check out that original app if interested in a full-featured clipboard manager." id="wHd-ST-cAs">
                                                 <font key="font" metaFont="system" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1190,7 +1224,9 @@ DQ
         </customView>
         <viewController id="o5X-kK-gzk" customClass="IntroViewController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
+                <outlet property="aboutGitHubLabel" destination="bJz-fV-YLk" id="5w4-Ha-0Gd"/>
                 <outlet property="animatedLogoImage" destination="dAC-wT-V2b" id="UYc-BF-gYg"/>
+                <outlet property="appStoreAboutGitHubLabel" destination="id9-2O-9Q5" id="DCr-Fx-IU2"/>
                 <outlet property="appStorePromoLabel" destination="dOo-x3-0gT" id="lyz-aE-wSq"/>
                 <outlet property="appStorePromoTitle" destination="5i0-OJ-wh8" id="ECQ-dY-ePn"/>
                 <outlet property="authorizationDeniedEmoji" destination="4k3-Do-TDL" id="m2H-5T-AZy"/>
@@ -1199,6 +1235,7 @@ DQ
                 <outlet property="copyDonationLinkButton" destination="AGe-vu-v96" id="eyU-dV-ixW"/>
                 <outlet property="copyGitHubLinkButton" destination="s0H-ax-VVd" id="87c-2j-cPP"/>
                 <outlet property="copyMaccyLinkButton" destination="DoP-zS-gJW" id="GjV-WB-fiQ"/>
+                <outlet property="copyPrivacyPolicyLinkButton" destination="GsH-9g-ozW" id="7CG-vE-c5K"/>
                 <outlet property="copySupportEmailButton" destination="Hau-Kb-5xn" id="oyw-iY-ByW"/>
                 <outlet property="demoCopyBubble" destination="lnS-C6-5P3" id="sEQ-BR-4UA"/>
                 <outlet property="demoImage" destination="2Yt-bt-A1K" id="Rr2-18-Gdc"/>
@@ -1218,6 +1255,7 @@ DQ
                 <outlet property="openDonationLinkButton" destination="K04-rZ-O0s" id="tZ5-ra-2Zu"/>
                 <outlet property="openGitHubLinkButton" destination="kdS-e2-KIB" id="fMj-FS-eI5"/>
                 <outlet property="openMaccyLinkButton" destination="Fff-0G-hUh" id="t0C-46-bRx"/>
+                <outlet property="openPrivacyPolicyLinkButton" destination="xiZ-Qf-6K9" id="pSQ-14-QH5"/>
                 <outlet property="openSecurityPanelButton" destination="2VO-Pm-i8d" id="R4l-fD-bqu"/>
                 <outlet property="openSecurityPanelSpinner" destination="w2D-dO-d7T" id="U9Z-8M-Muf"/>
                 <outlet property="sendSupportEmailButton" destination="Jez-C6-oFa" id="Lkh-Vo-TqX"/>
