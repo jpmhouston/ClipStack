@@ -1,5 +1,12 @@
 Batch Clipboard Changelog
 
+## version 1.0b6 (2024-12-10)
+
+- Minor edits to section that brags about open source in the Intro widow. 
+- App Store build removes from the Intro widow references to a non-App Store build being downloadable from GitHub.
+- App Store build shows links to standard store EULA and privacy policy in purchase window, button to open privacy policy also in the Intro widow.
+- App Store build and the Xcode project have the now-unused framework SwiftyStoreKit fully removed.
+
 ## version 1.0b5 (2024-11-17)
 
 - App Store build should now successfully fetch products from Apple servers and support making purchases.
