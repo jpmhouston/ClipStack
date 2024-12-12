@@ -104,7 +104,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
   @IBOutlet var openDonationLinkButton: NSButton?
   @IBOutlet var copyDonationLinkButton: NSButton?
   @IBOutlet var openPrivacyPolicyLinkButton: NSButton?
-  @IBOutlet var copyPrivacyPolicyLinkButton: NSButton?
+  @IBOutlet var openAppStoreEULALinkButton: NSButton?
   //@IBOutlet var sendL10nEmailButton: NSButton?
   //@IBOutlet var copyL10nEmailButton: NSButton?
   @IBOutlet var aboutGitHubLabel: NSTextField?
@@ -193,10 +193,6 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       runDemo()
       
     case .links:
-      showAltCopyEmailButtons(false)
-      setupOptionKeyObserver() { [weak self] event in
-        self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
-      }
       #if FOR_APP_STORE
       inAppPurchageTitle?.isHidden = false
       inAppPurchageLabel?.isHidden = false
@@ -205,7 +201,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       openDonationLinkButton?.isHidden = true
       copyDonationLinkButton?.isHidden = true
       openPrivacyPolicyLinkButton?.isHidden = false
-      copyPrivacyPolicyLinkButton?.isHidden = true
+      openAppStoreEULALinkButton?.isHidden = false
       aboutGitHubLabel?.isHidden = true
       appStoreAboutGitHubLabel?.isHidden = false
       #else
@@ -214,10 +210,14 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
       appStorePromoTitle?.isHidden = false
       appStorePromoLabel?.isHidden = false
       openPrivacyPolicyLinkButton?.isHidden = true
-      copyPrivacyPolicyLinkButton?.isHidden = true
-      appStoreAboutGitHubLabel?.isHidden = true
+      openAppStoreEULALinkButton?.isHidden = true
       aboutGitHubLabel?.isHidden = false
+      appStoreAboutGitHubLabel?.isHidden = true
       #endif
+      showAltCopyEmailButtons(false)
+      setupOptionKeyObserver() { [weak self] event in
+        self?.showAltCopyEmailButtons(event.modifierFlags.contains(.option))
+      }
       
     default:
       break
@@ -352,10 +352,7 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     copySupportEmailButton?.isHidden = !showCopy
     //sendL10nEmailButton?.isHidden = showCopy  // for now i've removed the translation buttons
     //copyL10nEmailButton?.isHidden = !showCopy  // until i form some l10n plans
-    #if FOR_APP_STORE
-    openPrivacyPolicyLinkButton?.isHidden = showCopy
-    copyPrivacyPolicyLinkButton?.isHidden = !showCopy
-    #else
+    #if !FOR_APP_STORE
     openDonationLinkButton?.isHidden = showCopy
     copyDonationLinkButton?.isHidden = !showCopy
     #endif
@@ -535,8 +532,8 @@ public class IntroViewController: NSViewController, PagedWindowControllerDelegat
     openURL(string: Cleepp.privacyPolicyURL)
   }
   
-  @IBAction func copyPrivacyPolicyWebpage(_ sender: AnyObject) {
-    Clipboard.shared.copy(Cleepp.privacyPolicyURL, excludeFromHistory: false)
+  @IBAction func openAppStoreEULAWebpage(_ sender: AnyObject) {
+    openURL(string: Cleepp.appStoreUserAgreementURL)
   }
   
   @IBAction func openMaccyWebpage(_ sender: AnyObject) {

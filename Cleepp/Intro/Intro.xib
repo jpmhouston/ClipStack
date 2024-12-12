@@ -1001,8 +1001,8 @@ DQ
                                             </connections>
                                         </button>
                                         <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xiZ-Qf-6K9">
-                                            <rect key="frame" x="-7" y="-7" width="155" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Open Privacy Policy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RSV-zx-Ocu">
+                                            <rect key="frame" x="-7" y="-7" width="118" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Privacy Policy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RSV-zx-Ocu">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -1011,13 +1011,13 @@ DQ
                                             </connections>
                                         </button>
                                         <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GsH-9g-ozW">
-                                            <rect key="frame" x="-7" y="-7" width="182" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Copy Privacy Policy Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KiV-53-hoh">
+                                            <rect key="frame" x="-7" y="-7" width="132" height="32"/>
+                                            <buttonCell key="cell" type="push" title="App Store EULA" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KiV-53-hoh">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="copyPrivacyPolicyWebpage:" target="o5X-kK-gzk" id="VNp-1W-6OX"/>
+                                                <action selector="openAppStoreEULAWebpage:" target="o5X-kK-gzk" id="P5P-Rg-RoP"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -1235,7 +1235,6 @@ DQ
                 <outlet property="copyDonationLinkButton" destination="AGe-vu-v96" id="eyU-dV-ixW"/>
                 <outlet property="copyGitHubLinkButton" destination="s0H-ax-VVd" id="87c-2j-cPP"/>
                 <outlet property="copyMaccyLinkButton" destination="DoP-zS-gJW" id="GjV-WB-fiQ"/>
-                <outlet property="copyPrivacyPolicyLinkButton" destination="GsH-9g-ozW" id="7CG-vE-c5K"/>
                 <outlet property="copySupportEmailButton" destination="Hau-Kb-5xn" id="oyw-iY-ByW"/>
                 <outlet property="demoCopyBubble" destination="lnS-C6-5P3" id="sEQ-BR-4UA"/>
                 <outlet property="demoImage" destination="2Yt-bt-A1K" id="Rr2-18-Gdc"/>
@@ -1251,6 +1250,7 @@ DQ
                 <outlet property="needsAuthorizationEmoji" destination="gJb-ZW-iAj" id="xNI-2L-jsS"/>
                 <outlet property="needsAuthorizationLabel" destination="EvF-0r-9Z1" id="Ffe-yk-KRE"/>
                 <outlet property="nextAuthorizationDirectionsLabel" destination="rEx-zK-yMR" id="yK3-0r-SVQ"/>
+                <outlet property="openAppStoreEULALinkButton" destination="GsH-9g-ozW" id="7CG-vE-c5K"/>
                 <outlet property="openDocsLinkButton" destination="xpD-ga-KD6" id="uo7-xc-kBB"/>
                 <outlet property="openDonationLinkButton" destination="K04-rZ-O0s" id="tZ5-ra-2Zu"/>
                 <outlet property="openGitHubLinkButton" destination="kdS-e2-KIB" id="fMj-FS-eI5"/>
