@@ -1,5 +1,11 @@
 Batch Clipboard Changelog
 
+## version 1.0b7 (2024-12-12)
+
+- App Store build no longer shows link to the privacy policy in the purchase window, only the standard store EULA link is relevant there.
+- App Store build adds button to the Intro widow that opens the standard store EULA.
+- App Store build adds additional links to the About box to open the privacy policy and the standard store EULA.
+
 ## version 1.0b6 (2024-12-10)
 
 - Minor edits to section that brags about open source in the Intro widow. 
