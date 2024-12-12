@@ -17,13 +17,23 @@ class About {
     string.addAttribute(.link, value: Cleepp.homepageURL, range: NSRange(location: 0, length: 7))
     string.addAttribute(.link, value: Cleepp.githubURL, range: NSRange(location: 10, length: 6))
     string.addAttribute(.link, value: Cleepp.supportEmailURL, range: NSRange(location: 19, length: 7))
+    #if FOR_APP_STORE
+    string.append(NSAttributedString(string: "\n", attributes: [:]))
+    let spacingStyle = NSMutableParagraphStyle()
+    spacingStyle.maximumLineHeight = 3
+    string.append(NSAttributedString(string: "\n", attributes: [.paragraphStyle: spacingStyle]))
+    string.append(NSAttributedString(string: "Privacy Policy | App Store EULA",
+                                     attributes: [.foregroundColor: NSColor.labelColor]))
+    string.addAttribute(.link, value: Cleepp.privacyPolicyURL, range: NSRange(location: 28, length: 14))
+    string.addAttribute(.link, value: Cleepp.appStoreUserAgreementURL, range: NSRange(location: 45, length: 14))
+    #endif
     return string
   }
   
   private var introLink: NSAttributedString {
-    let string = NSMutableAttributedString(string: "For more information click this link to\nreopen the intro window.",
+    let string = NSMutableAttributedString(string: "For details reopen the intro window.",
                                            attributes: [.foregroundColor: NSColor.labelColor])
-    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 40, length: 23))
+    string.addAttribute(.link, value: Cleepp.showIntroInAppURL, range: NSRange(location: 12, length: 23))
     return string
   }
   
