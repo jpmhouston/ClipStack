@@ -8,7 +8,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PurchaseDetailWindowController" customModule="Batch_Clipboard" customModuleProvider="target">
             <connections>
                 <outlet property="buyButton" destination="sBN-6U-amv" id="gUE-ja-qLO"/>
-                <outlet property="privacyPolicyLinkLabel" destination="Md2-zR-KU7" id="Wpe-b8-KsW"/>
                 <outlet property="tableView" destination="qws-Mb-yig" id="gZ8-Yf-CTL"/>
                 <outlet property="userAgreementLinkLabel" destination="cOx-ct-8Sf" id="vc7-my-5Rm"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="LI7-Wu-LZF"/>
@@ -196,14 +195,6 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Md2-zR-KU7" customClass="HyperlinkTextField" customModule="Batch_Clipboard" customModuleProvider="target">
-                        <rect key="frame" x="153" y="23" width="86" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="[Privacy Policy]" allowsEditingTextAttributes="YES" id="e0H-YW-Aop">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sBN-6U-amv">
                         <rect key="frame" x="417" y="13" width="90" height="32"/>
                         <buttonCell key="cell" type="push" title="Buy for $" alternateTitle="Buy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oOa-BR-fjg">
@@ -233,12 +224,10 @@ Gw
                     <constraint firstAttribute="bottom" secondItem="sBN-6U-amv" secondAttribute="bottom" constant="20" symbolic="YES" id="5kk-eE-CT5"/>
                     <constraint firstItem="aIl-Kb-5PX" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="HMo-cx-BI5"/>
                     <constraint firstAttribute="trailing" secondItem="sBN-6U-amv" secondAttribute="trailing" constant="20" symbolic="YES" id="Kb4-nl-4on"/>
-                    <constraint firstItem="Md2-zR-KU7" firstAttribute="leading" secondItem="cOx-ct-8Sf" secondAttribute="trailing" constant="12" id="LC6-P8-SJu"/>
                     <constraint firstAttribute="trailing" secondItem="wCL-YB-GAI" secondAttribute="trailing" constant="20" symbolic="YES" id="SXb-XW-7md"/>
                     <constraint firstItem="sBN-6U-amv" firstAttribute="top" secondItem="wCL-YB-GAI" secondAttribute="bottom" constant="20" symbolic="YES" id="TEo-I7-i2O"/>
                     <constraint firstItem="cOx-ct-8Sf" firstAttribute="centerY" secondItem="7Lg-0e-ZX1" secondAttribute="centerY" id="ahL-8y-56V"/>
                     <constraint firstItem="aIl-Kb-5PX" firstAttribute="trailing" secondItem="wCL-YB-GAI" secondAttribute="trailing" constant="-4" id="f70-xO-oRp"/>
-                    <constraint firstItem="Md2-zR-KU7" firstAttribute="top" secondItem="cOx-ct-8Sf" secondAttribute="top" id="fbR-wj-T8m"/>
                     <constraint firstItem="cOx-ct-8Sf" firstAttribute="leading" secondItem="aIl-Kb-5PX" secondAttribute="leading" id="kJh-yx-wBd"/>
                     <constraint firstItem="aIl-Kb-5PX" firstAttribute="leading" secondItem="wCL-YB-GAI" secondAttribute="leading" constant="4" id="ocX-73-3CS"/>
                     <constraint firstItem="wCL-YB-GAI" firstAttribute="top" secondItem="aIl-Kb-5PX" secondAttribute="bottom" constant="20" id="rPt-KB-Wv6"/>

@@ -24,7 +24,7 @@ class PurchaseDetailWindowController: NSWindowController, NSWindowDelegate, NSTa
   @IBOutlet var tableView: NSTableView!
   @IBOutlet var buyButton: NSButton!
   @IBOutlet var userAgreementLinkLabel: NSTextField!
-  @IBOutlet var privacyPolicyLinkLabel: NSTextField!
+  //@IBOutlet var privacyPolicyLinkLabel: NSTextField!
   
   private var disabledBuyButtonTitle: String = ""
   private var templateBuyButtonTitle: String = ""
@@ -53,14 +53,14 @@ class PurchaseDetailWindowController: NSWindowController, NSWindowDelegate, NSTa
     disabledBuyButtonTitle = buyButton.alternateTitle
     buyButton.alternateTitle = ""
     
-    var styled = NSMutableAttributedString(attributedString: userAgreementLinkLabel.attributedStringValue)
+    let styled = NSMutableAttributedString(attributedString: userAgreementLinkLabel.attributedStringValue)
     let font = userAgreementLinkLabel.font ?? NSFont.labelFont(ofSize: NSFont.smallSystemFontSize)
     styled.applySimpleStyles(basedOnFont: font, withLink: Cleepp.appStoreUserAgreementURL)
     userAgreementLinkLabel.attributedStringValue = styled
     
-    styled = NSMutableAttributedString(attributedString: privacyPolicyLinkLabel.attributedStringValue)
-    styled.applySimpleStyles(basedOnFont: font, withLink: Cleepp.privacyPolicyURL)
-    privacyPolicyLinkLabel.attributedStringValue = styled
+    //styled = NSMutableAttributedString(attributedString: privacyPolicyLinkLabel.attributedStringValue)
+    //styled.applySimpleStyles(basedOnFont: font, withLink: Cleepp.privacyPolicyURL)
+    //privacyPolicyLinkLabel.attributedStringValue = styled
     
     if purchases.isEmpty, let defaultSelectRow = products.firstIndex(where: { $0.item == .bonus }) {
       let product = products[defaultSelectRow]
