@@ -1,5 +1,10 @@
 Batch Clipboard Changelog
 
+## version 1.0b7 (2025-01-07)
+
+- Improved app icon
+- App Store build add encryption exempt key to its Info.plist
+
 ## version 1.0b7 (2024-12-12)
 
 - App Store build no longer shows link to the privacy policy in the purchase window, only the standard store EULA link is relevant there.
