@@ -371,63 +371,6 @@ jobs:
           xcrun codesign --force --sign "${{ secrets.STORE_MACOS_CERTIFICATE_NAME }}" \
             --entitlements entitlements.xml --options runtime -v "${{ steps.build.outputs.appbundle }}"
       
-      - name: Package App
-        id: package
-        run: |
-          :
-          if [[ -z "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" ]] ; then
-            echo "::error::Secret PKG_MACOS_CERTIFICATE_NAME not defined"
-            exit 1
-          fi
-          
-          # Build a pkg from the built app for uploading to App Store Connect
-          
-          packagefilename="${{ steps.version.outputs.archivename }}.pkg"
-          
-          echo "- Package app to make \"$packagefilename\""
-          xcrun productbuild --sign "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" \
-            --component "${{ steps.build.outputs.appbundle }}" /Applications \
-            "${{ env.builddir }}/$packagefilename"
-          
-          echo "filename=$packagefilename" >> $GITHUB_OUTPUT
-          echo "file=${{ env.builddir }}/$packagefilename" >> $GITHUB_OUTPUT
-      
-      - name: Verify Package and AppStore Connect Acceess
-        id: connect
-        run: |
-          :
-          if [[ -z "${{ secrets.APPSTORECONNECT_APIKEY }}" ]] ; then
-            echo "::error::Secret APPSTORECONNECT_APIKEY not defined"
-            exit 1
-          fi
-          if [[ -z "${{ secrets.APPSTORECONNECT_APIKEYID }}" ]] ; then
-            echo "::error::Secret APPSTORECONNECT_APIKEYID not defined"
-            exit 1
-          fi
-          if [[ -z "${{ secrets.APPSTORECONNECT_APIISSUERID }}" ]] ; then
-            echo "::error::Secret APPSTORECONNECT_APIISSUERID not defined"
-            exit 1
-          fi
-          
-          # Turn our base64-encoded acess key back to a regular .p8 file
-          # in the expected subdirectory with the expected name containing the key id
-          
-          keyfilename="AuthKey_${{ secrets.APPSTORECONNECT_APIKEYID }}.p8"
-          keydir="private_keys"
-          mkdir "$keydir"
-          
-          echo "- Base64-decode key to make \"$keyfilename\""
-          echo "${{ secrets.APPSTORECONNECT_APIKEY }}" | base64 --decode > "./$keydir/$keyfilename"
-          # if deploying, this decoded key file will be used again by altool
-          
-          echo "- Run verification"
-          xcrun altool --validate-app --file "${{ steps.package.outputs.file }}" \
-            --type macos --apiKey "${{ secrets.APPSTORECONNECT_APIKEYID }}" \
-            --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}"
-          
-          echo "keyid=${{ secrets.APPSTORECONNECT_APIKEYID }}" >> $GITHUB_OUTPUT
-          echo "issuerid=${{ secrets.APPSTORECONNECT_APIISSUERID }}" >> $GITHUB_OUTPUT
-      
       - name: Release Notes
         id: notes
         run: |
@@ -479,19 +422,76 @@ jobs:
           echo "filename=$currentNotesFilename" >> $GITHUB_OUTPUT
           echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
       
-      - name: Save Build Components as Artifact
+      - name: Save Build as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.version.outputs.archivename }} App and Pkg"
+          name: "${{ steps.version.outputs.archivename }} (app-store)"
           path: |
             ${{ steps.build.outputs.appbundle }}
-            ${{ steps.package.outputs.file }}
+            ${{ steps.notes.outputs.file }}
       
-      - name: Save Release Notes as Artifact
+      - name: Package App
+        id: package
+        run: |
+          :
+          if [[ -z "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" ]] ; then
+            echo "::error::Secret PKG_MACOS_CERTIFICATE_NAME not defined"
+            exit 1
+          fi
+          
+          # Build a pkg from the built app for uploading to App Store Connect
+          
+          packagefilename="${{ steps.version.outputs.archivename }}.pkg"
+          
+          echo "- Package app to make \"$packagefilename\""
+          xcrun productbuild --sign "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" \
+            --component "${{ steps.build.outputs.appbundle }}" /Applications \
+            "${{ env.builddir }}/$packagefilename"
+          
+          echo "filename=$packagefilename" >> $GITHUB_OUTPUT
+          echo "file=${{ env.builddir }}/$packagefilename" >> $GITHUB_OUTPUT
+      
+      - name: Save Pkg as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.version.outputs.archivename }} Release notes"
-          path: ${{ steps.notes.outputs.file }}
+          name: "${{ steps.version.outputs.archivename }} (app-store) Package"
+          path: ${{ steps.package.outputs.file }}
+      
+      - name: Verify Package and AppStore Connect Acceess
+        id: connect
+        run: |
+          :
+          if [[ -z "${{ secrets.APPSTORECONNECT_APIKEY }}" ]] ; then
+            echo "::error::Secret APPSTORECONNECT_APIKEY not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.APPSTORECONNECT_APIKEYID }}" ]] ; then
+            echo "::error::Secret APPSTORECONNECT_APIKEYID not defined"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.APPSTORECONNECT_APIISSUERID }}" ]] ; then
+            echo "::error::Secret APPSTORECONNECT_APIISSUERID not defined"
+            exit 1
+          fi
+          
+          # Turn our base64-encoded acess key back to a regular .p8 file
+          # in the expected subdirectory with the expected name containing the key id
+          
+          keyfilename="AuthKey_${{ secrets.APPSTORECONNECT_APIKEYID }}.p8"
+          keydir="private_keys"
+          mkdir "$keydir"
+          
+          echo "- Base64-decode key to make \"$keyfilename\""
+          echo "${{ secrets.APPSTORECONNECT_APIKEY }}" | base64 --decode > "./$keydir/$keyfilename"
+          # if deploying, this decoded key file will be used again by altool
+          
+          echo "- Run verification"
+          xcrun altool --validate-app --file "${{ steps.package.outputs.file }}" \
+            --type macos --apiKey "${{ secrets.APPSTORECONNECT_APIKEYID }}" \
+            --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}"
+          
+          echo "keyid=${{ secrets.APPSTORECONNECT_APIKEYID }}" >> $GITHUB_OUTPUT
+          echo "issuerid=${{ secrets.APPSTORECONNECT_APIISSUERID }}" >> $GITHUB_OUTPUT
       
       - name: Deploy
         if: ${{ success() && steps.version.outputs.upload == 'true' }}

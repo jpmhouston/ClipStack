@@ -347,7 +347,7 @@ jobs:
           xcrun codesign --force --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" \
             --entitlements entitlements.xml --options runtime -v "${{ steps.build.outputs.appbundle }}"
       
-      - name: Notarize app bundle
+      - name: Notarize App Bundle
         run: |
           :
           if [[ -z "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" ]] ; then
@@ -400,72 +400,6 @@ jobs:
           echo "- Attach staple"
           xcrun stapler staple "${{ steps.build.outputs.appbundle }}"
       
-      - name: Build Zip File
-        id: zip
-        run: |
-          :
-          archiveDir="${{ env.builddir }}/Sparkle"
-          archiveFileName="${{ steps.version.outputs.archivename }}.zip"
-          
-          echo "- Compress built app to \"$(basename $archiveDir)/$archiveFileName\""
-          mkdir "$archiveDir"
-          ditto -c -k --sequesterRsrc --keepParent "${{ steps.build.outputs.appbundle }}" \
-            "$archiveDir/$archiveFileName"
-          
-          echo "file=$archiveDir/$archiveFileName" >> $GITHUB_OUTPUT
-          echo "directory=$archiveDir" >> $GITHUB_OUTPUT
-      
-      - name: Disk Image
-        id: dmg
-        run: |
-          :
-          if ! command -v create-dmg >/dev/null 2>&1 ; then
-            echo "::warning::Required helper script not found: create-dmg. Skipping dmg creation"
-            # not sure if need to do `echo "file=whatever" >> $GITHUB_OUTPUT`
-            # to make release step work, or if empty/missing steps.dmg.output.file is ok
-            exit 0
-          fi
-          
-          imageDir="${{ env.builddir }}/Image"
-          imageFileName="${{ steps.version.outputs.archivename }}.dmg"
-          readmeFilename="${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
-          
-          echo "- Copy built app to \"$(basename $imageDir)/${{ env.bundlename }}\""
-          mkdir "$imageDir"
-          ditto "${{ steps.build.outputs.appbundle }}" "$imageDir/${{ env.bundlename }}"
-          
-          echo "- Copy readme file from source repo to \"$(basename $imageDir)/$readmeFilename\""
-          cp "Designs/Cleepp/Cleepp download read me.rtf" "$imageDir/$readmeFilename"
-          
-          echo "- Build disk image \"${{ env.builddir }}/$imageFileName\""
-          create-dmg --hdiutil-quiet \
-            --volname "${{ steps.version.outputs.releasename }}" \
-            --window-size 540 160 --icon-size 64 \
-            --icon "$readmeFilename" 40 60 \
-            --icon "${{ env.bundlename }}" 200 60 \
-            --app-drop-link 360 60 \
-            "${{ env.builddir }}/$imageFileName" "$imageDir"
-          
-          echo "filename=${{ env.bundlename }}" >> $GITHUB_OUTPUT
-          echo "file=${{ env.builddir }}/$imageFileName" >> $GITHUB_OUTPUT
-          
-      - name: Sign and notarize disk image
-        run: |
-          :
-          echo "- Notarize disk image"
-          xcrun notarytool submit "${{ steps.dmg.outputs.file }}" --keychain-profile "notarytool-profile" --wait \
-            2>&1 | tee notarytool-out.txt
-          if [ ${PIPESTATUS[0]} -ne 0 ] || grep -q Invalid notarytool-out.txt ; then
-            if sed -nr '/^[[:space:]]*id: (.*)$/{s//\1/p;q;}' notarytool-out.txt > notarytool-id.txt ; then
-              echo "- Extract notarytool failure log"
-              xcrun notarytool log "$(<notarytool-id.txt)" --keychain-profile "notarytool-profile"
-            fi
-            exit 1
-          fi
-          
-          echo "- Attach staple"
-          xcrun stapler staple "${{ steps.dmg.outputs.file }}"
-      
       - name: Release Notes
         id: notes
         run: |
@@ -516,6 +450,86 @@ jobs:
           
           echo "filename=$currentNotesFilename" >> $GITHUB_OUTPUT
           echo "file=${{ env.builddir }}/$currentNotesFilename" >> $GITHUB_OUTPUT
+      
+      - name: Save Build as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ steps.version.outputs.archivename }} (non-app store)"
+          path: |
+            ${{ steps.build.outputs.appbundle }}
+            ${{ steps.notes.outputs.file }}
+      
+      - name: Build Zip File
+        id: zip
+        run: |
+          :
+          archiveDir="${{ env.builddir }}/Sparkle"
+          archiveFileName="${{ steps.version.outputs.archivename }}.zip"
+          
+          echo "- Compress built app to \"$(basename $archiveDir)/$archiveFileName\""
+          mkdir "$archiveDir"
+          ditto -c -k --sequesterRsrc --keepParent "${{ steps.build.outputs.appbundle }}" \
+            "$archiveDir/$archiveFileName"
+          
+          echo "file=$archiveDir/$archiveFileName" >> $GITHUB_OUTPUT
+          echo "directory=$archiveDir" >> $GITHUB_OUTPUT
+      
+      - name: Disk Image
+        id: dmg
+        run: |
+          :
+          if ! command -v create-dmg >/dev/null 2>&1 ; then
+            echo "::warning::Required helper script not found: create-dmg. Skipping dmg creation"
+            # not sure if need to do `echo "file=whatever" >> $GITHUB_OUTPUT`
+            # to make release step work, or if empty/missing steps.dmg.output.file is ok
+            exit 0
+          fi
+          
+          imageDir="${{ env.builddir }}/Image"
+          imageFileName="${{ steps.version.outputs.archivename }}.dmg"
+          readmeFilename="${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
+          
+          echo "- Copy built app to \"$(basename $imageDir)/${{ env.bundlename }}\""
+          mkdir "$imageDir"
+          ditto "${{ steps.build.outputs.appbundle }}" "$imageDir/${{ env.bundlename }}"
+          
+          echo "- Copy readme file from source repo to \"$(basename $imageDir)/$readmeFilename\""
+          cp "Designs/Cleepp/Cleepp download read me.rtf" "$imageDir/$readmeFilename"
+          
+          echo "- Build disk image \"${{ env.builddir }}/$imageFileName\""
+          create-dmg --hdiutil-quiet \
+            --volname "${{ steps.version.outputs.releasename }}" \
+            --window-size 540 160 --icon-size 64 \
+            --icon "$readmeFilename" 40 60 \
+            --icon "${{ env.bundlename }}" 200 60 \
+            --app-drop-link 360 60 \
+            "${{ env.builddir }}/$imageFileName" "$imageDir"
+          
+          echo "filename=${{ env.bundlename }}" >> $GITHUB_OUTPUT
+          echo "file=${{ env.builddir }}/$imageFileName" >> $GITHUB_OUTPUT
+          
+      - name: Sign and Notarize Disk Image
+        run: |
+          :
+          echo "- Notarize disk image"
+          xcrun notarytool submit "${{ steps.dmg.outputs.file }}" --keychain-profile "notarytool-profile" --wait \
+            2>&1 | tee notarytool-out.txt
+          if [ ${PIPESTATUS[0]} -ne 0 ] || grep -q Invalid notarytool-out.txt ; then
+            if sed -nr '/^[[:space:]]*id: (.*)$/{s//\1/p;q;}' notarytool-out.txt > notarytool-id.txt ; then
+              echo "- Extract notarytool failure log"
+              xcrun notarytool log "$(<notarytool-id.txt)" --keychain-profile "notarytool-profile"
+            fi
+            exit 1
+          fi
+          
+          echo "- Attach staple"
+          xcrun stapler staple "${{ steps.dmg.outputs.file }}"
+      
+      - name: Save Disk Image as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ steps.version.outputs.archivename }} (non-app store) Disk Image"
+          path: ${{ steps.dmg.outputs.file }}
       
       - name: Setup Sparkle
         if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag }}
@@ -579,22 +593,6 @@ jobs:
           commit_message: Automated Change to appcast.xml
           file_pattern: "appcast.xml"
           status_options: "--untracked-files=no"
-      
-      - name: Save build as artifact
-        if: ${{ success() && !(steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag) }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: Non-App Store build
-          path: |
-            ${{ steps.dmg.outputs.file }}
-      
-      - name: Save release notes as artifact
-        if: ${{ success() && !(steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag) }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: Release notes
-          path: |
-            ${{ steps.notes.outputs.file }}
       
       - name: Draft Tagged Release
         if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag }}
