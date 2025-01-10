@@ -81,6 +81,49 @@ jobs:
             exit 1
           fi
       
+      - name: Get Script Inputs
+        id: inputs
+        run: |
+          :
+          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
+            echo "- Build version is $version"
+          else
+            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
+            version="${{ inputs.releaseVersion }}"
+          fi
+          releasename="${{ env.productname }} $version"
+          releasenameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
+          
+          if [[ -z "${{ inputs.isPrerelease }}" ]] ; then
+            echo "- Use default value for isPrerelease: ${{ env.isPrereleaseDefault }}"
+            isPrerelease=${{ env.isPrereleaseDefault }}
+          else
+            echo "- Use supplied value for isPrerelease: ${{ inputs.isPrerelease }}"
+            isPrerelease=${{ inputs.isPrerelease }}
+          fi
+          
+          if [[ -z "${{ inputs.githubRelease }}" ]] ; then
+            echo "- Use default value for githubRelease: ${{ env.githubReleaseDefault }}"
+            githubRelease=${{ env.githubReleaseDefault }}
+          else
+            echo "- Use supplied value for githubRelease: ${{ inputs.githubRelease }}"
+            githubRelease=${{ inputs.githubRelease }}
+          fi
+          
+          if [[ -z "${{ inputs.updateAppcast }}" ]] ; then
+            echo "- Use default value for updateAppcast: ${{ env.updateAppcastDefault }}"
+            updateAppcast=${{ env.updateAppcastDefault }}
+          else
+            echo "- Use supplied value for updateAppcast: ${{ inputs.updateAppcast }}"
+            updateAppcast=${{ inputs.updateAppcast }}
+          fi
+          
+          echo "releasename=$releasename" >> $GITHUB_OUTPUT
+          echo "archivename=$releasenameNoSpaces" >> $GITHUB_OUTPUT
+          echo "githubRelease=$githubRelease" >> $GITHUB_OUTPUT
+          echo "updateAppcast=$updateAppcast" >> $GITHUB_OUTPUT
+          echo "prerelease=$isPrerelease" >> $GITHUB_OUTPUT
+      
       - name: Validate
         id: version
         run: |
@@ -99,38 +142,6 @@ jobs:
             exit 1
           fi
           
-          echo "- Check script inputs"
-          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
-            echo "- Build version is $version"
-          else
-            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
-            version="${{ inputs.releaseVersion }}"
-          fi
-          releasename="${{ env.productname }} $version"
-          releasenameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
-          
-          if [[ -z "${{ inputs.isPrerelease }}" ]] ; then
-            echo "- Use default value for isPrerelease: ${{ env.isPrereleaseDefault }}"
-            isPrerelease=${{ env.isPrereleaseDefault }}
-          else
-            echo "- Use supplied value for isPrerelease: ${{ inputs.isPrerelease }}"
-            isPrerelease=${{ inputs.isPrerelease }}
-          fi
-          if [[ -z "${{ inputs.githubRelease }}" ]] ; then
-            echo "- Use default value for githubRelease: ${{ env.githubReleaseDefault }}"
-            githubRelease=${{ env.githubReleaseDefault }}
-          else
-            echo "- Use supplied value for githubRelease: ${{ inputs.githubRelease }}"
-            githubRelease=${{ inputs.githubRelease }}
-          fi
-          if [[ -z "${{ inputs.updateAppcast }}" ]] ; then
-            echo "- Use default value for updateAppcast: ${{ env.updateAppcastDefault }}"
-            updateAppcast=${{ env.updateAppcastDefault }}
-          else
-            echo "- Use supplied value for updateAppcast: ${{ inputs.updateAppcast }}"
-            updateAppcast=${{ inputs.updateAppcast }}
-          fi
-          
           echo "- Parse trigger"
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
             if [[ "${{ github.ref }}" != "refs/heads/${{ env.branch }}" ]] ; then
@@ -139,39 +150,34 @@ jobs:
             fi
             if git show-ref --tags --verify refs/tags/v$version --quiet ; then
               tag="v$version"
-              if [[ $githubRelease != 'true' ]] ; then
-                echo "- Will build and save release \"$releasename\" as artifact"
+              if [[ ${{ steps.inputs.outputs.githubRelease }} != "true" ]] ; then
+                echo "- Will build and save release \"${{ steps.inputs.outputs.releasename }}\" as artifact"
               else
-                echo "- Will build and draft release \"$releasename\" with matching tag \"$tag\""
+                echo "- Will build and draft release \"${{ steps.inputs.outputs.releasename }}\" with matching tag \"$tag\""
               fi
-            elif [[ $githubRelease != 'true' ]] ; then
-              echo "- Will build and save release \"$releasename\" as artifact"
+            elif [[ ${{ steps.inputs.outputs.githubRelease }} != "true" ]] ; then
+              echo "- Will build and save release \"${{ steps.inputs.outputs.releasename }}\" as artifact"
             else
-              echo "- Will build and save release \"$releasename\" as artifact because no tag \"v$version\" was found"
+              echo "- Will build and save release \"${{ steps.inputs.outputs.releasename }}\" as artifact because no tag \"v$version\" was found"
             fi
           elif [[ "${{ github.ref }}" == refs/tags/* ]] ; then
             # TODO: how do we verify the branch of this tag and ensure its ${{ env.branch }} ?
             ref="${{ github.ref }}"
             tag="${ref:10}" # magic number 10 being the length of "refs/tags/", stripping that to leave just the tag name
-            echo "- Will build and draft release \"$releasename\" because triggered by pushed tag \"$tag\""
+            echo "- Will build and draft release \"${{ steps.inputs.outputs.releasename }}\" because triggered by pushed tag \"$tag\""
           else
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
             exit 1
           fi
-          if [[ -z $tag && $githubRelease == 'true' ]] ; then
+          if [[ -z $tag && ${{ steps.inputs.outputs.githubRelease }} == "true" ]] ; then
             echo "::notice::Creating a github release skipped because no tag \"v$version\" was found"
           fi
-          if [[ $updateAppcast == 'true' && ( -z $tag || $githubRelease != 'true' ) ]] ; then
+          if [[ ${{ steps.inputs.outputs.updateAppcast }} == "true" && ( -z $tag || ${{ steps.inputs.outputs.githubRelease }} != "true" ) ]] ; then
             echo "::notice::Updating the sparkle appcast is always skipped for untagged or non-github release builds"
           fi
           
           echo "version=$version" >> $GITHUB_OUTPUT
           echo "bundleid=$bundleid" >> $GITHUB_OUTPUT
-          echo "releasename=$releasename" >> $GITHUB_OUTPUT
-          echo "archivename=$releasenameNoSpaces" >> $GITHUB_OUTPUT
-          echo "githubRelease=$githubRelease" >> $GITHUB_OUTPUT
-          echo "updateAppcast=$updateAppcast" >> $GITHUB_OUTPUT
-          echo "prerelease=$isPrerelease" >> $GITHUB_OUTPUT
           if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
@@ -202,7 +208,7 @@ jobs:
             "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist"
           bundleVersion=$(plutil -extract CFBundleVersion raw \
             "Build/Products/Release/${{ env.bundlename }}/Contents/Info.plist" 2> /dev/null)
-          if [[ -z $bundleVersion && "${{ steps.version.outputs.updateAppcast }}" == "true" ]] ; then
+          if [[ -z $bundleVersion && "${{ steps.inputs.outputs.updateAppcast }}" == "true" ]] ; then
             echo "::error::Unable to find the app's bundle version"
             exit 1
           elif [[ -z $bundleVersion ]] ; then
@@ -406,8 +412,8 @@ jobs:
           :
           echo "- Collect release notes"
           changeLogFilename=CHANGELOG.md
-          tempNotesFilename="${{ steps.version.outputs.releasename }}.temp.md"
-          currentNotesFilename="${{ steps.version.outputs.releasename }}.md"
+          tempNotesFilename="${{ steps.inputs.outputs.releasename }}.temp.md"
+          currentNotesFilename="${{ steps.inputs.outputs.releasename }}.md"
           if [[ ! -f $changeLogFilename ]] ; then
             echo "::warning::Change log file is missing"
             numlines=0
@@ -454,7 +460,7 @@ jobs:
       - name: Save Build as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.version.outputs.archivename }} (non-app store)"
+          name: "${{ steps.inputs.outputs.archivename }} (non-app store)"
           path: |
             ${{ steps.build.outputs.appbundle }}
             ${{ steps.notes.outputs.file }}
@@ -464,7 +470,7 @@ jobs:
         run: |
           :
           archiveDir="${{ env.builddir }}/Sparkle"
-          archiveFileName="${{ steps.version.outputs.archivename }}.zip"
+          archiveFileName="${{ steps.inputs.outputs.archivename }}.zip"
           
           echo "- Compress built app to \"$(basename $archiveDir)/$archiveFileName\""
           mkdir "$archiveDir"
@@ -486,7 +492,7 @@ jobs:
           fi
           
           imageDir="${{ env.builddir }}/Image"
-          imageFileName="${{ steps.version.outputs.archivename }}.dmg"
+          imageFileName="${{ steps.inputs.outputs.archivename }}.dmg"
           readmeFilename="${{ env.productname }} version ${{ steps.version.outputs.version }} read me.rtf"
           
           echo "- Copy built app to \"$(basename $imageDir)/${{ env.bundlename }}\""
@@ -498,7 +504,7 @@ jobs:
           
           echo "- Build disk image \"${{ env.builddir }}/$imageFileName\""
           create-dmg --hdiutil-quiet \
-            --volname "${{ steps.version.outputs.releasename }}" \
+            --volname "${{ steps.inputs.outputs.releasename }}" \
             --window-size 540 160 --icon-size 64 \
             --icon "$readmeFilename" 40 60 \
             --icon "${{ env.bundlename }}" 200 60 \
@@ -528,18 +534,18 @@ jobs:
       - name: Save Disk Image as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.version.outputs.archivename }} (non-app store) Disk Image"
+          name: "${{ steps.inputs.outputs.archivename }} (non-app store) Disk Image"
           path: ${{ steps.dmg.outputs.file }}
       
       - name: Setup Sparkle
-        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag }}
+        if: ${{ success() && steps.inputs.outputs.githubRelease == "true" && steps.inputs.outputs.updateAppcast == "true" && steps.version.outputs.tag }}
         uses: jozefizso/setup-sparkle@v1
         with:
           version: 2.6.0
       
       - name: Generate Sparkle appcast.xml
         id: sparkle
-        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag }}
+        if: ${{ success() && steps.inputs.outputs.githubRelease == "true" && steps.inputs.outputs.updateAppcast == "true" && steps.version.outputs.tag }}
         run: |
           :
           echo "::add-mask::${{ secrets.SPARKLE_PRIVATE_KEY }}"
@@ -587,7 +593,7 @@ jobs:
           echo "appcastGenerated=true" >> $GITHUB_OUTPUT
       
       - name: Commit appcast.xml
-        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.updateAppcast == 'true' && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated }}
+        if: ${{ success() && steps.inputs.outputs.githubRelease == "true" && steps.inputs.outputs.updateAppcast == "true" && steps.version.outputs.tag && steps.sparkle.outputs.appcastGenerated }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Automated Change to appcast.xml
@@ -595,13 +601,13 @@ jobs:
           status_options: "--untracked-files=no"
       
       - name: Draft Tagged Release
-        if: ${{ success() && steps.version.outputs.githubRelease == 'true' && steps.version.outputs.tag }}
+        if: ${{ success() && steps.inputs.outputs.githubRelease == "true" && steps.version.outputs.tag }}
         uses: softprops/action-gh-release@v2
         with:
-          name: ${{ steps.version.outputs.releasename }}
+          name: ${{ steps.inputs.outputs.releasename }}
           tag_name: ${{ steps.version.outputs.tag }}
           draft: true
-          prerelease: ${{ steps.version.outputs.prerelease }}
+          prerelease: ${{ steps.inputs.outputs.prerelease }}
           body_path: ${{ steps.notes.outputs.file }}
           files: |
             ${{ steps.zip.outputs.file }}
@@ -611,8 +617,8 @@ jobs:
       - name: Fin
         run: |
           :
-          if [[ steps.version.outputs.githubRelease == 'true' && -n "${{ steps.version.outputs.tag }}" ]] ; then
-            echo "::notice::Release \"${{ steps.version.outputs.releasename }}\" draft created continaing \"${{ steps.dmg.outputs.filename }}\""
+          if [[ steps.inputs.outputs.githubRelease == "true" && -n "${{ steps.version.outputs.tag }}" ]] ; then
+            echo "::notice::Release \"${{ steps.inputs.outputs.releasename }}\" draft created continaing \"${{ steps.dmg.outputs.filename }}\""
           else
-            echo "::notice::Release \"${{ steps.version.outputs.releasename }}\" built and saved as artifact \"${{ steps.dmg.outputs.filename }}\""
+            echo "::notice::Release \"${{ steps.inputs.outputs.releasename }}\" built and saved as artifact \"${{ steps.dmg.outputs.filename }}\""
           fi

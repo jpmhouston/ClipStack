@@ -12,9 +12,15 @@ on:
         type: boolean
         required: true
         default: false
+      ignoreVerification:
+        description: "Ignore Package Validation Failure"
+        type: boolean
+        required: true
+        default: false
 
 env:
   uploadDefault: true
+  ignoreVerificationDefault: true
   projectfile: Maccy.xcodeproj
   entitlementsfile: Cleepp/Cleepp.entitlements
   profiledestinationfile: embedded.provisionprofile
@@ -72,6 +78,40 @@ jobs:
             exit 1
           fi
       
+      - name: Get Script Inputs
+        id: inputs
+        run: |
+          :
+          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
+            echo "- Build version is $version"
+          else
+            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
+            version="${{ inputs.releaseVersion }}"
+          fi
+          releasename="${{ env.productname }} $version"
+          releasenameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
+          
+          if [[ -z "${{ inputs.uploadToStore }}" ]] ; then
+            echo "- Use default value for uploadToStore: ${{ env.uploadDefault }}"
+            upload=${{ env.uploadDefault }}
+          else
+            echo "- Use supplied value for uploadToStore: ${{ inputs.uploadToStore }}"
+            upload=${{ inputs.uploadToStore }}
+          fi
+          
+          if [[ -z "${{ inputs.ignoreVerification }}" ]] ; then
+            echo "- Use default value for ignoreVerification: ${{ env.ignoreVerificationDefault }}"
+            ignoreverification=${{ env.ignoreVerificationDefault }}
+          else
+            echo "- Use supplied value for ignoreVerification: ${{ inputs.ignoreVerification }}"
+            ignoreverification=${{ inputs.ignoreVerification }}
+          fi
+          
+          echo "releasename=$releasename" >> $GITHUB_OUTPUT
+          echo "archivename=$releasenameNoSpaces" >> $GITHUB_OUTPUT
+          echo "upload=$upload" >> $GITHUB_OUTPUT
+          echo "ignoreverification=$ignoreverification" >> $GITHUB_OUTPUT
+      
       - name: Validate
         id: version
         run: |
@@ -90,34 +130,16 @@ jobs:
             exit 1
           fi
           
-          echo "- Check script inputs"
-          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
-            echo "- Build version is $version"
-          else
-            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
-            version="${{ inputs.releaseVersion }}"
-          fi
-          releasename="${{ env.productname }} $version"
-          releasenameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
-          
-          if [[ -z "${{ inputs.uploadToStore }}" ]] ; then
-            echo "- Use default value for uploadToStore: ${{ env.uploadDefault }}"
-            uploadToStore=${{ env.uploadDefault }}
-          else
-            echo "- Use supplied value for uploadToStore: ${{ inputs.uploadToStore }}"
-            uploadToStore=${{ inputs.uploadToStore }}
-          fi
-          
           echo "- Parse trigger" # NOTE: only support triggering manually for now
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
             if [[ "${{ github.ref }}" != "refs/heads/${{ env.branch }}" ]] ; then
               echo "::error::Manually triggered workflow supports ${{ env.branch }} only, gihub.ref == ${{ github.ref }})"
               exit 1
             fi
-            if $uploadToStore == "true" ; then
-              echo "- Will build and save as artifacts verison \"$releasename\" and associated release notes"
+            if [[ ${{ steps.inputs.outputs.upload }} == "true" ]] ; then
+              echo "- Will build and save as artifacts verison \"${{ steps.inputs.outputs.releasename }}\" and associated release notes"
             else
-              echo "- Will build and deplay verison \"$releasename\" and save as as artifact with associated release notes"
+              echo "- Will build and deplay verison \"${{ steps.inputs.outputs.releasename }}\" and save as as artifact with associated release notes"
             fi
           else
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
@@ -135,9 +157,6 @@ jobs:
           echo "bareversion=$bareversion" >> $GITHUB_OUTPUT
           echo "versionsuffix=$versionsuffix" >> $GITHUB_OUTPUT
           echo "bundleid=$bundleid" >> $GITHUB_OUTPUT
-          echo "releasename=$releasename" >> $GITHUB_OUTPUT
-          echo "archivename=$releasenameNoSpaces" >> $GITHUB_OUTPUT
-          echo "upload=$uploadToStore" >> $GITHUB_OUTPUT
           if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
@@ -377,8 +396,8 @@ jobs:
           :
           echo "- Collect release notes"
           changeLogFilename=CHANGELOG.md
-          tempNotesFilename="${{ steps.version.outputs.releasename }}.temp.md"
-          currentNotesFilename="${{ steps.version.outputs.releasename }}.md"
+          tempNotesFilename="${{ steps.inputs.outputs.releasename }}.temp.md"
+          currentNotesFilename="${{ steps.inputs.outputs.releasename }}.md"
           if [[ ! -f $changeLogFilename ]] ; then
             echo "::warning::Change log file is missing"
             numlines=0
@@ -425,7 +444,7 @@ jobs:
       - name: Save Build as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.version.outputs.archivename }} (app-store)"
+          name: "${{ steps.inputs.outputs.archivename }} (app-store)"
           path: |
             ${{ steps.build.outputs.appbundle }}
             ${{ steps.notes.outputs.file }}
@@ -441,7 +460,7 @@ jobs:
           
           # Build a pkg from the built app for uploading to App Store Connect
           
-          packagefilename="${{ steps.version.outputs.archivename }}.pkg"
+          packagefilename="${{ steps.inputs.outputs.archivename }}.pkg"
           
           echo "- Package app to make \"$packagefilename\""
           xcrun productbuild --sign "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" \
@@ -454,7 +473,7 @@ jobs:
       - name: Save Pkg as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.version.outputs.archivename }} (app-store) Package"
+          name: "${{ steps.inputs.outputs.archivename }} (app-store) Package"
           path: ${{ steps.package.outputs.file }}
       
       - name: Verify Package and AppStore Connect Acceess
@@ -488,13 +507,22 @@ jobs:
           echo "- Run verification"
           xcrun altool --validate-app --file "${{ steps.package.outputs.file }}" \
             --type macos --apiKey "${{ secrets.APPSTORECONNECT_APIKEYID }}" \
-            --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}"
+            --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}" || status=$?
+          
+          if [ status -ne 0 ] ; then
+            if [[ ${{ steps.inputs.outputs.ignoreverification }} == "true" ]] ; then
+              echo "::warning::Proceeding even though app package failed altool validation"
+            else
+              echo "::error::App package failed altool validation"
+              exit 1
+            fi
+          fi
           
           echo "keyid=${{ secrets.APPSTORECONNECT_APIKEYID }}" >> $GITHUB_OUTPUT
           echo "issuerid=${{ secrets.APPSTORECONNECT_APIISSUERID }}" >> $GITHUB_OUTPUT
       
       - name: Deploy
-        if: ${{ success() && steps.version.outputs.upload == 'true' }}
+        if: ${{ success() && steps.inputs.outputs.upload == "true" }}
         run: |
           :
           if [[ -z "${{ secrets.APPSTORECONNECT_APPID }}" ]] ; then
@@ -517,7 +545,7 @@ jobs:
       - name: Fin
         run: |
           :
-          if [[ "${{ steps.version.outputs.upload }}" == "true" ]] ; then
+          if [[ "${{ steps.inputs.outputs.upload }}" == "true" ]] ; then
             echo "::notice::Deployed \"${{ env.bundlename }}\" to app store, saved it and \"${{ steps.notes.outputs.filename }}\" as artifacts"
           else
             echo "::notice::Saved \"${{ env.bundlename }}\" and \"${{ steps.notes.outputs.filename }}\" as artifacts"
