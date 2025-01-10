@@ -136,7 +136,7 @@ jobs:
               echo "::error::Manually triggered workflow supports ${{ env.branch }} only, gihub.ref == ${{ github.ref }})"
               exit 1
             fi
-            if [[ ${{ steps.inputs.outputs.upload }} == "true" ]] ; then
+            if [[ ${{ steps.inputs.outputs.upload }} == 'true']] ; then
               echo "- Will build and save as artifacts verison \"${{ steps.inputs.outputs.releasename }}\" and associated release notes"
             else
               echo "- Will build and deplay verison \"${{ steps.inputs.outputs.releasename }}\" and save as as artifact with associated release notes"
@@ -510,7 +510,7 @@ jobs:
             --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}" || status=$?
           
           if [ status -ne 0 ] ; then
-            if [[ ${{ steps.inputs.outputs.ignoreverification }} == "true" ]] ; then
+            if [[ ${{ steps.inputs.outputs.ignoreverification }} == 'true']] ; then
               echo "::warning::Proceeding even though app package failed altool validation"
             else
               echo "::error::App package failed altool validation"
@@ -522,7 +522,7 @@ jobs:
           echo "issuerid=${{ secrets.APPSTORECONNECT_APIISSUERID }}" >> $GITHUB_OUTPUT
       
       - name: Deploy
-        if: ${{ success() && steps.inputs.outputs.upload == "true" }}
+        if: ${{ success() && steps.inputs.outputs.upload == 'true'}}
         run: |
           :
           if [[ -z "${{ secrets.APPSTORECONNECT_APPID }}" ]] ; then
@@ -545,7 +545,7 @@ jobs:
       - name: Fin
         run: |
           :
-          if [[ "${{ steps.inputs.outputs.upload }}" == "true" ]] ; then
+          if [[ "${{ steps.inputs.outputs.upload }}" == 'true']] ; then
             echo "::notice::Deployed \"${{ env.bundlename }}\" to app store, saved it and \"${{ steps.notes.outputs.filename }}\" as artifacts"
           else
             echo "::notice::Saved \"${{ env.bundlename }}\" and \"${{ steps.notes.outputs.filename }}\" as artifacts"
