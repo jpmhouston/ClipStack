@@ -1,9 +1,10 @@
 Batch Clipboard Changelog
 
-## version 1.0b7 (2025-01-07)
+## version 1.0.1b8 (2025-01-11 🏈🚀)
 
-- Improved app icon
-- App Store build add encryption exempt key to its Info.plist
+- Had to increase version number from 1.0 to 1.0.1 because reasons to do with the App Store, made it apply to non-AppStore build as well.
+- Improved app icon.
+- App Store build add encryption exempt key to its Info.plist.
 
 ## version 1.0b7 (2024-12-12)
 
