@@ -82,15 +82,7 @@ jobs:
         id: inputs
         run: |
           :
-          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
-            echo "- Build version is $version"
-          else
-            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
-            version="${{ inputs.releaseVersion }}"
-          fi
-          releasename="${{ env.productname }} $version"
-          releasenameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
-          
+          echo "- Check some script inputs and use defaults if unset"
           if [[ -z "${{ inputs.uploadToStore }}" ]] ; then
             echo "- Use default value for uploadToStore: ${{ env.uploadDefault }}"
             upload=${{ env.uploadDefault }}
@@ -107,8 +99,6 @@ jobs:
             ignoreverification=${{ inputs.ignoreVerification }}
           fi
           
-          echo "releasename=$releasename" >> $GITHUB_OUTPUT
-          echo "archivename=$releasenameNoSpaces" >> $GITHUB_OUTPUT
           echo "upload=$upload" >> $GITHUB_OUTPUT
           echo "ignoreverification=$ignoreverification" >> $GITHUB_OUTPUT
       
@@ -130,6 +120,15 @@ jobs:
             exit 1
           fi
           
+          if [[ -z "${{ inputs.releaseVersion }}" || $version == "${{ inputs.releaseVersion }}" ]] ; then
+            echo "- Build version is $version"
+          else
+            echo "- Build version is $version but overriding with ${{ inputs.releaseVersion }} for release & file names"
+            version="${{ inputs.releaseVersion }}"
+          fi
+          releasename="${{ env.productname }} $version"
+          releasenameNoSpaces="$(echo "${{ env.productname }}" |  sed "s/ /./").$version"
+          
           echo "- Parse trigger" # NOTE: only support triggering manually for now
           if [[ "${{ github.event_name }}" == workflow_dispatch ]] ; then
             if [[ "${{ github.ref }}" != "refs/heads/${{ env.branch }}" ]] ; then
@@ -137,9 +136,9 @@ jobs:
               exit 1
             fi
             if [[ ${{ steps.inputs.outputs.upload }} == 'true']] ; then
-              echo "- Will build and save as artifacts verison \"${{ steps.inputs.outputs.releasename }}\" and associated release notes"
+              echo "- Will build and save as artifacts verison \"${{ steps.version.outputs.releasename }}\" and associated release notes"
             else
-              echo "- Will build and deplay verison \"${{ steps.inputs.outputs.releasename }}\" and save as as artifact with associated release notes"
+              echo "- Will build and deplay verison \"${{ steps.version.outputs.releasename }}\" and save as as artifact with associated release notes"
             fi
           else
             echo "::error::Not triggered manually or by a tag (github.event_name == ${{ github.event_name }}, gihub.ref == ${{ github.ref }})"
@@ -157,6 +156,8 @@ jobs:
           echo "bareversion=$bareversion" >> $GITHUB_OUTPUT
           echo "versionsuffix=$versionsuffix" >> $GITHUB_OUTPUT
           echo "bundleid=$bundleid" >> $GITHUB_OUTPUT
+          echo "releasename=$releasename" >> $GITHUB_OUTPUT
+          echo "archivename=$releasenameNoSpaces" >> $GITHUB_OUTPUT
           if [[ -n $tag ]] ; then
             echo "tag=$tag" >> $GITHUB_OUTPUT
           fi
@@ -396,8 +397,8 @@ jobs:
           :
           echo "- Collect release notes"
           changeLogFilename=CHANGELOG.md
-          tempNotesFilename="${{ steps.inputs.outputs.releasename }}.temp.md"
-          currentNotesFilename="${{ steps.inputs.outputs.releasename }}.md"
+          tempNotesFilename="${{ steps.version.outputs.releasename }}.temp.md"
+          currentNotesFilename="${{ steps.version.outputs.releasename }}.md"
           if [[ ! -f $changeLogFilename ]] ; then
             echo "::warning::Change log file is missing"
             numlines=0
@@ -444,7 +445,7 @@ jobs:
       - name: Save Build as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.inputs.outputs.archivename }} (app-store)"
+          name: "${{ steps.version.outputs.archivename }} (app-store)"
           path: |
             ${{ steps.build.outputs.appbundle }}
             ${{ steps.notes.outputs.file }}
@@ -460,7 +461,7 @@ jobs:
           
           # Build a pkg from the built app for uploading to App Store Connect
           
-          packagefilename="${{ steps.inputs.outputs.archivename }}.pkg"
+          packagefilename="${{ steps.version.outputs.archivename }}.pkg"
           
           echo "- Package app to make \"$packagefilename\""
           xcrun productbuild --sign "${{ secrets.PKG_MACOS_CERTIFICATE_NAME }}" \
@@ -473,7 +474,7 @@ jobs:
       - name: Save Pkg as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ steps.inputs.outputs.archivename }} (app-store) Package"
+          name: "${{ steps.version.outputs.archivename }} (app-store) Package"
           path: ${{ steps.package.outputs.file }}
       
       - name: Verify Package and AppStore Connect Acceess
