@@ -135,7 +135,7 @@ jobs:
               echo "::error::Manually triggered workflow supports ${{ env.branch }} only, gihub.ref == ${{ github.ref }})"
               exit 1
             fi
-            if [[ ${{ steps.inputs.outputs.upload }} == 'true']] ; then
+            if [[ ${{ steps.inputs.outputs.upload }} == 'true' ]] ; then
               echo "- Will build and save as artifacts verison \"${{ steps.version.outputs.releasename }}\" and associated release notes"
             else
               echo "- Will build and deplay verison \"${{ steps.version.outputs.releasename }}\" and save as as artifact with associated release notes"
@@ -191,6 +191,7 @@ jobs:
         run: |
           :
           buildlogfile=xcodebuild-out.txt
+          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
           
           if [ -n steps.version.outputs.bareversion ]; then
             versionoverride="MARKETING_VERSION=${{ steps.version.outputs.bareversion }}"
@@ -224,8 +225,14 @@ jobs:
           fi
 
           echo "version=$bundleVersion" >> $GITHUB_OUTPUT
-          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
           echo "appbundle=${{ env.builddir }}/${{ env.bundlename }}" >> $GITHUB_OUTPUT
+      
+      - name: Save Build Log as Artifact
+        if: ${{ steps.build.outcome == 'success' || steps.build.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build log
+          path: ${{ steps.build.outputs.log }}
       
       - name: Add Provisioning Profile
         run: |
@@ -239,13 +246,6 @@ jobs:
           
           profiledest="${{ env.builddir }}/${{ env.bundlename }}/Contents/${{ env.profiledestinationfile }}"
           echo "${{ secrets.STORE_MACOS_PROFILE }}" | base64 --decode > "$profiledest"
-      
-      - name: Save Build Log as Artifact
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build log
-          path: ${{ steps.build.outputs.log }}
       
       - name: Setup Keychain
         run: |
@@ -511,7 +511,7 @@ jobs:
             --apiIssuer "${{ secrets.APPSTORECONNECT_APIISSUERID }}" || status=$?
           
           if [ status -ne 0 ] ; then
-            if [[ ${{ steps.inputs.outputs.ignoreverification }} == 'true']] ; then
+            if [[ ${{ steps.inputs.outputs.ignoreverification }} == 'true' ]] ; then
               echo "::warning::Proceeding even though app package failed altool validation"
             else
               echo "::error::App package failed altool validation"
@@ -546,7 +546,7 @@ jobs:
       - name: Fin
         run: |
           :
-          if [[ "${{ steps.inputs.outputs.upload }}" == 'true']] ; then
+          if [[ "${{ steps.inputs.outputs.upload }}" == 'true' ]] ; then
             echo "::notice::Deployed \"${{ env.bundlename }}\" to app store, saved it and \"${{ steps.notes.outputs.filename }}\" as artifacts"
           else
             echo "::notice::Saved \"${{ env.bundlename }}\" and \"${{ steps.notes.outputs.filename }}\" as artifacts"

@@ -188,6 +188,7 @@ jobs:
         run: |
           :
           buildlogfile=xcodebuild-out.txt
+          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
           
           echo "- Build with xcodebuild from $(xcodebuild -version)"
           # requires that env.projectfile is the name of the .xcodeproj, env.buildscheme is
@@ -217,11 +218,10 @@ jobs:
           fi
           
           echo "version=$bundleVersion" >> $GITHUB_OUTPUT
-          echo "log=$buildlogfile" >> $GITHUB_OUTPUT
           echo "appbundle=${{ env.builddir }}/${{ env.bundlename }}" >> $GITHUB_OUTPUT
       
       - name: Save Build Log as Artifact
-        if: ${{ success() || failure() }}
+        if: ${{ steps.build.outcome == 'success' || steps.build.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
           name: Build log
@@ -618,8 +618,8 @@ jobs:
       - name: Fin
         run: |
           :
-          if [[ steps.inputs.outputs.githubRelease == 'true' && -n "${{ steps.version.outputs.tag }}" ]] ; then
+          if [[ ${{ steps.inputs.outputs.githubRelease }} == 'true' && -n "${{ steps.version.outputs.tag }}" ]] ; then
             echo "::notice::Release \"${{ steps.version.outputs.releasename }}\" draft created continaing \"${{ steps.dmg.outputs.filename }}\""
           else
-            echo "::notice::Release \"${{ steps.version.outputs.releasename }}\" built and saved as artifact \"${{ steps.dmg.outputs.filename }}\""
+            echo "::notice::Release \"${{ steps.version.outputs.releasename }}\" built and saved as artifact"
           fi
